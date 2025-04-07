@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and Test
         run: |
-          set -o pipefail && xcodebuild -workspace "GDSCommon-Demo.xcworkspace" -scheme GDSCommon-Demo test \
+          set -o pipefail && xcodebuild -workspace "DesignSystemDemo.xcworkspace" -scheme DesignSystemDemo test \
            -destination "platform=iOS Simulator,name=iPhone 16,OS=18.0" \
            -enableCodeCoverage YES \
            -resultBundlePath result.xcresult | xcbeautify
