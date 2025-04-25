@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "4535A0A4-0630-4401-8292-C501A8361339",
+      "id" : "A9CDCB77-9544-417D-8E69-3B0B416D5B3E",
       "name" : "Configuration 1",
       "options" : {
 
@@ -14,21 +14,21 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:",
-        "identifier" : "DesignSystemTests",
-        "name" : "DesignSystemTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Demo\/DesignSystemDemo.xcodeproj",
+        "containerPath" : "container:DesignSystemDemo.xcodeproj",
         "identifier" : "960AC98B2DA0725200519D5F",
         "name" : "DesignSystemDemoUITests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Demo\/DesignSystemDemo.xcodeproj",
+        "containerPath" : "container:..",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:DesignSystemDemo.xcodeproj",
         "identifier" : "960AC9812DA0725200519D5F",
         "name" : "DesignSystemDemoTests"
       }

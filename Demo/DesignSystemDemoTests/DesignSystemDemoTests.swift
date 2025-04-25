@@ -1,9 +1,4 @@
-import Testing
 @testable import DesignSystemDemo
+import Testing
 
-struct DesignSystemDemoTests {
-
-    @Test func example() async throws {
-    }
-
-}
+struct DesignSystemDemoTests {}
