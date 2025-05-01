@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		96684C432DA07B2400E2BF2D /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 96684C422DA07B2400E2BF2D /* TestPlan.xctestplan */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		960AC9832DA0725200519D5F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -31,7 +27,6 @@
 		960AC96C2DA0725000519D5F /* DesignSystemDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignSystemDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		960AC9822DA0725200519D5F /* DesignSystemDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignSystemDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		960AC98C2DA0725200519D5F /* DesignSystemDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignSystemDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		96684C422DA07B2400E2BF2D /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -93,7 +88,6 @@
 		960AC9632DA0725000519D5F = {
 			isa = PBXGroup;
 			children = (
-				96684C422DA07B2400E2BF2D /* TestPlan.xctestplan */,
 				960AC96E2DA0725000519D5F /* DesignSystemDemo */,
 				960AC9852DA0725200519D5F /* DesignSystemDemoTests */,
 				960AC98F2DA0725200519D5F /* DesignSystemDemoUITests */,
@@ -231,7 +225,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96684C432DA07B2400E2BF2D /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,7 +471,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N8W395F695;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.gov.DesignSystemDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -497,7 +490,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N8W395F695;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.gov.DesignSystemDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -515,6 +508,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N8W395F695;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.gov.DesignSystemDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -532,6 +526,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N8W395F695;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.gov.DesignSystemDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
