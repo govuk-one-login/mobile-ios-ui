@@ -53,8 +53,6 @@ extension DesignSystem {
         
         public static let yellow = UIColor.fromHex("#FFDD00")
         public static let purple = UIColor.fromHex("#774495")
-        
-      
 
     }
 }
