@@ -3,9 +3,22 @@ import UIKit
 // As per Color defined in Figma design system:
 extension DesignSystem {
     public enum Color {
-        // MARK: - Tokens
+        
+        public enum Background {
+            public static let expiredWalletDocument = Color.grey4
+        }
+        
+        public enum Divider {
+        }
+        
+        public enum Border {
+            public static let statusTag = Color.red1
+        }
         
         public enum Text {
+            public static let statusTag = Color.red1
+            public static let invalidWalletDocumentAction = Color.red1
+            
             public static let primary = UIColor(
                 light: Color.black1,
                 dark: Color.white
@@ -16,6 +29,7 @@ extension DesignSystem {
                 dark: Color.white
             )
         }
+        
         
         // MARK: - Base Colors
         public static let black1 = UIColor.fromHex("#0B0C0C")
@@ -39,5 +53,8 @@ extension DesignSystem {
         
         public static let yellow = UIColor.fromHex("#FFDD00")
         public static let purple = UIColor.fromHex("#774495")
+        
+      
+
     }
 }
