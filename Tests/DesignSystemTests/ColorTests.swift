@@ -74,6 +74,13 @@ struct ColorTests {
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
+    @Test func test_Color_Grey4() async throws {
+        let expectedColor = UIColor.fromHex("#F3F2F1")
+        
+        let sut = DesignSystem.Color.grey4
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
     @Test func test_Color_Red1() async throws {
         let expectedColor = UIColor.fromHex("#D4351C")
         
