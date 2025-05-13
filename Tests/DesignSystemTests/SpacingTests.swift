@@ -5,10 +5,10 @@ import XCTest
 
 struct SpacingTests {
     
-    @Test func test_Spacing_ExtraSmall() async throws {
+    @Test func test_Spacing_xSmall() async throws {
         let expectedValue: Double = 4
         
-        let sut = DesignSystem.Spacing.extraSmall
+        let sut = DesignSystem.Spacing.xSmall
         #expect(sut == expectedValue)
     }
     
@@ -16,6 +16,13 @@ struct SpacingTests {
         let expectedValue: Double = 8
         
         let sut = DesignSystem.Spacing.small
+        #expect(sut == expectedValue)
+    }
+    
+    @Test func test_Spacing_Medium() async throws {
+        let expectedValue: Double = 16
+        
+        let sut = DesignSystem.Spacing.medium
         #expect(sut == expectedValue)
     }
     
@@ -33,10 +40,10 @@ struct SpacingTests {
         #expect(sut == expectedValue)
     }
     
-    @Test func test_Spacing_ExtraLarge() async throws {
+    @Test func test_Spacing_xLarge() async throws {
         let expectedValue: Double = 32
         
-        let sut = DesignSystem.Spacing.extraLarge
+        let sut = DesignSystem.Spacing.xLarge
         #expect(sut == expectedValue)
     }
     
