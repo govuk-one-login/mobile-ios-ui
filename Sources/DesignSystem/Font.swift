@@ -22,7 +22,7 @@ extension DesignSystem {
         public static let caption2: UIFont = .preferredFont(for: .caption2)
         
         // NOTE: Example new font Tokens...
-        public static let expiredTag: UIFont = .preferredFont(for: .body, weight: .semibold, size: 12)
+        public static let expiredTag: UIFont = .preferredFont(for: .caption1, weight: .bold, size: 12)
         public static let primaryLabelLarge: UIFont = .preferredMonospacedFont(for: .title2, weight: .bold, size: 20)
     }
 }
