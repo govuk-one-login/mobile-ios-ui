@@ -113,7 +113,7 @@ struct FontTests {
     
     // MARK: - Fonts Tokens
     @Test func test_Font_expiredTag() async throws {
-        let expectedFont = UIFont.preferredFont(for: .body, weight: .semibold, size: 12)
+        let expectedFont = UIFont.preferredFont(for: .caption1, weight: .bold, size: 12)
         
         let sut = DesignSystem.Font.expiredTag
         #expect(sut == expectedFont)
