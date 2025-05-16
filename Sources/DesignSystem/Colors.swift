@@ -4,14 +4,14 @@ import UIKit
 extension DesignSystem {
     public enum Color {
         
-        public enum Background {
+        public enum Backgrounds {
             public static let expiredWalletDocument = Color.grey4
         }
         
-        public enum Divider {
+        public enum Dividers {
         }
         
-        public enum Border {
+        public enum Borders {
             public static let statusTag = Color.red1
         }
         

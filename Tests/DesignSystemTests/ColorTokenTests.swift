@@ -50,7 +50,7 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Background_ExpiredWalletDocument() async throws {
         let expectedColor = DesignSystem.Color.grey4
-        let sut = DesignSystem.Color.Background.expiredWalletDocument
+        let sut = DesignSystem.Color.Backgrounds.expiredWalletDocument
         
         #expect(sut.lightColor.cgColor == expectedColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.darkColor.cgColor)
@@ -61,7 +61,7 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Border_StatusTag() async throws {
         let expectedColor = DesignSystem.Color.red1
-        let sut = DesignSystem.Color.Border.statusTag
+        let sut = DesignSystem.Color.Borders.statusTag
         
         #expect(sut.lightColor.cgColor == expectedColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.darkColor.cgColor)
