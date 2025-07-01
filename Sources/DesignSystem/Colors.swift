@@ -6,9 +6,16 @@ extension DesignSystem {
         
         public enum Backgrounds {
             public static let expiredWalletDocument = Color.grey4
+            public static let veteranInformationHeader = Color.darkPurple
+            public static let dbsInformationHeader = Color.dbsPurple
+            public static let ninoInformationHeader = Color.hmrcGreen
         }
         
         public enum Dividers {
+            public static let `default` = UIColor(
+                light: Color.grey2,
+                dark: Color.white
+            )
         }
         
         public enum Borders {
@@ -30,12 +37,22 @@ extension DesignSystem {
             )
         }
         
+        public enum Buttons {
+            public static let secondaryTextAndIcon = UIColor(
+                light: Color.green1,
+                dark: Color.green3
+            )
+            
+            public static let focusStateTextAndIcon = Color.black1
+        }
+       
         
         // MARK: - Base Colors
         public static let black1 = UIColor.fromHex("#0B0C0C")
         
         public static let green1 = UIColor.fromHex("#00703C")
         public static let green2 = UIColor.fromHex("#008547")
+        public static let green3 = UIColor.fromHex("#03CD6E")
         
         public static let white = UIColor.fromHex("#FFFFFF")
         
@@ -52,7 +69,12 @@ extension DesignSystem {
         public static let red1 = UIColor.fromHex("#D4351C")
         
         public static let yellow = UIColor.fromHex("#FFDD00")
+        
         public static let purple = UIColor.fromHex("#774495")
-
+        public static let darkPurple = UIColor.fromHex("#532A45")
+        
+        // MARK: - Temporay colors until replacements provided
+        static let dbsPurple = UIColor.fromHex("#732282")
+        static let hmrcGreen = UIColor.fromHex("#008476")
     }
 }
