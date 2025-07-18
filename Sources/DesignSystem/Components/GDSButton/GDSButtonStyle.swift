@@ -62,11 +62,11 @@ extension GDSButtonStyle {
             ),
             foregroundColor: ColorForState(
                 normal: .systemBackground,
-                focused: .label
+                focused: DesignSystem.Color.Buttons.focusStateTextAndIcon
             ),
             backgroundColor: ColorForState(
-                normal: .systemGreen,
-                focused: .yellow
+                normal: DesignSystem.Color.green2,
+                focused: DesignSystem.Color.yellow
             ),
             cornerRadius: DesignSystem.Spacing.default
         )
@@ -80,12 +80,12 @@ extension GDSButtonStyle {
             font: DesignSystem.Font.body,
             alignment: .center,
             foregroundColor: ColorForState(
-                normal: .systemGreen,
-                focused: .label
+                normal: DesignSystem.Color.green2,
+                focused: DesignSystem.Color.Buttons.focusStateTextAndIcon
             ),
             backgroundColor: ColorForState(
                 normal: .systemBackground,
-                focused: .yellow
+                focused: DesignSystem.Color.yellow
             ),
             cornerRadius: DesignSystem.Spacing.xSmall
         )

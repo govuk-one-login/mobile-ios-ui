@@ -49,7 +49,7 @@ extension UIButton {
 
             switch button.state {
             case [.selected, .highlighted]:
-                var string = title + " Highlighted Selected"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
                 
@@ -62,7 +62,7 @@ extension UIButton {
                 }
 
             case [.focused, .highlighted]:
-                var string = title + " Focused Highlighted"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
                 
@@ -79,7 +79,7 @@ extension UIButton {
                 }
                 
             case .selected:
-                var string = title + " Selected"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
                 
@@ -92,7 +92,7 @@ extension UIButton {
                 }
                 
             case .highlighted:
-                var string = title + " Highlighted"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
 
@@ -105,7 +105,7 @@ extension UIButton {
                 }
                 
             case .focused:
-                var string = title + " Focused"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
                 
@@ -134,7 +134,7 @@ extension UIButton {
                 }
                 
             default:
-                var string = title + " Normal"
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
                 
