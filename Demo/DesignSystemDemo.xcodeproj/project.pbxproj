@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		965975AB2E2AC0D4007370CC /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 965975AA2E2AC0D4007370CC /* DesignSystem */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		960AC9832DA0725200519D5F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				965975AB2E2AC0D4007370CC /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +96,7 @@
 				960AC96E2DA0725000519D5F /* DesignSystemDemo */,
 				960AC9852DA0725200519D5F /* DesignSystemDemoTests */,
 				960AC98F2DA0725200519D5F /* DesignSystemDemoUITests */,
+				965975A92E2AC0D4007370CC /* Frameworks */,
 				960AC96D2DA0725000519D5F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +109,13 @@
 				960AC98C2DA0725200519D5F /* DesignSystemDemoUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		965975A92E2AC0D4007370CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +138,7 @@
 			);
 			name = DesignSystemDemo;
 			packageProductDependencies = (
+				965975AA2E2AC0D4007370CC /* DesignSystem */,
 			);
 			productName = DesignSystemDemo;
 			productReference = 960AC96C2DA0725000519D5F /* DesignSystemDemo.app */;
@@ -577,6 +591,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		965975AA2E2AC0D4007370CC /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 960AC9642DA0725000519D5F /* Project object */;
 }
