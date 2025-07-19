@@ -5,25 +5,25 @@ extension DesignSystem {
     public enum Font {
         
         // NOTE: Example mappings from existing
-        public static let largeTitle: UIFont = .preferredFont(for: .largeTitle)
-        public static let largeTitleBold: UIFont = .preferredFont(for: .largeTitle, weight: .bold)
-        public static let title1: UIFont = .preferredFont(for: .title1)
-        public static let title2: UIFont = .preferredFont(for: .title2)
-        public static let title3: UIFont = .preferredFont(for: .title3)
-        public static let title3Bold: UIFont = .preferredFont(for: .title3, weight: .bold)
-        public static let headline: UIFont = .preferredFont(for: .headline)
-        public static let subheadline: UIFont = .preferredFont(for: .subheadline)
-        public static let body: UIFont = .preferredFont(for: .body)
-        public static let bodySemiBold: UIFont = .preferredFont(for: .body, weight: .semibold)
-        public static let bodyBold: UIFont = .preferredFont(for: .body, weight: .bold)
-        public static let callout: UIFont = .preferredFont(for: .callout)
-        public static let footnote: UIFont = .preferredFont(for: .footnote)
-        public static let caption1: UIFont = .preferredFont(for: .caption1)
-        public static let caption2: UIFont = .preferredFont(for: .caption2)
-        
-        // NOTE: Example new font Tokens...
-        public static let expiredTag: UIFont = .preferredFont(for: .caption1, weight: .bold, size: 12)
-        public static let primaryLabelLarge: UIFont = .preferredMonospacedFont(for: .title2, weight: .bold, size: 20)
+        public enum Base {
+            public static let largeTitle: UIFont = .preferredFont(for: .largeTitle)
+            public static let largeTitleBold: UIFont = .preferredFont(for: .largeTitle, weight: .bold)
+            public static let title1: UIFont = .preferredFont(for: .title1)
+            public static let title2: UIFont = .preferredFont(for: .title2)
+            public static let title2Monospaced: UIFont = .preferredMonospacedFont(for: .title2, weight: .bold, size: 20)
+            
+            public static let title3: UIFont = .preferredFont(for: .title3)
+            public static let title3Bold: UIFont = .preferredFont(for: .title3, weight: .bold)
+            public static let headline: UIFont = .preferredFont(for: .headline)
+            public static let subheadline: UIFont = .preferredFont(for: .subheadline)
+            public static let body: UIFont = .preferredFont(for: .body)
+            public static let bodySemiBold: UIFont = .preferredFont(for: .body, weight: .semibold)
+            public static let bodyBold: UIFont = .preferredFont(for: .body, weight: .bold)
+            public static let callout: UIFont = .preferredFont(for: .callout)
+            public static let footnote: UIFont = .preferredFont(for: .footnote)
+            public static let caption1: UIFont = .preferredFont(for: .caption1)
+            public static let caption2: UIFont = .preferredFont(for: .caption2)
+        }
     }
 }
 
