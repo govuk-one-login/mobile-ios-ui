@@ -1,6 +1,6 @@
 import UIKit
 
-public enum Haptic {
+public enum Haptic: CaseIterable {
     case error
     case success
     case warning

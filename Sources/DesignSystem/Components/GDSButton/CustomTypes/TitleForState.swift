@@ -1,35 +1,13 @@
 import UIKit
 
 public struct TitleForState {
-    public let normal: String
-    
-    public var highlighted: String {
-        internalHighlighted ?? normal
-    }
-    
-    public var selected: String {
-        internalSelected ?? normal
-    }
-    
-    public var focused: String {
-        internalFocused ?? normal
-    }
-    
-    public var selectedHighlighted: String {
-        internalSelectedHighlighted ?? normal
-    }
-    
-    public var focusedHighlighted: String {
-        internalHighlighted ?? normal
-    }
-    
-    public var disabled: String?
-    
-    private let internalHighlighted: String?
-    private let internalSelected: String?
-    private let internalFocused: String?
-    private let internalSelectedHighlighted: String?
-    private let internalFocusedHighlighted: String?
+    private let normal: String
+    private let highlighted: String?
+    private let selected: String?
+    private let focused: String?
+    private let selectedHighlighted: String?
+    private let focusedHighlighted: String?
+    private let disabled: String?
     
     public init(
         normal: String,
@@ -42,10 +20,29 @@ public struct TitleForState {
     ) {
         self.normal = normal
         self.disabled = disabled
-        self.internalHighlighted = highlighted
-        self.internalSelected = selected
-        self.internalFocused = focused
-        self.internalSelectedHighlighted = selectedHighlighted
-        self.internalFocusedHighlighted = focusedHighlighted
+        self.highlighted = highlighted
+        self.selected = selected
+        self.focused = focused
+        self.selectedHighlighted = selectedHighlighted
+        self.focusedHighlighted = focusedHighlighted
+    }
+    
+    public func title(for state: UIControl.State) -> String {
+        switch state {
+        case [.selected, .highlighted]:
+            return selectedHighlighted ?? normal
+        case [.focused, .highlighted]:
+            return focusedHighlighted ?? normal
+        case .selected:
+            return selected ?? normal
+        case .highlighted:
+            return highlighted ?? normal
+        case .focused:
+            return focused ?? normal
+        case .disabled, [.focused, .disabled]:
+            return disabled ?? normal
+        default:
+            return normal
+        }
     }
 }

@@ -1,152 +1,110 @@
 import UIKit
 
-// swiftlint:disable function_body_length
 extension UIButton {
     static func buttonUpdater(
         viewModel: GDSButtonViewModel
     ) -> ConfigurationUpdateHandler {
         return { button in
-
-            button.configuration?.titleAlignment = viewModel.style.alignment
-            button.contentHorizontalAlignment = viewModel.style.contentAlignment
             
-            if let insets = viewModel.style.contentInsets {
-                button.configuration?.contentInsets = insets
-            }
+            let title = button.general(viewModel: viewModel)
             
-            if (button.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall,
-               UIAccessibility.buttonShapesEnabled {
-                button.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-            }
-            
-            var attrString = AttributedString(viewModel.title.normal)
-            attrString.font = viewModel.style.font
-            let title = attrString.addIcon(
-                iconStyle: viewModel.icon
-            ) ?? attrString
-            
-            button.titleLabel?.font = viewModel.style.font
-            
-            button.configuration?.background.cornerRadius = viewModel.style.cornerRadius
-            button.configuration?.cornerStyle = .fixed
-            
-            if let borderStyle = viewModel.style.border {
-                button.clipsToBounds = true
-                button.layer.borderColor = borderStyle.color.cgColor
-                button.layer.borderWidth = borderStyle.width
-                button.layer.cornerRadius = viewModel.style.cornerRadius
-                button.layer.cornerCurve = .continuous
-            }
-            
-            switch viewModel.style.alignment {
-            case .leading:
-                button.titleLabel?.textAlignment = .left
-            case .trailing:
-                button.titleLabel?.textAlignment = .right
-            default:
-                button.titleLabel?.textAlignment = .center
-            }
-
-            switch button.state {
-            case [.selected, .highlighted]:
-                var string = title
-                string.font = viewModel.style.font
-                button.configuration?.attributedTitle = string
-                
-                if let color = viewModel.style.backgroundColor.selectedHighlighted {
-                    button.configuration?.baseBackgroundColor = color
-                }
-                
-                if let color = viewModel.style.foregroundColor.selectedHighlighted {
-                    button.configuration?.baseForegroundColor = color
-                }
-
-            case [.focused, .highlighted]:
-                var string = title
-                string.font = viewModel.style.font
-                button.configuration?.attributedTitle = string
-                
-                if (button.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall {
-                    button.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-                }
-                
-                if let color = viewModel.style.backgroundColor.focusedHighlighted {
-                    button.configuration?.baseBackgroundColor = color
-                }
-                
-                if let color = viewModel.style.foregroundColor.focusedHighlighted {
-                    button.configuration?.baseForegroundColor = color
-                }
-                
-            case .selected:
-                var string = title
-                string.font = viewModel.style.font
-                button.configuration?.attributedTitle = string
-                
-                if let color = viewModel.style.backgroundColor.selected {
-                    button.configuration?.baseBackgroundColor = color
-                }
-                
-                if let color = viewModel.style.foregroundColor.selected {
-                    button.configuration?.baseForegroundColor = color
-                }
-                
-            case .highlighted:
-                var string = title
-                string.font = viewModel.style.font
-                button.configuration?.attributedTitle = string
-
-                if let color = viewModel.style.backgroundColor.highlighted {
-                    button.configuration?.baseBackgroundColor = color
-                }
-                
-                if let color = viewModel.style.foregroundColor.highlighted {
-                    button.configuration?.baseForegroundColor = color
-                }
-                
-            case .focused:
-                var string = title
-                string.font = viewModel.style.font
-                button.configuration?.attributedTitle = string
-                
-                if (button.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall {
-                    button.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-                }
-                
-                if let color = viewModel.style.backgroundColor.focused {
-                    button.configuration?.baseBackgroundColor = color
-                }
-                
-                if let color = viewModel.style.foregroundColor.focused {
-                    button.configuration?.baseForegroundColor = color
-                }
-                
-            case .disabled, [.focused, .disabled]:
+            if button.state.contains(.disabled) {
+                button.configuration?.titleAlignment = .center
+                button.contentHorizontalAlignment = .center
                 button.configuration?.attributedTitle = nil
                 button.configuration?.title = nil
-
-                if let color = viewModel.style.backgroundColor.disabled {
-                    button.configuration?.baseBackgroundColor = color
-                }
+                button.configuration?.imagePlacement = .top
+            } else {
+                button.configuration?.titleAlignment = viewModel.style.alignment
+                button.contentHorizontalAlignment = viewModel.style.contentAlignment
                 
-                if let color = viewModel.style.foregroundColor.disabled {
-                    button.configuration?.baseForegroundColor = color
-                }
-                
-            default:
-                var string = title
+                var string = title + " " + AttributedString(button.state.description)
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
-                
-                if viewModel.style.backgroundColor.normal == UIColor.systemBackground
-                && UIAccessibility.buttonShapesEnabled {
+            }
+            
+            if button.state.contains(.focused) &&
+                (button.configuration?.contentInsets.leading ?? 0) < 4  {
+                button.configuration?.contentInsets.leading = 4
+            }
+            
+            switch button.state {
+            case .normal:
+                if viewModel.style.backgroundColor.color(for: button.state) == UIColor.systemBackground
+                    && UIAccessibility.buttonShapesEnabled {
                     button.configuration?.baseBackgroundColor = .systemGray6
                 } else {
-                    button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.normal
+                    button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: button.state)
                 }
-                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.normal
+                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: button.state)
+                
+            default:
+                button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: button.state)
+                
+                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: button.state)
+                
             }
         }
     }
+    
+    func general(viewModel: GDSButtonViewModel) -> AttributedString {
+        if let insets = viewModel.style.contentInsets {
+            self.configuration?.contentInsets = insets
+        }
+        
+        if (self.configuration?.contentInsets.leading ?? 0) < 4,
+           UIAccessibility.buttonShapesEnabled {
+            self.configuration?.contentInsets.leading = 4
+        }
+        
+        var attrString = AttributedString(viewModel.title.title(for: self.state))
+        attrString.font = viewModel.style.font
+        let title = attrString.addIcon(
+            iconStyle: viewModel.icon
+        ) ?? attrString
+        
+        self.titleLabel?.font = viewModel.style.font
+        
+        self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
+        self.configuration?.cornerStyle = .fixed
+        
+        if let borderStyle = viewModel.style.border {
+            self.clipsToBounds = true
+            self.layer.borderColor = borderStyle.color.cgColor
+            self.layer.borderWidth = borderStyle.width
+            self.layer.cornerRadius = viewModel.style.cornerRadius
+            self.layer.cornerCurve = .continuous
+        }
+        
+        self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: self.state)
+        
+        self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: self.state)
+        
+        return title
+    }
 }
-// swiftlint:enable function_body_length
+
+// for debug
+extension UIButton.State: @retroactive CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case [.selected, .highlighted]:
+            return "selectedHighlighted"
+        case [.focused, .highlighted]:
+            return "focusedHighlighted"
+        case .focused:
+            return "focused"
+        case .highlighted:
+            return "highlighted"
+        case .selected:
+            return "selected"
+        case .disabled, [.focused, .disabled]:
+            return "disabled"
+        case .normal:
+            return "normal"
+        default:
+            return "default"
+        }
+    }
+}
+
