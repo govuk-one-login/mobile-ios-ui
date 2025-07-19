@@ -55,10 +55,10 @@ extension GDSButtonStyle {
             font: DesignSystem.Font.bodySemiBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
-                top: 8,
-                leading: 16,
-                bottom: 8,
-                trailing: 16
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
                 normal: .systemBackground,
@@ -68,7 +68,7 @@ extension GDSButtonStyle {
                 normal: DesignSystem.Color.green2,
                 focused: DesignSystem.Color.yellow
             ),
-            cornerRadius: 16,
+            cornerRadius: DesignSystem.Spacing.default,
             border: nil
         )
     }
@@ -81,10 +81,10 @@ extension GDSButtonStyle {
             font: DesignSystem.Font.largeTitleBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
-                top: 8,
-                leading: 16,
-                bottom: 8,
-                trailing: 16
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
                 normal: .systemBackground,
@@ -94,7 +94,7 @@ extension GDSButtonStyle {
                 normal: .systemRed,
                 focused: DesignSystem.Color.yellow
             ),
-            cornerRadius: 16,
+            cornerRadius: DesignSystem.Spacing.default,
             border: nil
         )
     }
@@ -115,7 +115,7 @@ extension GDSButtonStyle {
                 highlighted: .systemGray6,
                 focused: DesignSystem.Color.yellow
             ),
-            cornerRadius: 4,
+            cornerRadius: DesignSystem.Spacing.xSmall,
             border: nil
         )
     }
@@ -128,12 +128,12 @@ extension GDSButtonStyle {
             font: DesignSystem.Font.footnote,
             alignment: .leading,
             contentInsets: NSDirectionalEdgeInsets(
-                top: 8,
+                top: DesignSystem.Spacing.small,
                 leading: 0,
-                bottom: 8,
+                bottom: DesignSystem.Spacing.small,
                 trailing: 0
             ),
-            minimumHeight: 24,
+            minimumHeight: DesignSystem.Spacing.large,
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.green2,
                 focused: DesignSystem.Color.Text.primary

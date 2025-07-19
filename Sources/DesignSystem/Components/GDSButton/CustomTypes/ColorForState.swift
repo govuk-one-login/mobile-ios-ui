@@ -9,6 +9,24 @@ public struct ColorForState {
     private let selectedHighlighted: UIColor?
     private let focusedHighlighted: UIColor?
     
+    public init(
+        normal: UIColor,
+        highlighted: UIColor? = nil,
+        selected: UIColor? = nil,
+        focused: UIColor?,
+        disabled: UIColor? = nil,
+        selectedHighlighted: UIColor? = nil,
+        focusedHighlighted: UIColor? = nil
+    ) {
+        self.normal = normal
+        self.highlighted = highlighted
+        self.selected = selected
+        self.focused = focused
+        self.disabled = disabled
+        self.selectedHighlighted = selectedHighlighted
+        self.focusedHighlighted = focusedHighlighted
+    }
+    
     public func color(for state: UIControl.State) -> UIColor {
         switch state {
         case [.selected, .highlighted]:
@@ -26,23 +44,5 @@ public struct ColorForState {
         default:
             return normal
         }
-    }
-    
-    public init(
-        normal: UIColor,
-        highlighted: UIColor? = nil,
-        selected: UIColor? = nil,
-        focused: UIColor?,
-        disabled: UIColor? = nil,
-        selectedHighlighted: UIColor? = nil,
-        focusedHighlighted: UIColor? = nil
-    ) {
-        self.normal = normal
-        self.highlighted = highlighted
-        self.selected = selected
-        self.focused = focused
-        self.disabled = disabled
-        self.selectedHighlighted = selectedHighlighted
-        self.focusedHighlighted = focusedHighlighted
     }
 }
