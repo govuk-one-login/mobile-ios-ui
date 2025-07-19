@@ -37,10 +37,9 @@ extension DesignSystem {
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
+            public static let secondaryForegroundFocus = Color.Base.black1
             public static let secondaryBackground = Color.Base.background
-        
             
-            public static let focusStateTextAndIcon = Color.Base.black1
         }
        
         
