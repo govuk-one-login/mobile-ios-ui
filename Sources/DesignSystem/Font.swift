@@ -8,21 +8,39 @@ extension DesignSystem {
         public enum Base {
             public static let largeTitle: UIFont = .preferredFont(for: .largeTitle)
             public static let largeTitleBold: UIFont = .preferredFont(for: .largeTitle, weight: .bold)
+            
             public static let title1: UIFont = .preferredFont(for: .title1)
+            public static let title1Bold: UIFont = .preferredFont(for: .title1, weight: .bold)
+            
             public static let title2: UIFont = .preferredFont(for: .title2)
+            public static let title2Bold: UIFont = .preferredFont(for: .title2, weight: .bold)
+            
             public static let title3: UIFont = .preferredFont(for: .title3)
             public static let title3Bold: UIFont = .preferredFont(for: .title3, weight: .bold)
             public static let title3Monospaced: UIFont = .preferredMonospacedFont(for: .title3, weight: .bold)
             
             public static let headline: UIFont = .preferredFont(for: .headline)
+            public static let headlineBold: UIFont = .preferredFont(for: .headline, weight: .bold)
+            
             public static let subheadline: UIFont = .preferredFont(for: .subheadline)
+            public static let subheadlineBold: UIFont = .preferredFont(for: .subheadline, weight: .bold)
+            
             public static let body: UIFont = .preferredFont(for: .body)
             public static let bodySemiBold: UIFont = .preferredFont(for: .body, weight: .semibold)
             public static let bodyBold: UIFont = .preferredFont(for: .body, weight: .bold)
+            
             public static let callout: UIFont = .preferredFont(for: .callout)
+            public static let calloutBold: UIFont = .preferredFont(for: .callout, weight: .bold)
+            
             public static let footnote: UIFont = .preferredFont(for: .footnote)
+            public static let footnoteBold: UIFont = .preferredFont(for: .footnote, weight: .bold)
+            
             public static let caption1: UIFont = .preferredFont(for: .caption1)
+            public static let caption1Bold: UIFont = .preferredFont(for: .caption1, weight: .bold)
+            
             public static let caption2: UIFont = .preferredFont(for: .caption2)
+            public static let caption2Bold: UIFont = .preferredFont(for: .caption2, weight: .bold)
+            
         }
     }
 }
