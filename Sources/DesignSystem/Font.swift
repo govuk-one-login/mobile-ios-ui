@@ -28,7 +28,7 @@ extension DesignSystem {
 }
 
 extension UIFont {
-    publuc static func preferredFont(
+    public static func preferredFont(
         for style: UIFont.TextStyle,
         weight: Weight = .regular,
         size: CGFloat? = nil
