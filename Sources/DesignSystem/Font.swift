@@ -17,7 +17,7 @@ extension DesignSystem {
             
             public static let title3: UIFont = .preferredFont(for: .title3)
             public static let title3Bold: UIFont = .preferredFont(for: .title3, weight: .bold)
-            public static let title3Monospaced: UIFont = .preferredMonospacedFont(for: .title3, weight: .bold)
+            public static let title3BoldMonospaced: UIFont = .preferredMonospacedFont(for: .title3, weight: .bold)
             
             public static let headline: UIFont = .preferredFont(for: .headline)
             public static let headlineBold: UIFont = .preferredFont(for: .headline, weight: .bold)
