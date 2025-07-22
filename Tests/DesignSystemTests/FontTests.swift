@@ -113,9 +113,9 @@ struct FontTests {
 
     // MARK: - Font Helpers
     @Test func test_Font_preferredMonospacedFont() async throws {
-        let expectedFont = UIFont.preferredMonospacedFont(for: .title2, weight: .bold, size: 20)
+        let expectedFont = UIFont.preferredMonospacedFont(for: .title3, weight: .bold)
         
-        let sut = DesignSystem.Font.Base.title2Monospaced
+        let sut = DesignSystem.Font.Base.title3BoldMonospaced
         #expect(sut == expectedFont)
     }
 }
