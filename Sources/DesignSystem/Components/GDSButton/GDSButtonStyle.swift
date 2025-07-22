@@ -52,7 +52,7 @@ extension GDSButtonStyle {
     public static var primary: Self {
         GDSButtonStyle(
             config: .primary,
-            font: DesignSystem.Font.bodySemiBold,
+            font: DesignSystem.Font.Base.bodySemiBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
                 top: DesignSystem.Spacing.small,
@@ -65,8 +65,8 @@ extension GDSButtonStyle {
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
-                normal: DesignSystem.Color.green2,
-                focused: DesignSystem.Color.yellow
+                normal: DesignSystem.Color.Base.green2,
+                focused: DesignSystem.Color.Base.yellow
             ),
             cornerRadius: DesignSystem.Spacing.default,
             border: nil
@@ -78,7 +78,7 @@ extension GDSButtonStyle {
     public static var primaryLarge: Self {
         GDSButtonStyle(
             config: .primary,
-            font: DesignSystem.Font.largeTitleBold,
+            font: DesignSystem.Font.Base.largeTitleBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
                 top: DesignSystem.Spacing.small,
@@ -92,7 +92,7 @@ extension GDSButtonStyle {
             ),
             backgroundColor: ColorForState(
                 normal: .systemRed,
-                focused: DesignSystem.Color.yellow
+                focused: DesignSystem.Color.Base.yellow
             ),
             cornerRadius: DesignSystem.Spacing.default,
             border: nil
@@ -104,16 +104,16 @@ extension GDSButtonStyle {
     public static var secondary: Self {
         GDSButtonStyle(
             config: .secondary,
-            font: DesignSystem.Font.body,
+            font: DesignSystem.Font.Base.body,
             alignment: .center,
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.green2,
+                normal: DesignSystem.Color.Base.green2,
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
                 normal: .systemBackground,
                 highlighted: .systemGray6,
-                focused: DesignSystem.Color.yellow
+                focused: DesignSystem.Color.Base.yellow
             ),
             cornerRadius: DesignSystem.Spacing.xSmall,
             border: nil
@@ -125,7 +125,7 @@ extension GDSButtonStyle {
     public static var secondarySmallLeading: Self {
         GDSButtonStyle(
             config: .secondary,
-            font: DesignSystem.Font.footnote,
+            font: DesignSystem.Font.Base.footnote,
             alignment: .leading,
             contentInsets: NSDirectionalEdgeInsets(
                 top: DesignSystem.Spacing.small,
@@ -135,17 +135,16 @@ extension GDSButtonStyle {
             ),
             minimumHeight: DesignSystem.Spacing.large,
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.green2,
+                normal: DesignSystem.Color.Base.green2,
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
                 normal: .systemBackground,
                 highlighted: .systemGray6,
-                focused: DesignSystem.Color.yellow
+                focused: DesignSystem.Color.Base.yellow
             ),
             cornerRadius: 4,
             border: nil
         )
     }
 }
-
