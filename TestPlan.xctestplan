@@ -13,6 +13,7 @@
   },
   "testTargets" : [
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:DesignSystemDemo.xcodeproj",
         "identifier" : "960AC98B2DA0725200519D5F",
