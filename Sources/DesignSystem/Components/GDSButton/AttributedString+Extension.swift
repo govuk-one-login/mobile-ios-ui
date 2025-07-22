@@ -1,16 +1,16 @@
 import UIKit
 
 extension AttributedString {
-    public static var nonBreakingSpace: AttributedString {
-        .init("\u{00A0}")
-    }
+    static let objectReplacementCharacter = "\u{FFFC}"
+
+    static let nonBreakingSpace: AttributedString = "\u{00A0}"
     
-    public func addIcon(iconStyle: IconStyle?) -> AttributedString? {
+    func addIcon(iconStyle: IconStyle?) -> AttributedString? {
         guard let iconStyle else { return nil }
         
         let textAttachment = NSTextAttachment(image: UIImage(systemName: iconStyle.icon) ?? UIImage())
         let iconAttString = AttributedString(
-            "\(UnicodeScalar(NSTextAttachment.character)!)",
+            Self.objectReplacementCharacter,
             attributes: AttributeContainer.attachment(textAttachment)
         )
         
