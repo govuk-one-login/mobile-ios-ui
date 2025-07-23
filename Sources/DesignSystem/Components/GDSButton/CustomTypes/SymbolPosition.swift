@@ -1,4 +1,4 @@
 public enum SymbolPosition: Sendable {
-    case beforeTitle
-    case afterTitle
+    case leading
+    case trailing
 }

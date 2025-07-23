@@ -1,13 +1,13 @@
 public struct GDSButtonViewModel {
     public let title: TitleForState
-    public let icon: IconStyle?
+    public let icon: IconForState?
     public let style: GDSButtonStyle
     public let buttonAction: ButtonAction
     public let haptic: Haptic?
      
     public init(
         title: TitleForState,
-        icon: IconStyle? = nil,
+        icon: IconForState? = nil,
         style: GDSButtonStyle,
         buttonAction: ButtonAction,
         haptic: Haptic? = nil
