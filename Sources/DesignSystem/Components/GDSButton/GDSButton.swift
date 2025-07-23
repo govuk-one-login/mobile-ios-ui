@@ -29,6 +29,7 @@ public final class GDSButton: UIButton {
                 UIAction(
                     handler: { _ in
                         action()
+                        self.isSelected.toggle()
                         if let haptic = viewModel.haptic {
                             haptic.perform()
                         }
@@ -46,6 +47,7 @@ public final class GDSButton: UIButton {
                             
                             self.isLoading = true
                             await action()
+                            self.isSelected.toggle()
                             
                             if let haptic = viewModel.haptic {
                                 haptic.perform()

@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     lazy var button: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My really very long button title"),
-            icon: .arrowUpRight,
+            icon: IconForState.arrowUpRight,
             style: .primary,
             buttonAction: .asyncAction(
                 { [unowned self] in
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     lazy var button2: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My really very long button title"),
-            icon: .arrowUpRight,
+            icon: IconForState.arrowUpRight,
             style: .primaryLarge,
             buttonAction: .asyncAction(
                 { [unowned self] in
@@ -78,7 +78,10 @@ class ViewController: UIViewController {
     lazy var button3: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My button title"),
-            icon: .arrowUpRight,
+            icon: IconForState(
+                normal: IconStyle(icon: "chevron.up.circle", position: .leading),
+                selected: IconStyle(icon: "chevron.down.circle", position: .leading)
+            ),
             style: .secondarySmallLeading,
             buttonAction: .action(
                 { [unowned self] in
@@ -97,7 +100,7 @@ class ViewController: UIViewController {
     lazy var button4: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My button title"),
-            icon: .arrowUpRight,
+            icon: IconForState.arrowUpRight,
             style: .secondarySmallLeading,
             buttonAction: .asyncAction(
                 { [unowned self] in
@@ -122,7 +125,7 @@ class ViewController: UIViewController {
     lazy var button5: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My button title"),
-            icon: .qrCode,
+            icon: IconForState.qrCode,
             style: .secondary,
             buttonAction: .action(
                 { [unowned self] in

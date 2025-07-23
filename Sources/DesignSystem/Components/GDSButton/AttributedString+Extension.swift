@@ -15,9 +15,9 @@ extension AttributedString {
         )
         
         switch iconStyle.position {
-        case .beforeTitle:
+        case .leading:
             return iconAttString + .nonBreakingSpace + self
-        case .afterTitle:
+        case .trailing:
             return self + .nonBreakingSpace + iconAttString
         }
     }

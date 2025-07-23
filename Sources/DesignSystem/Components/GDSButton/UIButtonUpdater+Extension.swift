@@ -14,7 +14,7 @@ extension UIButton {
         var attrString = AttributedString(viewModel.title.title(for: self.state))
         attrString.font = viewModel.style.font
         let title = attrString.addIcon(
-            iconStyle: viewModel.icon
+            iconStyle: viewModel.icon?.icon(for: self.state)
         ) ?? attrString
         
         self.titleLabel?.font = viewModel.style.font
