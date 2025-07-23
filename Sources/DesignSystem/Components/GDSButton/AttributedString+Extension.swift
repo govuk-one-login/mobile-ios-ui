@@ -14,6 +14,10 @@ extension AttributedString {
             attributes: AttributeContainer.attachment(textAttachment)
         )
         
+        if self.characters.count == 0 {
+            return iconAttString
+        }
+        
         switch iconStyle.position {
         case .leading:
             return iconAttString + .nonBreakingSpace + self

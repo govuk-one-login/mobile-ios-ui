@@ -1,6 +1,24 @@
 import UIKit
 
 extension UIButton {
+    private func titleWithIcon(viewModel: GDSButtonViewModel) -> AttributedString {
+        var attrString = AttributedString(viewModel.title.title(for: self.state))
+        attrString.font = viewModel.style.font
+        return attrString.addIcon(
+            iconStyle: viewModel.icon?.icon(for: self.state)
+        ) ?? attrString
+    }
+    
+    private func addBorder(viewModel: GDSButtonViewModel) {
+        if let borderStyle = viewModel.style.border {
+            self.clipsToBounds = true
+            self.layer.borderColor = borderStyle.color.cgColor
+            self.layer.borderWidth = borderStyle.width
+            self.layer.cornerRadius = viewModel.style.cornerRadius
+            self.layer.cornerCurve = .continuous
+        }
+    }
+    
     func general(viewModel: GDSButtonViewModel) -> AttributedString {
         if let insets = viewModel.style.contentInsets {
             self.configuration?.contentInsets = insets
@@ -11,30 +29,20 @@ extension UIButton {
             self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
         }
         
-        var attrString = AttributedString(viewModel.title.title(for: self.state))
-        attrString.font = viewModel.style.font
-        let title = attrString.addIcon(
-            iconStyle: viewModel.icon?.icon(for: self.state)
-        ) ?? attrString
+        let attrString = titleWithIcon(viewModel: viewModel)
         
         self.titleLabel?.font = viewModel.style.font
         
+        self.addBorder(viewModel: viewModel)
+        
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
         self.configuration?.cornerStyle = .fixed
-        
-        if let borderStyle = viewModel.style.border {
-            self.clipsToBounds = true
-            self.layer.borderColor = borderStyle.color.cgColor
-            self.layer.borderWidth = borderStyle.width
-            self.layer.cornerRadius = viewModel.style.cornerRadius
-            self.layer.cornerCurve = .continuous
-        }
-        
+    
         self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: self.state)
         
         self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: self.state)
         
-        return title
+        return attrString
     }
     
     static func buttonUpdater(

@@ -75,6 +75,32 @@ class ViewController: UIViewController {
         return result
     }()
     
+    lazy var button2a: UIButton = {
+        let viewmodel = GDSButtonViewModel(
+            title: TitleForState(normal: ""),
+            icon: IconForState.arrowUpRight,
+            style: .primaryLarge,
+            buttonAction: .asyncAction(
+                { [unowned self] in
+                    do {
+                        print("button tapped")
+                        try await Task.sleep(nanoseconds: 1_000_000_000)
+                        print("button await completed")
+                    } catch {
+                        
+                    }
+                }
+            ),
+            haptic: .impactHeavy
+        )
+        
+        let result = GDSButton(
+            viewModel: viewmodel
+        )
+        
+        return result
+    }()
+    
     lazy var button3: UIButton = {
         let viewmodel = GDSButtonViewModel(
             title: TitleForState(normal: "My button title"),
@@ -178,6 +204,7 @@ class ViewController: UIViewController {
         stackview.addArrangedSubview(spacer1)
         stackview.addArrangedSubview(button)
         stackview.addArrangedSubview(button2)
+        stackview.addArrangedSubview(button2a)
         stackview.addArrangedSubview(button3)
         stackview.addArrangedSubview(button4)
         stackview.addArrangedSubview(button5)
