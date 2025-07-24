@@ -1,7 +1,135 @@
 import DesignSystem
 import UIKit
 
+public struct TestViewControllerViewModel: ScreenViewModel {
+    public let content: [ContentItem]
+    public var moveableFooter: [ContentItem]
+    public var footer: [ContentItem]
+    
+}
+
 class ViewController: UIViewController {
+    var viewModel: TestViewControllerViewModel {
+        let hapticButtons = Haptic.allCases.map { haptic in
+            GDSButtonViewModel(
+                title: TitleForState(normal: String(describing: haptic)),
+                icon: nil,
+                style: .primary,
+                buttonAction: .action(
+                    {
+                        print(String(describing: haptic))
+                    }
+                ),
+                haptic: haptic
+            )
+        }
+        
+        return TestViewControllerViewModel(
+            content: [
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My really very long button title"),
+                    icon: IconForState.arrowUpRight,
+                    style: .primary,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .success
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My really very long button title"),
+                    icon: IconForState.arrowUpRight,
+                    style: .primaryLarge,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .impactHeavy
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: ""),
+                    icon: IconForState.arrowUpRight,
+                    style: .primaryLarge,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .impactHeavy
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState(
+                        normal: IconStyle(icon: "chevron.up.circle", position: .leading),
+                        selected: IconStyle(icon: "chevron.down.circle", position: .leading)
+                    ),
+                    style: .secondarySmallLeading,
+                    buttonAction: .action(
+                        {
+                            print("button tapped")
+                        }
+                    )
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState.arrowUpRight,
+                    style: .secondarySmallLeading,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    )
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState.qrCode,
+                    style: .secondary,
+                    buttonAction: .action(
+                        {
+                            print("button tapped")
+                        }
+                    )
+                )
+                
+            ]
+            + hapticButtons,
+            
+            moveableFooter: [],
+            footer: []
+        )
+    }
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         return scrollView
@@ -23,168 +151,6 @@ class ViewController: UIViewController {
         return stackview
     }()
     
-    lazy var button: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: "My really very long button title"),
-            icon: IconForState.arrowUpRight,
-            style: .primary,
-            buttonAction: .asyncAction(
-                { [unowned self] in
-                    do {
-                        print("button tapped")
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                        print("button await completed")
-                    } catch {
-                        
-                    }
-                }
-            ),
-            haptic: .success
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    lazy var button2: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: "My really very long button title"),
-            icon: IconForState.arrowUpRight,
-            style: .primaryLarge,
-            buttonAction: .asyncAction(
-                { [unowned self] in
-                    do {
-                        print("button tapped")
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                        print("button await completed")
-                    } catch {
-                        
-                    }
-                }
-            ),
-            haptic: .impactHeavy
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    lazy var button2a: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: ""),
-            icon: IconForState.arrowUpRight,
-            style: .primaryLarge,
-            buttonAction: .asyncAction(
-                { [unowned self] in
-                    do {
-                        print("button tapped")
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                        print("button await completed")
-                    } catch {
-                        
-                    }
-                }
-            ),
-            haptic: .impactHeavy
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    lazy var button3: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: "My button title"),
-            icon: IconForState(
-                normal: IconStyle(icon: "chevron.up.circle", position: .leading),
-                selected: IconStyle(icon: "chevron.down.circle", position: .leading)
-            ),
-            style: .secondarySmallLeading,
-            buttonAction: .action(
-                { [unowned self] in
-                    print("button tapped")
-                }
-            )
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    lazy var button4: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: "My button title"),
-            icon: IconForState.arrowUpRight,
-            style: .secondarySmallLeading,
-            buttonAction: .asyncAction(
-                { [unowned self] in
-                    do {
-                        print("button tapped")
-                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                        print("button await completed")
-                    } catch {
-                        
-                    }
-                }
-            )
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    lazy var button5: UIButton = {
-        let viewmodel = GDSButtonViewModel(
-            title: TitleForState(normal: "My button title"),
-            icon: IconForState.qrCode,
-            style: .secondary,
-            buttonAction: .action(
-                { [unowned self] in
-                    print("button tapped")
-                }
-            )
-        )
-        
-        let result = GDSButton(
-            viewModel: viewmodel
-        )
-        
-        return result
-    }()
-    
-    func addHapticButtons() {
-        Haptic.allCases.forEach { haptic in
-            let viewModel = GDSButtonViewModel(
-                title: TitleForState(normal: String(describing: haptic)),
-                icon: nil,
-                style: .primary,
-                buttonAction: .action(
-                    {
-                        print(String(describing: haptic))
-                    }
-                ),
-                haptic: haptic
-            )
-            let button = GDSButton(viewModel: viewModel)
-            stackview.addArrangedSubview(button)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -202,13 +168,11 @@ class ViewController: UIViewController {
         let spacer2 = UIView()
         
         stackview.addArrangedSubview(spacer1)
-        stackview.addArrangedSubview(button)
-        stackview.addArrangedSubview(button2)
-        stackview.addArrangedSubview(button2a)
-        stackview.addArrangedSubview(button3)
-        stackview.addArrangedSubview(button4)
-        stackview.addArrangedSubview(button5)
-        addHapticButtons()
+        
+        viewModel.content.forEach {
+            stackview.addArrangedSubview($0.uiView)
+        }
+
         stackview.addArrangedSubview(spacer2)
     }
     
