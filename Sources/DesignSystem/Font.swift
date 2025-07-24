@@ -49,8 +49,7 @@ extension UIFont {
     public convenience init(
         style: TextStyle,
         weight: Weight = .regular,
-        design: UIFontDescriptor.SystemDesign = .default,
-        monospaced: Bool = false
+        design: UIFontDescriptor.SystemDesign = .default
     ) {
         guard let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style)
             .addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: weight]])
