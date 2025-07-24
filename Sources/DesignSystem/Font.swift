@@ -6,40 +6,40 @@ extension DesignSystem {
         
         // NOTE: Example mappings from existing
         public enum Base {
-            public static let largeTitle: UIFont = UIFont(style: .largeTitle)
-            public static let largeTitleBold: UIFont = UIFont(style: .largeTitle, weight: .bold)
+            public static let largeTitle: UIFont = UIFont(.largeTitle)
+            public static let largeTitleBold: UIFont = UIFont(.largeTitle, weight: .bold)
             
-            public static let title1: UIFont = UIFont(style: .title1)
-            public static let title1Bold: UIFont = UIFont(style: .title1, weight: .bold)
+            public static let title1: UIFont = UIFont(.title1)
+            public static let title1Bold: UIFont = UIFont(.title1, weight: .bold)
             
-            public static let title2: UIFont = UIFont(style: .title2)
-            public static let title2Bold: UIFont = UIFont(style: .title2, weight: .bold)
+            public static let title2: UIFont = UIFont(.title2)
+            public static let title2Bold: UIFont = UIFont(.title2, weight: .bold)
             
-            public static let title3: UIFont = UIFont(style: .title3)
-            public static let title3Bold: UIFont = UIFont(style: .title3, weight: .bold)
-            public static let title3BoldMonospaced: UIFont = UIFont(style: .title3, weight: .bold, design: .monospaced)
+            public static let title3: UIFont = UIFont(.title3)
+            public static let title3Bold: UIFont = UIFont(.title3, weight: .bold)
+            public static let title3BoldMonospaced: UIFont = UIFont(.title3, weight: .bold, design: .monospaced)
             
-            public static let headline: UIFont = UIFont(style: .headline)
-            public static let headlineBold: UIFont = UIFont(style: .headline, weight: .bold)
+            public static let headline: UIFont = UIFont(.headline)
+            public static let headlineBold: UIFont = UIFont(.headline, weight: .bold)
             
-            public static let subheadline: UIFont = UIFont(style: .subheadline)
-            public static let subheadlineBold: UIFont = UIFont(style: .subheadline, weight: .bold)
+            public static let subheadline: UIFont = UIFont(.subheadline)
+            public static let subheadlineBold: UIFont = UIFont(.subheadline, weight: .bold)
             
-            public static let body: UIFont = UIFont(style: .body)
-            public static let bodySemiBold: UIFont = UIFont(style: .body, weight: .semibold)
-            public static let bodyBold: UIFont = UIFont(style: .body, weight: .bold)
+            public static let body: UIFont = UIFont(.body)
+            public static let bodySemiBold: UIFont = UIFont(.body, weight: .semibold)
+            public static let bodyBold: UIFont = UIFont(.body, weight: .bold)
             
-            public static let callout: UIFont = UIFont(style: .callout)
-            public static let calloutBold: UIFont = UIFont(style: .body, weight: .bold)
+            public static let callout: UIFont = UIFont(.callout)
+            public static let calloutBold: UIFont = UIFont(.body, weight: .bold)
             
-            public static let footnote: UIFont = UIFont(style: .footnote)
-            public static let footnoteBold: UIFont = UIFont(style: .footnote, weight: .bold)
+            public static let footnote: UIFont = UIFont(.footnote)
+            public static let footnoteBold: UIFont = UIFont(.footnote, weight: .bold)
             
-            public static let caption1: UIFont = UIFont(style: .caption1)
-            public static let caption1Bold: UIFont = UIFont(style: .caption1, weight: .bold)
+            public static let caption1: UIFont = UIFont(.caption1)
+            public static let caption1Bold: UIFont = UIFont(.caption1, weight: .bold)
             
-            public static let caption2: UIFont = UIFont(style: .caption2)
-            public static let caption2Bold: UIFont = UIFont(style: .caption2, weight: .bold)
+            public static let caption2: UIFont = UIFont(.caption2)
+            public static let caption2Bold: UIFont = UIFont(.caption2, weight: .bold)
             
         }
     }
@@ -47,7 +47,7 @@ extension DesignSystem {
 
 extension UIFont {
     public convenience init(
-        style: TextStyle,
+        _ style: TextStyle,
         weight: Weight = .regular,
         design: UIFontDescriptor.SystemDesign = .default
     ) {
