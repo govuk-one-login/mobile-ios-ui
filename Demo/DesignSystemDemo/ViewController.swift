@@ -2,7 +2,7 @@ import DesignSystem
 import UIKit
 
 public struct TestViewControllerViewModel: ScreenViewModel {
-    public let content: [ContentItem]
+    public let body: [ContentItem]
     public var moveableFooter: [ContentItem]
     public var footer: [ContentItem]
     
@@ -25,9 +25,9 @@ class ViewController: UIViewController {
         }
         
         return TestViewControllerViewModel(
-            content: [
+            body: [
                 GDSButtonViewModel(
-                    title: TitleForState(normal: "My really very long button title"),
+                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
                     icon: IconForState.arrowUpRight,
                     style: .primary,
                     buttonAction: .asyncAction(
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
                 GDSButtonViewModel(
                     title: TitleForState(normal: "My really very long button title"),
                     icon: IconForState.arrowUpRight,
-                    style: .primaryLarge,
+                    style: .destructive,
                     buttonAction: .asyncAction(
                         {
                             do {
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
                 GDSButtonViewModel(
                     title: TitleForState(normal: ""),
                     icon: IconForState.arrowUpRight,
-                    style: .primaryLarge,
+                    style: .primary,
                     buttonAction: .asyncAction(
                         {
                             do {
@@ -121,7 +121,6 @@ class ViewController: UIViewController {
                         }
                     )
                 )
-                
             ]
             + hapticButtons,
             
@@ -169,7 +168,7 @@ class ViewController: UIViewController {
         
         stackview.addArrangedSubview(spacer1)
         
-        viewModel.content.forEach {
+        viewModel.body.forEach {
             stackview.addArrangedSubview($0.uiView)
         }
 

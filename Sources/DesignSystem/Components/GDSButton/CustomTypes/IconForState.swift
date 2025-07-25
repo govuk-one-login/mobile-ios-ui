@@ -1,22 +1,22 @@
 import UIKit
 
-public struct ColorForState: Equatable {
-    private let normal: UIColor
-    private let highlighted: UIColor?
-    private let selected: UIColor?
-    private let focused: UIColor?
-    private let disabled: UIColor?
-    private let selectedHighlighted: UIColor?
-    private let focusedHighlighted: UIColor?
+public struct IconForState: Sendable, Equatable {
+    private let normal: IconStyle
+    private let highlighted: IconStyle?
+    private let selected: IconStyle?
+    private let focused: IconStyle?
+    private let disabled: IconStyle?
+    private let selectedHighlighted: IconStyle?
+    private let focusedHighlighted: IconStyle?
     
     public init(
-        normal: UIColor,
-        highlighted: UIColor? = nil,
-        selected: UIColor? = nil,
-        focused: UIColor?,
-        disabled: UIColor? = nil,
-        selectedHighlighted: UIColor? = nil,
-        focusedHighlighted: UIColor? = nil
+        normal: IconStyle,
+        highlighted: IconStyle? = nil,
+        selected: IconStyle? = nil,
+        focused: IconStyle? = nil,
+        disabled: IconStyle? = nil,
+        selectedHighlighted: IconStyle? = nil,
+        focusedHighlighted: IconStyle? = nil
     ) {
         self.normal = normal
         self.highlighted = highlighted
@@ -27,7 +27,7 @@ public struct ColorForState: Equatable {
         self.focusedHighlighted = focusedHighlighted
     }
     
-    public func color(for state: UIControl.State) -> UIColor {
+    public func icon(for state: UIControl.State) -> IconStyle {
         switch state {
         case [.selected, .highlighted]:
             return selectedHighlighted ?? normal
@@ -45,4 +45,9 @@ public struct ColorForState: Equatable {
             return normal
         }
     }
+}
+
+extension IconForState {
+    public static let arrowUpRight: Self = IconForState(normal: IconStyle.arrowUpRight)
+    public static let qrCode: Self = IconForState(normal: IconStyle.qrCode)
 }
