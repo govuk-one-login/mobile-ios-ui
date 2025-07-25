@@ -1,0 +1,22 @@
+import UIKit
+
+public struct IconStyle: Sendable, Equatable {
+    public let icon: String
+    public let position: SymbolPosition
+    public let accessibilityHint: String?
+    
+    public init(
+        icon: String,
+        position: SymbolPosition,
+        accessibilityHint: String? = nil
+    ) {
+        self.icon = icon
+        self.position = position
+        self.accessibilityHint = accessibilityHint
+    }
+}
+
+extension IconStyle {
+    public static let arrowUpRight: Self = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in your web browser")
+    public static let qrCode: Self = IconStyle(icon: "qrcode", position: .leading)
+}
