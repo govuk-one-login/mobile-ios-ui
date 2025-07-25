@@ -137,17 +137,23 @@ extension GDSButtonStyle {
 }
 
 extension GDSButtonStyle {
-    public static var secondarySmallLeading: Self {
+    public static var secondaryLeading: Self {
         secondary.adjusting(
-            font: DesignSystem.Font.Base.footnote,
             alignment: .leading,
             contentInsets: NSDirectionalEdgeInsets(
                 top: DesignSystem.Spacing.small,
                 leading: 0,
                 bottom: DesignSystem.Spacing.small,
                 trailing: 0
-                ),
-            cornerRadius: DesignSystem.CornerRadius.xSmall
+            )
+        )
+    }
+}
+
+extension GDSButtonStyle {
+    public static var secondaryLeadingSmall: Self {
+        secondaryLeading.adjusting(
+            font: DesignSystem.Font.Base.footnote
         )
     }
 }

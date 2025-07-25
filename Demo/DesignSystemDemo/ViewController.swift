@@ -86,7 +86,7 @@ class ViewController: UIViewController {
                         normal: IconStyle(icon: "chevron.up.circle", position: .leading),
                         selected: IconStyle(icon: "chevron.down.circle", position: .leading)
                     ),
-                    style: .secondarySmallLeading,
+                    style: .secondaryLeadingSmall,
                     buttonAction: .action(
                         {
                             print("button tapped")
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
                 GDSButtonViewModel(
                     title: TitleForState(normal: "My button title"),
                     icon: IconForState.arrowUpRight,
-                    style: .secondarySmallLeading,
+                    style: .secondaryLeading,
                     buttonAction: .asyncAction(
                         {
                             do {
