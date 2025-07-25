@@ -43,7 +43,7 @@ public struct GDSButtonStyle {
         self.border = border
     }
     
-    func newStyleAdjusting(
+    func adjusting(
         font: UIFont? = nil,
         alignment: UIButton.Configuration.TitleAlignment? = nil,
         contentInsets: NSDirectionalEdgeInsets? = nil,
@@ -138,7 +138,7 @@ extension GDSButtonStyle {
 
 extension GDSButtonStyle {
     public static var secondarySmallLeading: Self {
-        secondary.newStyleAdjusting(
+        secondary.adjusting(
             font: DesignSystem.Font.Base.footnote,
             alignment: .leading,
             contentInsets: NSDirectionalEdgeInsets(
