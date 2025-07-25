@@ -41,7 +41,7 @@ public final class GDSButton: UIButton {
             self.addAction(
                 UIAction(
                     handler: { [unowned self] _ in
-                        Task {
+                        Task { @MainActor in
                             var constraint: NSLayoutConstraint? = self.heightAnchor.constraint(equalToConstant: self.bounds.height)
                             constraint?.isActive = true
                             
