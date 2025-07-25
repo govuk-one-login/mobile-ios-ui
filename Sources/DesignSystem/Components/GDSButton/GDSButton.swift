@@ -18,7 +18,7 @@ public final class GDSButton: UIButton {
     ) {
         self.viewModel = viewModel
         super.init(frame: .zero)
-        self.configuration = viewModel.style.config
+        self.configuration = .gds
         self.configurationUpdateHandler = UIButton.buttonUpdater(viewModel: viewModel)
         
         self.configuration?.title = viewModel.title.title(for: .normal)

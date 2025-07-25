@@ -1,8 +1,6 @@
 import UIKit
 
 public struct GDSButtonStyle {
-    public let config: UIButton.Configuration
-
     public let font: UIFont
     public let alignment: UIButton.Configuration.TitleAlignment
     public var contentInsets: NSDirectionalEdgeInsets?
@@ -26,7 +24,6 @@ public struct GDSButtonStyle {
     }
     
     public init(
-        config: UIButton.Configuration,
         font: UIFont,
         alignment: UIButton.Configuration.TitleAlignment,
         contentInsets: NSDirectionalEdgeInsets? = nil,
@@ -36,7 +33,6 @@ public struct GDSButtonStyle {
         cornerRadius: CGFloat,
         border: BorderStyle? = nil
     ) {
-        self.config = config
         self.font = font
         self.alignment = alignment
         self.contentInsets = contentInsets
@@ -46,12 +42,33 @@ public struct GDSButtonStyle {
         self.cornerRadius = cornerRadius
         self.border = border
     }
+    
+    func newStyleAdjusting(
+        font: UIFont? = nil,
+        alignment: UIButton.Configuration.TitleAlignment? = nil,
+        contentInsets: NSDirectionalEdgeInsets? = nil,
+        minimumHeight: CGFloat? = nil,
+        foregroundColor: ColorForState? = nil,
+        backgroundColor: ColorForState? = nil,
+        cornerRadius: CGFloat? = nil,
+        border: BorderStyle? = nil
+    ) -> GDSButtonStyle {
+        GDSButtonStyle(
+            font: font ?? self.font,
+            alignment: alignment ?? self.alignment,
+            contentInsets: contentInsets ?? self.contentInsets,
+            minimumHeight: minimumHeight ?? self.minimumHeight,
+            foregroundColor: foregroundColor ?? self.foregroundColor,
+            backgroundColor: backgroundColor ?? self.backgroundColor,
+            cornerRadius: cornerRadius ?? self.cornerRadius,
+            border: border ?? self.border
+        )
+    }
 }
 
 extension GDSButtonStyle {
     public static var primary: Self {
         GDSButtonStyle(
-            config: .primary,
             font: DesignSystem.Font.Base.bodySemiBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
@@ -77,7 +94,6 @@ extension GDSButtonStyle {
 extension GDSButtonStyle {
     public static var primaryLarge: Self {
         GDSButtonStyle(
-            config: .primary,
             font: DesignSystem.Font.Base.largeTitleBold,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
@@ -103,7 +119,6 @@ extension GDSButtonStyle {
 extension GDSButtonStyle {
     public static var secondary: Self {
         GDSButtonStyle(
-            config: .secondary,
             font: DesignSystem.Font.Base.body,
             alignment: .center,
             foregroundColor: ColorForState(
@@ -123,8 +138,7 @@ extension GDSButtonStyle {
 
 extension GDSButtonStyle {
     public static var secondarySmallLeading: Self {
-        GDSButtonStyle(
-            config: .secondary,
+        secondary.newStyleAdjusting(
             font: DesignSystem.Font.Base.footnote,
             alignment: .leading,
             contentInsets: NSDirectionalEdgeInsets(
@@ -132,19 +146,8 @@ extension GDSButtonStyle {
                 leading: 0,
                 bottom: DesignSystem.Spacing.small,
                 trailing: 0
-            ),
-            minimumHeight: DesignSystem.Spacing.large,
-            foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.green2,
-                focused: DesignSystem.Color.Text.primary
-            ),
-            backgroundColor: ColorForState(
-                normal: .systemBackground,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow
-            ),
-            cornerRadius: 4,
-            border: nil
+                ),
+            cornerRadius: DesignSystem.CornerRadius.xSmall
         )
     }
 }
