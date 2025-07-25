@@ -188,9 +188,8 @@ class ViewController: UIViewController {
                 stackview.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
                 stackview.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor ),
                 stackview.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-                stackview.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+                stackview.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
             ]
         )
     }
 }
-
