@@ -55,7 +55,6 @@ public final class GDSButton: UIButton {
                             self.isLoading = false
            
                             constraint?.isActive = false
-                            constraint = nil
                         }
                     }
                 ),
