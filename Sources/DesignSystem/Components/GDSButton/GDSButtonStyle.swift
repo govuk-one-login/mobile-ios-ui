@@ -1,6 +1,6 @@
 import UIKit
 
-public struct GDSButtonStyle {
+public struct GDSButtonStyle: Equatable {
     public let font: UIFont
     public let alignment: UIButton.Configuration.TitleAlignment
     public var contentInsets: NSDirectionalEdgeInsets?
@@ -11,17 +11,6 @@ public struct GDSButtonStyle {
 
     public let cornerRadius: CGFloat
     public let border: BorderStyle?
-    
-    public var contentAlignment: UIControl.ContentHorizontalAlignment {
-        switch alignment {
-        case .leading:
-                .leading
-        case .trailing:
-                .trailing
-        default:
-                .center
-        }
-    }
     
     public init(
         font: UIFont,
@@ -43,7 +32,7 @@ public struct GDSButtonStyle {
         self.border = border
     }
     
-    func adjusting(
+    public func adjusting(
         font: UIFont? = nil,
         alignment: UIButton.Configuration.TitleAlignment? = nil,
         contentInsets: NSDirectionalEdgeInsets? = nil,
@@ -92,37 +81,25 @@ extension GDSButtonStyle {
 }
 
 extension GDSButtonStyle {
-    public static var primaryLarge: Self {
-        GDSButtonStyle(
-            font: DesignSystem.Font.Base.largeTitleBold,
-            alignment: .center,
-            contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.small,
-                leading: DesignSystem.Spacing.default,
-                bottom: DesignSystem.Spacing.small,
-                trailing: DesignSystem.Spacing.default
-            ),
-            foregroundColor: ColorForState(
-                normal: .systemBackground,
-                focused: .label
-            ),
+    public static var destructive: Self {
+        primary.adjusting(
             backgroundColor: ColorForState(
-                normal: .systemRed,
+                normal: DesignSystem.Color.Base.red1,
+                highlighted: .systemGray6,
                 focused: DesignSystem.Color.Base.yellow
-            ),
-            cornerRadius: DesignSystem.Spacing.default,
-            border: nil
+            )
         )
     }
 }
 
+// Should be in design system
 extension GDSButtonStyle {
     public static var secondary: Self {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.body,
             alignment: .center,
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.green2,
+                normal: DesignSystem.Color.Base.green1,
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
@@ -136,6 +113,7 @@ extension GDSButtonStyle {
     }
 }
 
+// Should be in design system
 extension GDSButtonStyle {
     public static var secondaryLeading: Self {
         secondary.adjusting(
@@ -150,6 +128,7 @@ extension GDSButtonStyle {
     }
 }
 
+// Wallet
 extension GDSButtonStyle {
     public static var secondaryLeadingSmall: Self {
         secondaryLeading.adjusting(

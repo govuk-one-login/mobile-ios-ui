@@ -1,4 +1,4 @@
-public enum SymbolPosition: Sendable {
+public enum SymbolPosition: Sendable, Equatable {
     case leading
     case trailing
 }

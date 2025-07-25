@@ -19,7 +19,7 @@ extension UIButton {
         }
     }
     
-    func general(viewModel: GDSButtonViewModel) -> AttributedString {
+    func general(viewModel: GDSButtonViewModel) {
         if let insets = viewModel.style.contentInsets {
             self.configuration?.contentInsets = insets
         }
@@ -28,21 +28,14 @@ extension UIButton {
            UIAccessibility.buttonShapesEnabled {
             self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
         }
+
+        self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: self.state)
         
-        let attrString = titleWithIcon(viewModel: viewModel)
-        
-        self.titleLabel?.font = viewModel.style.font
-        
-        self.addBorder(viewModel: viewModel)
-        
+        self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: self.state)
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
         self.configuration?.cornerStyle = .fixed
     
-        self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: self.state)
-        
-        self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: self.state)
-        
-        return attrString
+        self.addBorder(viewModel: viewModel)
     }
     
     static func buttonUpdater(
@@ -50,7 +43,9 @@ extension UIButton {
     ) -> ConfigurationUpdateHandler {
         return { button in
             
-            let title = button.general(viewModel: viewModel)
+            button.general(viewModel: viewModel)
+            
+            let title = button.titleWithIcon(viewModel: viewModel)
             
             if button.state.contains(.disabled) {
                 button.configuration?.titleAlignment = .center
@@ -59,12 +54,13 @@ extension UIButton {
                 button.configuration?.title = nil
                 button.configuration?.imagePlacement = .top
             } else {
-                button.configuration?.titleAlignment = viewModel.style.alignment
-                button.contentHorizontalAlignment = viewModel.style.contentAlignment
-                
-                var string = title + " " + AttributedString(button.state.description)
+                var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
+                
+                button.configuration?.titleAlignment = viewModel.style.alignment
+                button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
+                button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
             }
             
             if button.state.contains(.focused) &&
@@ -88,30 +84,6 @@ extension UIButton {
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: button.state)
                 
             }
-        }
-    }
-}
-
-// for debug
-extension UIButton.State: @retroactive CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case [.selected, .highlighted]:
-            return "selectedHighlighted"
-        case [.focused, .highlighted]:
-            return "focusedHighlighted"
-        case .focused:
-            return "focused"
-        case .highlighted:
-            return "highlighted"
-        case .selected:
-            return "selected"
-        case .disabled, [.focused, .disabled]:
-            return "disabled"
-        case .normal:
-            return "normal"
-        default:
-            return "default"
         }
     }
 }
