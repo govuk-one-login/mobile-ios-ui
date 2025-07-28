@@ -83,6 +83,7 @@ extension GDSButtonStyle {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
+    @_spi(unstable)
     public static var destructive: Self {
         primary.adjusting(
             backgroundColor: ColorForState(
@@ -96,6 +97,7 @@ extension GDSButtonStyle {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
+    @_spi(unstable)
     public static var secondary: Self {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.body,

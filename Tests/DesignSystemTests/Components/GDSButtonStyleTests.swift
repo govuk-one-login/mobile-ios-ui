@@ -1,4 +1,4 @@
-import DesignSystem
+@_spi(unstable) import DesignSystem
 import Testing
 import UIKit
 

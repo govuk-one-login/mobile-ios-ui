@@ -14,6 +14,20 @@ public struct IconStyle: Sendable, Equatable {
         self.position = position
         self.accessibilityHint = accessibilityHint
     }
+    
+    public init?(
+        icon: String?,
+        position: SymbolPosition?,
+        accessibilityHint: String? = nil
+    ) {
+        if let icon {
+            self.icon = icon
+        } else { return nil }
+        
+        self.position = position ?? .trailing
+        
+        self.accessibilityHint = accessibilityHint
+    }
 }
 
 extension IconStyle {

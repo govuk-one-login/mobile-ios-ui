@@ -1,4 +1,4 @@
-import DesignSystem
+@_spi(unstable) import DesignSystem
 import UIKit
 
 /// The design of specific button styles is not complete and are therefore subject to change

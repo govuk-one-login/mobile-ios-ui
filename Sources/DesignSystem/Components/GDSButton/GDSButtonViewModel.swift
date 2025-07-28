@@ -6,6 +6,24 @@ public struct GDSButtonViewModel {
     public let style: GDSButtonStyle
     public let buttonAction: ButtonAction
     public let haptic: Haptic?
+    
+    public init(
+        title: String,
+        icon: IconStyle? = nil,
+        style: GDSButtonStyle,
+        buttonAction: ButtonAction,
+        haptic: Haptic? = nil
+    ) {
+        self.title = TitleForState(stringLiteral: title)
+        if let icon {
+            self.icon = IconForState(normal: icon)
+        } else {
+            self.icon = nil
+        }
+        self.style = style
+        self.buttonAction = buttonAction
+        self.haptic = haptic
+    }
      
     public init(
         title: TitleForState,
