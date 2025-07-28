@@ -1,4 +1,4 @@
-import DesignSystem
+@testable import DesignSystem
 import Testing
 import UIKit
 
@@ -15,6 +15,8 @@ struct TitleForStateTests {
         #expect(sut.title(for: [.selected, .highlighted]) == "test title")
         #expect(sut.title(for: [.focused, .highlighted]) == "test title")
         #expect(sut.title(for: .disabled) == "test title")
+        
+        #expect(!sut.isSelectable)
     }
     
     @Test
@@ -36,6 +38,8 @@ struct TitleForStateTests {
         #expect(sut.title(for: [.selected, .highlighted]) == "test title5")
         #expect(sut.title(for: [.focused, .highlighted]) == "test title6")
         #expect(sut.title(for: .disabled) == "test title7")
+        
+        #expect(sut.isSelectable)
     }
     
 }

@@ -63,7 +63,7 @@ class ViewController: UIViewController {
                 ),
                 
                 GDSButtonViewModel(
-                    title: TitleForState(normal: ""),
+                    title: TitleForState(normal: "", selected: "selected"),
                     icon: IconForState.arrowUpRight,
                     style: .primary,
                     buttonAction: .asyncAction(

@@ -50,3 +50,9 @@ public struct TitleForState {
         }
     }
 }
+
+extension TitleForState: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(normal: value)
+    }
+}

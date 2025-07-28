@@ -55,6 +55,7 @@ public struct GDSButtonStyle: Equatable {
     }
 }
 
+/// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
     public static var primary: Self {
         GDSButtonStyle(
@@ -80,6 +81,7 @@ extension GDSButtonStyle {
     }
 }
 
+/// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
     public static var destructive: Self {
         primary.adjusting(
@@ -92,7 +94,7 @@ extension GDSButtonStyle {
     }
 }
 
-// Should be in design system
+/// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
     public static var secondary: Self {
         GDSButtonStyle(
@@ -109,30 +111,6 @@ extension GDSButtonStyle {
             ),
             cornerRadius: DesignSystem.Spacing.xSmall,
             border: nil
-        )
-    }
-}
-
-// Should be in design system
-extension GDSButtonStyle {
-    public static var secondaryLeading: Self {
-        secondary.adjusting(
-            alignment: .leading,
-            contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.small,
-                leading: 0,
-                bottom: DesignSystem.Spacing.small,
-                trailing: 0
-            )
-        )
-    }
-}
-
-// Wallet
-extension GDSButtonStyle {
-    public static var secondaryLeadingSmall: Self {
-        secondaryLeading.adjusting(
-            font: DesignSystem.Font.Base.footnote
         )
     }
 }

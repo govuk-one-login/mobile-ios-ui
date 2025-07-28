@@ -1,4 +1,4 @@
-import DesignSystem
+@testable import DesignSystem
 import Testing
 import UIKit
 
@@ -15,6 +15,8 @@ struct ColorForStateTests {
         #expect(sut.color(for: .disabled) == .black)
         #expect(sut.color(for: [.selected, .highlighted]) == .black)
         #expect(sut.color(for: [.focused, .highlighted]) == .black)
+        
+        #expect(!sut.isSelectable)
     }
     
     @Test
@@ -36,6 +38,8 @@ struct ColorForStateTests {
         #expect(sut.color(for: .disabled) == .yellow)
         #expect(sut.color(for: [.selected, .highlighted]) == .cyan)
         #expect(sut.color(for: [.focused, .highlighted]) == .orange)
+        
+        #expect(sut.isSelectable)
     }
     
 }

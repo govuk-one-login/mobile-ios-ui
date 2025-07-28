@@ -95,8 +95,9 @@ public final class GDSButton: UIButton {
         )
     }
     
-    private func selectedState(viewModel: GDSButtonViewModel) -> Bool {
-        if viewModel.style.backgroundColor.isSelectable ||
+    func selectedState(viewModel: GDSButtonViewModel) -> Bool {
+        if viewModel.title.isSelectable ||
+            viewModel.style.backgroundColor.isSelectable ||
             viewModel.style.foregroundColor.isSelectable ||
             (viewModel.icon?.isSelectable == true) {
             return true

@@ -55,3 +55,9 @@ extension IconForState {
     public static let arrowUpRight: Self = IconForState(normal: IconStyle.arrowUpRight)
     public static let qrCode: Self = IconForState(normal: IconStyle.qrCode)
 }
+
+extension IconForState: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(normal: IconStyle(icon: value, position: .trailing))
+    }
+}

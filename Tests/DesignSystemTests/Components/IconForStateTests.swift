@@ -1,4 +1,4 @@
-import DesignSystem
+@testable import DesignSystem
 import Testing
 import UIKit
 
@@ -17,6 +17,8 @@ struct IconForStateTests {
         #expect(sut.icon(for: .disabled) == .arrowUpRight)
         #expect(sut.icon(for: [.selected, .highlighted]) == .arrowUpRight)
         #expect(sut.icon(for: [.focused, .highlighted]) == .arrowUpRight)
+        
+        #expect(!sut.isSelectable)
     }
     
     @Test
@@ -38,6 +40,8 @@ struct IconForStateTests {
         #expect(sut.icon(for: .disabled) == .qrCode)
         #expect(sut.icon(for: [.selected, .highlighted]) == .qrCode)
         #expect(sut.icon(for: [.focused, .highlighted]) == .qrCode)
+        
+        #expect(sut.isSelectable)
     }
     
 }
