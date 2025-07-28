@@ -40,21 +40,24 @@ public final class GDSButton: UIButton {
         case .asyncAction(let action):
             self.addAction(
                 UIAction(
-                    handler: { [unowned self] _ in
+                    handler: { handler in
+                        var handlerButton: GDSButton? = handler.sender as? GDSButton
                         Task { @MainActor in
-                            var constraint: NSLayoutConstraint? = self.heightAnchor.constraint(equalToConstant: self.bounds.height)
+                            guard let button = handlerButton else { return }
+                            let constraint: NSLayoutConstraint? = button.heightAnchor.constraint(equalToConstant: button.bounds.height)
                             constraint?.isActive = true
                             
-                            self.isLoading = true
+                            button.isLoading = true
                             await action()
-                            self.isSelected.toggle()
+                            button.isSelected.toggle()
                             
                             if let haptic = viewModel.haptic {
                                 haptic.perform()
                             }
-                            self.isLoading = false
+                            button.isLoading = false
            
                             constraint?.isActive = false
+                            handlerButton = nil
                         }
                     }
                 ),
@@ -73,5 +76,9 @@ public final class GDSButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("deinit")
     }
 }
