@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         let hapticButtons = Haptic.allCases.map { haptic in
             GDSButtonViewModel(
-                title: TitleForState(normal: String(describing: haptic)),
+                title: TitleForState(normal: "haptic - " + String(describing: haptic)),
                 icon: nil,
                 style: .primary,
                 buttonAction: .action(
