@@ -28,48 +28,12 @@ public final class GDSButton: UIButton {
         switch viewModel.buttonAction {
         case .action(let action):
             self.addAction(
-                UIAction(
-                    handler: { [unowned self] _ in
-                        action()
-                        
-                        if selectedState(viewModel: viewModel) {
-                            self.isSelected.toggle()
-                        }
-                        
-                        if let haptic = viewModel.haptic {
-                            haptic.perform()
-                        }
-                    }
-                ),
+                createAction(viewModel: viewModel, action: action),
                 for: .touchUpInside
             )
         case .asyncAction(let action):
             self.addAction(
-                UIAction(
-                    handler: { handler in
-                        var handlerButton: GDSButton? = handler.sender as? GDSButton
-                        handlerButton?.asyncTask = Task { @MainActor in
-                            guard let button = handlerButton else { return }
-                            let constraint: NSLayoutConstraint? = button.heightAnchor.constraint(equalToConstant: button.bounds.height)
-                            constraint?.isActive = true
-                            
-                            button.isLoading = true
-                            await action()
-                            
-                            if button.selectedState(viewModel: viewModel) {
-                                button.isSelected.toggle()
-                            }
-                            
-                            if let haptic = viewModel.haptic {
-                                haptic.perform()
-                            }
-                            button.isLoading = false
-           
-                            constraint?.isActive = false
-                            handlerButton = nil
-                        }
-                    }
-                ),
+                createAsyncAction(viewModel: viewModel, action: action),
                 for: .touchUpInside
             )
         }
@@ -85,6 +49,50 @@ public final class GDSButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func createAction(viewModel: GDSButtonViewModel, action: @escaping () -> Void) -> UIAction {
+        UIAction(
+            handler: { [unowned self] _ in
+                action()
+                
+                if selectedState(viewModel: viewModel) {
+                    self.isSelected.toggle()
+                }
+                
+                if let haptic = viewModel.haptic {
+                    haptic.perform()
+                }
+            }
+        )
+    }
+    
+    private func createAsyncAction(viewModel: GDSButtonViewModel, action: @escaping () async -> Void) -> UIAction {
+        UIAction(
+            handler: { handler in
+                var handlerButton: GDSButton? = handler.sender as? GDSButton
+                handlerButton?.asyncTask = Task { @MainActor in
+                    guard let button = handlerButton else { return }
+                    let constraint: NSLayoutConstraint? = button.heightAnchor.constraint(equalToConstant: button.bounds.height)
+                    constraint?.isActive = true
+                    
+                    button.isLoading = true
+                    await action()
+                    
+                    if button.selectedState(viewModel: viewModel) {
+                        button.isSelected.toggle()
+                    }
+                    
+                    if let haptic = viewModel.haptic {
+                        haptic.perform()
+                    }
+                    button.isLoading = false
+                    
+                    constraint?.isActive = false
+                    handlerButton = nil
+                }
+            }
+        )
     }
     
     private func selectedState(viewModel: GDSButtonViewModel) -> Bool {
