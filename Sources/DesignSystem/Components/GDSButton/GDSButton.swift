@@ -29,9 +29,13 @@ public final class GDSButton: UIButton {
         case .action(let action):
             self.addAction(
                 UIAction(
-                    handler: { _ in
+                    handler: { [unowned self] _ in
                         action()
-                        self.isSelected.toggle()
+                        
+                        if selectedState(viewModel: viewModel) {
+                            self.isSelected.toggle()
+                        }
+                        
                         if let haptic = viewModel.haptic {
                             haptic.perform()
                         }
@@ -51,7 +55,10 @@ public final class GDSButton: UIButton {
                             
                             button.isLoading = true
                             await action()
-                            button.isSelected.toggle()
+                            
+                            if button.selectedState(viewModel: viewModel) {
+                                button.isSelected.toggle()
+                            }
                             
                             if let haptic = viewModel.haptic {
                                 haptic.perform()
@@ -78,5 +85,15 @@ public final class GDSButton: UIButton {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func selectedState(viewModel: GDSButtonViewModel) -> Bool {
+        if viewModel.style.backgroundColor.isSelectable ||
+            viewModel.style.foregroundColor.isSelectable ||
+            (viewModel.icon?.isSelectable == true) {
+            return true
+        } else {
+            return false
+        }
     }
 }

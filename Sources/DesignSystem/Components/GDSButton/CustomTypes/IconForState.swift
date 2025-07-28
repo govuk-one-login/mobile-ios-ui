@@ -9,6 +9,10 @@ public struct IconForState: Sendable, Equatable {
     private let selectedHighlighted: IconStyle?
     private let focusedHighlighted: IconStyle?
     
+    var isSelectable: Bool {
+        (selected != nil) || (selectedHighlighted != nil)
+    }
+    
     public init(
         normal: IconStyle,
         highlighted: IconStyle? = nil,

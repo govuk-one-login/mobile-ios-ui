@@ -9,6 +9,10 @@ public struct ColorForState: Equatable {
     private let selectedHighlighted: UIColor?
     private let focusedHighlighted: UIColor?
     
+    var isSelectable: Bool {
+        (selected != nil) || (selectedHighlighted != nil)
+    }
+    
     public init(
         normal: UIColor,
         highlighted: UIColor? = nil,

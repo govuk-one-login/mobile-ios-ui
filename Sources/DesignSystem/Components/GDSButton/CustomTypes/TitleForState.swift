@@ -9,6 +9,10 @@ public struct TitleForState {
     private let focusedHighlighted: String?
     private let disabled: String?
     
+    var isSelectable: Bool {
+        (selected != nil) || (selectedHighlighted != nil)
+    }
+    
     public init(
         normal: String,
         highlighted: String? = nil,
