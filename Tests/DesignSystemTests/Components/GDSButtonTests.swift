@@ -40,7 +40,7 @@ struct GDSButtonTests {
         
         #expect(didCallAction == false)
         sut.sendActions(for: .touchUpInside)
-        try await Task.sleep(seconds: 0.01)
+        await sut.asyncTask?.value
         #expect(didCallAction)
     }
 }

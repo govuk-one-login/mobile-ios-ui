@@ -3,6 +3,8 @@ import UIKit
 public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
+    public private(set) var asyncTask: Task<Void, Never>?
+
     var isLoading: Bool = false {
         didSet {
             var config = self.configuration
@@ -42,7 +44,7 @@ public final class GDSButton: UIButton {
                 UIAction(
                     handler: { handler in
                         var handlerButton: GDSButton? = handler.sender as? GDSButton
-                        Task { @MainActor in
+                        handlerButton?.asyncTask = Task { @MainActor in
                             guard let button = handlerButton else { return }
                             let constraint: NSLayoutConstraint? = button.heightAnchor.constraint(equalToConstant: button.bounds.height)
                             constraint?.isActive = true
