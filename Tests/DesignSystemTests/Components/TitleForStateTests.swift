@@ -8,13 +8,13 @@ struct TitleForStateTests {
     func normal() {
         let sut = TitleForState(normal: "test title")
         
-        #expect(sut.title(for: .normal) == "test title")
-        #expect(sut.title(for: .highlighted) == "test title")
-        #expect(sut.title(for: .selected) == "test title")
-        #expect(sut.title(for: .focused) == "test title")
-        #expect(sut.title(for: [.selected, .highlighted]) == "test title")
-        #expect(sut.title(for: [.focused, .highlighted]) == "test title")
-        #expect(sut.title(for: .disabled) == "test title")
+        #expect(sut.forState(.normal) == "test title")
+        #expect(sut.forState(.highlighted) == "test title")
+        #expect(sut.forState(.selected) == "test title")
+        #expect(sut.forState(.focused) == "test title")
+        #expect(sut.forState([.selected, .highlighted]) == "test title")
+        #expect(sut.forState([.focused, .highlighted]) == "test title")
+        #expect(sut.forState(.disabled) == "test title")
         
         #expect(!sut.isSelectable)
     }
@@ -31,15 +31,21 @@ struct TitleForStateTests {
             disabled: "test title7"
         )
         
-        #expect(sut.title(for: .normal) == "test title1")
-        #expect(sut.title(for: .highlighted) == "test title2")
-        #expect(sut.title(for: .selected) == "test title3")
-        #expect(sut.title(for: .focused) == "test title4")
-        #expect(sut.title(for: [.selected, .highlighted]) == "test title5")
-        #expect(sut.title(for: [.focused, .highlighted]) == "test title6")
-        #expect(sut.title(for: .disabled) == "test title7")
+        #expect(sut.forState(.normal) == "test title1")
+        #expect(sut.forState(.highlighted) == "test title2")
+        #expect(sut.forState(.selected) == "test title3")
+        #expect(sut.forState(.focused) == "test title4")
+        #expect(sut.forState([.selected, .highlighted]) == "test title5")
+        #expect(sut.forState([.focused, .highlighted]) == "test title6")
+        #expect(sut.forState(.disabled) == "test title7")
         
         #expect(sut.isSelectable)
+    }
+    
+    @Test
+    func expressibleByStringLiteral() async throws {
+        let sut: TitleForState = "title"
+        #expect(sut.forState(.normal) == "title")
     }
     
 }

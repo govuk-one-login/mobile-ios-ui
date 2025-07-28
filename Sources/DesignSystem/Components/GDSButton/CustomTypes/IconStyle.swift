@@ -17,7 +17,7 @@ public struct IconStyle: Sendable, Equatable {
     
     public init?(
         icon: String?,
-        position: SymbolPosition?,
+        position: SymbolPosition? = nil,
         accessibilityHint: String? = nil
     ) {
         if let icon {

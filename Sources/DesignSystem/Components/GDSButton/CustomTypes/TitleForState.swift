@@ -31,7 +31,7 @@ public struct TitleForState {
         self.focusedHighlighted = focusedHighlighted
     }
     
-    public func title(for state: UIControl.State) -> String {
+    public func forState(_ state: UIControl.State) -> String {
         switch state {
         case [.selected, .highlighted]:
             return selectedHighlighted ?? normal

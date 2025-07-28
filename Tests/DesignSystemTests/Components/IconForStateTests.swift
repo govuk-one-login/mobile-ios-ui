@@ -10,13 +10,13 @@ struct IconForStateTests {
         #expect(IconStyle.arrowUpRight.position == .trailing)
         #expect(IconStyle.arrowUpRight.accessibilityHint == "opens in your web browser")
         
-        #expect(sut.icon(for: .normal) == .arrowUpRight)
-        #expect(sut.icon(for: .highlighted) == .arrowUpRight)
-        #expect(sut.icon(for: .selected) == .arrowUpRight)
-        #expect(sut.icon(for: .focused) == .arrowUpRight)
-        #expect(sut.icon(for: .disabled) == .arrowUpRight)
-        #expect(sut.icon(for: [.selected, .highlighted]) == .arrowUpRight)
-        #expect(sut.icon(for: [.focused, .highlighted]) == .arrowUpRight)
+        #expect(sut.forState(.normal) == .arrowUpRight)
+        #expect(sut.forState(.highlighted) == .arrowUpRight)
+        #expect(sut.forState(.selected) == .arrowUpRight)
+        #expect(sut.forState(.focused) == .arrowUpRight)
+        #expect(sut.forState(.disabled) == .arrowUpRight)
+        #expect(sut.forState([.selected, .highlighted]) == .arrowUpRight)
+        #expect(sut.forState([.focused, .highlighted]) == .arrowUpRight)
         
         #expect(!sut.isSelectable)
     }
@@ -33,15 +33,22 @@ struct IconForStateTests {
             focusedHighlighted: .qrCode
         )
         
-        #expect(sut.icon(for: .normal) == .arrowUpRight)
-        #expect(sut.icon(for: .highlighted) == .qrCode)
-        #expect(sut.icon(for: .selected) == .qrCode)
-        #expect(sut.icon(for: .focused) == .qrCode)
-        #expect(sut.icon(for: .disabled) == .qrCode)
-        #expect(sut.icon(for: [.selected, .highlighted]) == .qrCode)
-        #expect(sut.icon(for: [.focused, .highlighted]) == .qrCode)
+        #expect(sut.forState(.normal) == .arrowUpRight)
+        #expect(sut.forState(.highlighted) == .qrCode)
+        #expect(sut.forState(.selected) == .qrCode)
+        #expect(sut.forState(.focused) == .qrCode)
+        #expect(sut.forState(.disabled) == .qrCode)
+        #expect(sut.forState([.selected, .highlighted]) == .qrCode)
+        #expect(sut.forState([.focused, .highlighted]) == .qrCode)
         
         #expect(sut.isSelectable)
+    }
+    
+    @Test func expressibleByStringLiteral() async throws {
+        let sut: IconForState = "house"
+        #expect(sut.forState(.normal).icon == "house")
+        #expect(sut.forState(.normal).position == .trailing)
+        #expect(sut.forState(.normal).accessibilityHint == nil)
     }
     
 }

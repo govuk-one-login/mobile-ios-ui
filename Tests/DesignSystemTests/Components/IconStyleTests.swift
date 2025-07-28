@@ -12,5 +12,17 @@ struct IconStyleTests {
         let expectation = IconStyle(icon: "qrcode", position: .leading)
         #expect(IconStyle.qrCode == expectation)
     }
+    
+    @Test func minimalInitSuccess() async throws {
+        let sut = IconStyle(icon: "sun.min")
+        #expect(sut?.icon == "sun.min")
+        #expect(sut?.position == .trailing)
+        #expect(sut?.accessibilityHint == nil)
+    }
+    
+    @Test func minimalInitNil() async throws {
+        let sut = IconStyle(icon: nil)
+        #expect(sut == nil)
+    }
 
 }

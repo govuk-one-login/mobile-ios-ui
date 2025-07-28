@@ -31,7 +31,7 @@ public struct IconForState: Sendable, Equatable {
         self.focusedHighlighted = focusedHighlighted
     }
     
-    public func icon(for state: UIControl.State) -> IconStyle {
+    public func forState(_ state: UIControl.State) -> IconStyle {
         switch state {
         case [.selected, .highlighted]:
             return selectedHighlighted ?? normal

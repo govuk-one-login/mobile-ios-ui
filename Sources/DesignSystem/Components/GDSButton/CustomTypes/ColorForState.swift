@@ -31,7 +31,7 @@ public struct ColorForState: Equatable {
         self.focusedHighlighted = focusedHighlighted
     }
     
-    public func color(for state: UIControl.State) -> UIColor {
+    public func forState(_ state: UIControl.State) -> UIColor {
         switch state {
         case [.selected, .highlighted]:
             return selectedHighlighted ?? normal

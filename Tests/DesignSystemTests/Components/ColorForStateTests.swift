@@ -8,13 +8,13 @@ struct ColorForStateTests {
     func normal() {
         let sut = ColorForState(normal: .black, focused: .white)
         
-        #expect(sut.color(for: .normal) == .black)
-        #expect(sut.color(for: .highlighted) == .black)
-        #expect(sut.color(for: .selected) == .black)
-        #expect(sut.color(for: .focused) == .white)
-        #expect(sut.color(for: .disabled) == .black)
-        #expect(sut.color(for: [.selected, .highlighted]) == .black)
-        #expect(sut.color(for: [.focused, .highlighted]) == .black)
+        #expect(sut.forState(.normal) == .black)
+        #expect(sut.forState(.highlighted) == .black)
+        #expect(sut.forState(.selected) == .black)
+        #expect(sut.forState(.focused) == .white)
+        #expect(sut.forState(.disabled) == .black)
+        #expect(sut.forState([.selected, .highlighted]) == .black)
+        #expect(sut.forState([.focused, .highlighted]) == .black)
         
         #expect(!sut.isSelectable)
     }
@@ -31,13 +31,13 @@ struct ColorForStateTests {
             focusedHighlighted: .orange
         )
         
-        #expect(sut.color(for: .normal) == .black)
-        #expect(sut.color(for: .highlighted) == .white)
-        #expect(sut.color(for: .selected) == .red)
-        #expect(sut.color(for: .focused) == .green)
-        #expect(sut.color(for: .disabled) == .yellow)
-        #expect(sut.color(for: [.selected, .highlighted]) == .cyan)
-        #expect(sut.color(for: [.focused, .highlighted]) == .orange)
+        #expect(sut.forState(.normal) == .black)
+        #expect(sut.forState(.highlighted) == .white)
+        #expect(sut.forState(.selected) == .red)
+        #expect(sut.forState(.focused) == .green)
+        #expect(sut.forState(.disabled) == .yellow)
+        #expect(sut.forState([.selected, .highlighted]) == .cyan)
+        #expect(sut.forState([.focused, .highlighted]) == .orange)
         
         #expect(sut.isSelectable)
     }

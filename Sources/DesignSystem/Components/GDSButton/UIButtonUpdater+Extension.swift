@@ -2,10 +2,10 @@ import UIKit
 
 extension UIButton {
     private func titleWithIcon(viewModel: GDSButtonViewModel) -> AttributedString {
-        var attrString = AttributedString(viewModel.title.title(for: self.state))
+        var attrString = AttributedString(viewModel.title.forState(self.state))
         attrString.font = viewModel.style.font
         return attrString.addIcon(
-            iconStyle: viewModel.icon?.icon(for: self.state)
+            iconStyle: viewModel.icon?.forState(self.state)
         ) ?? attrString
     }
     
@@ -29,9 +29,9 @@ extension UIButton {
             self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
         }
 
-        self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: self.state)
+        self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(self.state)
         
-        self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: self.state)
+        self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
         self.configuration?.cornerStyle = .fixed
     
@@ -70,18 +70,18 @@ extension UIButton {
             
             switch button.state {
             case .normal:
-                if viewModel.style.backgroundColor.color(for: button.state) == UIColor.systemBackground
+                if viewModel.style.backgroundColor.forState(button.state) == UIColor.systemBackground
                     && UIAccessibility.buttonShapesEnabled {
                     button.configuration?.baseBackgroundColor = .systemGray6
                 } else {
-                    button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: button.state)
+                    button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(button.state)
                 }
-                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: button.state)
+                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
                 
             default:
-                button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.color(for: button.state)
+                button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(button.state)
                 
-                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.color(for: button.state)
+                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
                 
             }
         }

@@ -23,7 +23,7 @@ public final class GDSButton: UIButton {
         self.configuration = .gds
         self.configurationUpdateHandler = UIButton.buttonUpdater(viewModel: viewModel)
         
-        self.configuration?.title = viewModel.title.title(for: .normal)
+        self.configuration?.title = viewModel.title.forState(.normal)
         
         switch viewModel.buttonAction {
         case .action(let action):
