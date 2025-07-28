@@ -57,6 +57,7 @@ public struct GDSButtonStyle: Equatable {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
+    @_spi(unstable)
     public static var primary: Self {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.bodySemiBold,
