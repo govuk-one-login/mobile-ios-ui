@@ -31,6 +31,6 @@ public struct IconStyle: Sendable, Equatable {
 }
 
 extension IconStyle {
-    public static let arrowUpRight: Self = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in your web browser")
+    public static let arrowUpRight: Self = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in web browser")
     public static let qrCode: Self = IconStyle(icon: "qrcode", position: .leading)
 }
