@@ -8,7 +8,7 @@ struct IconForStateTests {
     func normal() {
         let sut = IconForState(normal: .arrowUpRight)
         #expect(IconStyle.arrowUpRight.position == .trailing)
-        #expect(IconStyle.arrowUpRight.accessibilityHint == "opens in your web browser")
+        #expect(IconStyle.arrowUpRight.accessibilityHint == "opens in web browser")
         
         #expect(sut.forState(.normal) == .arrowUpRight)
         #expect(sut.forState(.highlighted) == .arrowUpRight)

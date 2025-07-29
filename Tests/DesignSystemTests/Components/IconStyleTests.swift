@@ -4,7 +4,7 @@ import Testing
 struct IconStyleTests {
 
     @Test func arrowUpRight() async throws {
-        let expectation = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in your web browser")
+        let expectation = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in web browser")
         #expect(IconStyle.arrowUpRight == expectation)
     }
     
