@@ -5,7 +5,6 @@ public struct TestViewControllerViewModel: ScreenViewModel {
     public let body: [ContentItem]
     public var moveableFooter: [ContentItem]
     public var footer: [ContentItem]
-    
 }
 
 class ViewController: UIViewController {
@@ -158,8 +157,6 @@ class ViewController: UIViewController {
         view.addSubview(scrollView)
         configureConstraints()
         addViewsToStack()
-        
-        
     }
     
     func addViewsToStack() {
@@ -186,7 +183,7 @@ class ViewController: UIViewController {
                 scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                 
                 stackview.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
-                stackview.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor ),
+                stackview.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
                 stackview.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
                 stackview.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
             ]
