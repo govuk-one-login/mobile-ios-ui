@@ -68,6 +68,11 @@ extension UIButton {
                 button.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
             }
             
+            if let icon = viewModel.icon?.forState(button.state),
+               let accessibilityHint = icon.accessibilityHint {
+                button.accessibilityHint = accessibilityHint
+            }
+            
             switch button.state {
             case .normal:
                 if viewModel.style.backgroundColor.forState(button.state) == UIColor.systemBackground
