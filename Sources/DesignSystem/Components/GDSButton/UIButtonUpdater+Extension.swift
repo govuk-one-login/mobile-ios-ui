@@ -47,7 +47,9 @@ extension UIButton {
             
             let title = button.titleWithIcon(viewModel: viewModel)
             
-            if button.state.contains(.disabled) {
+            if let button = button as? GDSButton,
+               button.state.contains(.disabled) &&
+                button.isLoading {
                 button.configuration?.titleAlignment = .center
                 button.contentHorizontalAlignment = .center
                 button.configuration?.attributedTitle = nil

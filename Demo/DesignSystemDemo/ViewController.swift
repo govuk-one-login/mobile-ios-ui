@@ -157,6 +157,9 @@ class ViewController: UIViewController {
         view.addSubview(scrollView)
         configureConstraints()
         addViewsToStack()
+        
+        let first = stackview.arrangedSubviews[1] as? UIButton
+        first?.isEnabled = false
     }
     
     func addViewsToStack() {
