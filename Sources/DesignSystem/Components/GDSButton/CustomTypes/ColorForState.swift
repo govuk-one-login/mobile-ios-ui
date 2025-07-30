@@ -37,6 +37,8 @@ public struct ColorForState: Equatable {
             return selectedHighlighted ?? normal
         case [.focused, .highlighted]:
             return focusedHighlighted ?? normal
+        case [.focused, .selected]:
+            return focused ?? normal
         case .selected:
             return selected ?? normal
         case .highlighted:

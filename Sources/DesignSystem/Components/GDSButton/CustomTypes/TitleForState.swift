@@ -37,6 +37,8 @@ public struct TitleForState {
             return selectedHighlighted ?? normal
         case [.focused, .highlighted]:
             return focusedHighlighted ?? normal
+        case [.focused, .selected]:
+            return selected ?? normal
         case .selected:
             return selected ?? normal
         case .highlighted:
