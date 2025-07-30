@@ -157,22 +157,12 @@ class ViewController: UIViewController {
         view.addSubview(scrollView)
         configureConstraints()
         addViewsToStack()
-        
-        let first = stackview.arrangedSubviews[1] as? UIButton
-        first?.isEnabled = false
     }
     
     func addViewsToStack() {
-        let spacer1 = UIView()
-        let spacer2 = UIView()
-        
-        stackview.addArrangedSubview(spacer1)
-        
         viewModel.body.forEach {
             stackview.addArrangedSubview($0.uiView)
         }
-
-        stackview.addArrangedSubview(spacer2)
     }
     
     func configureConstraints() {
