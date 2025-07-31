@@ -105,4 +105,17 @@ public final class GDSButton: UIButton {
             return false
         }
     }
+    
+    public override func accessibilityElementDidLoseFocus() {
+        super.accessibilityElementDidLoseFocus()
+        self.setNeedsUpdateConfiguration()
+    }
+    
+    public override func accessibilityElementDidBecomeFocused() {
+        super.accessibilityElementDidBecomeFocused()
+        var config = self.configuration
+        config?.baseBackgroundColor = viewModel.style.backgroundColor.forState(.focused)
+        config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
+        self.configuration = config
+    }
 }
