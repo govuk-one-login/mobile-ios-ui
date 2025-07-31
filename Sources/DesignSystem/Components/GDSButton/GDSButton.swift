@@ -4,7 +4,7 @@ public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?
-
+    
     var isLoading: Bool = false {
         didSet {
             var config = self.configuration
@@ -14,6 +14,8 @@ public final class GDSButton: UIButton {
             self.setNeedsUpdateConfiguration()
         }
     }
+    
+    var isVoiceOverFocussed: Bool = false
     
     public init(
         viewModel: GDSButtonViewModel

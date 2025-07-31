@@ -15,6 +15,7 @@ struct IconForStateTests {
         #expect(sut.forState(.selected) == .arrowUpRight)
         #expect(sut.forState(.focused) == .arrowUpRight)
         #expect(sut.forState(.disabled) == .arrowUpRight)
+        #expect(sut.forState([.selected, .focused]) == .arrowUpRight)
         #expect(sut.forState([.selected, .highlighted]) == .arrowUpRight)
         #expect(sut.forState([.focused, .highlighted]) == .arrowUpRight)
         
@@ -38,6 +39,7 @@ struct IconForStateTests {
         #expect(sut.forState(.selected) == .qrCode)
         #expect(sut.forState(.focused) == .qrCode)
         #expect(sut.forState(.disabled) == .qrCode)
+        #expect(sut.forState([.selected, .focused]) == .qrCode)
         #expect(sut.forState([.selected, .highlighted]) == .qrCode)
         #expect(sut.forState([.focused, .highlighted]) == .qrCode)
         

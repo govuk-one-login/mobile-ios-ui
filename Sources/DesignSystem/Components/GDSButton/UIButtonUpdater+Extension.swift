@@ -21,7 +21,17 @@ extension UIButton {
     
     func general(viewModel: GDSButtonViewModel) {
         if let insets = viewModel.style.contentInsets {
+            
             self.configuration?.contentInsets = insets
+            
+            if insets.leading < DesignSystem.Spacing.xSmall {
+                switch (UIAccessibility.buttonShapesEnabled, self.state.contains(.focused)) {
+                case (true, _), (_, true):
+                    self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
+                default:
+                    break
+                }
+            }
         }
         
         if (self.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall,
@@ -30,8 +40,8 @@ extension UIButton {
         }
 
         self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(self.state)
-        
         self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
+        
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
         self.configuration?.cornerStyle = .fixed
     
@@ -42,12 +52,13 @@ extension UIButton {
         viewModel: GDSButtonViewModel
     ) -> ConfigurationUpdateHandler {
         return { button in
-            
             button.general(viewModel: viewModel)
             
             let title = button.titleWithIcon(viewModel: viewModel)
             
-            if button.state.contains(.disabled) {
+            if let button = button as? GDSButton,
+               button.state.contains(.disabled) &&
+                button.isLoading {
                 button.configuration?.titleAlignment = .center
                 button.contentHorizontalAlignment = .center
                 button.configuration?.attributedTitle = nil
@@ -61,20 +72,12 @@ extension UIButton {
                 button.configuration?.titleAlignment = viewModel.style.alignment
                 button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
                 button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
-            }
-            
-            if button.state.contains(.focused) &&
-                (button.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall {
-                button.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-            }
-            
-            if let icon = viewModel.icon?.forState(button.state),
-               let accessibilityHint = icon.accessibilityHint {
-                button.accessibilityHint = accessibilityHint
-            }
-            
-            switch button.state {
-            case .normal:
+                
+                if let icon = viewModel.icon?.forState(button.state),
+                   let accessibilityHint = icon.accessibilityHint {
+                    button.accessibilityHint = accessibilityHint
+                }
+                
                 if viewModel.style.backgroundColor.forState(button.state) == UIColor.systemBackground
                     && UIAccessibility.buttonShapesEnabled {
                     button.configuration?.baseBackgroundColor = .systemGray6
@@ -82,12 +85,6 @@ extension UIButton {
                     button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(button.state)
                 }
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
-                
-            default:
-                button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(button.state)
-                
-                button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
-                
             }
         }
     }

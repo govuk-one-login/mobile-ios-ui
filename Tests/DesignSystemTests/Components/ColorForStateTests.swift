@@ -13,6 +13,7 @@ struct ColorForStateTests {
         #expect(sut.forState(.selected) == .black)
         #expect(sut.forState(.focused) == .white)
         #expect(sut.forState(.disabled) == .black)
+        #expect(sut.forState([.selected, .focused]) == .white)
         #expect(sut.forState([.selected, .highlighted]) == .black)
         #expect(sut.forState([.focused, .highlighted]) == .black)
         
@@ -36,6 +37,7 @@ struct ColorForStateTests {
         #expect(sut.forState(.selected) == .red)
         #expect(sut.forState(.focused) == .green)
         #expect(sut.forState(.disabled) == .yellow)
+        #expect(sut.forState([.selected, .focused]) == .green)
         #expect(sut.forState([.selected, .highlighted]) == .cyan)
         #expect(sut.forState([.focused, .highlighted]) == .orange)
         
