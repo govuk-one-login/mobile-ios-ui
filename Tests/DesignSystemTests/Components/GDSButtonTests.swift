@@ -124,4 +124,32 @@ struct GDSButtonTests {
         sut.sendActions(for: .touchUpInside)
         #expect(sut.isSelected)
     }
+    
+    @Test func isDisabled() async throws {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(
+                normal: "title"
+            ),
+            icon: IconForState(normal: .arrowUpRight, selected: .arrowUpRight),
+            style: .primary,
+            buttonAction: .asyncAction(
+                {
+                    try? await Task.sleep(seconds: 0.3)
+                }
+            )
+        )
+        
+        let sut = GDSButton(viewModel: viewModel)
+        
+        #expect(!sut.isLoading)
+        sut.sendActions(for: .touchUpInside)
+        try await Task.sleep(seconds: 0.1)
+        
+        #expect(sut.isLoading)
+        #expect(sut.configuration?.showsActivityIndicator ?? false)
+
+        await sut.asyncTask?.value
+        #expect(!sut.isLoading)
+        #expect(!(sut.configuration?.showsActivityIndicator ?? true))
+    }
 }
