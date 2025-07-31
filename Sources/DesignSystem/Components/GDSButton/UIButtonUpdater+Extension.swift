@@ -51,9 +51,7 @@ extension UIButton {
     static func buttonUpdater(
         viewModel: GDSButtonViewModel
     ) -> ConfigurationUpdateHandler {
-        return { button in
-            print(button.state)
-            
+        return { button in            
             button.general(viewModel: viewModel)
             
             let title = button.titleWithIcon(viewModel: viewModel)
