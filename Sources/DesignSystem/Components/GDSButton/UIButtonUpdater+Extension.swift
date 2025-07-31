@@ -52,6 +52,7 @@ extension UIButton {
         viewModel: GDSButtonViewModel
     ) -> ConfigurationUpdateHandler {
         return { button in
+            print(button.state)
             
             button.general(viewModel: viewModel)
             
