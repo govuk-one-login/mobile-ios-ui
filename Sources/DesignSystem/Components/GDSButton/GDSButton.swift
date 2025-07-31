@@ -4,7 +4,7 @@ public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?
-
+    
     var isLoading: Bool = false {
         didSet {
             var config = self.configuration
@@ -14,6 +14,8 @@ public final class GDSButton: UIButton {
             self.setNeedsUpdateConfiguration()
         }
     }
+    
+    var isVoiceOverFocussed: Bool = false
     
     public init(
         viewModel: GDSButtonViewModel
@@ -104,5 +106,18 @@ public final class GDSButton: UIButton {
         } else {
             return false
         }
+    }
+    
+    public override func accessibilityElementDidLoseFocus() {
+        super.accessibilityElementDidLoseFocus()
+        self.setNeedsUpdateConfiguration()
+    }
+    
+    public override func accessibilityElementDidBecomeFocused() {
+        super.accessibilityElementDidBecomeFocused()
+        var config = self.configuration
+        config?.baseBackgroundColor = viewModel.style.backgroundColor.forState(.focused)
+        config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
+        self.configuration = config
     }
 }
