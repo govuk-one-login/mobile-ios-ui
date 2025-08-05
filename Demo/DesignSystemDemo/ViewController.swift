@@ -25,103 +25,106 @@ class ViewController: UIViewController {
         
         return TestViewControllerViewModel(
             body: [
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
-                    icon: IconForState.arrowUpRight,
-                    style: .primary,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .success
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My really very long button title"),
-                    icon: IconForState.arrowUpRight,
-                    style: .destructive,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .impactHeavy
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "", selected: "selected"),
-                    icon: IconForState.arrowUpRight,
-                    style: .primary,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .impactHeavy
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState(
-                        normal: IconStyle(icon: "chevron.up.circle", position: .leading),
-                        selected: IconStyle(icon: "chevron.down.circle", position: .leading)
-                    ),
-                    style: .secondaryLeadingSmall,
-                    buttonAction: .action(
-                        {
-                            print("button tapped")
-                        }
-                    )
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState.arrowUpRight,
-                    style: .secondaryLeading,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    )
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState.qrCode,
-                    style: .secondary,
-                    buttonAction: .action(
-                        {
-                            print("button tapped")
-                        }
-                    )
-                )
-            ]
-            + hapticButtons,
+                FullGDSContentTile()
+
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
+//                    icon: IconForState.arrowUpRight,
+//                    style: .primary,
+//                    buttonAction: .asyncAction(
+//                        {
+//                            do {
+//                                print("button tapped")
+//                                try await Task.sleep(nanoseconds: 1_000_000_000)
+//                                print("button await completed")
+//                            } catch {
+//
+//                            }
+//                        }
+//                    ),
+//                    haptic: .success
+//                ),
+//
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "My really very long button title"),
+//                    icon: IconForState.arrowUpRight,
+//                    style: .destructive,
+//                    buttonAction: .asyncAction(
+//                        {
+//                            do {
+//                                print("button tapped")
+//                                try await Task.sleep(nanoseconds: 1_000_000_000)
+//                                print("button await completed")
+//                            } catch {
+//
+//                            }
+//                        }
+//                    ),
+//                    haptic: .impactHeavy
+//                ),
+//
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "", selected: "selected"),
+//                    icon: IconForState.arrowUpRight,
+//                    style: .primary,
+//                    buttonAction: .asyncAction(
+//                        {
+//                            do {
+//                                print("button tapped")
+//                                try await Task.sleep(nanoseconds: 1_000_000_000)
+//                                print("button await completed")
+//                            } catch {
+//
+//                            }
+//                        }
+//                    ),
+//                    haptic: .impactHeavy
+//                ),
+//
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "My button title"),
+//                    icon: IconForState(
+//                        normal: IconStyle(icon: "chevron.up.circle", position: .leading),
+//                        selected: IconStyle(icon: "chevron.down.circle", position: .leading)
+//                    ),
+//                    style: .secondaryLeadingSmall,
+//                    buttonAction: .action(
+//                        {
+//                            print("button tapped")
+//                        }
+//                    )
+//                ),
+//
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "My button title"),
+//                    icon: IconForState.arrowUpRight,
+//                    style: .secondaryLeading,
+//                    buttonAction: .asyncAction(
+//                        {
+//                            do {
+//                                print("button tapped")
+//                                try await Task.sleep(nanoseconds: 1_000_000_000)
+//                                print("button await completed")
+//                            } catch {
+//
+//                            }
+//                        }
+//                    )
+//                ),
+//
+//                GDSButtonViewModel(
+//                    title: TitleForState(normal: "My button title"),
+//                    icon: IconForState.qrCode,
+//                    style: .secondary,
+//                    buttonAction: .action(
+//                        {
+//                            print("button tapped")
+//                        }
+//                    )
+//                )
+//            ]
+//            + hapticButtons,
+                ],
             
             moveableFooter: [],
             footer: []
