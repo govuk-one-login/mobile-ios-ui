@@ -134,7 +134,7 @@ final public class GDSContentTile: UIView {
             spacing: 12,
             distribution: .fill
         )
-        stackView.directionalLayoutMargins.leading = 24
+        stackView.directionalLayoutMargins.leading = 12
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()

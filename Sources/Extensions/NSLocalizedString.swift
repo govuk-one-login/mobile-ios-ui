@@ -1,11 +1,3 @@
-//
-//  File.swift
-//  DesignSystem
-//
-//  Created by James, Dylan on 30/07/2025.
-//
-
-
 import Foundation
 
 // This is a wrapper function around NSLocalizedString that provides a default argument for the comment parameter to simplify the call site.
