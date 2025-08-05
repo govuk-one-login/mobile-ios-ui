@@ -51,8 +51,8 @@ public struct FullGDSContentTile: ExpandedContentTileViewModel {
     public let showShadow: Bool = true
     public let image: UIImage = UIImage(named: "DemoImage")!
     public let closeButtonAction: () -> Void = { }
-    public let caption: GDSLocalisedString? = "caption"
-    public let body: GDSLocalisedString = "content tile body"
+    public let caption: GDSLocalisedString? = "image caption"
+    public let body: GDSLocalisedString = "Content tile body description text"
     public let primaryButtonViewModel: GDSButtonViewModel = GDSButtonViewModel(
         title: "Button 1",
         style: .primary,

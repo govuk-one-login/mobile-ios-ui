@@ -90,20 +90,14 @@ final public class GDSContentTile: UIView {
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .custom)
         if let viewModel = viewModel as? GDSContentTileViewModelWithDismissButton {
-            let config = UIImage.SymbolConfiguration(textStyle: .body, scale: .default)
-            let image = UIImage(systemName: "xmark", withConfiguration: config) ?? UIImage()
-            button.setImage(image, for: .normal)
-            button.tintColor = traitCollection.userInterfaceStyle == .dark ? DesignSystem.Color.Base.green1 : DesignSystem.Color.Base.green2
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            configureCloseButton(button)
+            button.tintColor = traitCollection.userInterfaceStyle == .dark
+                ? DesignSystem.Color.Base.green1
+                : DesignSystem.Color.Base.green2
             button.addAction(
-                UIAction { _ in
-                    viewModel.closeButtonAction()
-                },
+                UIAction { _ in viewModel.closeButtonAction() },
                 for: .touchUpInside
             )
-            button.widthAnchor.constraint(equalToConstant: image.size.width).isActive = true
-            button.heightAnchor.constraint(equalToConstant: image.size.height).isActive = true
         } else {
             button.isHidden = true
         }
@@ -143,7 +137,7 @@ final public class GDSContentTile: UIView {
         let separator = UIView()
         if viewModel.showSeparatorLine {
             separator.backgroundColor = .separator
-            separator.heightAnchor.constraint(equalToConstant: 2).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: 1).isActive = true
             separator.translatesAutoresizingMaskIntoConstraints = false
         } else {
             separator.isHidden = true
@@ -206,9 +200,26 @@ final public class GDSContentTile: UIView {
         setUp()
     }
     
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        viewModel is GDSContentTileViewModelWithDismissButton ? configureCloseButton(closeButton) : nil
+    }
+    
     private func setUp() {
         backgroundColor = viewModel.backgroundColour
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
+    }
+    
+    private func configureCloseButton(_ button: UIButton) {
+        let font = UIFont.preferredFont(forTextStyle: .body)
+        let config = UIImage.SymbolConfiguration(pointSize: font.pointSize, weight: .regular)
+        button.setImage(UIImage(systemName: "xmark", withConfiguration: config), for: .normal)
+        button.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        
+        button.constraints.forEach { $0.isActive = false }
+        
+        button.widthAnchor.constraint(equalToConstant: font.pointSize).isActive = true
+        button.heightAnchor.constraint(equalToConstant: font.pointSize).isActive = true
     }
 }
