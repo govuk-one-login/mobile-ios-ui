@@ -95,7 +95,9 @@ final public class GDSContentTile: UIView {
                 ? DesignSystem.Color.Base.green1
                 : DesignSystem.Color.Base.green2
             button.addAction(
-                UIAction { _ in viewModel.closeButtonAction() },
+                UIAction { [unowned self] _ in
+                    viewModel.closeButtonAction()
+                },
                 for: .touchUpInside
             )
         } else {
