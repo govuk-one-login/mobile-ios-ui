@@ -19,7 +19,7 @@ public protocol GDSContentTileViewModel {
 
 public extension GDSContentTileViewModel {
     var backgroundColour: UIColor? {
-        .clear
+        .systemBackground
     }
 }
 

@@ -15,6 +15,7 @@ final public class GDSContentTile: UIView {
         stackView.layer.cornerRadius = 12
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = viewModel.backgroundColour
         return stackView
     }()
     
@@ -193,7 +194,6 @@ final public class GDSContentTile: UIView {
     }
     
     private func setUp() {
-        backgroundColor = viewModel.backgroundColour
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
         viewModel is GDSContentTileViewModelWithDismissButton ? addDismissButton() : ()
@@ -202,11 +202,10 @@ final public class GDSContentTile: UIView {
 
     private func applyShadowIfNeeded() {
         if viewModel.showShadow {
-            // Customize these values as needed for your design system
+            layer.shadowRadius = 10
+            layer.shadowOffset = CGSize(width: 0, height: 3)
+            layer.shadowOpacity = 0.1
             layer.shadowColor = UIColor.black.cgColor
-            layer.shadowOpacity = 0.15
-            layer.shadowOffset = CGSize(width: 0, height: 2)
-            layer.shadowRadius = 8
             layer.masksToBounds = false
         }
     }
