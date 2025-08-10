@@ -25,7 +25,8 @@ class ViewController: UIViewController {
         
         return TestViewControllerViewModel(
             body: [
-                FullGDSContentTile()
+                FullGDSContentTile(),
+                PartialGDSContentTile()
 
 //                GDSButtonViewModel(
 //                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),

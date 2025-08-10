@@ -50,7 +50,7 @@ public protocol GDSContentTileViewModelWithSecondaryButton {
 }
 
 public struct FullGDSContentTile: ExpandedContentTileViewModel {
-    public let title: GDSLocalisedString = "Content Tile"
+    public let title: GDSLocalisedString = "Full Content Tile"
     public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
     public let showSeparatorLine: Bool = true
     public let backgroundColour: UIColor? = .clear
@@ -74,6 +74,32 @@ public struct FullGDSContentTile: ExpandedContentTileViewModel {
 }
 
 extension FullGDSContentTile: ContentItem {
+    public var uiView: UIView {
+        GDSContentTile(viewModel: self)
+    }
+}
+
+public struct PartialGDSContentTile: GDSContentTileViewModel &
+                                     GDSContentTileViewModelWithDismissButton &
+                                     GDSContentTileViewModelWithBody &
+                                     GDSContentTileViewModelWithPrimaryButton {
+    public let title: GDSLocalisedString = "Full Content Tile"
+    public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
+    public let showSeparatorLine: Bool = true
+    public let backgroundColour: UIColor? = .clear
+    public let showShadow: Bool = true
+    public let closeButtonAction: () -> Void = { print("close button pressed") }
+    public let body: GDSLocalisedString = "Content tile body description text with extra text to demonstrate multi line"
+    public let primaryButtonViewModel: GDSButtonViewModel = GDSButtonViewModel(
+        title: "Button 1",
+        style: .primary,
+        buttonAction: .action({ print("button 1 pressed") })
+    )
+    
+    public init() { }
+}
+
+extension PartialGDSContentTile: ContentItem {
     public var uiView: UIView {
         GDSContentTile(viewModel: self)
     }

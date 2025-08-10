@@ -34,13 +34,13 @@ final public class GDSContentTile: UIView {
         let stackView = UIStackView(
             views: [
                 captionLabel,
-                titleStackView,
+                titleLabel,
                 bodyLabel
             ],
-            spacing: 12,
+            spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
-        stackView.directionalLayoutMargins = .childStack
+        stackView.directionalLayoutMargins = .bodyStack
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -61,21 +61,6 @@ final public class GDSContentTile: UIView {
         return caption
     }()
     
-    private lazy var titleStackView: UIStackView = {
-        let stackView = UIStackView(
-            views: [
-                titleLabel,
-                closeButton
-            ],
-            axis: .horizontal,
-            spacing: 12,
-            alignment: .bottom,
-            distribution: .fill
-        )
-        stackView.isLayoutMarginsRelativeArrangement = true
-        return stackView
-    }()
-    
     private lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.text = viewModel.title.value
@@ -85,26 +70,6 @@ final public class GDSContentTile: UIView {
         title.numberOfLines = 0
         title.accessibilityIdentifier = "numbered-list-title"
         return title
-    }()
-    
-    lazy var closeButton: UIButton = {
-        let button = UIButton(type: .custom)
-        if let viewModel = viewModel as? GDSContentTileViewModelWithDismissButton {
-            configureCloseButton(button)
-            button.tintColor = traitCollection.userInterfaceStyle == .dark
-                ? DesignSystem.Color.Base.green1
-                : DesignSystem.Color.Base.green2
-            button.addAction(
-                UIAction { [unowned self] _ in
-                    viewModel.closeButtonAction()
-                },
-                for: .touchUpInside
-            )
-        } else {
-            button.isHidden = true
-        }
-        button.accessibilityIdentifier = "close-button"
-        return button
     }()
     
     private lazy var bodyLabel: UILabel = {
@@ -127,10 +92,10 @@ final public class GDSContentTile: UIView {
             views: [
                 separatorView
             ],
-            spacing: 12,
+            spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
-        stackView.directionalLayoutMargins.leading = 12
+        stackView.directionalLayoutMargins = .separator
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -154,10 +119,10 @@ final public class GDSContentTile: UIView {
                 secondaryButton,
                 primaryButton
             ],
-            spacing: 12,
+            spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
-        stackView.directionalLayoutMargins = .childStack
+        stackView.directionalLayoutMargins = .buttonStack
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
@@ -190,6 +155,26 @@ final public class GDSContentTile: UIView {
         }
     }()
     
+    lazy var dismissButton: UIButton = {
+        let button = UIButton(type: .custom)
+        if let viewModel = viewModel as? GDSContentTileViewModelWithDismissButton {
+            configureDismissButton(button)
+            button.tintColor = traitCollection.userInterfaceStyle == .dark ?
+            DesignSystem.Color.Base.green1
+            : DesignSystem.Color.Base.green2
+            button.addAction(
+                UIAction { [unowned self] _ in
+                    viewModel.closeButtonAction()
+                },
+                for: .touchUpInside
+            )
+        } else {
+            button.isHidden = true
+        }
+        button.accessibilityIdentifier = "close-button"
+        return button
+    }()
+    
     public let viewModel: GDSContentTileViewModel
     
     required public init?(coder aDecoder: NSCoder) {
@@ -204,24 +189,50 @@ final public class GDSContentTile: UIView {
     
     override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        viewModel is GDSContentTileViewModelWithDismissButton ? configureCloseButton(closeButton) : nil
+        viewModel is GDSContentTileViewModelWithDismissButton ? configureDismissButton(dismissButton) : nil
     }
     
     private func setUp() {
         backgroundColor = viewModel.backgroundColour
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
+        viewModel is GDSContentTileViewModelWithDismissButton ? addDismissButton() : ()
     }
     
-    private func configureCloseButton(_ button: UIButton) {
-        let font = UIFont.preferredFont(forTextStyle: .body)
+    private func addDismissButton() {
+        addSubview(dismissButton)
+        NSLayoutConstraint.activate([
+            dismissButton.topAnchor.constraint(
+                equalTo: containerStackView.topAnchor
+            ),
+            dismissButton.trailingAnchor.constraint(
+                equalTo: containerStackView.trailingAnchor
+            )]
+        )
+        if !(viewModel is GDSContentTileViewModelWithImage) {
+            titleLabel.trailingAnchor
+                .constraint(
+                    equalTo: dismissButton.leadingAnchor
+                ).isActive = true
+            bodyLabel.trailingAnchor
+                .constraint(
+                    equalTo: containerStackView.trailingAnchor,
+                    constant: -DesignSystem.Spacing.default
+                )
+                .isActive = true
+        }
+    }
+    
+    private func configureDismissButton(_ button: UIButton) {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let font = UIFont.preferredFont(forTextStyle: .footnote)
         let config = UIImage.SymbolConfiguration(pointSize: font.pointSize, weight: .regular)
         button.setImage(UIImage(systemName: "xmark", withConfiguration: config), for: .normal)
-        button.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        button.configuration = .closeButton
         
         button.constraints.forEach { $0.isActive = false }
         
-        button.widthAnchor.constraint(equalToConstant: font.pointSize).isActive = true
-        button.heightAnchor.constraint(equalToConstant: font.pointSize).isActive = true
+        button.widthAnchor.constraint(equalToConstant: font.pointSize + 32).isActive = true
+        button.heightAnchor.constraint(equalToConstant: font.pointSize + 24).isActive = true
     }
 }
