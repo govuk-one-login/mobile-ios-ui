@@ -1,6 +1,6 @@
 import UIKit
 
-final public class GDSContentTile: UIView {
+final public class GDSContentCard: UIView {
     private lazy var containerStackView: UIStackView = {
         let stackView = UIStackView(
             views: [
@@ -21,7 +21,7 @@ final public class GDSContentTile: UIView {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        if let viewModel = viewModel as? GDSContentTileViewModelWithImage {
+        if let viewModel = viewModel as? GDSContentCardViewModelWithImage {
             imageView.image = viewModel.image
             imageView.contentMode = .scaleAspectFill
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ final public class GDSContentTile: UIView {
     
     private lazy var captionLabel: UILabel = {
         let caption = UILabel()
-        if let viewModel = viewModel as? GDSContentTileViewModelWithImage,
+        if let viewModel = viewModel as? GDSContentCardViewModelWithImage,
            let imageCaption = viewModel.caption {
             caption.text = imageCaption.value
             caption.font = DesignSystem.Font.Base.caption1
@@ -75,7 +75,7 @@ final public class GDSContentTile: UIView {
     
     private lazy var bodyLabel: UILabel = {
         let body = UILabel()
-        if let viewModel = viewModel as? GDSContentTileViewModelWithBody {
+        if let viewModel = viewModel as? GDSContentCardViewModelWithBody {
             body.text = viewModel.body.value
             body.font = DesignSystem.Font.Base.body
             body.adjustsFontForContentSizeCategory = true
@@ -129,7 +129,7 @@ final public class GDSContentTile: UIView {
     }()
     
     lazy var secondaryButton: UIButton = {
-        if let viewModel = viewModel as? GDSContentTileViewModelWithSecondaryButton {
+        if let viewModel = viewModel as? GDSContentCardViewModelWithSecondaryButton {
             let secondaryButton = GDSButton(viewModel: viewModel.secondaryButtonViewModel)
             secondaryButton.contentHorizontalAlignment = .left
             secondaryButton.isUserInteractionEnabled = true
@@ -143,7 +143,7 @@ final public class GDSContentTile: UIView {
     }()
     
     lazy var primaryButton: UIButton = {
-        if let viewModel = viewModel as? GDSContentTileViewModelWithPrimaryButton {
+        if let viewModel = viewModel as? GDSContentCardViewModelWithPrimaryButton {
             let secondaryButton = GDSButton(viewModel: viewModel.primaryButtonViewModel)
             secondaryButton.contentHorizontalAlignment = .left
             secondaryButton.isUserInteractionEnabled = true
@@ -158,7 +158,7 @@ final public class GDSContentTile: UIView {
     
     lazy var dismissButton: UIButton = {
         let button = UIButton(type: .custom)
-        if let viewModel = viewModel as? GDSContentTileViewModelWithDismissButton {
+        if let viewModel = viewModel as? GDSContentCardViewModelWithDismissButton {
             configureDismissButton(button)
             button.tintColor = traitCollection.userInterfaceStyle == .dark ?
             DesignSystem.Color.Base.green1
@@ -176,13 +176,13 @@ final public class GDSContentTile: UIView {
         return button
     }()
     
-    public let viewModel: GDSContentTileViewModel
+    public let viewModel: GDSContentCardViewModel
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(viewModel: GDSContentTileViewModel, frame: CGRect = .zero) {
+    public init(viewModel: GDSContentCardViewModel, frame: CGRect = .zero) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setUp()
@@ -190,13 +190,13 @@ final public class GDSContentTile: UIView {
     
     override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        viewModel is GDSContentTileViewModelWithDismissButton ? configureDismissButton(dismissButton) : nil
+        viewModel is GDSContentCardViewModelWithDismissButton ? configureDismissButton(dismissButton) : nil
     }
     
     private func setUp() {
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
-        viewModel is GDSContentTileViewModelWithDismissButton ? addDismissButton() : ()
+        viewModel is GDSContentCardViewModelWithDismissButton ? addDismissButton() : ()
         viewModel.applyShadow ? applyShadow() : ()
     }
     
@@ -218,7 +218,7 @@ final public class GDSContentTile: UIView {
                 equalTo: containerStackView.trailingAnchor
             )]
         )
-        if !(viewModel is GDSContentTileViewModelWithImage) {
+        if !(viewModel is GDSContentCardViewModelWithImage) {
             titleLabel.trailingAnchor
                 .constraint(
                     equalTo: dismissButton.leadingAnchor

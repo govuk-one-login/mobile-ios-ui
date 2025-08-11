@@ -1,15 +1,15 @@
 import Foundation
 import UIKit
 
-public typealias ExpandedContentTileViewModel = GDSContentTileViewModel &
-                                                GDSContentTileViewModelWithImage &
-                                                GDSContentTileViewModelWithDismissButton &
-                                                GDSContentTileViewModelWithBody &
-                                                GDSContentTileViewModelWithSecondaryButton &
-                                                GDSContentTileViewModelWithPrimaryButton
+public typealias ExpandedContentTileViewModel = GDSContentCardViewModel &
+                                                GDSContentCardViewModelWithImage &
+                                                GDSContentCardViewModelWithDismissButton &
+                                                GDSContentCardViewModelWithBody &
+                                                GDSContentCardViewModelWithSecondaryButton &
+                                                GDSContentCardViewModelWithPrimaryButton
 
 @MainActor
-public protocol GDSContentTileViewModel {
+public protocol GDSContentCardViewModel {
     var title: GDSLocalisedString { get }
     var titleFont: UIFont { get }
     var showSeparatorLine: Bool { get }
@@ -17,45 +17,45 @@ public protocol GDSContentTileViewModel {
     var applyShadow: Bool { get }
 }
 
-public extension GDSContentTileViewModel {
+public extension GDSContentCardViewModel {
     var backgroundColour: UIColor? {
         .systemBackground
     }
 }
 
 @MainActor
-public protocol GDSContentTileViewModelWithImage {
+public protocol GDSContentCardViewModelWithImage {
     var image: UIImage { get }
     var caption: GDSLocalisedString? { get }
 }
 
-public extension GDSContentTileViewModelWithImage {
+public extension GDSContentCardViewModelWithImage {
     var caption: GDSLocalisedString? {
         nil
     }
 }
 
 @MainActor
-public protocol GDSContentTileViewModelWithDismissButton {
+public protocol GDSContentCardViewModelWithDismissButton {
     var closeButtonAction: () -> Void { get }
 }
 
 @MainActor
-public protocol GDSContentTileViewModelWithBody {
+public protocol GDSContentCardViewModelWithBody {
     var body: GDSLocalisedString { get }
 }
 
 @MainActor
-public protocol GDSContentTileViewModelWithPrimaryButton {
+public protocol GDSContentCardViewModelWithPrimaryButton {
     var primaryButtonViewModel: GDSButtonViewModel { get }
 }
 
 @MainActor
-public protocol GDSContentTileViewModelWithSecondaryButton {
+public protocol GDSContentCardViewModelWithSecondaryButton {
     var secondaryButtonViewModel: GDSButtonViewModel { get }
 }
 
-public struct FullGDSContentTile: ExpandedContentTileViewModel {
+public struct FullGDSContentCard: ExpandedContentTileViewModel {
     public let title: GDSLocalisedString = "Full Content Tile"
     public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
     public let showSeparatorLine: Bool = true
@@ -78,16 +78,16 @@ public struct FullGDSContentTile: ExpandedContentTileViewModel {
     public init() { }
 }
 
-extension FullGDSContentTile: ContentItem {
+extension FullGDSContentCard: ContentItem {
     public var uiView: UIView {
-        GDSContentTile(viewModel: self)
+        GDSContentCard(viewModel: self)
     }
 }
 
-public struct PartialGDSContentTile: GDSContentTileViewModel &
-                                     GDSContentTileViewModelWithDismissButton &
-                                     GDSContentTileViewModelWithBody &
-                                     GDSContentTileViewModelWithPrimaryButton {
+public struct PartialGDSContentCard: GDSContentCardViewModel &
+                                     GDSContentCardViewModelWithDismissButton &
+                                     GDSContentCardViewModelWithBody &
+                                     GDSContentCardViewModelWithPrimaryButton {
     public let title: GDSLocalisedString = "Full Content Tile"
     public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
     public let showSeparatorLine: Bool = true
@@ -103,8 +103,8 @@ public struct PartialGDSContentTile: GDSContentTileViewModel &
     public init() { }
 }
 
-extension PartialGDSContentTile: ContentItem {
+extension PartialGDSContentCard: ContentItem {
     public var uiView: UIView {
-        GDSContentTile(viewModel: self)
+        GDSContentCard(viewModel: self)
     }
 }
