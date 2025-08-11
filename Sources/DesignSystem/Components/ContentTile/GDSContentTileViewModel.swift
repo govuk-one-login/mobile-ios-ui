@@ -14,7 +14,7 @@ public protocol GDSContentTileViewModel {
     var titleFont: UIFont { get }
     var showSeparatorLine: Bool { get }
     var backgroundColour: UIColor? { get }
-    var showShadow: Bool { get }
+    var applyShadow: Bool { get }
 }
 
 public extension GDSContentTileViewModel {
@@ -59,7 +59,7 @@ public struct FullGDSContentTile: ExpandedContentTileViewModel {
     public let title: GDSLocalisedString = "Full Content Tile"
     public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
     public let showSeparatorLine: Bool = true
-    public let showShadow: Bool = true
+    public let applyShadow: Bool = true
     public let image: UIImage = UIImage(named: "DemoImage")!
     public let closeButtonAction: () -> Void = { print("close button pressed") }
     public let caption: GDSLocalisedString? = "image caption"
@@ -91,7 +91,7 @@ public struct PartialGDSContentTile: GDSContentTileViewModel &
     public let title: GDSLocalisedString = "Full Content Tile"
     public let titleFont: UIFont = DesignSystem.Font.Base.bodySemiBold
     public let showSeparatorLine: Bool = true
-    public let showShadow: Bool = true
+    public let applyShadow: Bool = true
     public let closeButtonAction: () -> Void = { print("close button pressed") }
     public let body: GDSLocalisedString = "Content tile body description text with extra text to demonstrate multi line"
     public let primaryButtonViewModel: GDSButtonViewModel = GDSButtonViewModel(

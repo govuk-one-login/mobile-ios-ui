@@ -197,17 +197,15 @@ final public class GDSContentTile: UIView {
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
         viewModel is GDSContentTileViewModelWithDismissButton ? addDismissButton() : ()
-        applyShadowIfNeeded()
+        viewModel.applyShadow ? applyShadow() : ()
     }
-
-    private func applyShadowIfNeeded() {
-        if viewModel.showShadow {
-            layer.shadowRadius = 10
-            layer.shadowOffset = CGSize(width: 0, height: 3)
-            layer.shadowOpacity = 0.1
-            layer.shadowColor = UIColor.black.cgColor
-            layer.masksToBounds = false
-        }
+    
+    private func applyShadow() {
+        layer.shadowRadius = 10
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.shadowOpacity = 0.1
+        layer.shadowColor = UIColor.black.cgColor
+        layer.masksToBounds = false
     }
     
     private func addDismissButton() {
