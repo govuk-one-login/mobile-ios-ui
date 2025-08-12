@@ -88,7 +88,7 @@ struct GDSContentCardViewModelTests {
                 title
             ],
             showShadow: false,
-            dismissAction: { }
+            dismissAction: .action({ })
         )
         let cardStackView = try #require(card.uiView as? UIStackView)
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
@@ -116,7 +116,7 @@ struct GDSContentCardViewModelTests {
                 title
             ],
             showShadow: false,
-            dismissAction: { }
+            dismissAction: .action({ })
         )
         let cardStackView = try #require(card.uiView as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
