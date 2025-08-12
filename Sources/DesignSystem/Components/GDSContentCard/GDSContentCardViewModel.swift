@@ -28,7 +28,7 @@ extension GDSContentCardViewModel: ContentItem {
         stackView.backgroundColor = .systemBackground
         items.forEach {
             let stack = UIStackView(
-                views: [$0.uiView],
+                views: [ $0.uiView ],
                 distribution: .fill
             )
             if let dismissAction {
@@ -41,11 +41,17 @@ extension GDSContentCardViewModel: ContentItem {
                 if items.first is ContentImageViewModel {
                     if $0 is ContentImageViewModel {
                         stack.addSubview(dismissButton)
+                        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            dismissButton.topAnchor.constraint(equalTo: stack.topAnchor),
+                            dismissButton.trailingAnchor.constraint(equalTo: stack.trailingAnchor)
+                        ])
                     }
                 } else if $0 is ContentTitleViewModel {
+                    stack.spacing = 0
                     stack.axis = .horizontal
                     stack.alignment = .center
-                    stack.spacing = 0
+                    stack.distribution = .fillProportionally
                     stack.addArrangedSubview(dismissButton)
                 }
             }
