@@ -27,59 +27,82 @@ extension GDSContentCardViewModel: ContentItem {
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .systemBackground
-        items.forEach {
+        items.forEach { item in
             let stack = UIStackView(
-                views: $0.uiView,
+                views: item.uiView,
                 alignment: .fill,
                 distribution: .fill
             )
             if let dismissAction {
                 if items.first is ContentImageViewModel {
-                    if $0 is ContentImageViewModel {
-                        let dismissButton = createDismissButton(action: dismissAction)
-                        stack.addSubview(dismissButton)
-                        dismissButton.translatesAutoresizingMaskIntoConstraints = false
-                        NSLayoutConstraint.activate([
-                            dismissButton.topAnchor.constraint(equalTo: stack.topAnchor),
-                            dismissButton.trailingAnchor.constraint(equalTo: stack.trailingAnchor)
-                        ])
+                    if item is ContentImageViewModel {
+                        addDismissButton(type: .image, stackView: stack, action: dismissAction)
                     }
-                } else if $0 is ContentTitleViewModel {
-                    let dismissButton = createDismissButton(action: dismissAction)
-                    stack.spacing = 0
-                    stack.axis = .horizontal
-                    stack.alignment = .center
-                    stack.distribution = .fillProportionally
-                    stack.addArrangedSubview(dismissButton)
+                } else if item is ContentTitleViewModel {
+                    addDismissButton(type: .title, stackView: stack, action: dismissAction)
                 }
             }
-            stack.isLayoutMarginsRelativeArrangement = true
-            stack.directionalLayoutMargins = NSDirectionalEdgeInsets(
-                top: $0.verticalPadding?.topPadding ?? .zero,
-                leading: $0.horizontalPadding?.leadingPadding ?? DesignSystem.Spacing.default,
-                bottom: $0.verticalPadding?.bottomPadding ?? .zero,
-                trailing: $0.horizontalPadding?.trailingPadding ?? DesignSystem.Spacing.default
-            )
-            stack.translatesAutoresizingMaskIntoConstraints = false
+            additionalStackViewConfiguration(stack, contentItem: item)
             stackView.addArrangedSubview(stack)
         }
-        if showShadow {
-            stackView.layer.shadowRadius = 10
-            stackView.layer.shadowOffset = CGSize(width: 0, height: 3)
-            stackView.layer.shadowOpacity = 0.1
-            stackView.layer.shadowColor = UIColor.black.cgColor
-            stackView.layer.masksToBounds = false
-        }
+        if showShadow { addShadowToView(stackView) }
         return stackView
+    }
+}
+
+extension GDSContentCardViewModel {
+    private enum StackViewType {
+        case image, title
     }
     
     @MainActor
-    func createDismissButton(action: ButtonAction) -> UIView {
-        GDSButtonViewModel(
+    private func addDismissButton(
+        type: StackViewType,
+        stackView: UIStackView,
+        action: ButtonAction
+    ) {
+        let dismissButton = GDSButtonViewModel(
             title: "",
             icon: "xmark",
             style: .secondary,
             buttonAction: action
         ).uiView
+        
+        switch type {
+        case .image:
+            stackView.addSubview(dismissButton)
+            dismissButton.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                dismissButton.topAnchor.constraint(equalTo: stackView.topAnchor),
+                dismissButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
+            ])
+        case .title:
+            stackView.spacing = 0
+            stackView.axis = .horizontal
+            stackView.alignment = .center
+            stackView.distribution = .fillProportionally
+            stackView.addArrangedSubview(dismissButton)
+        }
+    }
+    
+    @MainActor
+    func additionalStackViewConfiguration(_ stackView: UIStackView, contentItem: ContentItem) {
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+            top: contentItem.verticalPadding?.topPadding ?? .zero,
+            leading: contentItem.horizontalPadding?.leadingPadding ?? DesignSystem.Spacing.default,
+            bottom: contentItem.verticalPadding?.bottomPadding ?? .zero,
+            trailing: contentItem.horizontalPadding?.trailingPadding ?? DesignSystem.Spacing.default
+        )
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    @MainActor
+    private func addShadowToView(_ stackView: UIStackView) {
+        stackView.layer.shadowRadius = 10
+        stackView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        stackView.layer.shadowOpacity = 0.1
+        stackView.layer.shadowColor = UIColor.black.cgColor
+        stackView.layer.masksToBounds = false
     }
 }
