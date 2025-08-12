@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "iOS cropped.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
