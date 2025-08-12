@@ -13,10 +13,10 @@ class ViewController: UIViewController {
             body: [
                 GDSContentCardViewModel(
                     items: [
-                        ContentImageViewModel(
-                            image: UIImage(named: "DemoImage")!,
-                            contentMode: .scaleAspectFit
-                        ),
+//                        ContentImageViewModel(
+//                            image: UIImage(named: "DemoImage")!,
+//                            contentMode: .scaleAspectFit
+//                        ),
                         ContentTitleViewModel(
                             title: "Title",
                             titleFont: DesignSystem.Font.Base.title1,
@@ -29,7 +29,19 @@ class ViewController: UIViewController {
                         DividerViewModel(
                             height: 1,
                             colour: .separator,
-                            verticalPadding: .bottom(8)
+                            verticalPadding: .vertical(0)
+                        ),
+                        GDSButtonViewModel(
+                            title: "Secondary Button",
+                            style: .secondary,
+                            buttonAction: .action({ }),
+                            verticalPadding: .vertical(0)
+                        ),
+                        GDSButtonViewModel(
+                            title: "Primay Button",
+                            style: .primary,
+                            buttonAction: .action({ }),
+                            verticalPadding: .bottom(16)
                         )
                     ],
                     showShadow: true,

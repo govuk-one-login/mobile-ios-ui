@@ -6,13 +6,17 @@ public struct GDSButtonViewModel {
     public let style: GDSButtonStyle
     public let buttonAction: ButtonAction
     public let haptic: Haptic?
+    public let verticalPadding: VerticalPadding?
+    public let horizontalPadding: HorizontalPadding?
     
     public init(
         title: String,
         icon: IconStyle? = nil,
         style: GDSButtonStyle,
         buttonAction: ButtonAction,
-        haptic: Haptic? = nil
+        haptic: Haptic? = nil,
+        verticalPadding: VerticalPadding? = .vertical(8),
+        horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
         self.title = TitleForState(stringLiteral: title)
         if let icon {
@@ -23,6 +27,8 @@ public struct GDSButtonViewModel {
         self.style = style
         self.buttonAction = buttonAction
         self.haptic = haptic
+        self.verticalPadding = verticalPadding
+        self.horizontalPadding = horizontalPadding
     }
      
     public init(
@@ -30,13 +36,17 @@ public struct GDSButtonViewModel {
         icon: IconForState? = nil,
         style: GDSButtonStyle,
         buttonAction: ButtonAction,
-        haptic: Haptic? = nil
+        haptic: Haptic? = nil,
+        verticalPadding: VerticalPadding? = .vertical(8),
+        horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
         self.title = title
         self.icon = icon
         self.style = style
         self.buttonAction = buttonAction
         self.haptic = haptic
+        self.verticalPadding = verticalPadding
+        self.horizontalPadding = horizontalPadding
     }
 }
 
