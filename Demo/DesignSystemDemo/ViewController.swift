@@ -45,8 +45,7 @@ class ViewController: UIViewController {
                         )
                     ],
                     showShadow: true,
-                    dismissAction: {
-                    }
+                    dismissAction: .action({ })
                 )
             ],
             moveableFooter: [],
