@@ -13,10 +13,10 @@ class ViewController: UIViewController {
             body: [
                 GDSContentCardViewModel(
                     items: [
-//                        ContentImageViewModel(
-//                            image: UIImage(named: "DemoImage")!,
-//                            contentMode: .scaleAspectFit
-//                        ),
+                        ContentImageViewModel(
+                            image: UIImage(named: "DemoImage")!,
+                            contentMode: .scaleAspectFit
+                        ),
                         ContentTitleViewModel(
                             title: "Title",
                             titleFont: DesignSystem.Font.Base.title1,
