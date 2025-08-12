@@ -20,11 +20,21 @@ class ViewController: UIViewController {
                         ContentTitleViewModel(
                             title: "Title",
                             titleFont: DesignSystem.Font.Base.title1,
+                            verticalPadding: .vertical(0)
+                        ),
+                        ContentSubtitleViewModel(
+                            title: "Title",
+                            verticalPadding: .vertical(0)
+                        ),
+                        DividerViewModel(
+                            height: 1,
+                            colour: .separator,
                             verticalPadding: .bottom(8)
                         )
                     ],
                     showShadow: true,
-                    dismissAction: { }
+                    dismissAction: {
+                    }
                 )
             ],
             moveableFooter: [],
