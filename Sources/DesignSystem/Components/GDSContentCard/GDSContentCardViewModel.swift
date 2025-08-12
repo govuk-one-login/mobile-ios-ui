@@ -3,12 +3,12 @@ import UIKit
 public struct GDSContentCardViewModel {
     public let items: [ContentItem]
     public let showShadow: Bool
-    public let dismissAction: (() -> Void)?
+    public let dismissAction: ButtonAction?
     
     public init(
         items: [ContentItem],
         showShadow: Bool,
-        dismissAction: (() -> Void)? = nil
+        dismissAction: ButtonAction? = nil
     ) {
         self.items = items
         self.showShadow = showShadow
@@ -34,14 +34,9 @@ extension GDSContentCardViewModel: ContentItem {
                 distribution: .fill
             )
             if let dismissAction {
-                let dismissButton = GDSButtonViewModel(
-                    title: "",
-                    icon: "xmark",
-                    style: .secondary,
-                    buttonAction: .action(dismissAction)
-                ).uiView
                 if items.first is ContentImageViewModel {
                     if $0 is ContentImageViewModel {
+                        let dismissButton = createDismissButton(action: dismissAction)
                         stack.addSubview(dismissButton)
                         dismissButton.translatesAutoresizingMaskIntoConstraints = false
                         NSLayoutConstraint.activate([
@@ -50,6 +45,7 @@ extension GDSContentCardViewModel: ContentItem {
                         ])
                     }
                 } else if $0 is ContentTitleViewModel {
+                    let dismissButton = createDismissButton(action: dismissAction)
                     stack.spacing = 0
                     stack.axis = .horizontal
                     stack.alignment = .center
@@ -75,5 +71,15 @@ extension GDSContentCardViewModel: ContentItem {
             stackView.layer.masksToBounds = false
         }
         return stackView
+    }
+    
+    @MainActor
+    func createDismissButton(action: ButtonAction) -> UIView {
+        GDSButtonViewModel(
+            title: "",
+            icon: "xmark",
+            style: .secondary,
+            buttonAction: action
+        ).uiView
     }
 }
