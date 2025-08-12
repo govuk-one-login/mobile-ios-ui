@@ -18,10 +18,11 @@ public struct GDSContentCardViewModel {
 
 extension GDSContentCardViewModel: ContentItem {
     public var uiView: UIView {
-        let stackView = UIStackView()
-        stackView.spacing = 8
-        stackView.axis = .vertical
-        stackView.distribution = .fill
+        let stackView = UIStackView(
+            spacing: 8,
+            alignment: .fill,
+            distribution: .fill
+        )
         stackView.layer.cornerRadius = 12
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
