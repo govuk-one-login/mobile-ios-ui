@@ -29,7 +29,8 @@ extension GDSContentCardViewModel: ContentItem {
         stackView.backgroundColor = .systemBackground
         items.forEach {
             let stack = UIStackView(
-                views: [ $0.uiView ],
+                views: $0.uiView,
+                alignment: .fill,
                 distribution: .fill
             )
             if let dismissAction {
