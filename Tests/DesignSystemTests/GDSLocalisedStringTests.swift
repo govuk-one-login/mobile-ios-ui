@@ -10,6 +10,7 @@ struct GDSLocalisedStringTests {
         #expect(sut.value == "stringLiteralInitialiser")
     }
     
+    @Test
     func test_firstNonStringLiteralInitialiser() throws {
         let sut = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three")
         
