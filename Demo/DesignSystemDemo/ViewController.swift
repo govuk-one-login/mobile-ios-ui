@@ -35,13 +35,15 @@ class ViewController: UIViewController {
                             title: "Secondary Button",
                             style: .secondary,
                             buttonAction: .action({ }),
-                            verticalPadding: .vertical(0)
+                            verticalPadding: .vertical(0),
+                            horizontalPadding: .horizontal(16)
                         ),
                         GDSButtonViewModel(
                             title: "Primay Button",
                             style: .primary,
                             buttonAction: .action({ }),
-                            verticalPadding: .bottom(16)
+                            verticalPadding: .bottom(16),
+                            horizontalPadding: .horizontal(16)
                         )
                     ],
                     showShadow: true,
