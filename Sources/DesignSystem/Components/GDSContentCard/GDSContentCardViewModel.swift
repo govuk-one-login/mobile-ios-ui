@@ -45,7 +45,9 @@ extension GDSContentCardViewModel: ContentItem {
             additionalStackViewConfiguration(stack, contentItem: item)
             stackView.addArrangedSubview(stack)
         }
-        if showShadow { addShadowToView(stackView) }
+        if showShadow {
+            addShadowToView(stackView)
+        }
         return stackView
     }
 }
