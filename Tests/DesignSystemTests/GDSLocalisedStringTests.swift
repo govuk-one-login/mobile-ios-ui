@@ -1,93 +1,94 @@
 @testable import DesignSystem
-import XCTest
+import Foundation
+import Testing
 
-final class GDSLocalisedStringTests: XCTestCase {
-    var sut: GDSLocalisedString!
-    
-    override func tearDown() {
-        sut = nil
-        
-        super.tearDown()
-    }
-}
-
-extension GDSLocalisedStringTests {
+struct GDSLocalisedStringTests {
+    @Test
     func test_stringLiteralInitialiser() throws {
-        sut = .init(stringLiteral: "stringLiteralInitialiser")
+        let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser")
         
-        XCTAssertEqual(sut.value, "stringLiteralInitialiser")
+        #expect(sut.value == "stringLiteralInitialiser")
     }
     
     func test_firstNonStringLiteralInitialiser() throws {
-        sut = .init(stringKey: "firstNonStringLiteral", "one", "two", "three")
+        let sut = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three")
         
-        XCTAssertEqual(sut.value, "firstNonStringLiteral")
+        #expect(sut.value == "firstNonStringLiteral")
     }
     
+    @Test
     func test_secondNonStringLiteralInitialiser() throws {
-        sut = .init(stringKey: "secondNonStringLiteral", variableKeys: ["one", "two", "three"])
+        let sut = GDSLocalisedString(stringKey: "secondNonStringLiteral", variableKeys: ["one", "two", "three"])
         
-        XCTAssertEqual(sut.value, "secondNonStringLiteral")
+        #expect(sut.value == "secondNonStringLiteral")
     }
     
+    @Test
     func test_descriptionProperty() throws {
-        sut = .init(stringLiteral: "stringLiteralInitialiser")
+        let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser")
         
-        XCTAssertEqual(sut.description, "stringLiteralInitialiser")
+        #expect(sut.description == "stringLiteralInitialiser")
     }
-
+    
+    @Test
     func test_attributedString_stringLiteralInitialiser() {
-        sut = .init(stringLiteral: "stringLiteralInitialiser",
-                    attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
-        XCTAssertNotNil(sut.attributedValue)
+        let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser",
+                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+        #expect(sut.attributedValue != nil)
     }
     
+    @Test
     func test_attributedString_firstNonStringLiteralInitialiser() throws {
-        sut = .init(stringKey: "firstNonStringLiteral", "one", "two", "three",
-                    attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+        let sut = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three",
+                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
         
-        XCTAssertEqual(sut.value, "firstNonStringLiteral")
-        XCTAssertNotNil(sut.attributedValue)
+        #expect(sut.value == "firstNonStringLiteral")
+        #expect(sut.attributedValue != nil)
     }
     
+    @Test
     func test_attributedString_secondNonStringLiteralInitialiser() throws {
-        sut = .init(stringKey: "secondNonStringLiteral",
-                    variableKeys: ["one", "two", "three"],
-                    attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+        let sut = GDSLocalisedString(stringKey: "secondNonStringLiteral",
+                                     variableKeys: ["one", "two", "three"],
+                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
         
-        XCTAssertEqual(sut.value, "secondNonStringLiteral")
-        XCTAssertNotNil(sut.attributedValue)
-    }
-
-    func test_attributedString_isNil() {
-        sut = .init(stringLiteral: "stringLiteralInitialiser")
-        XCTAssertNil(sut.attributedValue)
+        #expect(sut.value == "secondNonStringLiteral")
+        #expect(sut.attributedValue != nil)
     }
     
+    @Test
+    func test_attributedString_isNil() {
+        let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser")
+        #expect(sut.attributedValue == nil)
+    }
+    
+    @Test
     func test_attributedString_withEmptyArray() {
-        sut = .init(stringLiteral: "stringLiteralInitialiser",
-                    attributes: [])
-        XCTAssertNil(sut.attributedValue)
+        let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser",
+                                     attributes: [])
+        #expect(sut.attributedValue == nil)
     }
 }
 
 extension GDSLocalisedStringTests {
+    @Test
     func test_equatable() {
         let stringOne = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three")
-        XCTAssertEqual(stringOne, stringOne)
+        #expect(stringOne == stringOne)
         
         let stringTwo = GDSLocalisedString(stringKey: "secondNonStringLiteral", "one", "two", "three")
         let stringThree = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three", "four")
-        XCTAssertNotEqual(stringOne, stringTwo)
-        XCTAssertNotEqual(stringOne, stringThree)
+        #expect(stringOne != stringTwo)
+        #expect(stringOne != stringThree)
     }
     
+    @Test
     func test_equatableAttributes() {
         let stringOne = GDSLocalisedString(stringKey: "firstNonStringLiteral",
-                                           attributes: [("one", [NSAttributedString.Key.foregroundColor: UIColor.red.cgColor])])
-        XCTAssertEqual(stringOne, stringOne)
+                                           attributes: [("one", [NSAttributedString.Key.foregroundColor: DesignSystem.Color.Base.red1])])
+        #expect(stringOne == stringOne)
         
         let stringTwo = GDSLocalisedString(stringKey: "firstNonStringLiteral")
-        XCTAssertNotEqual(stringOne, stringTwo)
+        #expect(stringOne != stringTwo)
     }
 }
