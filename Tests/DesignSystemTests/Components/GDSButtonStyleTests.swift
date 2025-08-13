@@ -21,7 +21,7 @@ struct GDSButtonStyleTests {
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Base.green2,
-                focused: DesignSystem.Color.Base.yellow
+                focused: DesignSystem.Color.Base.yellow1
             ),
             cornerRadius: DesignSystem.Spacing.default,
             border: nil
@@ -36,7 +36,7 @@ struct GDSButtonStyleTests {
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Base.red1,
                 highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow
+                focused: DesignSystem.Color.Base.yellow1
             )
         )
         
@@ -55,7 +55,7 @@ struct GDSButtonStyleTests {
             backgroundColor: ColorForState(
                 normal: .systemBackground,
                 highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow
+                focused: DesignSystem.Color.Base.yellow1
             ),
             cornerRadius: DesignSystem.Spacing.xSmall,
             border: nil
@@ -99,7 +99,7 @@ struct GDSButtonStyleTests {
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Base.green2,
-                focused: DesignSystem.Color.Base.yellow
+                focused: DesignSystem.Color.Base.yellow1
             ),
             cornerRadius: DesignSystem.Spacing.default,
             border: BorderStyle(width: 1, color: .red)
