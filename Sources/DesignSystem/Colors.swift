@@ -5,12 +5,28 @@ extension DesignSystem {
     public enum Color {
         
         public enum Backgrounds {
+            public static let homeHeader = UIColor(
+                light: Color.Base.blue2,
+                dark: Color.Base.blue1
+            )
+            
+            public static let card = UIColor(
+                light: Color.Base.white,
+                dark: Color.Base.charcoal
+            )
+            
+            public static let statusOverlay = Color.Base.grey1
         }
         
         public enum Dividers {
             public static let `default` = UIColor(
                 light: Color.Base.grey2,
                 dark: Color.Base.white
+            )
+            
+            public static let card = UIColor(
+                light: Color.Base.grey1,
+                dark: Color.Base.grey3
             )
         }
         
@@ -28,21 +44,95 @@ extension DesignSystem {
                 light: Color.Base.grey1,
                 dark: Color.Base.white
             )
+            
+            public static let statusOverlay = Color.Base.white
+        }
+        
+        public enum Links {
+            public static let `default` = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green3
+            )
         }
         
         public enum Buttons {
             public static let primaryForeground = Color.Base.white
+            public static let primaryForegroundFocused = Color.Base.black1
+            public static let primaryForegroundDisabled = Color.Base.charcoal
             public static let primaryBackground = Color.Base.green1
+            public static let primaryBackgroundHighlighted = Color.Base.green8
+            public static let primaryBackgroundFocused = Color.Base.yellow1
+            public static let primaryBackgroundDisabled = Color.Base.grey3
+            public static let primaryBackgroundFocusedHighlighted = Color.Base.yellow4
             
             public static let secondaryForeground = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
-            public static let secondaryForegroundFocus = Color.Base.black1
+            public static let secondaryForegroundFocused = Color.Base.black1
+            public static let secondaryForegroundHighlighted = Color.Base.green8
             public static let secondaryBackground = Color.Base.background
+            public static let secondaryBackgroundFocused = Color.Base.yellow1
+
+            public static let destructiveForeground = Color.Base.white
+            public static let destructiveForegroundDisabled = Color.Base.charcoal
+            public static let destructiveBackground = Color.Base.red1
+            public static let destructiveBackgroundFocused = Color.Base.yellow1
+            public static let destructiveBackgroundHighlighted = Color.Base.red4
+            public static let destructiveBackgroundDisabled = Color.Base.grey3
             
+            public static let nativeButtonText = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green3
+            )
+            public static let nativeButtonTextDestructive = UIColor(
+                light: Color.Base.red1,
+                dark: Color.Base.red2
+            )
         }
-       
+        
+        public enum Icons {
+            public static let `default` = UIColor(
+                light: Color.Base.black1,
+                dark: Color.Base.white
+            )
+            
+            public static let success = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green2
+            )
+            
+            public static let error = UIColor(
+                light: Color.Base.black1,
+                dark: Color.Base.white
+            )
+            
+            public static let destructive = Color.Base.red1
+            public static let statusOverlay = Color.Base.white
+        }
+        
+        public enum Navigation {
+            public static let `default` = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green3
+            )
+            
+            public static let selected = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green3
+            )
+        }
+        
+        public enum Radios {
+            public static let check = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green3
+            )
+        }
+        
+        public enum Shadow {
+            public static let card = Color.Base.black1.withAlphaComponent(0.15)
+        }
         
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
