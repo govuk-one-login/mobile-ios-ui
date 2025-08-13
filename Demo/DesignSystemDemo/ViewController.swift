@@ -14,7 +14,7 @@ class ViewController: UIViewController {
                 GDSContentCardViewModel(
                     items: [
                         ContentImageViewModel(
-                            image: UIImage(named: "DemoImage")!,
+                            image: UIImage(named: "placeholder") ?? UIImage(),
                             contentMode: .scaleAspectFit
                         ),
                         ContentTitleViewModel(
