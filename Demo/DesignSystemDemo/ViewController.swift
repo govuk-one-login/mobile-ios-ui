@@ -9,47 +9,120 @@ public struct TestViewControllerViewModel: ScreenViewModel {
 
 class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
-        TestViewControllerViewModel(
+        let hapticButtons = Haptic.allCases.map { haptic in
+            GDSButtonViewModel(
+                title: TitleForState(normal: "haptic - " + String(describing: haptic)),
+                icon: nil,
+                style: .primary,
+                buttonAction: .action(
+                    {
+                        print(String(describing: haptic))
+                    }
+                ),
+                haptic: haptic
+            )
+        }
+        
+        return TestViewControllerViewModel(
             body: [
-                GDSContentCardViewModel(
-                    items: [
-//                        ContentImageViewModel(
-//                            image: UIImage(named: "placeholder") ?? UIImage(),
-//                            contentMode: .scaleAspectFit
-//                        ),
-                        ContentTitleViewModel(
-                            title: "This is a really very very long title",
-                            titleFont: DesignSystem.Font.Base.title1,
-                            verticalPadding: .vertical(0)
-                        ),
-                        ContentSubtitleViewModel(
-                            title: "Title",
-                            verticalPadding: .vertical(0)
-                        ),
-                        DividerViewModel(
-                            height: 1,
-                            colour: .separator,
-                            verticalPadding: .vertical(0)
-                        ),
-                        GDSButtonViewModel(
-                            title: "Secondary Button",
-                            style: .secondary,
-                            buttonAction: .action({ }),
-                            verticalPadding: .vertical(0),
-                            horizontalPadding: .horizontal(16)
-                        ),
-                        GDSButtonViewModel(
-                            title: "Primay Button",
-                            style: .primary,
-                            buttonAction: .action({ }),
-                            verticalPadding: .bottom(16),
-                            horizontalPadding: .horizontal(16)
-                        )
-                    ],
-                    showShadow: true,
-                    dismissAction: .action({ })
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
+                    icon: IconForState.arrowUpRight,
+                    style: .primary,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .success
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My really very long button title"),
+                    icon: IconForState.arrowUpRight,
+                    style: .destructive,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .impactHeavy
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "", selected: "selected"),
+                    icon: IconForState.arrowUpRight,
+                    style: .primary,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    ),
+                    haptic: .impactHeavy
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState(
+                        normal: IconStyle(icon: "chevron.up.circle", position: .leading),
+                        selected: IconStyle(icon: "chevron.down.circle", position: .leading)
+                    ),
+                    style: .secondaryLeadingSmall,
+                    buttonAction: .action(
+                        {
+                            print("button tapped")
+                        }
+                    )
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState.arrowUpRight,
+                    style: .secondaryLeading,
+                    buttonAction: .asyncAction(
+                        {
+                            do {
+                                print("button tapped")
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                print("button await completed")
+                            } catch {
+                                
+                            }
+                        }
+                    )
+                ),
+                
+                GDSButtonViewModel(
+                    title: TitleForState(normal: "My button title"),
+                    icon: IconForState.qrCode,
+                    style: .secondary,
+                    buttonAction: .action(
+                        {
+                            print("button tapped")
+                        }
+                    )
                 )
-            ],
+            ]
+            + hapticButtons,
+            
             moveableFooter: [],
             footer: []
         )
