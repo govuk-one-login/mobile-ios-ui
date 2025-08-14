@@ -14,8 +14,9 @@ extension DesignSystem {
             )
         }
         
-        public enum Borders {
-        }
+        public enum Borders {}
+        
+        public enum Gradients {}
         
         public enum Text {
             public static let primary = UIColor(
@@ -54,6 +55,7 @@ extension DesignSystem {
             
             public static let blue1 = UIColor.fromHex("#0F385C")
             public static let blue2 = UIColor.fromHex("#1D70B8")
+            public static let blue3 = UIColor.fromHex("#EFFFFF")
             
             public static let teal = UIColor.fromHex("#008670")
             
@@ -64,12 +66,16 @@ extension DesignSystem {
             
             public static let red1 = UIColor.fromHex("#D4351C")
             
+            public static let pink2 = UIColor.fromHex("#FFF4FD")
+            
             public static let yellow = UIColor.fromHex("#FFDD00")
             
             public static let purple = UIColor.fromHex("#774495")
             public static let darkPurple = UIColor.fromHex("#532A45")
             
             public static let background = UIColor.systemBackground
+            
+            
         }
     }
 }
