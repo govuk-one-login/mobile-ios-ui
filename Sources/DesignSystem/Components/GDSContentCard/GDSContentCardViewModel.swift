@@ -18,8 +18,54 @@ public struct GDSContentCardViewModel {
 
 extension GDSContentCardViewModel: ContentItem {
     public var uiView: UIView {
+        GDSContentCardView(viewModel: self)
+    }
+}
+
+extension UIView {
+    var allNestedSubviews: [UIView] {
+        self.subviews.flatMap { [$0] + $0.allNestedSubviews }
+    }
+}
+
+@MainActor
+class GDSContentCardView: UIView {
+    private enum StackViewType {
+        case image, title
+    }
+    
+    let viewModel: GDSContentCardViewModel
+    
+    var dismissButton: UIButton = UIButton()
+    var buttonWidthConstraint: NSLayoutConstraint?
+    
+    private var contentSize: UIContentSizeCategory {
+        didSet {
+            let subviews = self.allNestedSubviews
+            subviews.forEach {
+                if let button = $0 as? UIButton,
+                   button.titleLabel?.text?.count ?? 0 < 5 {
+                    print(button.titleLabel?.text)
+                    print(button.bounds)
+                    print(button.frame)
+                    print(button.intrinsicContentSize)
+                    
+                    if let buttonWidthConstraint {
+                        dismissButton.removeConstraint(buttonWidthConstraint)
+                    }
+                    let adjustment = SizeAdjustment.size(for: contentSize)
+                    buttonWidthConstraint =  dismissButton.widthAnchor.constraint(equalToConstant: ((16 * adjustment) + 32))
+                    buttonWidthConstraint?.isActive = true
+                    
+                }
+            }
+            layoutIfNeeded()
+        }
+    }
+    
+    lazy var stackView: UIStackView = {
         let stackView = UIStackView(
-            spacing: 8,
+            spacing: 0,
             alignment: .fill,
             distribution: .fill
         )
@@ -27,34 +73,81 @@ extension GDSContentCardViewModel: ContentItem {
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .systemBackground
-        items.forEach { item in
+        viewModel.items.forEach { item in
+            let view = item.uiView
+//            view.layer.borderColor = UIColor.blue.cgColor
+//            view.layer.borderWidth = 2
+            
+            view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            
             let stack = UIStackView(
-                views: item.uiView,
+                views: view,
                 alignment: .fill,
                 distribution: .fill
             )
-            if let dismissAction {
-                if items.first is ContentImageViewModel {
+            if let dismissAction = viewModel.dismissAction {
+                if viewModel.items.first is ContentImageViewModel {
                     if item is ContentImageViewModel {
-                        addDismissButton(type: .image, stackView: stack, action: dismissAction)
+                        addDismissButton(
+                            type: .image,
+                            stackView: stack,
+                            action: dismissAction
+                        )
                     }
                 } else if item is ContentTitleViewModel {
-                    addDismissButton(type: .title, stackView: stack, action: dismissAction)
+                    addDismissButton(
+                        type: .title,
+                        stackView: stack,
+                        action: dismissAction
+                    )
                 }
             }
             additionalStackViewConfiguration(stack, contentItem: item)
             stackView.addArrangedSubview(stack)
+            stackView.layoutSubviews()
         }
-        if showShadow {
+        
+        if viewModel.showShadow {
             addShadowToView(stackView)
         }
         return stackView
+    }()
+    
+    init(viewModel: GDSContentCardViewModel) {
+        self.viewModel = viewModel
+        self.contentSize = UIApplication.shared.preferredContentSizeCategory
+        
+        super.init(frame: .zero)
+        addStackToView()
+        
+        NotificationCenter.default.addObserver(
+            forName: UIContentSizeCategory.didChangeNotification,
+            object: nil,
+            queue: nil
+        ) { _ in
+            Task { @MainActor in
+                self.contentSize = UIApplication.shared.preferredContentSizeCategory
+            }
+        }
     }
-}
-
-extension GDSContentCardViewModel {
-    private enum StackViewType {
-        case image, title
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addStackToView() {
+        self.addSubview(stackView)
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate(
+            [
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                stackView.topAnchor.constraint(equalTo: topAnchor),
+                stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ]
+        )
     }
     
     @MainActor
@@ -63,13 +156,33 @@ extension GDSContentCardViewModel {
         stackView: UIStackView,
         action: ButtonAction
     ) {
-        let dismissButton = GDSButtonViewModel(
+        let dismissButtonViewModel = GDSButtonViewModel(
             title: "",
             icon: "xmark",
-            style: .secondary,
+            style: .secondary.adjusting(
+                alignment: .trailing,
+//                border: BorderStyle(width: 2, color: .red)
+            ),
             buttonAction: action
-        ).uiView
+        )
         
+        dismissButton = dismissButtonViewModel.uiView as? UIButton ?? UIButton()
+        
+        dismissButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        dismissButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        dismissButton.titleLabel?.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        dismissButton.titleLabel?.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+//        dismissButton.widthAnchor.constraint(greaterThanOrEqualToConstant: dismissButton.intrinsicContentSize.width).isActive = true
+//        dismissButton.widthAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        let adjustment = SizeAdjustment.size(for: contentSize)
+        
+        buttonWidthConstraint =  dismissButton.widthAnchor.constraint(equalToConstant: ((20 * adjustment) + 32))
+        buttonWidthConstraint?.isActive = true
+        
+        dismissButton.maximumContentSizeCategory = .accessibilityLarge
+
         switch type {
         case .image:
             stackView.addSubview(dismissButton)
@@ -79,12 +192,15 @@ extension GDSContentCardViewModel {
                 dismissButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
             ])
         case .title:
-            stackView.spacing = 0
+            stackView.spacing = 8
             stackView.axis = .horizontal
-            stackView.alignment = .center
-            stackView.distribution = .fillProportionally
+            stackView.alignment = .top
+            stackView.distribution = .fill
             stackView.addArrangedSubview(dismissButton)
         }
+        dump(dismissButton.intrinsicContentSize)
+        stackView.layoutSubviews()
+        dump(dismissButton.intrinsicContentSize)
     }
     
     @MainActor

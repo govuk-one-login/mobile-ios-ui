@@ -13,12 +13,12 @@ class ViewController: UIViewController {
             body: [
                 GDSContentCardViewModel(
                     items: [
-                        ContentImageViewModel(
-                            image: UIImage(named: "placeholder") ?? UIImage(),
-                            contentMode: .scaleAspectFit
-                        ),
+//                        ContentImageViewModel(
+//                            image: UIImage(named: "placeholder") ?? UIImage(),
+//                            contentMode: .scaleAspectFit
+//                        ),
                         ContentTitleViewModel(
-                            title: "Title",
+                            title: "This is a really very very long title",
                             titleFont: DesignSystem.Font.Base.title1,
                             verticalPadding: .vertical(0)
                         ),
