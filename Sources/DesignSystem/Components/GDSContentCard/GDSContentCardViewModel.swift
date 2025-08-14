@@ -41,24 +41,16 @@ class GDSContentCardView: UIView {
     
     private var contentSize: UIContentSizeCategory {
         didSet {
-            let subviews = self.allNestedSubviews
-            subviews.forEach {
-                if let button = $0 as? UIButton,
-                   button.titleLabel?.text?.count ?? 0 < 5 {
-                    print(button.titleLabel?.text)
-                    print(button.bounds)
-                    print(button.frame)
-                    print(button.intrinsicContentSize)
-                    
-                    if let buttonWidthConstraint {
-                        dismissButton.removeConstraint(buttonWidthConstraint)
-                    }
-                    let adjustment = SizeAdjustment.size(for: contentSize)
-                    buttonWidthConstraint =  dismissButton.widthAnchor.constraint(equalToConstant: ((16 * adjustment) + 32))
-                    buttonWidthConstraint?.isActive = true
-                    
-                }
+            if let buttonWidthConstraint {
+                dismissButton.removeConstraint(buttonWidthConstraint)
             }
+            let adjustment = SizeAdjustment.size(for: contentSize)
+            buttonWidthConstraint = dismissButton.widthAnchor.constraint(
+                equalToConstant: (
+                    20 * adjustment
+                ) + DesignSystem.Spacing.xLarge // this should really be set from the button horizontal content insets - both == 32 currently so this works
+            )
+            buttonWidthConstraint?.isActive = true
             layoutIfNeeded()
         }
     }
@@ -69,19 +61,13 @@ class GDSContentCardView: UIView {
             alignment: .fill,
             distribution: .fill
         )
-        stackView.layer.cornerRadius = 12
+        stackView.layer.cornerRadius = 12 // probably should use a design system constant
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .systemBackground
         viewModel.items.forEach { item in
-            let view = item.uiView
-//            view.layer.borderColor = UIColor.blue.cgColor
-//            view.layer.borderWidth = 2
-            
-            view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-            
             let stack = UIStackView(
-                views: view,
+                views: item.uiView,
                 alignment: .fill,
                 distribution: .fill
             )
@@ -160,8 +146,7 @@ class GDSContentCardView: UIView {
             title: "",
             icon: "xmark",
             style: .secondary.adjusting(
-                alignment: .trailing,
-//                border: BorderStyle(width: 2, color: .red)
+                alignment: .trailing
             ),
             buttonAction: action
         )
@@ -173,15 +158,15 @@ class GDSContentCardView: UIView {
         
         dismissButton.titleLabel?.setContentHuggingPriority(.defaultLow, for: .horizontal)
         dismissButton.titleLabel?.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        
-//        dismissButton.widthAnchor.constraint(greaterThanOrEqualToConstant: dismissButton.intrinsicContentSize.width).isActive = true
-//        dismissButton.widthAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+
         let adjustment = SizeAdjustment.size(for: contentSize)
         
-        buttonWidthConstraint =  dismissButton.widthAnchor.constraint(equalToConstant: ((20 * adjustment) + 32))
+        buttonWidthConstraint =  dismissButton.widthAnchor.constraint(
+            equalToConstant: (
+                20 * adjustment
+            ) + DesignSystem.Spacing.xLarge // this should really be set from the button horizontal content insets - both == 32 currently so this works
+        )
         buttonWidthConstraint?.isActive = true
-        
-        dismissButton.maximumContentSizeCategory = .accessibilityLarge
 
         switch type {
         case .image:
@@ -192,7 +177,7 @@ class GDSContentCardView: UIView {
                 dismissButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
             ])
         case .title:
-            stackView.spacing = 8
+            stackView.spacing = .zero
             stackView.axis = .horizontal
             stackView.alignment = .top
             stackView.distribution = .fill

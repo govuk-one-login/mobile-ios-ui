@@ -17,14 +17,6 @@ public final class GDSButton: UIButton {
     
     var isVoiceOverFocussed: Bool = false
     
-//    public override var intrinsicContentSize: CGSize {
-//        let titlesize = CGSize(width: titleLabel?.bounds.width ?? 44, height: titleLabel?.bounds.height ?? 44)
-//        return CGSize(
-//            width: titlesize.width + (viewModel.style.contentInsets?.leading ?? 22) + (viewModel.style.contentInsets?.trailing ?? 22),
-//            height: titlesize.height + (viewModel.style.contentInsets?.top ?? 22) + (viewModel.style.contentInsets?.bottom ?? 22)
-//        )
-//    }
-    
     public init(
         viewModel: GDSButtonViewModel
     ) {
@@ -128,8 +120,4 @@ public final class GDSButton: UIButton {
         config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
         self.configuration = config
     }
-    
-//    override public var intrinsicContentSize: CGSize {
-//        CGSize(width: self.bounds.width, height: self.bounds.height)
-//    }
 }
