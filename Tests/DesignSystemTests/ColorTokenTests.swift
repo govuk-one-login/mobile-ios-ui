@@ -317,7 +317,7 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Navigation_Default() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
         let expectedDarkColor = DesignSystem.Color.Base.green3
-        let sut = DesignSystem.Color.Navigation.default
+        let sut = DesignSystem.Color.NavigationElements.navigationBarElements
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
@@ -326,7 +326,7 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Navigation_Selected() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
         let expectedDarkColor = DesignSystem.Color.Base.green3
-        let sut = DesignSystem.Color.Navigation.selected
+        let sut = DesignSystem.Color.NavigationElements.selectedTabIconAndLabel
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
@@ -336,7 +336,7 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Radio_Check() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
         let expectedDarkColor = DesignSystem.Color.Base.green3
-        let sut = DesignSystem.Color.Radios.check
+        let sut = DesignSystem.Color.SelectedIcon.check
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
@@ -345,8 +345,8 @@ struct ColorTokenTests {
     // MARK: - Shadow tokens
     
     @Test func test_ColorToken_Shadow_Card() async throws {
-        let expectedColor = DesignSystem.Color.Base.black1.withAlphaComponent(0.15)
-        let sut = DesignSystem.Color.Shadow.card
+        let expectedColor = DesignSystem.Color.Base.blackA15
+        let sut = DesignSystem.Color.Shadows.card
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)

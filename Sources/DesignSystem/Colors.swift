@@ -62,8 +62,8 @@ extension DesignSystem {
             public static let primaryBackground = Color.Base.green1
             public static let primaryBackgroundHighlighted = Color.Base.green8
             public static let primaryBackgroundFocused = Color.Base.yellow1
-            public static let primaryBackgroundDisabled = Color.Base.grey3
             public static let primaryBackgroundFocusedHighlighted = Color.Base.yellow4
+            public static let primaryBackgroundDisabled = Color.Base.grey3
             
             public static let secondaryForeground = UIColor(
                 light: Color.Base.green1,
@@ -73,12 +73,15 @@ extension DesignSystem {
             public static let secondaryForegroundHighlighted = Color.Base.green8
             public static let secondaryBackground = Color.Base.background
             public static let secondaryBackgroundFocused = Color.Base.yellow1
+            public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
 
             public static let destructiveForeground = Color.Base.white
+            public static let destructiveForegroundFocused = Color.Base.black1
             public static let destructiveForegroundDisabled = Color.Base.charcoal
             public static let destructiveBackground = Color.Base.red1
             public static let destructiveBackgroundFocused = Color.Base.yellow1
             public static let destructiveBackgroundHighlighted = Color.Base.red4
+            public static let destructiveBackgroundFocusedHighlighted = Color.Base.yellow4
             public static let destructiveBackgroundDisabled = Color.Base.grey3
             
             public static let nativeButtonText = UIColor(
@@ -111,31 +114,37 @@ extension DesignSystem {
             public static let statusOverlay = Color.Base.white
         }
         
-        public enum Navigation {
-            public static let `default` = UIColor(
+        public enum NavigationElements {
+            public static let navigationBarElements = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
             
-            public static let selected = UIColor(
+            public static let selectedTabIconAndLabel = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
         }
         
-        public enum Radios {
+        public enum SelectedIcon {
             public static let check = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
         }
         
-        public enum Shadow {
-            public static let card = Color.Base.black1.withAlphaComponent(0.15)
+        public enum Shadows {
+            public static let card = Color.Base.blackA15
         }
         
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
+            
+            public static let blackA5 = UIColor.fromHex("#000000").withAlphaComponent(0.05)
+            public static let blackA12 = UIColor.fromHex("#000000").withAlphaComponent(0.12)
+            public static let blackA15 = UIColor.fromHex("#000000").withAlphaComponent(0.15)
+            public static let blackA20 = UIColor.fromHex("#000000").withAlphaComponent(0.2)
+            public static let blackA30 = UIColor.fromHex("#000000").withAlphaComponent(0.3)
             
             public static let charcoal = UIColor.fromHex("#262626")
             
@@ -156,7 +165,7 @@ extension DesignSystem {
             
             public static let teal = UIColor.fromHex("#0D697C")
             
-            public static let grey1 = UIColor.fromHex("#505A54")
+            public static let grey1 = UIColor.fromHex("#505A5F")
             public static let grey2 = UIColor.fromHex("#6F777B")
             public static let grey3 = UIColor.fromHex("#B1B4B6")
             public static let grey4 = UIColor.fromHex("#F3F2F1")
@@ -177,10 +186,9 @@ extension DesignSystem {
             public static let yellow4 = UIColor.fromHex("#BFA600")
             
             public static let gold1 = UIColor.fromHex("#B89746")
+            public static let gold1A25 = UIColor.fromHex("#B89746").withAlphaComponent(0.25)
             public static let gold2 = UIColor.fromHex("#DDC78E")
-            
-            public static let darkPurple = UIColor.fromHex("#532A45")
-            
+                        
             public static let background = UIColor.systemBackground
             
             
