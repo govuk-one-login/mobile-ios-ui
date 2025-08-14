@@ -4,6 +4,7 @@ public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?
+    private var buttonWidthAnchor: NSLayoutConstraint?
     
     var isLoading: Bool = false {
         didSet {
@@ -119,5 +120,12 @@ public final class GDSButton: UIButton {
         config?.baseBackgroundColor = viewModel.style.backgroundColor.forState(.focused)
         config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
         self.configuration = config
+    }
+    
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        buttonWidthAnchor?.isActive = false
+        buttonWidthAnchor = widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(UIContentSizeCategory.sizeForDismissButton))
+        buttonWidthAnchor?.isActive = true
     }
 }
