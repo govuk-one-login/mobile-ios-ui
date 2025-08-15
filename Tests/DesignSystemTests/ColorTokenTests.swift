@@ -115,19 +115,21 @@ struct ColorTokenTests {
     }
     
     @Test func test_ColorToken_Buttons_primaryBackground() async throws {
-        let expectedColor = DesignSystem.Color.Base.green1
+        let expectedLightColor = DesignSystem.Color.Base.green1
+        let expectedDarkColor = DesignSystem.Color.Base.green2
         let sut = DesignSystem.Color.Buttons.primaryBackground
         
-        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
-        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+        #expect(sut.lightColor.cgColor == expectedLightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedDarkColor.cgColor)
     }
     
     @Test func test_ColorToken_Buttons_primaryBackgroundHighlighted() async throws {
-        let expectedColor = DesignSystem.Color.Base.green8
+        let expectedLightColor = DesignSystem.Color.Base.green8
+        let expectedDarkColor = DesignSystem.Color.Base.green7
         let sut = DesignSystem.Color.Buttons.primaryBackgroundHighlighted
         
-        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
-        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+        #expect(sut.lightColor.cgColor == expectedLightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedDarkColor.cgColor)
     }
     
     @Test func test_ColorToken_Buttons_primaryBackgroundFocused() async throws {
@@ -174,11 +176,12 @@ struct ColorTokenTests {
     }
     
     @Test func test_ColorToken_Buttons_secondaryForegroundHighlighted() async throws {
-        let expectedColor = DesignSystem.Color.Base.green8
+        let expectedLightColor = DesignSystem.Color.Base.green8
+        let expectedDarkColor = DesignSystem.Color.Base.green6
         let sut = DesignSystem.Color.Buttons.secondaryForegroundHighlighted
         
-        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
-        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+        #expect(sut.lightColor.cgColor == expectedLightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedDarkColor.cgColor)
     }
     
     @Test func test_ColorToken_Buttons_secondaryBackgroundFocused() async throws {
@@ -336,7 +339,7 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Radio_Check() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
         let expectedDarkColor = DesignSystem.Color.Base.green3
-        let sut = DesignSystem.Color.SelectedIcon.check
+        let sut = DesignSystem.Color.Radios.selectedIcon
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
