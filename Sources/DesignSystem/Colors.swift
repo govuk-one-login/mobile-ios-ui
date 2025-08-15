@@ -59,8 +59,14 @@ extension DesignSystem {
             public static let primaryForeground = Color.Base.white
             public static let primaryForegroundFocused = Color.Base.black1
             public static let primaryForegroundDisabled = Color.Base.charcoal
-            public static let primaryBackground = Color.Base.green1
-            public static let primaryBackgroundHighlighted = Color.Base.green8
+            public static let primaryBackground = UIColor(
+                light: Color.Base.green1,
+                dark: Color.Base.green2
+            )
+            public static let primaryBackgroundHighlighted = UIColor(
+                light: Color.Base.green8,
+                dark: Color.Base.green7
+            )
             public static let primaryBackgroundFocused = Color.Base.yellow1
             public static let primaryBackgroundFocusedHighlighted = Color.Base.yellow4
             public static let primaryBackgroundDisabled = Color.Base.grey3
@@ -70,7 +76,10 @@ extension DesignSystem {
                 dark: Color.Base.green3
             )
             public static let secondaryForegroundFocused = Color.Base.black1
-            public static let secondaryForegroundHighlighted = Color.Base.green8
+            public static let secondaryForegroundHighlighted = UIColor(
+                light: Color.Base.green8,
+                dark: Color.Base.green6
+            )
             public static let secondaryBackground = Color.Base.background
             public static let secondaryBackgroundFocused = Color.Base.yellow1
             public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
@@ -126,8 +135,8 @@ extension DesignSystem {
             )
         }
         
-        public enum SelectedIcon {
-            public static let check = UIColor(
+        public enum Radios {
+            public static let selectedIcon = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green3
             )
@@ -163,7 +172,7 @@ extension DesignSystem {
             public static let blue2 = UIColor.fromHex("#1D70B8")
             public static let blue3 = UIColor.fromHex("#EFFFFF")
             
-            public static let teal = UIColor.fromHex("#0D697C")
+            public static let teal1 = UIColor.fromHex("#0D697C")
             
             public static let grey1 = UIColor.fromHex("#505A5F")
             public static let grey2 = UIColor.fromHex("#6F777B")
