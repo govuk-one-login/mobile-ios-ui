@@ -149,7 +149,7 @@ extension DesignSystem {
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
             
-            public static let blackA = UIColor.fromHex("#000000")
+            static let blackA = UIColor.fromHex("#000000")
             public static let blackA5 = blackA.withAlphaComponent(0.05)
             public static let blackA12 = blackA.withAlphaComponent(0.12)
             public static let blackA15 = blackA.withAlphaComponent(0.15)
