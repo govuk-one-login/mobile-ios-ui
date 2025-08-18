@@ -201,7 +201,10 @@ extension DesignSystem {
                         
             public static let background = UIColor.systemBackground
             
-            
+            public static let ministryOfDefense = UIColor.fromHex("#532A45")
+            public static let homeOffice = UIColor.fromHex("#732282")
+            public static let hmRevenueAndCustoms = UIColor.fromHex("#008476")
+            public static let departmentOfTransport = UIColor.fromHex("#006853")
         }
     }
 }

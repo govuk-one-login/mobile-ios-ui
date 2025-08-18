@@ -277,4 +277,32 @@ struct ColorTests {
         let sut = DesignSystem.Color.Base.gold2
         #expect(sut.cgColor == expectedColor.cgColor)
     }
+    
+    @Test func test_Color_MinistryOfDefence() async throws {
+        let expectedColor = UIColor.fromHex("#532A45")
+        
+        let sut = DesignSystem.Color.Base.ministryOfDefense
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_Color_HomeOffice() async throws {
+        let expectedColor = UIColor.fromHex("#732282")
+        
+        let sut = DesignSystem.Color.Base.homeOffice
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_Color_HMRevenueAndCustoms() async throws {
+        let expectedColor = UIColor.fromHex("#008476")
+        
+        let sut = DesignSystem.Color.Base.hmRevenueAndCustoms
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_Color_DepartmentOfTransport() async throws {
+        let expectedColor = UIColor.fromHex("#006853")
+        
+        let sut = DesignSystem.Color.Base.departmentOfTransport
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
 }
