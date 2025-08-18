@@ -21,8 +21,7 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Text_Secondary() async throws {
         let expectedColor = UIColor(
             light: DesignSystem.Color.Base.grey1,
-            dark: DesignSystem.Color.Base.white
-        )
+            dark: DesignSystem.Color.Base.white)
         
         let sut = DesignSystem.Color.Text.secondary
         
@@ -32,7 +31,6 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Text_Overlay() async throws {
         let expectedColor = DesignSystem.Color.Base.white
-        
         let sut = DesignSystem.Color.Text.statusOverlay
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
@@ -61,7 +59,6 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Background_Overlay() async throws {
         let expectedColor = DesignSystem.Color.Base.grey1
-        
         let sut = DesignSystem.Color.Backgrounds.statusOverlay
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
@@ -167,12 +164,11 @@ struct ColorTokenTests {
     }
     
     @Test func test_ColorToken_Buttons_secondaryForegroundFocused() async throws {
-        let expectedLightColor = DesignSystem.Color.Base.black1
-        let expectedDarkColor = DesignSystem.Color.Base.black1
+        let expectedColor = DesignSystem.Color.Base.black1
         let sut = DesignSystem.Color.Buttons.secondaryForegroundFocused
         
-        #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
-        #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
+        #expect(sut.lightColor.cgColor == expectedColor.lightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedColor.darkColor.cgColor)
     }
     
     @Test func test_ColorToken_Buttons_secondaryForegroundHighlighted() async throws {
@@ -308,7 +304,6 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Icons_Overlay() async throws {
         let expectedColor = DesignSystem.Color.Base.white
-        
         let sut = DesignSystem.Color.Icons.statusOverlay
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
