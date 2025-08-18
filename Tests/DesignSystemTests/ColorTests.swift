@@ -11,6 +11,14 @@ struct ColorTests {
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
+    @Test func test_Color_BlackAlpha() async throws {
+        let expectedColor = UIColor.fromHex("#000000")
+        
+        let sut = DesignSystem.Color.Base.blackA
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+
+
     @Test func test_Color_BlackA5() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.05)
         

@@ -149,11 +149,12 @@ extension DesignSystem {
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
             
-            public static let blackA5 = UIColor.fromHex("#000000").withAlphaComponent(0.05)
-            public static let blackA12 = UIColor.fromHex("#000000").withAlphaComponent(0.12)
-            public static let blackA15 = UIColor.fromHex("#000000").withAlphaComponent(0.15)
-            public static let blackA20 = UIColor.fromHex("#000000").withAlphaComponent(0.2)
-            public static let blackA30 = UIColor.fromHex("#000000").withAlphaComponent(0.3)
+            public static let blackA = UIColor.fromHex("#000000")
+            public static let blackA5 = blackA.withAlphaComponent(0.05)
+            public static let blackA12 = blackA.withAlphaComponent(0.12)
+            public static let blackA15 = blackA.withAlphaComponent(0.15)
+            public static let blackA20 = blackA.withAlphaComponent(0.2)
+            public static let blackA30 = blackA.withAlphaComponent(0.3)
             
             public static let charcoal = UIColor.fromHex("#262626")
             
