@@ -162,7 +162,7 @@ extension DesignSystem {
             public static let green3 = UIColor.fromHex("#03CD6E")
             public static let green4 = UIColor.fromHex("#CCE2D8")
             public static let green5 = UIColor.fromHex("#002D18")
-            public static let green6 = UIColor.fromHex("#029A53")
+            public static let green6 = UIColor.fromHex("#02A458")
             public static let green7 = UIColor.fromHex("#007840")
             public static let green8 = UIColor.fromHex("#00542D")
             
