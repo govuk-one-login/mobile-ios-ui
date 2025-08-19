@@ -5,11 +5,6 @@ extension DesignSystem {
     public enum Color {
         
         public enum Backgrounds {
-            public static let homeHeader = UIColor(
-                light: Color.Base.blue2,
-                dark: Color.Base.blue1
-            )
-            
             public static let card = UIColor(
                 light: Color.Base.white,
                 dark: Color.Base.charcoal
@@ -143,18 +138,18 @@ extension DesignSystem {
         }
         
         public enum Shadows {
-            public static let card = Color.Base.blackA15
+            public static let card = Color.Base.blackAlpha15
         }
         
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
             
-            static let blackA = UIColor.fromHex("#000000")
-            public static let blackA5 = blackA.withAlphaComponent(0.05)
-            public static let blackA12 = blackA.withAlphaComponent(0.12)
-            public static let blackA15 = blackA.withAlphaComponent(0.15)
-            public static let blackA20 = blackA.withAlphaComponent(0.2)
-            public static let blackA30 = blackA.withAlphaComponent(0.3)
+            static let blackAlpha = UIColor.fromHex("#000000")
+            public static let blackAlpha5 = blackAlpha.withAlphaComponent(0.05)
+            public static let blackAlpha12 = blackAlpha.withAlphaComponent(0.12)
+            public static let blackAlpha15 = blackAlpha.withAlphaComponent(0.15)
+            public static let blackAlpha20 = blackAlpha.withAlphaComponent(0.2)
+            public static let blackAlpha30 = blackAlpha.withAlphaComponent(0.3)
             
             public static let charcoal = UIColor.fromHex("#262626")
             
@@ -196,11 +191,13 @@ extension DesignSystem {
             public static let yellow4 = UIColor.fromHex("#BFA600")
             
             public static let gold1 = UIColor.fromHex("#B89746")
-            public static let gold1A25 = UIColor.fromHex("#B89746").withAlphaComponent(0.25)
+            public static let gold1Alpha25 = UIColor.fromHex("#B89746").withAlphaComponent(0.25)
             public static let gold2 = UIColor.fromHex("#DDC78E")
-                        
-            public static let background = UIColor.systemBackground
             
+            public static let background = UIColor.systemBackground
+        }
+        
+        public enum Department {
             public static let ministryOfDefense = UIColor.fromHex("#532A45")
             public static let homeOffice = UIColor.fromHex("#732282")
             public static let hmRevenueAndCustoms = UIColor.fromHex("#008476")

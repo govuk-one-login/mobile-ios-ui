@@ -14,7 +14,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha() async throws {
         let expectedColor = UIColor.fromHex("#000000")
         
-        let sut = DesignSystem.Color.Base.blackA
+        let sut = DesignSystem.Color.Base.blackAlpha
         #expect(sut.cgColor == expectedColor.cgColor)
     }
 
@@ -22,35 +22,35 @@ struct ColorTests {
     @Test func test_Color_BlackA5() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.05)
         
-        let sut = DesignSystem.Color.Base.blackA5
+        let sut = DesignSystem.Color.Base.blackAlpha5
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_BlackA12() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.12)
         
-        let sut = DesignSystem.Color.Base.blackA12
+        let sut = DesignSystem.Color.Base.blackAlpha12
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_BlackA15() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.15)
         
-        let sut = DesignSystem.Color.Base.blackA15
+        let sut = DesignSystem.Color.Base.blackAlpha15
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_BlackA20() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.2)
         
-        let sut = DesignSystem.Color.Base.blackA20
+        let sut = DesignSystem.Color.Base.blackAlpha20
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_BlackA30() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.3)
         
-        let sut = DesignSystem.Color.Base.blackA30
+        let sut = DesignSystem.Color.Base.blackAlpha30
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -281,28 +281,28 @@ struct ColorTests {
     @Test func test_Color_MinistryOfDefence() async throws {
         let expectedColor = UIColor.fromHex("#532A45")
         
-        let sut = DesignSystem.Color.Base.ministryOfDefense
+        let sut = DesignSystem.Color.Department.ministryOfDefense
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_HomeOffice() async throws {
         let expectedColor = UIColor.fromHex("#732282")
         
-        let sut = DesignSystem.Color.Base.homeOffice
+        let sut = DesignSystem.Color.Department.homeOffice
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_HMRevenueAndCustoms() async throws {
         let expectedColor = UIColor.fromHex("#008476")
         
-        let sut = DesignSystem.Color.Base.hmRevenueAndCustoms
+        let sut = DesignSystem.Color.Department.hmRevenueAndCustoms
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
     @Test func test_Color_DepartmentOfTransport() async throws {
         let expectedColor = UIColor.fromHex("#006853")
         
-        let sut = DesignSystem.Color.Base.departmentOfTransport
+        let sut = DesignSystem.Color.Department.departmentOfTransport
         #expect(sut.cgColor == expectedColor.cgColor)
     }
 }

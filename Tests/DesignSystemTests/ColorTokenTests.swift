@@ -21,7 +21,8 @@ struct ColorTokenTests {
     @Test func test_ColorToken_Text_Secondary() async throws {
         let expectedColor = UIColor(
             light: DesignSystem.Color.Base.grey1,
-            dark: DesignSystem.Color.Base.white)
+            dark: DesignSystem.Color.Base.white
+        )
         
         let sut = DesignSystem.Color.Text.secondary
         
@@ -39,15 +40,6 @@ struct ColorTokenTests {
     
     // MARK: - Background Tokens
 
-    @Test func test_ColorToken_Background_homeHeader() async throws {
-        let expectedLightColor = DesignSystem.Color.Base.blue2
-        let expectedDarkColor = DesignSystem.Color.Base.blue1
-        let sut = DesignSystem.Color.Backgrounds.homeHeader
-        
-        #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
-        #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
-    }
-    
     @Test func test_ColorToken_Background_Card() async throws {
         let expectedLightColor = DesignSystem.Color.Base.white
         let expectedDarkColor = DesignSystem.Color.Base.charcoal
@@ -343,7 +335,7 @@ struct ColorTokenTests {
     // MARK: - Shadow tokens
     
     @Test func test_ColorToken_Shadow_Card() async throws {
-        let expectedColor = DesignSystem.Color.Base.blackA15
+        let expectedColor = DesignSystem.Color.Base.blackAlpha15
         let sut = DesignSystem.Color.Shadows.card
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
