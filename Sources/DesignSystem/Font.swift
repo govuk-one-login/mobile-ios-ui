@@ -41,6 +41,7 @@ extension DesignSystem {
             public static let caption2: UIFont = UIFont(.caption2)
             public static let caption2Bold: UIFont = UIFont(.caption2, weight: .bold)
             
+            public static let bodyBoldMonospaced: UIFont = UIFont(.body, weight: .bold, design: .monospaced)
         }
     }
 }

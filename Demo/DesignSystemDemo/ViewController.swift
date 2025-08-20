@@ -7,6 +7,17 @@ public struct TestViewControllerViewModel: ScreenViewModel {
     public var footer: [ContentItem]
 }
 
+
+struct CustomLabel: ContentItem {
+    var uiView: UIView {
+        let label = UILabel()
+        label.text = "Hello, World!"
+        label.font = DesignSystem.Font.Base.bodyBoldMonospaced
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }
+}
+
 class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         let hapticButtons = Haptic.allCases.map { haptic in
@@ -25,6 +36,7 @@ class ViewController: UIViewController {
         
         return TestViewControllerViewModel(
             body: [
+                CustomLabel(),
                 GDSButtonViewModel(
                     title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
                     icon: IconForState.arrowUpRight,
