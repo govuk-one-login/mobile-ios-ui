@@ -28,8 +28,6 @@ extension UIContentSizeCategory {
             48
         case UIContentSizeCategory.extraSmall:
             47
-        case UIContentSizeCategory.unspecified:
-            0
         default:
             0
         }
