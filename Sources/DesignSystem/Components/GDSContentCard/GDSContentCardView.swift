@@ -84,7 +84,7 @@ public final class GDSContentCardView: UIView {
                 contentInsets: .dismissButton,
                 backgroundColor: ColorForState(
                     normal: .clear,
-                    focused: DesignSystem.Color.Base.yellow
+                    focused: DesignSystem.Color.Base.yellow1
                 )
             ),
             buttonAction: action
