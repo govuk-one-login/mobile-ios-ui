@@ -5,29 +5,29 @@ extension UIContentSizeCategory {
     static var sizeForDismissButton: Int {
         switch UIApplication.shared.preferredContentSizeCategory {
         case UIContentSizeCategory.accessibilityExtraExtraExtraLarge:
-            100
+            88
         case UIContentSizeCategory.accessibilityExtraExtraLarge:
-            90
+            82
         case UIContentSizeCategory.accessibilityExtraLarge:
-            78
+            74
         case UIContentSizeCategory.accessibilityLarge:
             66
         case UIContentSizeCategory.accessibilityMedium:
-            58
+            62
         case UIContentSizeCategory.extraExtraExtraLarge:
-            48
+            56
         case UIContentSizeCategory.extraExtraLarge:
-            46
+            54
         case UIContentSizeCategory.extraLarge:
-            44
+            52
         case UIContentSizeCategory.large:
-            42
+            50
         case UIContentSizeCategory.medium:
-            42
+            49
         case UIContentSizeCategory.small:
-            40
+            48
         case UIContentSizeCategory.extraSmall:
-            35
+            47
         case UIContentSizeCategory.unspecified:
             0
         default:

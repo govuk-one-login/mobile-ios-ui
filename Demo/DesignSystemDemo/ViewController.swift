@@ -13,29 +13,64 @@ class ViewController: UIViewController {
             body: [
                 GDSContentCardViewModel(
                     items: [
-//                        ContentImageViewModel(
-//                            image: UIImage(named: "placeholder") ?? UIImage(),
-//                            contentMode: .scaleAspectFit
-//                        ),
+                        ContentImageViewModel(
+                            image: UIImage(named: "placeholder") ?? UIImage(),
+                            contentMode: .scaleAspectFit
+                        ),
                         ContentTitleViewModel(
-                            title: "Title",
+                            title: "A really really really long title for the component",
                             titleFont: DesignSystem.Font.Base.title1,
-                            verticalPadding: .vertical(0)
+                            verticalPadding: .vertical(8)
                         ),
                         ContentSubtitleViewModel(
                             title: "Title",
-                            verticalPadding: .vertical(0)
+                            verticalPadding: .bottom(8)
                         ),
                         DividerViewModel(
                             height: 1,
                             colour: .separator,
-                            verticalPadding: .vertical(0)
+                            verticalPadding: .bottom(8)
                         ),
                         GDSButtonViewModel(
                             title: "Secondary Button",
                             style: .secondary,
                             buttonAction: .action({ }),
-                            verticalPadding: .vertical(0),
+                            verticalPadding: .bottom(8),
+                            horizontalPadding: .horizontal(16)
+                        ),
+                        GDSButtonViewModel(
+                            title: "Primay Button",
+                            style: .primary,
+                            buttonAction: .action({ }),
+                            verticalPadding: .bottom(16),
+                            horizontalPadding: .horizontal(16)
+                        )
+                    ],
+                    showShadow: true,
+                    dismissAction: .action({ })
+                ),
+                GDSContentCardViewModel(
+                    items: [
+                        ContentTitleViewModel(
+                            title: "A really really really long title for the component",
+                            titleFont: DesignSystem.Font.Base.title1,
+                            verticalPadding: .vertical(8),
+                            horizontalPadding: .trailing(0)
+                        ),
+                        ContentSubtitleViewModel(
+                            title: "Title",
+                            verticalPadding: .bottom(8)
+                        ),
+                        DividerViewModel(
+                            height: 1,
+                            colour: .separator,
+                            verticalPadding: .bottom(8)
+                        ),
+                        GDSButtonViewModel(
+                            title: "Secondary Button",
+                            style: .secondary,
+                            buttonAction: .action({ }),
+                            verticalPadding: .bottom(8),
                             horizontalPadding: .horizontal(16)
                         ),
                         GDSButtonViewModel(

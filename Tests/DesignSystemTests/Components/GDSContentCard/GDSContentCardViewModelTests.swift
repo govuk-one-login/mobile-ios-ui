@@ -13,9 +13,9 @@ struct GDSContentCardViewModelTests {
             showShadow: false,
             dismissAction: nil
         )
-        let cardStackView = try #require(card.uiView as? UIStackView)
+        let cardStackView = try #require(card.uiView.subviews.first as? UIStackView)
         
-        #expect(cardStackView.spacing == 8)
+        #expect(cardStackView.spacing == .zero)
         #expect(cardStackView.alignment == .fill)
         #expect(cardStackView.distribution == .fill)
         #expect(cardStackView.layer.cornerRadius == 12)
@@ -33,12 +33,12 @@ struct GDSContentCardViewModelTests {
             showShadow: true,
             dismissAction: nil
         )
-        let cardStackView = try #require(card.uiView as? UIStackView)
-        
+        let cardStackView = try #require(card.uiView.subviews.first as? UIStackView)
+
         #expect(cardStackView.layer.shadowRadius == 10)
         #expect(cardStackView.layer.shadowOffset == CGSize(width: 0, height: 3))
         #expect(cardStackView.layer.shadowOpacity == 0.1)
-        #expect(cardStackView.layer.shadowColor == UIColor.black.cgColor)
+        #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Base.black1.cgColor)
         #expect(cardStackView.layer.masksToBounds == false)
     }
     
@@ -59,8 +59,8 @@ struct GDSContentCardViewModelTests {
             showShadow: false,
             dismissAction: nil
         )
-        let cardStackView = try #require(card.uiView as? UIStackView)
-        
+        let cardStackView = try #require(card.uiView.subviews.first as? UIStackView)
+
         #expect(cardStackView.arrangedSubviews.count == 1)
         
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
@@ -90,7 +90,7 @@ struct GDSContentCardViewModelTests {
             showShadow: false,
             dismissAction: .action({ })
         )
-        let cardStackView = try #require(card.uiView as? UIStackView)
+        let cardStackView = try #require(card.uiView.subviews.first as? UIStackView)
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
         
         #expect(titleStackView.arrangedSubviews.count == 2)
@@ -118,7 +118,7 @@ struct GDSContentCardViewModelTests {
             showShadow: false,
             dismissAction: .action({ })
         )
-        let cardStackView = try #require(card.uiView as? UIStackView)
+        let cardStackView = try #require(card.uiView.subviews.first as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
         
         #expect(imageStackView.subviews.count == 2)
