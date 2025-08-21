@@ -105,7 +105,6 @@ public final class GDSContentCardView: UIView {
             stackView.distribution = .fillProportionally
             stackView.addArrangedSubview(dismissButton)
         }
-        stackView.layoutSubviews()
     }
 
     func additionalStackViewConfiguration(_ stackView: UIStackView, contentItem: ContentItem) {
