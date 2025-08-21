@@ -24,7 +24,7 @@ extension ContentSubtitleViewModel: ContentItem {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.adjustsFontForContentSizeCategory = true
-        label.accessibilityIdentifier = "numbered-list-subtitle"
+        label.accessibilityIdentifier = "content-card-subtitle"
         return label
     }
 }

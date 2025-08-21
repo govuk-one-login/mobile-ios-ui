@@ -27,7 +27,7 @@ extension ContentTitleViewModel: ContentItem {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.adjustsFontForContentSizeCategory = true
-        label.accessibilityIdentifier = "numbered-list-title"
+        label.accessibilityIdentifier = "content-card-title"
         return label
     }
 }
