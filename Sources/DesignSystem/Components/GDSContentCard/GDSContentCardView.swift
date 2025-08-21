@@ -79,14 +79,7 @@ public final class GDSContentCardView: UIView {
         let dismissButton = GDSButtonViewModel(
             title: .init(),
             icon: .xmark,
-            style: .secondary.adjusting(
-                alignment: .trailing,
-                contentInsets: .dismissButton,
-                backgroundColor: ColorForState(
-                    normal: .clear,
-                    focused: DesignSystem.Color.Base.yellow1
-                )
-            ),
+            style: .dismiss,
             buttonAction: action
         ).uiView
         
