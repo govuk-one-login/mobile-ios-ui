@@ -4,7 +4,7 @@ public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?
-    private var buttonWidthAnchor: NSLayoutConstraint?
+    private var buttonWidthAnchorConstraint: NSLayoutConstraint?
     
     var isLoading: Bool = false {
         didSet {
@@ -124,8 +124,8 @@ public final class GDSButton: UIButton {
     
     override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        buttonWidthAnchor?.isActive = false
-        buttonWidthAnchor = widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(UIContentSizeCategory.sizeForDismissButton))
-        buttonWidthAnchor?.isActive = true
+        buttonWidthAnchorConstraint?.isActive = false
+        buttonWidthAnchorConstraint = widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(UIContentSizeCategory.sizeForDismissButton))
+        buttonWidthAnchorConstraint?.isActive = true
     }
 }
