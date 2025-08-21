@@ -21,6 +21,7 @@ extension DesignSystem {
             public static let title3BoldMonospaced: UIFont = UIFont(.title3, weight: .bold, design: .monospaced)
             
             public static let headline: UIFont = UIFont(.headline)
+            public static let headlineSemiBold: UIFont = UIFont(.headline, weight: .semibold)
             public static let headlineBold: UIFont = UIFont(.headline, weight: .bold)
             
             public static let subheadline: UIFont = UIFont(.subheadline)
@@ -47,7 +48,6 @@ extension DesignSystem {
             public static let caption2: UIFont = UIFont(.caption2)
             public static let caption2SemiBold: UIFont = UIFont(.caption2, weight: .semibold)
             public static let caption2Bold: UIFont = UIFont(.caption2, weight: .bold)
-            
         }
     }
 }
