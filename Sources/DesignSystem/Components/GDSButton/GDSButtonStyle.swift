@@ -76,8 +76,7 @@ extension GDSButtonStyle {
                 normal: DesignSystem.Color.Base.green2,
                 focused: DesignSystem.Color.Base.yellow1
             ),
-            cornerRadius: DesignSystem.Spacing.default,
-            border: nil
+            cornerRadius: DesignSystem.Spacing.default
         )
     }
 }
@@ -112,8 +111,29 @@ extension GDSButtonStyle {
                 highlighted: .systemGray6,
                 focused: DesignSystem.Color.Base.yellow1
             ),
-            cornerRadius: DesignSystem.Spacing.xSmall,
-            border: nil
+            cornerRadius: DesignSystem.Spacing.xSmall
+        )
+    }
+}
+
+/// The design of specific button styles is not complete and are therefore subject to change
+extension GDSButtonStyle {
+    @_spi(unstable)
+    public static var dismiss: Self {
+        GDSButtonStyle(
+            font: DesignSystem.Font.Base.body,
+            alignment: .center,
+            contentInsets: .dismissButton,
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Base.green1,
+                focused: DesignSystem.Color.Text.primary
+            ),
+            backgroundColor: ColorForState(
+                normal: .clear,
+                highlighted: .systemGray6,
+                focused: DesignSystem.Color.Base.yellow1
+            ),
+            cornerRadius: DesignSystem.Spacing.xSmall
         )
     }
 }
