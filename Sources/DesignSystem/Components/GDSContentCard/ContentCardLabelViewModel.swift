@@ -1,33 +1,43 @@
 import UIKit
 
-public struct ContentTitleViewModel {
+public struct ContentCardLabelViewModel {
     let title: GDSLocalisedString
     let titleFont: UIFont
+    let alignment: NSTextAlignment
+    public let isTitle: Bool
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
     public init(
         title: GDSLocalisedString,
-        titleFont: UIFont,
+        titleFont: UIFont = DesignSystem.Font.Base.body,
+        alignment: NSTextAlignment = .left,
+        isTitle: Bool = false,
         verticalPadding: VerticalPadding? = .vertical(8),
         horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
         self.title = title
         self.titleFont = titleFont
+        self.alignment = alignment
+        self.isTitle = isTitle
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
 }
 
-extension ContentTitleViewModel: ContentItem {
+extension ContentCardLabelViewModel: ContentItem {
     public var uiView: UIView {
         let label = UILabel()
-        label.text = title.value
         label.font = titleFont
-        label.textAlignment = .left
-        label.numberOfLines = 0
+        if let attributedTitle = title.attributedValue {
+            label.attributedText = attributedTitle
+        } else {
+            label.text = title.value
+        }
+        label.textAlignment = alignment
+        label.numberOfLines = .zero
         label.adjustsFontForContentSizeCategory = true
-        label.accessibilityIdentifier = "content-card-title"
+        label.accessibilityIdentifier = "content-card-\(isTitle ? "title" : "label")"
         return label
     }
 }
