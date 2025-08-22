@@ -1,6 +1,6 @@
 import UIKit
 
-public struct ContentImageViewModel: ContentItem {
+public struct ContentCardImageViewModel: ContentItem {
     let image: UIImage
     let contentMode: UIView.ContentMode
     
@@ -24,7 +24,7 @@ public struct ContentImageViewModel: ContentItem {
     }
 }
 
-extension ContentImageViewModel {
+extension ContentCardImageViewModel {
     public var uiView: UIView {
         let result = UIImageView()
         result.image = image

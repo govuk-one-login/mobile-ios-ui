@@ -13,20 +13,25 @@ class ViewController: UIViewController {
             body: [
                 GDSContentCardViewModel(
                     items: [
-                        ContentImageViewModel(
+                        ContentCardImageViewModel(
                             image: UIImage(named: "placeholder") ?? UIImage(),
                             contentMode: .scaleAspectFit
                         ),
-                        ContentTitleViewModel(
-                            title: "A really really really long title for the component",
-                            titleFont: DesignSystem.Font.Base.title1,
+                        ContentCardLabelViewModel(
+                            title: GDSLocalisedString(stringLiteral: "caption here",
+                                                      attributes: [("caption here", [.foregroundColor: DesignSystem.Color.Base.red4])]),
                             verticalPadding: .vertical(8)
                         ),
-                        ContentSubtitleViewModel(
+                        ContentCardLabelViewModel(
+                            title: "A really really really long title for the component",
+                            titleFont: DesignSystem.Font.Base.title1,
+                            verticalPadding: .bottom(8)
+                        ),
+                        ContentCardLabelViewModel(
                             title: "Title",
                             verticalPadding: .bottom(8)
                         ),
-                        DividerViewModel(
+                        ContentCardDividerViewModel(
                             height: 1,
                             colour: .separator,
                             verticalPadding: .bottom(8)
@@ -51,38 +56,35 @@ class ViewController: UIViewController {
                 ),
                 GDSContentCardViewModel(
                     items: [
-                        ContentTitleViewModel(
-                            title: "A really really really long title for the component",
-                            titleFont: DesignSystem.Font.Base.title1,
+                        ContentCardLabelViewModel(
+                            title: "A title for the component",
+                            titleFont: DesignSystem.Font.Base.title2Bold,
                             verticalPadding: .vertical(8),
-                            horizontalPadding: .trailing(0)
+                            horizontalPadding: .horizontal(16)
                         ),
-                        ContentSubtitleViewModel(
-                            title: "Title",
-                            verticalPadding: .bottom(8)
-                        ),
-                        DividerViewModel(
+                        ContentCardDividerViewModel(
                             height: 1,
                             colour: .separator,
                             verticalPadding: .bottom(8)
                         ),
                         GDSButtonViewModel(
                             title: "Secondary Button",
-                            style: .secondary,
+                            icon: .arrowUpRight,
+                            style: .secondary.adjusting(
+                                alignment: .leading,
+                                contentInsets: NSDirectionalEdgeInsets(
+                                    top: DesignSystem.Spacing.small,
+                                    leading: .zero,
+                                    bottom: DesignSystem.Spacing.small,
+                                    trailing: DesignSystem.Spacing.default
+                                )
+                            ),
                             buttonAction: .action({ }),
                             verticalPadding: .bottom(8),
                             horizontalPadding: .horizontal(16)
-                        ),
-                        GDSButtonViewModel(
-                            title: "Primay Button",
-                            style: .primary,
-                            buttonAction: .action({ }),
-                            verticalPadding: .bottom(16),
-                            horizontalPadding: .horizontal(16)
                         )
                     ],
-                    showShadow: true,
-                    dismissAction: .action({ })
+                    showShadow: true
                 )
             ],
             moveableFooter: [],
