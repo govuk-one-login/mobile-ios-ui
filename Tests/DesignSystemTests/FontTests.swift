@@ -41,7 +41,7 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
-    @Test func test_Font_title3SemibBold() async throws {
+    @Test func test_Font_title3SemiBold() async throws {
         let expectedFont = UIFont(.title3, weight: .semibold)
         
         let sut = DesignSystem.Font.Base.title3SemiBold
