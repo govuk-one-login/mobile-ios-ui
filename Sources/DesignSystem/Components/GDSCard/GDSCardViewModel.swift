@@ -1,23 +1,26 @@
 import UIKit
 
-public struct GDSContentCardViewModel {
-    public let items: [ContentItem]
+public struct GDSCardViewModel {
+    public let content: [ContentItem]
+    public let backgroundColour: UIColor
     public let showShadow: Bool
     public let dismissAction: ButtonAction?
     
     public init(
         items: [ContentItem],
+        backgroundColour: UIColor = .systemBackground,
         showShadow: Bool,
         dismissAction: ButtonAction? = nil
     ) {
-        self.items = items
+        self.content = items
+        self.backgroundColour = backgroundColour
         self.showShadow = showShadow
         self.dismissAction = dismissAction
     }
 }
 
-extension GDSContentCardViewModel: ContentItem {
+extension GDSCardViewModel: ContentItem {
     public var uiView: UIView {
-        GDSContentCardView(viewModel: self)
+        GDSCardView(viewModel: self)
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// `GDSAttributedString` is a custom type to help styling `GDSLocalisedString`.
 /// It is an internal type and is not used directly but rather it is used through a `GDSLocalisedString`.
@@ -14,17 +15,41 @@ import Foundation
 /// attributes: [("This text is bold", [.font: UIFont.bodyBold])])
 /// ```
 struct GDSAttributedString {
-    let localisedString: String
-    let attributes: Attributes
+    static let space: String = "\u{0020}"
     
-    var attributedString: NSAttributedString {
-        let mutableAttributeString = NSMutableAttributedString(string: localisedString)
-        attributes.forEach {
-            let range = NSString(string: mutableAttributeString.string)
-                .range(of: $0, options: .caseInsensitive)
-            mutableAttributeString.addAttributes($1, range: range)
+    let localisedString: String
+    let stringAttributes: GDSStringAttributes
+    
+    var attributedString: NSAttributedString? {
+        let mutableAttributeString: NSMutableAttributedString
+        
+        if let symbol = stringAttributes.symbol, let position = stringAttributes.position {
+            let sfSymbol = NSMutableAttributedString(attachment: NSTextAttachment(image: symbol))
+            
+            switch position {
+            case .leading:
+                let attributedString = NSMutableAttributedString(string: Self.space + localisedString)
+                attributedString.insert(sfSymbol, at: 0)
+                mutableAttributeString = attributedString
+            case .trailing:
+                let attributedString = NSMutableAttributedString(string: localisedString + Self.space)
+                attributedString.append(sfSymbol)
+                mutableAttributeString = attributedString
+            }
+        } else {
+            mutableAttributeString = NSMutableAttributedString(string: localisedString)
         }
         
-        return mutableAttributeString
+        if let attributes = stringAttributes.attributes, !attributes.isEmpty {
+            attributes.forEach {
+                let range = NSString(string: mutableAttributeString.string)
+                    .range(of: $0, options: .caseInsensitive)
+                mutableAttributeString.addAttributes($1, range: range)
+            }
+            
+            return mutableAttributeString
+        }
+        
+        return nil
     }
 }

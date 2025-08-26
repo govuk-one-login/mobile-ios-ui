@@ -34,14 +34,14 @@ struct GDSLocalisedStringTests {
     @Test
     func test_attributedString_stringLiteralInitialiser() {
         let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser",
-                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+                                     stringAttributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
         #expect(sut.attributedValue != nil)
     }
     
     @Test
     func test_attributedString_firstNonStringLiteralInitialiser() throws {
         let sut = GDSLocalisedString(stringKey: "firstNonStringLiteral", "one", "two", "three",
-                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+                                     stringAttributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
         
         #expect(sut.value == "firstNonStringLiteral")
         #expect(sut.attributedValue != nil)
@@ -51,7 +51,7 @@ struct GDSLocalisedStringTests {
     func test_attributedString_secondNonStringLiteralInitialiser() throws {
         let sut = GDSLocalisedString(stringKey: "secondNonStringLiteral",
                                      variableKeys: ["one", "two", "three"],
-                                     attributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
+                                     stringAttributes: [("Literal", [.font: DesignSystem.Font.Base.bodyBold])])
         
         #expect(sut.value == "secondNonStringLiteral")
         #expect(sut.attributedValue != nil)
@@ -66,7 +66,7 @@ struct GDSLocalisedStringTests {
     @Test
     func test_attributedString_withEmptyArray() {
         let sut = GDSLocalisedString(stringLiteral: "stringLiteralInitialiser",
-                                     attributes: [])
+                                     stringAttributes: [])
         #expect(sut.attributedValue == nil)
     }
 }
@@ -86,7 +86,7 @@ extension GDSLocalisedStringTests {
     @Test
     func test_equatableAttributes() {
         let stringOne = GDSLocalisedString(stringKey: "firstNonStringLiteral",
-                                           attributes: [("one", [NSAttributedString.Key.foregroundColor: DesignSystem.Color.Base.red1])])
+                                           stringAttributes: [("one", [NSAttributedString.Key.foregroundColor: DesignSystem.Color.Base.red1])])
         #expect(stringOne == stringOne)
         
         let stringTwo = GDSLocalisedString(stringKey: "firstNonStringLiteral")

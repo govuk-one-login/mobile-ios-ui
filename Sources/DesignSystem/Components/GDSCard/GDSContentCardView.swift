@@ -1,7 +1,7 @@
 import UIKit
 
-public final class GDSContentCardView: UIView {
-    let viewModel: GDSContentCardViewModel
+public final class GDSCardView: UIView {
+    let viewModel: GDSCardViewModel
 
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(
@@ -12,23 +12,23 @@ public final class GDSContentCardView: UIView {
         stackView.layer.cornerRadius = 12
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .systemBackground
-        viewModel.items.forEach { item in
+        stackView.backgroundColor = viewModel.backgroundColour
+        viewModel.content.forEach { item in
             let stack = UIStackView(
                 views: item.uiView,
                 alignment: .fill,
                 distribution: .fill
             )
             if let dismissAction = viewModel.dismissAction {
-                if viewModel.items.first is ContentCardImageViewModel {
-                    if item is ContentCardImageViewModel {
+                if viewModel.content.first is GDSCardImageViewModel {
+                    if item is GDSCardImageViewModel {
                         addDismissButton(
                             type: .image,
                             stackView: stack,
                             action: dismissAction
                         )
                     }
-                } else if let item = item as? ContentCardLabelViewModel,
+                } else if let item = item as? GDSCardLabelViewModel,
                           item.isTitle {
                     addDismissButton(
                         type: .title,
@@ -48,7 +48,7 @@ public final class GDSContentCardView: UIView {
         return stackView
     }()
 
-    init(viewModel: GDSContentCardViewModel) {
+    init(viewModel: GDSCardViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         addStackToView()
@@ -105,9 +105,9 @@ public final class GDSContentCardView: UIView {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
             top: contentItem.verticalPadding?.topPadding ?? .zero,
-            leading: contentItem.horizontalPadding?.leadingPadding ?? DesignSystem.Spacing.default,
+            leading: contentItem.horizontalPadding?.leadingPadding ?? .zero,
             bottom: contentItem.verticalPadding?.bottomPadding ?? .zero,
-            trailing: contentItem.horizontalPadding?.trailingPadding ?? DesignSystem.Spacing.default
+            trailing: contentItem.horizontalPadding?.trailingPadding ?? .zero
         )
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }

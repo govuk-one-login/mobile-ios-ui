@@ -1,6 +1,6 @@
 import UIKit
 
-public struct ContentCardLabelViewModel {
+public struct GDSCardLabelViewModel {
     let title: GDSLocalisedString
     let titleFont: UIFont
     let alignment: NSTextAlignment
@@ -25,7 +25,7 @@ public struct ContentCardLabelViewModel {
     }
 }
 
-extension ContentCardLabelViewModel: ContentItem {
+extension GDSCardLabelViewModel: ContentItem {
     public var uiView: UIView {
         let label = UILabel()
         label.font = titleFont

@@ -73,7 +73,7 @@ extension GDSButtonStyle {
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.green2,
+                normal: DesignSystem.Color.Buttons.primaryBackground,
                 focused: DesignSystem.Color.Base.yellow1
             ),
             cornerRadius: DesignSystem.Spacing.default
@@ -103,11 +103,11 @@ extension GDSButtonStyle {
             font: DesignSystem.Font.Base.body,
             alignment: .center,
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.green1,
+                normal: DesignSystem.Color.Buttons.secondaryForeground,
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(
-                normal: .systemBackground,
+                normal: .clear,
                 highlighted: .systemGray6,
                 focused: DesignSystem.Color.Base.yellow1
             ),
@@ -125,7 +125,7 @@ extension GDSButtonStyle {
             alignment: .center,
             contentInsets: .dismissButton,
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.green1,
+                normal: DesignSystem.Color.Buttons.secondaryForeground,
                 focused: DesignSystem.Color.Text.primary
             ),
             backgroundColor: ColorForState(

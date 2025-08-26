@@ -11,29 +11,31 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
-                GDSContentCardViewModel(
+                GDSCardViewModel(
                     items: [
-                        ContentCardImageViewModel(
+                        GDSCardImageViewModel(
                             image: UIImage(named: "placeholder") ?? UIImage(),
                             contentMode: .scaleAspectFit
                         ),
-                        ContentCardLabelViewModel(
-                            title: GDSLocalisedString(stringLiteral: "caption here",
-                                                      attributes: [("caption here", [.foregroundColor: DesignSystem.Color.Base.red4])]),
+                        GDSCardLabelViewModel(
+                            title: GDSLocalisedString(
+                                stringLiteral: "Here is the caption for the picture",
+                                stringAttributes: [("Here is the caption for the picture", [.foregroundColor: DesignSystem.Color.Icons.success])]
+                            ),
                             verticalPadding: .vertical(8)
                         ),
-                        ContentCardLabelViewModel(
+                        GDSCardLabelViewModel(
                             title: "A really really really long title for the component",
                             titleFont: DesignSystem.Font.Base.title1,
                             verticalPadding: .bottom(8)
                         ),
-                        ContentCardLabelViewModel(
+                        GDSCardLabelViewModel(
                             title: "Title",
                             verticalPadding: .bottom(8)
                         ),
-                        ContentCardDividerViewModel(
+                        GDSCardDividerViewModel(
                             height: 1,
-                            colour: .separator,
+                            colour: DesignSystem.Color.Dividers.card,
                             verticalPadding: .bottom(8)
                         ),
                         GDSButtonViewModel(
@@ -54,18 +56,26 @@ class ViewController: UIViewController {
                     showShadow: true,
                     dismissAction: .action({ })
                 ),
-                GDSContentCardViewModel(
+                GDSCardViewModel(
                     items: [
-                        ContentCardLabelViewModel(
-                            title: "A title for the component",
+                        GDSCardLabelViewModel(
+                            title: "A document has been removed",
                             titleFont: DesignSystem.Font.Base.title2Bold,
+                            isTitle: true,
                             verticalPadding: .vertical(8),
+                            horizontalPadding: .leading(16)
+                        ),
+                        GDSCardLabelViewModel(
+                            title: "This happened because you turned off your phone's passcode.",
+                            titleFont: DesignSystem.Font.Base.body,
+                            verticalPadding: .bottom(8),
                             horizontalPadding: .horizontal(16)
                         ),
-                        ContentCardDividerViewModel(
+                        GDSCardDividerViewModel(
                             height: 1,
-                            colour: .separator,
+                            colour: DesignSystem.Color.Dividers.card,
                             verticalPadding: .bottom(8)
+                            
                         ),
                         GDSButtonViewModel(
                             title: "Secondary Button",
@@ -84,7 +94,8 @@ class ViewController: UIViewController {
                             horizontalPadding: .horizontal(16)
                         )
                     ],
-                    showShadow: true
+                    showShadow: true,
+                    dismissAction: .action({ })
                 )
             ],
             moveableFooter: [],

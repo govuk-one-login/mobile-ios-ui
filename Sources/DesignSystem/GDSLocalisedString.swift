@@ -1,10 +1,36 @@
 import Foundation
+import UIKit
 
 public typealias Attributes = [(String, [NSAttributedString.Key: Any])]
+
+public struct GDSStringAttributes {
+    public let symbol: UIImage?
+    public let position: SymbolPosition?
+    public let attributes: Attributes?
+    
+    public init(
+        symbol: UIImage? = nil,
+        position: SymbolPosition? = .trailing,
+        attributes: Attributes? = nil
+    ) {
+        self.symbol = symbol
+        self.position = position
+        self.attributes = attributes
+    }
+}
+
+extension GDSStringAttributes: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: (String, [NSAttributedString.Key: Any])...) {
+        self.symbol = nil
+        self.position = nil
+        self.attributes = elements
+    }
+}
 
 public struct GDSLocalisedString {
     public let stringKey: String
     public let variableKeys: [String]
+    public let stringAttributes: GDSStringAttributes?
     let bundle: Bundle
     
     public var value: String {
@@ -14,68 +40,46 @@ public struct GDSLocalisedString {
     }
     
     public var attributedValue: NSAttributedString? {
-        guard let attributes, !attributes.isEmpty else {
-            return nil
-        }
+        guard let stringAttributes else { return nil }
         return GDSAttributedString(localisedString: value,
-                                   attributes: attributes).attributedString
-    }
-    
-    private let attributes: Attributes?
-    
-    public init(stringKey: String,
-                _ variableKeys: String...,
-                bundle: Bundle = .main,
-                attributes: Attributes) {
-        self.stringKey = stringKey
-        self.variableKeys = variableKeys
-        self.bundle = bundle
-        self.attributes = attributes
-    }
-    
-    public init(stringKey: String,
-                variableKeys: [String],
-                bundle: Bundle = .main,
-                attributes: Attributes) {
-        self.stringKey = stringKey
-        self.variableKeys = variableKeys
-        self.bundle = bundle
-        self.attributes = attributes
+                                   stringAttributes: stringAttributes).attributedString
     }
     
     public init(stringKey: String,
                 _ variableKeys: String...,
+                stringAttributes: GDSStringAttributes? = nil,
                 bundle: Bundle = .main) {
         self.stringKey = stringKey
         self.variableKeys = variableKeys
+        self.stringAttributes = stringAttributes
         self.bundle = bundle
-        self.attributes = nil
     }
     
     public init(stringKey: String,
                 variableKeys: [String],
+                stringAttributes: GDSStringAttributes? = nil,
                 bundle: Bundle = .main) {
         self.stringKey = stringKey
         self.variableKeys = variableKeys
+        self.stringAttributes = stringAttributes
         self.bundle = bundle
-        self.attributes = nil
     }
 }
 
 extension GDSLocalisedString: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        stringKey = value
-        variableKeys = []
-        bundle = .main
-        self.attributes = nil
+        self.stringKey = value
+        self.variableKeys = []
+        self.stringAttributes = nil
+        self.bundle = .main
     }
     
     public init(stringLiteral value: StringLiteralType,
-                attributes: Attributes) {
-        stringKey = value
-        variableKeys = []
-        bundle = .main
-        self.attributes = attributes
+                stringAttributes: GDSStringAttributes?) {
+        self.stringKey = value
+        self.variableKeys = []
+        self.stringAttributes = stringAttributes
+        self.bundle = .main
     }
 }
 
@@ -90,7 +94,7 @@ extension GDSLocalisedString: Equatable {
         lhs.stringKey == rhs.stringKey &&
         lhs.variableKeys == rhs.variableKeys &&
         lhs.bundle == rhs.bundle &&
-        compare(lhs: lhs.attributes, to: rhs.attributes)
+        compare(lhs: lhs.stringAttributes?.attributes, to: rhs.stringAttributes?.attributes)
     }
     
     private static func compare(lhs: Attributes?, to rhs: Attributes?) -> Bool {

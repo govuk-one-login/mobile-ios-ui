@@ -1,6 +1,6 @@
 import UIKit
 
-public struct ContentCardDividerViewModel {
+public struct GDSCardDividerViewModel {
     let height: CGFloat
     let colour: UIColor
     public let verticalPadding: VerticalPadding?
@@ -10,7 +10,7 @@ public struct ContentCardDividerViewModel {
         height: CGFloat,
         colour: UIColor,
         verticalPadding: VerticalPadding? = .vertical(8),
-        horizontalPadding: HorizontalPadding? = .trailing(0)
+        horizontalPadding: HorizontalPadding? = .leading(16)
     ) {
         self.height = height
         self.colour = colour
@@ -19,7 +19,7 @@ public struct ContentCardDividerViewModel {
     }
 }
 
-extension ContentCardDividerViewModel: ContentItem {
+extension GDSCardDividerViewModel: ContentItem {
     public var uiView: UIView {
         let view = UIView()
         view.backgroundColor = colour
