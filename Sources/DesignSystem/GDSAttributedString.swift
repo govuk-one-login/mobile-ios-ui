@@ -21,15 +21,21 @@ struct GDSAttributedString {
     let stringAttributes: GDSStringAttributes
     
     var attributedString: NSAttributedString? {
+        if stringAttributes.symbol == nil {
+            guard let attributes = stringAttributes.attributes, !attributes.isEmpty else {
+                return nil
+            }
+        }
+        
         let mutableAttributeString: NSMutableAttributedString
         
-        if let symbol = stringAttributes.symbol, let position = stringAttributes.position {
+        if let symbol = stringAttributes.symbol {
             let sfSymbol = NSMutableAttributedString(attachment: NSTextAttachment(image: symbol))
             
-            switch position {
+            switch stringAttributes.position {
             case .leading:
                 let attributedString = NSMutableAttributedString(string: Self.space + localisedString)
-                attributedString.insert(sfSymbol, at: 0)
+                attributedString.insert(sfSymbol, at: .zero)
                 mutableAttributeString = attributedString
             case .trailing:
                 let attributedString = NSMutableAttributedString(string: localisedString + Self.space)
@@ -40,16 +46,14 @@ struct GDSAttributedString {
             mutableAttributeString = NSMutableAttributedString(string: localisedString)
         }
         
-        if let attributes = stringAttributes.attributes, !attributes.isEmpty {
+        if let attributes = stringAttributes.attributes {
             attributes.forEach {
                 let range = NSString(string: mutableAttributeString.string)
                     .range(of: $0, options: .caseInsensitive)
                 mutableAttributeString.addAttributes($1, range: range)
             }
-            
-            return mutableAttributeString
         }
         
-        return nil
+        return mutableAttributeString
     }
 }

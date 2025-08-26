@@ -5,12 +5,12 @@ public typealias Attributes = [(String, [NSAttributedString.Key: Any])]
 
 public struct GDSStringAttributes {
     public let symbol: UIImage?
-    public let position: SymbolPosition?
+    public let position: SymbolPosition
     public let attributes: Attributes?
     
     public init(
         symbol: UIImage? = nil,
-        position: SymbolPosition? = .trailing,
+        position: SymbolPosition = .trailing,
         attributes: Attributes? = nil
     ) {
         self.symbol = symbol
@@ -22,7 +22,7 @@ public struct GDSStringAttributes {
 extension GDSStringAttributes: ExpressibleByArrayLiteral {
     public init(arrayLiteral elements: (String, [NSAttributedString.Key: Any])...) {
         self.symbol = nil
-        self.position = nil
+        self.position = .trailing
         self.attributes = elements
     }
 }
