@@ -41,6 +41,13 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_title3SemiBold() async throws {
+        let expectedFont = UIFont(.title3, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.title3SemiBold
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_title3Bold() async throws {
         let expectedFont = UIFont(.title3, weight: .bold)
         
@@ -55,10 +62,24 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_headlineSemiBold() async throws {
+        let expectedFont = UIFont(.headline, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.headlineSemiBold
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_subheadline() async throws {
         let expectedFont = UIFont(.subheadline)
         
         let sut = DesignSystem.Font.Base.subheadline
+        #expect(sut == expectedFont)
+    }
+    
+    @Test func test_Font_subheadlineSemiBold() async throws {
+        let expectedFont = UIFont(.subheadline, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.subheadlineSemiBold
         #expect(sut == expectedFont)
     }
         
@@ -83,10 +104,24 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_bodyBoldMonospaced() async throws {
+        let expectedFont = UIFont(.body, weight: .bold, design: .monospaced)
+        
+        let sut = DesignSystem.Font.Base.bodyBoldMonospaced
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_callout() async throws {
         let expectedFont = UIFont(.callout)
         
         let sut = DesignSystem.Font.Base.callout
+        #expect(sut == expectedFont)
+    }
+    
+    @Test func test_Font_calloutSemiBold() async throws {
+        let expectedFont = UIFont(.callout, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.calloutSemiBold
         #expect(sut == expectedFont)
     }
     
@@ -97,6 +132,13 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_footnoteSemiBold() async throws {
+        let expectedFont = UIFont(.footnote, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.footnoteSemiBold
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_caption1() async throws {
         let expectedFont = UIFont(.caption1)
         
@@ -104,10 +146,24 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_caption1Medium() async throws {
+        let expectedFont = UIFont(.caption1, weight: .medium)
+        
+        let sut = DesignSystem.Font.Base.caption1Medium
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_caption2() async throws {
         let expectedFont = UIFont(.caption2)
         
         let sut = DesignSystem.Font.Base.caption2
+        #expect(sut == expectedFont)
+    }
+    
+    @Test func test_Font_caption2SemiBold() async throws {
+        let expectedFont = UIFont(.caption2, weight: .semibold)
+        
+        let sut = DesignSystem.Font.Base.caption2SemiBold
         #expect(sut == expectedFont)
     }
 
