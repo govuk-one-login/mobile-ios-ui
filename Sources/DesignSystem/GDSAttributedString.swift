@@ -34,13 +34,13 @@ struct GDSAttributedString {
             
             switch stringAttributes.position {
             case .leading:
-                let attributedString = NSMutableAttributedString(string: Self.space + localisedString)
-                attributedString.insert(sfSymbol, at: .zero)
-                mutableAttributeString = attributedString
+                let attrString = NSMutableAttributedString(string: Self.space + localisedString)
+                attrString.insert(sfSymbol, at: .zero)
+                mutableAttributeString = attrString
             case .trailing:
-                let attributedString = NSMutableAttributedString(string: localisedString + Self.space)
-                attributedString.append(sfSymbol)
-                mutableAttributeString = attributedString
+                let attrString = NSMutableAttributedString(string: localisedString + Self.space)
+                attrString.append(sfSymbol)
+                mutableAttributeString = attrString
             }
         } else {
             mutableAttributeString = NSMutableAttributedString(string: localisedString)
