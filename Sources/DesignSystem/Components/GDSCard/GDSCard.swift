@@ -2,7 +2,7 @@ import UIKit
 
 public final class GDSCard: UIView {
     let viewModel: GDSCardViewModel
-
+    
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(
             spacing: 0,
@@ -13,6 +13,7 @@ public final class GDSCard: UIView {
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = viewModel.backgroundColour
+        
         viewModel.content.forEach { item in
             let stack = UIStackView(
                 views: item.uiView,
@@ -40,20 +41,20 @@ public final class GDSCard: UIView {
             additionalStackViewConfiguration(stack, contentItem: item)
             stackView.addArrangedSubview(stack)
         }
-
+        
         if viewModel.showShadow {
             addShadowToView(stackView)
         }
         
         return stackView
     }()
-
+    
     init(viewModel: GDSCardViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         addStackToView()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,7 +63,7 @@ public final class GDSCard: UIView {
         super.layoutSubviews()
         stackView.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: DesignSystem.CornerRadius.card).cgPath
     }
-
+    
     func addStackToView() {
         self.addSubview(stackView)
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +75,7 @@ public final class GDSCard: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-
+    
     private func addDismissButton(
         type: StackViewType,
         stackView: UIStackView,
@@ -103,7 +104,7 @@ public final class GDSCard: UIView {
             stackView.addArrangedSubview(dismissButton)
         }
     }
-
+    
     private func additionalStackViewConfiguration(_ stackView: UIStackView, contentItem: ContentItem) {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
@@ -114,7 +115,7 @@ public final class GDSCard: UIView {
         )
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }
-
+    
     private func addShadowToView(_ stackView: UIStackView) {
         stackView.layer.shadowRadius = DesignSystem.CornerRadius.card
         stackView.layer.shadowOffset = CGSize(width: .zero, height: 4)
