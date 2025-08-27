@@ -38,6 +38,12 @@ extension GDSCardLabelViewModel: ContentItem {
         label.numberOfLines = .zero
         label.adjustsFontForContentSizeCategory = true
         label.accessibilityIdentifier = "content-card-\(isTitle ? "title" : "label")"
+        if isTitle {
+            let paddingView = UIView()
+            paddingView.heightAnchor.constraint(equalToConstant: 8).isActive = true
+            let stackView = UIStackView(views: paddingView, label, spacing: 0, distribution: .fill)
+            return stackView
+        }
         return label
     }
 }

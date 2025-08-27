@@ -8,8 +8,8 @@ public struct GDSCardViewModel {
     
     public init(
         items: [ContentItem],
-        backgroundColour: UIColor = .systemBackground,
-        showShadow: Bool,
+        backgroundColour: UIColor = DesignSystem.Color.Backgrounds.card,
+        showShadow: Bool = false,
         dismissAction: ButtonAction? = nil
     ) {
         self.content = items
@@ -21,6 +21,6 @@ public struct GDSCardViewModel {
 
 extension GDSCardViewModel: ContentItem {
     public var uiView: UIView {
-        GDSCardView(viewModel: self)
+        GDSCard(viewModel: self)
     }
 }

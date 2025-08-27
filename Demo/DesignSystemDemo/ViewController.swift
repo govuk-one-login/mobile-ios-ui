@@ -62,7 +62,7 @@ class ViewController: UIViewController {
                             title: "A document has been removed",
                             titleFont: DesignSystem.Font.Base.title2Bold,
                             isTitle: true,
-                            verticalPadding: .vertical(8),
+                            verticalPadding: .bottom(8),
                             horizontalPadding: .leading(16)
                         ),
                         GDSCardLabelViewModel(

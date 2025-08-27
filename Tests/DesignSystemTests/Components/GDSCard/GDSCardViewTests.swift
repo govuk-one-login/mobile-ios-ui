@@ -13,7 +13,7 @@ struct GDSCardViewTests {
             showShadow: false,
             dismissAction: nil
         )
-        let sut = GDSCardView(viewModel: viewModel)
+        let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
         #expect(cardStackView.spacing == .zero)
@@ -22,7 +22,7 @@ struct GDSCardViewTests {
         #expect(cardStackView.layer.cornerRadius == 12)
         #expect(cardStackView.layer.masksToBounds == true)
         #expect(cardStackView.translatesAutoresizingMaskIntoConstraints == false)
-        #expect(cardStackView.backgroundColor == .systemBackground)
+        #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
     }
     
     @Test("""
@@ -34,13 +34,13 @@ struct GDSCardViewTests {
             showShadow: true,
             dismissAction: nil
         )
-        let sut = GDSCardView(viewModel: viewModel)
+        let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
 
-        #expect(cardStackView.layer.shadowRadius == 10)
-        #expect(cardStackView.layer.shadowOffset == CGSize(width: 0, height: 3))
+        #expect(cardStackView.layer.shadowRadius == 12)
+        #expect(cardStackView.layer.shadowOffset == CGSize(width: 0, height: 4))
         #expect(cardStackView.layer.shadowOpacity == 0.1)
-        #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Base.black1.cgColor)
+        #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Base.blackAlpha.cgColor)
         #expect(cardStackView.layer.masksToBounds == false)
     }
     
@@ -61,7 +61,7 @@ struct GDSCardViewTests {
             showShadow: false,
             dismissAction: nil
         )
-        let sut = GDSCardView(viewModel: viewModel)
+        let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
 
         #expect(cardStackView.arrangedSubviews.count == 1)
@@ -94,12 +94,13 @@ struct GDSCardViewTests {
             showShadow: false,
             dismissAction: .action({ })
         )
-        let sut = GDSCardView(viewModel: viewModel)
+        let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
+        let titleVStack = try #require(titleStackView.arrangedSubviews.first as? UIStackView)
         
         #expect(titleStackView.arrangedSubviews.count == 2)
-        #expect(titleStackView.arrangedSubviews.first is UILabel)
+        #expect(titleVStack.arrangedSubviews[1] is UILabel)
         #expect(titleStackView.arrangedSubviews[1] is GDSButton)
     }
     
@@ -123,7 +124,7 @@ struct GDSCardViewTests {
             showShadow: false,
             dismissAction: .action({ })
         )
-        let sut = GDSCardView(viewModel: viewModel)
+        let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
         
