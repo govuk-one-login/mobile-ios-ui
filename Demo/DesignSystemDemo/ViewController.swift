@@ -2,9 +2,9 @@
 import UIKit
 
 public struct TestViewControllerViewModel: ScreenViewModel {
-    public let body: [ContentItem]
-    public var moveableFooter: [ContentItem]
-    public var footer: [ContentItem]
+    public let body: [any ContentViewModel]
+    public var moveableFooter: [any ContentViewModel]
+    public var footer: [any ContentViewModel]
 }
 
 class ViewController: UIViewController {
@@ -12,91 +12,83 @@ class ViewController: UIViewController {
         TestViewControllerViewModel(
             body: [
                 GDSCardViewModel(
-                    items: [
-                        GDSCardImageViewModel(
-                            image: UIImage(named: "placeholder") ?? UIImage(),
-                            contentMode: .scaleAspectFit
-                        ),
-                        GDSCardLabelViewModel(
-                            title: GDSLocalisedString(
-                                stringLiteral: "Here is the caption for the picture",
-                                stringAttributes: [("Here is the caption for the picture", [.foregroundColor: DesignSystem.Color.Icons.success])]
-                            ),
-                            verticalPadding: .vertical(8)
-                        ),
-                        GDSCardLabelViewModel(
-                            title: "A really really really long title for the component",
-                            titleFont: DesignSystem.Font.Base.title1,
-                            verticalPadding: .bottom(8)
-                        ),
-                        GDSCardLabelViewModel(
-                            title: "Title",
-                            verticalPadding: .bottom(8)
-                        ),
-                        GDSCardDividerViewModel(
-                            height: 1,
-                            colour: DesignSystem.Color.Dividers.card,
-                            verticalPadding: .bottom(8)
-                        ),
-                        GDSButtonViewModel(
-                            title: "Secondary Button",
-                            style: .secondary,
-                            buttonAction: .action({ }),
-                            verticalPadding: .bottom(8),
-                            horizontalPadding: .horizontal(16)
-                        ),
-                        GDSButtonViewModel(
-                            title: "Primay Button",
-                            style: .primary,
-                            buttonAction: .action({ }),
-                            verticalPadding: .bottom(16),
-                            horizontalPadding: .horizontal(16)
-                        )
-                    ],
                     showShadow: true,
                     dismissAction: .action({ })
-                ),
+                ) {
+                    GDSCardImageViewModel(
+                        image: UIImage(named: "placeholder") ?? UIImage(),
+                        contentMode: .scaleAspectFit
+                    )
+                    GDSCardTextViewModel(
+                        title: GDSLocalisedString(
+                            stringLiteral: "Here is the caption for the picture",
+                            stringAttributes: [("Here is the caption for the picture",
+                                                [.foregroundColor: DesignSystem.Color.Icons.success])]
+                        ),
+                        verticalPadding: .vertical(8)
+                    )
+                    GDSCardTextViewModel(
+                        title: "A title for the component for a quick introduction",
+                        titleFont: DesignSystem.Font.Base.title1Bold,
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSCardTextViewModel(
+                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSCardDividerViewModel(
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSButtonViewModel(
+                        title: "Secondary Button",
+                        style: .secondary,
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .horizontal(16)
+                    )
+                    GDSButtonViewModel(
+                        title: "Primary Button",
+                        style: .primary,
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(16),
+                        horizontalPadding: .horizontal(16)
+                    )
+                },
                 GDSCardViewModel(
-                    items: [
-                        GDSCardLabelViewModel(
-                            title: "A document has been removed",
-                            titleFont: DesignSystem.Font.Base.title2Bold,
-                            isTitle: true,
-                            verticalPadding: .bottom(8),
-                            horizontalPadding: .leading(16)
-                        ),
-                        GDSCardLabelViewModel(
-                            title: "This happened because you turned off your phone's passcode.",
-                            titleFont: DesignSystem.Font.Base.body,
-                            verticalPadding: .bottom(8),
-                            horizontalPadding: .horizontal(16)
-                        ),
-                        GDSCardDividerViewModel(
-                            height: 1,
-                            colour: DesignSystem.Color.Dividers.card,
-                            verticalPadding: .bottom(8)
-                            
-                        ),
-                        GDSButtonViewModel(
-                            title: "Secondary Button",
-                            icon: .arrowUpRight,
-                            style: .secondary.adjusting(
-                                alignment: .leading,
-                                contentInsets: NSDirectionalEdgeInsets(
-                                    top: DesignSystem.Spacing.small,
-                                    leading: .zero,
-                                    bottom: DesignSystem.Spacing.small,
-                                    trailing: DesignSystem.Spacing.default
-                                )
-                            ),
-                            buttonAction: .action({ }),
-                            verticalPadding: .bottom(8),
-                            horizontalPadding: .horizontal(16)
-                        )
-                    ],
                     showShadow: true,
                     dismissAction: .action({ })
-                )
+                ) {
+                    GDSCardTitleViewModel(
+                        title: "A title for the component for a quick introduction",
+                        titleFont: DesignSystem.Font.Base.title2Bold,
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .leading(16)
+                    )
+                    GDSCardTextViewModel(
+                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSCardDividerViewModel(
+                        verticalPadding: .bottom(8)
+                        
+                    )
+                    GDSButtonViewModel(
+                        title: "Secondary Button",
+                        icon: .arrowUpRight,
+                        style: .secondary.adjusting(
+                            alignment: .leading,
+                            contentInsets: NSDirectionalEdgeInsets(
+                                top: DesignSystem.Spacing.small,
+                                leading: .zero,
+                                bottom: DesignSystem.Spacing.small,
+                                trailing: DesignSystem.Spacing.default
+                            )
+                        ),
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .horizontal(16)
+                    )
+                }
             ],
             moveableFooter: [],
             footer: []
@@ -136,7 +128,7 @@ class ViewController: UIViewController {
     
     func addViewsToStack() {
         viewModel.body.forEach {
-            stackview.addArrangedSubview($0.uiView)
+            stackview.addArrangedSubview($0.createUIView())
         }
     }
     

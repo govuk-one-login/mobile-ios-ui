@@ -1,20 +1,23 @@
 import UIKit
 
 @MainActor
-public protocol ContentItem {
+public protocol ContentViewModel {
+    associatedtype ViewType: ContentView where ViewType.Content == Self
+    
     var verticalPadding: VerticalPadding? { get }
     var horizontalPadding: HorizontalPadding? { get }
-    var uiView: UIView { get }
 }
 
-extension ContentItem {
-    public var verticalPadding: VerticalPadding? {
-        nil
+extension ContentViewModel {
+    public func createUIView() -> UIView {
+        ViewType(viewModel: self)
     }
+}
+
+public protocol ContentView: UIView {
+    associatedtype Content: ContentViewModel
     
-    public var horizontalPadding: HorizontalPadding? {
-        nil
-    }
+    init(viewModel: Content)
 }
 
 public enum HorizontalPadding {

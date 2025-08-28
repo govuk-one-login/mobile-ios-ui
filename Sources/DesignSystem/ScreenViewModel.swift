@@ -1,5 +1,5 @@
 public protocol ScreenViewModel {
-    var body: [ContentItem] { get }
-    var moveableFooter: [ContentItem] { get }
-    var footer: [ContentItem] { get }
+    var body: [any ContentViewModel] { get }
+    var moveableFooter: [any ContentViewModel] { get }
+    var footer: [any ContentViewModel] { get }
 }

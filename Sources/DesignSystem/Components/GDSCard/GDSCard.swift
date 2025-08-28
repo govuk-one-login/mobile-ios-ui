@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSCard: UIView {
+public final class GDSCard: UIView, ContentView {
     let viewModel: GDSCardViewModel
     
     lazy var stackView: UIStackView = {
@@ -14,14 +14,14 @@ public final class GDSCard: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = viewModel.backgroundColour
         
-        viewModel.content.forEach { item in
+        viewModel.contentItems.forEach { item in
             let stack = UIStackView(
-                views: item.uiView,
+                views: item.createUIView(),
                 alignment: .fill,
                 distribution: .fill
             )
             if let dismissAction = viewModel.dismissAction {
-                if viewModel.content.first is GDSCardImageViewModel {
+                if viewModel.contentItems.first is GDSCardImageViewModel {
                     if item is GDSCardImageViewModel {
                         addDismissButton(
                             type: .image,
@@ -29,8 +29,7 @@ public final class GDSCard: UIView {
                             action: dismissAction
                         )
                     }
-                } else if let item = item as? GDSCardLabelViewModel,
-                          item.isTitle {
+                } else if let item = item as? GDSCardTitleViewModel {
                     addDismissButton(
                         type: .title,
                         stackView: stack,
@@ -49,7 +48,7 @@ public final class GDSCard: UIView {
         return stackView
     }()
     
-    init(viewModel: GDSCardViewModel) {
+    public init(viewModel: GDSCardViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         addStackToView()
@@ -61,7 +60,10 @@ public final class GDSCard: UIView {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        stackView.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: DesignSystem.CornerRadius.card).cgPath
+        stackView.layer.shadowPath = UIBezierPath(
+            roundedRect: bounds,
+            cornerRadius: DesignSystem.CornerRadius.card
+        ).cgPath
     }
     
     func addStackToView() {
@@ -86,7 +88,7 @@ public final class GDSCard: UIView {
             icon: .xmark,
             style: .dismiss,
             buttonAction: action
-        ).uiView
+        ).createUIView()
         
         switch type {
         case .image:
@@ -105,7 +107,10 @@ public final class GDSCard: UIView {
         }
     }
     
-    private func additionalStackViewConfiguration(_ stackView: UIStackView, contentItem: ContentItem) {
+    private func additionalStackViewConfiguration(
+        _ stackView: UIStackView,
+        contentItem: any ContentViewModel
+    ) {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
             top: contentItem.verticalPadding?.topPadding ?? .zero,

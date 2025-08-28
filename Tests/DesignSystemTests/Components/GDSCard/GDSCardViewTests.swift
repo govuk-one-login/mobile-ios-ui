@@ -9,10 +9,9 @@ struct GDSCardViewTests {
     """)
     func encasingStackConfig() throws {
         let viewModel = GDSCardViewModel(
-            items: [],
             showShadow: false,
             dismissAction: nil
-        )
+        ) { }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
@@ -30,10 +29,9 @@ struct GDSCardViewTests {
     """)
     func encasingStackShadow() throws {
         let viewModel = GDSCardViewModel(
-            items: [],
             showShadow: true,
             dismissAction: nil
-        )
+        ) { }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
 
@@ -48,19 +46,16 @@ struct GDSCardViewTests {
         Check first inner stack view config is correct
     """)
     func innerStackViewConfig() throws {
-        let title = GDSCardLabelViewModel(
+        let title = GDSCardTextViewModel(
             title: "test title",
             titleFont: DesignSystem.Font.Base.title1,
             verticalPadding: .vertical(.zero),
             horizontalPadding: .horizontal(.zero)
         )
         let viewModel = GDSCardViewModel(
-            items: [
-                title
-            ],
             showShadow: false,
             dismissAction: nil
-        )
+        ) { title }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
 
@@ -82,18 +77,14 @@ struct GDSCardViewTests {
         Check the title stack view gets a dismiss button added as an arranged subview
     """)
     func titleLabelHasDismissButton() throws {
-        let title = GDSCardLabelViewModel(
+        let title = GDSCardTitleViewModel(
             title: "test title",
-            titleFont: DesignSystem.Font.Base.title1,
-            isTitle: true
+            titleFont: DesignSystem.Font.Base.title1
         )
         let viewModel = GDSCardViewModel(
-            items: [
-                title
-            ],
             showShadow: false,
             dismissAction: .action({ })
-        )
+        ) { title }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
@@ -112,18 +103,17 @@ struct GDSCardViewTests {
             image: UIImage(),
             contentMode: .scaleAspectFit
         )
-        let title = GDSCardLabelViewModel(
+        let title = GDSCardTextViewModel(
             title: "test title",
             titleFont: DesignSystem.Font.Base.title1
         )
         let viewModel = GDSCardViewModel(
-            items: [
-                image,
-                title
-            ],
             showShadow: false,
             dismissAction: .action({ })
-        )
+        ) {
+            image
+            title
+        }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
