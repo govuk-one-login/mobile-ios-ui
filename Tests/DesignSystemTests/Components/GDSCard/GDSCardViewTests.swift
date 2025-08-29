@@ -101,6 +101,7 @@ struct GDSCardViewTests {
     func imageLabelHasDismissButton() throws {
         let image = GDSCardImageViewModel(
             image: UIImage(),
+            accessibilityLabel: "test image",
             contentMode: .scaleAspectFit
         )
         let title = GDSCardTextViewModel(
@@ -117,9 +118,11 @@ struct GDSCardViewTests {
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
+        let imageView = try #require(imageStackView.subviews.first as? UIImageView)
         
         #expect(imageStackView.subviews.count == 2)
-        #expect(imageStackView.subviews.first is UIImageView)
+        #expect(imageView.isAccessibilityElement == true)
+        #expect(imageView.accessibilityLabel == "test image")
         #expect(imageStackView.subviews[1] is GDSButton)
         
         let titleStackView = try #require(cardStackView.arrangedSubviews[1] as? UIStackView)

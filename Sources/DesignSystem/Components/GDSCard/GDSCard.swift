@@ -29,7 +29,7 @@ public final class GDSCard: UIView, ContentView {
                             action: dismissAction
                         )
                     }
-                } else if let item = item as? GDSCardTitleViewModel {
+                } else if item is GDSCardTitleViewModel {
                     addDismissButton(
                         type: .title,
                         stackView: stack,
