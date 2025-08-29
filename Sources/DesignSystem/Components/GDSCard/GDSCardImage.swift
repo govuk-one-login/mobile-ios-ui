@@ -4,6 +4,7 @@ public struct GDSCardImageViewModel: ContentViewModel {
     public typealias ViewType = GDSCardImageView
     
     let image: UIImage
+    let accessibilityLabel: String?
     let contentMode: UIView.ContentMode
     
     var aspectRatio: CGFloat {
@@ -15,11 +16,13 @@ public struct GDSCardImageViewModel: ContentViewModel {
     
     public init(
         image: UIImage,
+        accessibilityLabel: String? = nil,
         contentMode: UIView.ContentMode,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
         self.image = image
+        self.accessibilityLabel = accessibilityLabel
         self.contentMode = contentMode
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
@@ -40,6 +43,10 @@ public final class GDSCardImageView: UIImageView, ContentView {
             NSLayoutConstraint.activate([
                 heightAnchor.constraint(equalTo: widthAnchor, multiplier: viewModel.aspectRatio)
             ])
+        }
+        if let accessibilityLabel = viewModel.accessibilityLabel {
+            self.isAccessibilityElement = true
+            self.accessibilityLabel = accessibilityLabel
         }
     }
     
