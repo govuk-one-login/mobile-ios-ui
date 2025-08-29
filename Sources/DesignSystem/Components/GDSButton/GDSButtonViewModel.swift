@@ -17,8 +17,8 @@ public struct GDSButtonViewModel: ContentViewModel {
         style: GDSButtonStyle,
         buttonAction: ButtonAction,
         haptic: Haptic? = nil,
-        verticalPadding: VerticalPadding? = nil,
-        horizontalPadding: HorizontalPadding? = nil
+        verticalPadding: VerticalPadding? = .vertical(0),
+        horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
         self.title = TitleForState(stringLiteral: title)
         if let icon {
@@ -39,8 +39,8 @@ public struct GDSButtonViewModel: ContentViewModel {
         style: GDSButtonStyle,
         buttonAction: ButtonAction,
         haptic: Haptic? = nil,
-        verticalPadding: VerticalPadding? = nil,
-        horizontalPadding: HorizontalPadding? = nil
+        verticalPadding: VerticalPadding? = .vertical(0),
+        horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
         self.title = title
         self.icon = icon

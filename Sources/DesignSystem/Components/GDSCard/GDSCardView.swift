@@ -14,8 +14,8 @@ public struct GDSCardViewModel: ContentViewModel {
         backgroundColour: UIColor = DesignSystem.Color.Backgrounds.card,
         showShadow: Bool = false,
         dismissAction: ButtonAction? = nil,
-        verticalPadding: VerticalPadding? = nil,
-        horizontalPadding: HorizontalPadding? = nil,
+        verticalPadding: VerticalPadding? = .vertical(0),
+        horizontalPadding: HorizontalPadding? = .horizontal(0),
         @ContentItemBuilder contentItems: () -> [any ContentViewModel]
     ) {
         self.backgroundColour = backgroundColour
