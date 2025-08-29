@@ -9,10 +9,10 @@ public final class GDSCard: UIView, ContentView {
             alignment: .fill,
             distribution: .fill
         )
+        stackView.backgroundColor = viewModel.backgroundColour
         stackView.layer.cornerRadius = DesignSystem.CornerRadius.card
         stackView.layer.masksToBounds = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = viewModel.backgroundColour
         
         viewModel.contentItems.forEach { item in
             let stack = UIStackView(
@@ -99,6 +99,7 @@ public final class GDSCard: UIView, ContentView {
                 dismissButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
             ])
         case .title:
+            dismissButton.setContentCompressionResistancePriority(.required, for: .horizontal)
             stackView.spacing = .zero
             stackView.axis = .horizontal
             stackView.alignment = .top
