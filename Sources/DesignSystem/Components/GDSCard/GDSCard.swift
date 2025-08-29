@@ -85,7 +85,7 @@ public final class GDSCard: UIView, ContentView {
     ) {
         let dismissButton = GDSButtonViewModel(
             title: .init(),
-            icon: .xmark,
+            icon: .xMark,
             style: .dismiss,
             buttonAction: action
         ).createUIView()
