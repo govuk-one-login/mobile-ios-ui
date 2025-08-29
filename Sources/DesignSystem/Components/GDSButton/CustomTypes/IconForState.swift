@@ -56,6 +56,7 @@ public struct IconForState: Sendable, Equatable {
 extension IconForState {
     public static let arrowUpRight: Self = IconForState(normal: IconStyle.arrowUpRight)
     public static let qrCode: Self = IconForState(normal: IconStyle.qrCode)
+    public static let xMark: Self = IconForState(normal: .xMark)
 }
 
 extension IconForState: ExpressibleByStringLiteral {

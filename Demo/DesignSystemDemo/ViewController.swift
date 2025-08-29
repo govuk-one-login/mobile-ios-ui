@@ -2,127 +2,94 @@
 import UIKit
 
 public struct TestViewControllerViewModel: ScreenViewModel {
-    public let body: [ContentItem]
-    public var moveableFooter: [ContentItem]
-    public var footer: [ContentItem]
+    public let body: [any ContentViewModel]
+    public var moveableFooter: [any ContentViewModel]
+    public var footer: [any ContentViewModel]
 }
 
 class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
-        let hapticButtons = Haptic.allCases.map { haptic in
-            GDSButtonViewModel(
-                title: TitleForState(normal: "haptic - " + String(describing: haptic)),
-                icon: nil,
-                style: .primary,
-                buttonAction: .action(
-                    {
-                        print(String(describing: haptic))
-                    }
-                ),
-                haptic: haptic
-            )
-        }
-        
-        return TestViewControllerViewModel(
+        TestViewControllerViewModel(
             body: [
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My really very long button title that is now even longer than ever before"),
-                    icon: IconForState.arrowUpRight,
-                    style: .primary,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .success
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My really very long button title"),
-                    icon: IconForState.arrowUpRight,
-                    style: .destructive,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .impactHeavy
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "", selected: "selected"),
-                    icon: IconForState.arrowUpRight,
-                    style: .primary,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
-                    ),
-                    haptic: .impactHeavy
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState(
-                        normal: IconStyle(icon: "chevron.up.circle", position: .leading),
-                        selected: IconStyle(icon: "chevron.down.circle", position: .leading)
-                    ),
-                    style: .secondaryLeadingSmall,
-                    buttonAction: .action(
-                        {
-                            print("button tapped")
-                        }
+                GDSCardViewModel(
+                    showShadow: true,
+                    dismissAction: .action({ })
+                ) {
+                    GDSCardImageViewModel(
+                        image: UIImage(named: "placeholder") ?? UIImage(),
+                        contentMode: .scaleAspectFit
                     )
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState.arrowUpRight,
-                    style: .secondaryLeading,
-                    buttonAction: .asyncAction(
-                        {
-                            do {
-                                print("button tapped")
-                                try await Task.sleep(nanoseconds: 1_000_000_000)
-                                print("button await completed")
-                            } catch {
-                                
-                            }
-                        }
+                    GDSCardTextViewModel(
+                        title: GDSLocalisedString(
+                            stringLiteral: "Here is the caption for the picture",
+                            stringAttributes: [("Here is the caption for the picture",
+                                                [.foregroundColor: DesignSystem.Color.Icons.success])]
+                        ),
+                        verticalPadding: .vertical(8)
                     )
-                ),
-                
-                GDSButtonViewModel(
-                    title: TitleForState(normal: "My button title"),
-                    icon: IconForState.qrCode,
-                    style: .secondary,
-                    buttonAction: .action(
-                        {
-                            print("button tapped")
-                        }
+                    GDSCardTextViewModel(
+                        title: "A title for the component for a quick introduction",
+                        titleFont: DesignSystem.Font.Base.title1Bold,
+                        verticalPadding: .bottom(8)
                     )
-                )
-            ]
-            + hapticButtons,
-            
+                    GDSCardTextViewModel(
+                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSCardDividerViewModel(
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSButtonViewModel(
+                        title: "Secondary Button",
+                        style: .secondary,
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .horizontal(16)
+                    )
+                    GDSButtonViewModel(
+                        title: "Primary Button",
+                        style: .primary,
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(16),
+                        horizontalPadding: .horizontal(16)
+                    )
+                },
+                GDSCardViewModel(
+                    showShadow: true,
+                    dismissAction: .action({ })
+                ) {
+                    GDSCardTitleViewModel(
+                        title: "A title for the component for a quick introduction",
+                        titleFont: DesignSystem.Font.Base.title2Bold,
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .leading(16)
+                    )
+                    GDSCardTextViewModel(
+                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSCardDividerViewModel(
+                        verticalPadding: .bottom(8)
+                        
+                    )
+                    GDSButtonViewModel(
+                        title: "Secondary Button",
+                        icon: .arrowUpRight,
+                        style: .secondary.adjusting(
+                            alignment: .leading,
+                            contentInsets: NSDirectionalEdgeInsets(
+                                top: DesignSystem.Spacing.small,
+                                leading: .zero,
+                                bottom: DesignSystem.Spacing.small,
+                                trailing: DesignSystem.Spacing.default
+                            )
+                        ),
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .horizontal(16)
+                    )
+                }
+            ],
             moveableFooter: [],
             footer: []
         )
@@ -161,7 +128,7 @@ class ViewController: UIViewController {
     
     func addViewsToStack() {
         viewModel.body.forEach {
-            stackview.addArrangedSubview($0.uiView)
+            stackview.addArrangedSubview($0.createUIView())
         }
     }
     
