@@ -4,6 +4,7 @@ public final class GDSButton: UIButton, ContentView {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?
+    private var buttonWidthAnchorConstraint: NSLayoutConstraint?
     
     var isLoading: Bool = false {
         didSet {
@@ -106,6 +107,16 @@ public final class GDSButton: UIButton, ContentView {
         } else {
             return false
         }
+    }
+    
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard titleLabel?.text?.count == 1 else { return }
+        buttonWidthAnchorConstraint?.isActive = false
+        buttonWidthAnchorConstraint = widthAnchor.constraint(
+            greaterThanOrEqualToConstant: (titleLabel?.intrinsicContentSize.width ?? 0) + 32
+        )
+        buttonWidthAnchorConstraint?.isActive = true
     }
     
     public override func accessibilityElementDidLoseFocus() {
