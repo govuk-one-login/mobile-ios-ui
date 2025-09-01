@@ -8,10 +8,7 @@ struct GDSCardViewTests {
         Check configuration of the outer stack view
     """)
     func encasingStackConfig() throws {
-        let viewModel = GDSCardViewModel(
-            showShadow: false,
-            dismissAction: nil
-        ) { }
+        let viewModel = GDSCardViewModel() { }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
@@ -27,18 +24,20 @@ struct GDSCardViewTests {
     @Test("""
         Check shadow is show for the outer stack view
     """)
-    func encasingStackShadow() throws {
+    func encasingStackShadowAndBorder() throws {
         let viewModel = GDSCardViewModel(
-            showShadow: true,
-            dismissAction: nil
+            borderStyle: BorderStyle(width: 1, color: .black),
+            showShadow: true
         ) { }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
-
+        
+        #expect(cardStackView.layer.borderWidth == 1)
+        #expect(cardStackView.layer.borderColor == UIColor.black.cgColor)
         #expect(cardStackView.layer.shadowRadius == 12)
         #expect(cardStackView.layer.shadowOffset == CGSize(width: 0, height: 4))
-        #expect(cardStackView.layer.shadowOpacity == 0.1)
-        #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Base.blackAlpha.cgColor)
+        #expect(cardStackView.layer.shadowOpacity == 1)
+        #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Shadows.card.cgColor)
         #expect(cardStackView.layer.masksToBounds == false)
     }
     
@@ -58,7 +57,7 @@ struct GDSCardViewTests {
         ) { title }
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
-
+        
         #expect(cardStackView.arrangedSubviews.count == 1)
         
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
@@ -70,7 +69,7 @@ struct GDSCardViewTests {
             trailing: .zero
         ))
         #expect(titleStackView.translatesAutoresizingMaskIntoConstraints == false)
-
+        
     }
     
     @Test("""

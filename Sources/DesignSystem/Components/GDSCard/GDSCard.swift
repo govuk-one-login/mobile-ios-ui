@@ -12,6 +12,10 @@ public final class GDSCard: UIView, ContentView {
         stackView.backgroundColor = viewModel.backgroundColour
         stackView.layer.cornerRadius = DesignSystem.CornerRadius.card
         stackView.layer.masksToBounds = true
+        if let borderStyle = viewModel.borderStyle {
+            stackView.layer.borderColor = borderStyle.color.cgColor
+            stackView.layer.borderWidth = borderStyle.width
+        }
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         viewModel.contentItems.forEach { item in
@@ -125,8 +129,8 @@ public final class GDSCard: UIView, ContentView {
     private func addShadowToView(_ stackView: UIStackView) {
         stackView.layer.shadowRadius = DesignSystem.CornerRadius.card
         stackView.layer.shadowOffset = CGSize(width: .zero, height: 4)
-        stackView.layer.shadowOpacity = 0.1
-        stackView.layer.shadowColor = DesignSystem.Color.Base.blackAlpha.cgColor
+        stackView.layer.shadowOpacity = 1
+        stackView.layer.shadowColor = DesignSystem.Color.Shadows.card.cgColor
         stackView.layer.masksToBounds = false
     }
 }
