@@ -4,6 +4,7 @@ public struct GDSCardViewModel: ContentViewModel {
     public typealias ViewType = GDSCard
     
     public let backgroundColour: UIColor
+    public let borderStyle: BorderStyle?
     public let showShadow: Bool
     public let dismissAction: ButtonAction?
     public let verticalPadding: VerticalPadding?
@@ -12,6 +13,7 @@ public struct GDSCardViewModel: ContentViewModel {
     
     public init(
         backgroundColour: UIColor = DesignSystem.Color.Backgrounds.card,
+        borderStyle: BorderStyle? = nil,
         showShadow: Bool = false,
         dismissAction: ButtonAction? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
@@ -19,6 +21,7 @@ public struct GDSCardViewModel: ContentViewModel {
         @ContentItemBuilder contentItems: () -> [any ContentViewModel]
     ) {
         self.backgroundColour = backgroundColour
+        self.borderStyle = borderStyle
         self.showShadow = showShadow
         self.dismissAction = dismissAction
         self.verticalPadding = verticalPadding

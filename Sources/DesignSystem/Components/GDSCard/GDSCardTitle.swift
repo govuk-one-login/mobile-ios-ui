@@ -11,7 +11,7 @@ public struct GDSCardTitleViewModel: ContentViewModel {
     
     public init(
         title: GDSLocalisedString,
-        titleFont: UIFont = DesignSystem.Font.Base.body,
+        titleFont: UIFont = DesignSystem.Font.Base.title2Bold,
         alignment: NSTextAlignment = .left,
         verticalPadding: VerticalPadding? = .vertical(8),
         horizontalPadding: HorizontalPadding? = .horizontal(16)
