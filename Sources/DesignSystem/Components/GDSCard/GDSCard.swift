@@ -104,7 +104,6 @@ public final class GDSCard: UIView, ContentView {
             stackView.spacing = .zero
             stackView.axis = .horizontal
             stackView.alignment = .top
-            stackView.distribution = .fill
             stackView.addArrangedSubview(dismissButton)
         }
     }
