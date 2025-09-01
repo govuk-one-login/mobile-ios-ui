@@ -16,12 +16,16 @@ struct GDSButtonStyleTests {
                 trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
-                normal: .systemBackground,
-                focused: DesignSystem.Color.Text.primary
+                normal: DesignSystem.Color.Buttons.primaryForeground,
+                focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
+                disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryBackground,
-                focused: DesignSystem.Color.Base.yellow1
+                highlighted: DesignSystem.Color.Buttons.primaryBackgroundHighlighted,
+                focused: DesignSystem.Color.Buttons.primaryBackgroundFocused,
+                disabled: DesignSystem.Color.Buttons.primaryBackgroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.primaryBackgroundFocusedHighlighted
             ),
             cornerRadius: DesignSystem.Spacing.default,
             border: nil
@@ -33,10 +37,17 @@ struct GDSButtonStyleTests {
     @Test
     func destructive() {
         let expectation = GDSButtonStyle.primary.adjusting(
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Buttons.destructiveForeground,
+                focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
+                disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled
+            ),
             backgroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.red1,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow1
+                normal: DesignSystem.Color.Buttons.destructiveBackground,
+                highlighted: DesignSystem.Color.Buttons.destructiveBackgroundHighlighted,
+                focused: DesignSystem.Color.Buttons.destructiveBackgroundFocused,
+                disabled: DesignSystem.Color.Buttons.destructiveBackgroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.destructiveBackgroundFocusedHighlighted
             )
         )
         

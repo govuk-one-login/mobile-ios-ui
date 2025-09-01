@@ -119,5 +119,8 @@ public final class GDSButton: UIButton, ContentView {
         config?.baseBackgroundColor = viewModel.style.backgroundColor.forState(.focused)
         config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
         self.configuration = config
+        if viewModel.icon == .arrowUpRight {
+            self.accessibilityHint = "Opens in web browser"
+        }
     }
 }
