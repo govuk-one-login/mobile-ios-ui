@@ -34,7 +34,7 @@ struct GDSCardViewTests {
         
         #expect(cardStackView.layer.borderWidth == 1)
         #expect(cardStackView.layer.borderColor == UIColor.black.cgColor)
-        #expect(cardStackView.layer.shadowRadius == 12)
+        #expect(cardStackView.layer.shadowRadius == 16)
         #expect(cardStackView.layer.shadowOffset == CGSize(width: 0, height: 4))
         #expect(cardStackView.layer.shadowOpacity == 1)
         #expect(cardStackView.layer.shadowColor == DesignSystem.Color.Shadows.card.cgColor)

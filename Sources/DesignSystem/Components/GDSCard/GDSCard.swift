@@ -127,7 +127,7 @@ public final class GDSCard: UIView, ContentView {
     }
     
     private func addShadowToView(_ stackView: UIStackView) {
-        stackView.layer.shadowRadius = DesignSystem.CornerRadius.card
+        stackView.layer.shadowRadius = DesignSystem.CornerRadius.default
         stackView.layer.shadowOffset = CGSize(width: .zero, height: 4)
         stackView.layer.shadowOpacity = 1
         stackView.layer.shadowColor = DesignSystem.Color.Shadows.card.cgColor
