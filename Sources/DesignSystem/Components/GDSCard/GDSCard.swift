@@ -100,10 +100,10 @@ public final class GDSCard: UIView, ContentView {
             ])
         case .title:
             dismissButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+            dismissButton.setContentHuggingPriority(.required, for: .horizontal)
             stackView.spacing = .zero
             stackView.axis = .horizontal
             stackView.alignment = .top
-            stackView.distribution = .fillProportionally
             stackView.addArrangedSubview(dismissButton)
         }
     }
