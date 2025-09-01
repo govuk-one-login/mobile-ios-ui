@@ -8,7 +8,7 @@ struct GDSCardViewTests {
         Check configuration of the outer stack view
     """)
     func encasingStackConfig() throws {
-        let viewModel = GDSCardViewModel() { }
+        let viewModel = GDSCardViewModel(contentItems: { })
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
@@ -27,8 +27,9 @@ struct GDSCardViewTests {
     func encasingStackShadowAndBorder() throws {
         let viewModel = GDSCardViewModel(
             borderStyle: BorderStyle(width: 1, color: .black),
-            showShadow: true
-        ) { }
+            showShadow: true,
+            contentItems: { }
+        )
         let sut = GDSCard(viewModel: viewModel)
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
