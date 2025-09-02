@@ -64,6 +64,8 @@ extension UIButton {
                 button.configuration?.attributedTitle = nil
                 button.configuration?.title = nil
                 button.configuration?.imagePlacement = .top
+                button.accessibilityLabel = "Loading"
+                button.accessibilityHint = nil
             } else {
                 var string = title
                 string.font = viewModel.style.font
