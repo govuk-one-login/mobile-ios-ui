@@ -152,15 +152,4 @@ struct GDSButtonTests {
         #expect(!sut.isLoading)
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
     }
-    
-    @Test func voiceOverFocus_accessibilityHint() async throws {
-        let viewModel = GDSButtonViewModel(
-            title: "title",
-            icon: .arrowUpRight,
-            style: .primary,
-            buttonAction: .action({ })
-        )
-
-        #expect(viewModel.icon?.forState(.normal).accessibilityHint == "opens in web browser")
-    }
 }

@@ -47,5 +47,10 @@ struct SpacingTests {
         #expect(sut == expectedValue)
     }
     
-    
+    @Test func test_Spacing_PrimaryButton() async throws {
+        let expectedValue: Double = 11
+        
+        let sut = DesignSystem.Spacing.primaryButton
+        #expect(sut == expectedValue)
+    }
 }
