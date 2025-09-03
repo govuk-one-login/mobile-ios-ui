@@ -15,7 +15,7 @@ struct GDSCardViewTests {
         #expect(cardStackView.spacing == .zero)
         #expect(cardStackView.alignment == .fill)
         #expect(cardStackView.distribution == .fill)
-        #expect(cardStackView.layer.cornerRadius == 12)
+        #expect(cardStackView.layer.cornerRadius == 14)
         #expect(cardStackView.layer.masksToBounds == true)
         #expect(cardStackView.translatesAutoresizingMaskIntoConstraints == false)
         #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
