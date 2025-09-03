@@ -17,8 +17,10 @@ struct GDSButtonStyleTests {
             ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryForeground,
+                highlighted: DesignSystem.Color.Buttons.primaryForeground,
                 focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
-                disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled
+                disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryBackground,
@@ -39,8 +41,10 @@ struct GDSButtonStyleTests {
         let expectation = GDSButtonStyle.primary.adjusting(
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveForeground,
+                highlighted: DesignSystem.Color.Buttons.destructiveForeground,
                 focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
-                disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled
+                disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveBackground,

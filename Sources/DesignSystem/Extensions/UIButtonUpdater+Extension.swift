@@ -70,7 +70,7 @@ extension UIButton {
                 var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
-                
+                button.accessibilityLabel = nil
                 button.configuration?.titleAlignment = viewModel.style.alignment
                 button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
                 button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
