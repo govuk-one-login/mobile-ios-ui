@@ -77,6 +77,8 @@ extension UIButton {
                    let accessibilityHint = icon.accessibilityHint {
                     button.accessibilityHint = accessibilityHint
                 }
+				
+//				button.buttonShapesEnabled(UIAccessibility.buttonShapeEnabled, viewModel: GDSButtonViewModel)
                 
                 if viewModel.style.backgroundColor.forState(button.state) == UIColor.systemBackground
                     && UIAccessibility.buttonShapesEnabled {
@@ -88,4 +90,23 @@ extension UIButton {
             }
         }
     }
+//	
+//	func buttonShapesEnabled(_ enabled: Bool, viewModel: GDSButtonViewModel) {
+//		if (viewModel.style.backgroundColor.forState(self.state) == UIColor.systemBackground
+//			&& enabled) ||
+//			(viewModel.style.backgroundColor.forState(self.state) == UIColor.clear
+//			 && enabled)
+//		{
+//			self.configuration?.baseBackgroundColor = .systemGray6
+//		} else {
+//			self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
+//}
+//		
+//		func buttonShapesEnabled(_ enabled: Bool, viewModel: GDSButtonViewModel) {
+//			self.configuration?.baseBackgroundColor =
+//			(enabled &&
+//			 (viewModel.style.backgroundColor.forState(self.state) == UIColor.systemBackground ||
+//			  viewModel.style.backgroundColor.forState(self.state) == UIColor.clear)) ? .systemGray6
+//			: viewModel.style.backgroundColor.forState(self.state)
+//		}
 }
