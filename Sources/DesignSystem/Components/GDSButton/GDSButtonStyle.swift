@@ -115,12 +115,6 @@ extension GDSButtonStyle {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.body,
             alignment: .center,
-            contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.small,
-                leading: DesignSystem.Spacing.default,
-                bottom: DesignSystem.Spacing.small,
-                trailing: DesignSystem.Spacing.default
-            ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryForeground,
                 focused: DesignSystem.Color.Text.primary
