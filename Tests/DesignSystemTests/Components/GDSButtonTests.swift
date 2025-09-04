@@ -54,6 +54,7 @@ struct GDSButtonTests {
         let sut = GDSButton(viewModel: viewModel)
         
         #expect(!sut.isSelected)
+        
         sut.sendActions(for: .touchUpInside)
         #expect(!sut.isSelected)
     }
