@@ -152,4 +152,71 @@ struct GDSButtonTests {
         #expect(!sut.isLoading)
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
     }
+    
+    @Test("Button Shapes enabled then background colour should be systemGray6")
+    func buttonShapesEnabledClear_setsSystemGray6() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        
+        sut.buttonShapesEnabled(true, viewModel: viewModel)
+        #expect(sut.configuration?.baseBackgroundColor == .systemGray6)
+    }
+    
+    @Test("Button Shapes is disabled & background colour is clear should default to normal state")
+    func buttonShapesDisabled_defaultsToNormal() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        
+        sut.buttonShapesEnabled(false, viewModel: viewModel)
+        #expect(sut.configuration?.baseBackgroundColor == viewModel.style.backgroundColor.forState(.normal))
+    }
+    
+    
+    @Test("Button Shapes is enabled and color is SystemBackground then background colour should be systemGray6")
+    func buttonShapesEnabledSytemBackground_setsSystemGray6() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary.adjusting(
+                backgroundColor: ColorForState(
+                    normal: DesignSystem.Color.Base.background,
+                    focused: nil
+                )
+            ),
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        
+        sut.buttonShapesEnabled(true, viewModel: viewModel)
+        #expect(sut.configuration?.baseBackgroundColor == .systemGray6)
+    }
+    
+    @Test("Button Shapes is disabled & colour is systemBackground should default to normal state")
+    func buttonShapesDisabledSystemBackGround_defaultsToNormal() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary.adjusting(
+                backgroundColor: ColorForState(
+                    normal: DesignSystem.Color.Base.background,
+                    focused: nil
+                )
+            ),
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        
+        sut.buttonShapesEnabled(false, viewModel: viewModel)
+        #expect(sut.configuration?.baseBackgroundColor == viewModel.style.backgroundColor.forState(.normal))
+    }
 }

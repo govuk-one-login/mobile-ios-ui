@@ -109,6 +109,7 @@ struct GDSButtonStyleTests {
         #expect(expectation.border == BorderStyle(width: 1, color: .red))
     }
 }
+
 extension GDSButtonStyle {
     static var secondaryLeading: Self {
         secondary.adjusting(
