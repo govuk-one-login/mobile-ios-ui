@@ -115,6 +115,12 @@ extension GDSButtonStyle {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.body,
             alignment: .center,
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
+            ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryForeground,
                 focused: DesignSystem.Color.Text.primary
@@ -133,20 +139,14 @@ extension GDSButtonStyle {
 extension GDSButtonStyle {
     @_spi(unstable)
     public static var dismiss: Self {
-        GDSButtonStyle(
-            font: DesignSystem.Font.Base.body,
-            alignment: .center,
-            contentInsets: .dismissButton,
-            foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Buttons.secondaryForeground,
-                focused: DesignSystem.Color.Text.primary
+        secondary.adjusting(
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.xSmall,
+                trailing: DesignSystem.Spacing.default
             ),
-            backgroundColor: ColorForState(
-                normal: .clear,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow1
-            ),
-            cornerRadius: DesignSystem.Spacing.xSmall
+            minimumHeight: .zero
         )
     }
 }
