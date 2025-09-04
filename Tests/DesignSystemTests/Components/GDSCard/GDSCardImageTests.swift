@@ -1,6 +1,6 @@
 @testable import DesignSystem
-import UIKit
 import Testing
+import UIKit
 
 @MainActor
 struct GDSCardImageTests {
