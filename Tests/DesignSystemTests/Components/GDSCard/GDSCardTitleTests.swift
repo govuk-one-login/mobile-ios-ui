@@ -4,9 +4,7 @@ import UIKit
 
 @MainActor
 struct GDSCardTitleTests {
-    @Test("""
-          Test default stack view config
-    """)
+    @Test("Test default stack view config")
     func defaultStackViewConfig() throws {
         let viewModel = GDSCardTitleViewModel(
             title: "test title"
@@ -18,9 +16,7 @@ struct GDSCardTitleTests {
         #expect(sut.distribution == .fill)
     }
     
-    @Test("""
-          Test default values
-    """)
+    @Test("Test default values")
     func defaultValues() throws {
         let viewModel = GDSCardTitleViewModel(
             title: "test title"
@@ -37,9 +33,7 @@ struct GDSCardTitleTests {
         #expect(label.accessibilityIdentifier == "content-card-title")
     }
     
-    @Test("""
-          Test set values
-    """)
+    @Test("Test set values")
     func setValues() throws {
         let viewModel = GDSCardTitleViewModel(
             title: "test title",

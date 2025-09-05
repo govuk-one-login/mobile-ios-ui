@@ -4,9 +4,7 @@ import UIKit
 
 @MainActor
 struct GDSCardImageTests {
-    @Test("""
-          Test default values
-    """)
+    @Test("Test default values")
     func defaultValues() throws {
         let viewModel = GDSCardImageViewModel(
             image: UIImage(),
@@ -22,9 +20,7 @@ struct GDSCardImageTests {
         #expect(sut.constraints.isEmpty)
     }
     
-    @Test("""
-          Test set values
-    """)
+    @Test("Test set values")
     func setValues() throws {
         let viewModel = GDSCardImageViewModel(
             image: UIImage(),

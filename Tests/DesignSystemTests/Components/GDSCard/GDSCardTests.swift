@@ -4,9 +4,7 @@ import UIKit
 
 @MainActor
 struct GDSCardViewTests {
-    @Test("""
-        Check configuration of the outer stack view
-    """)
+    @Test("Check configuration of the outer stack view")
     func encasingStackConfig() throws {
         let viewModel = GDSCardViewModel(contentItems: { })
         let sut = viewModel.createUIView()
@@ -21,9 +19,7 @@ struct GDSCardViewTests {
         #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
     }
     
-    @Test("""
-        Check shadow is show for the outer stack view
-    """)
+    @Test("Check shadow is show for the outer stack view")
     func encasingStackShadowAndBorder() throws {
         let viewModel = GDSCardViewModel(
             borderStyle: BorderStyle(width: 1, color: .black),
@@ -42,9 +38,7 @@ struct GDSCardViewTests {
         #expect(cardStackView.layer.masksToBounds == false)
     }
     
-    @Test("""
-        Check first inner stack view config is correct
-    """)
+    @Test("Check first inner stack view config is correct")
     func innerStackViewConfig() throws {
         let title = GDSCardTextViewModel(
             title: "test title",
@@ -72,9 +66,7 @@ struct GDSCardViewTests {
         
     }
     
-    @Test("""
-        Check the title stack view gets a dismiss button added as an arranged subview
-    """)
+    @Test("Check the title stack view gets a dismiss button added as an arranged subview")
     func titleLabelHasDismissButton() throws {
         let title = GDSCardTitleViewModel(
             title: "test title",
@@ -93,9 +85,7 @@ struct GDSCardViewTests {
         #expect(titleStackView.arrangedSubviews[1] is GDSButton)
     }
     
-    @Test("""
-        Check the image stack view gets a dismiss button added as a subview and not the title
-    """)
+    @Test("Check the image stack view gets a dismiss button added as a subview and not the title")
     func imageLabelHasDismissButton() throws {
         let image = GDSCardImageViewModel(
             image: UIImage(),
