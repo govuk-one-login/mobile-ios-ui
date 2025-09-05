@@ -125,7 +125,6 @@ struct GDSButtonStyleTests {
     }
 }
 
-
 extension GDSButtonStyle {
     static var secondaryLeading: Self {
         secondary.adjusting(

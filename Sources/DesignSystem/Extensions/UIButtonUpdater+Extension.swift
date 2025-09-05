@@ -53,6 +53,14 @@ extension UIButton {
         self.addBorder(viewModel: viewModel)
     }
     
+    func buttonShapesEnabled(_ enabled: Bool, viewModel: GDSButtonViewModel) {
+        self.configuration?.baseBackgroundColor =
+        (enabled &&
+         (viewModel.style.backgroundColor.forState(self.state) == UIColor.systemBackground ||
+          viewModel.style.backgroundColor.forState(self.state) == UIColor.clear)) ? .systemGray6
+        : viewModel.style.backgroundColor.forState(self.state)
+    }
+    
     static func buttonUpdater(
         viewModel: GDSButtonViewModel
     ) -> ConfigurationUpdateHandler {
@@ -85,12 +93,8 @@ extension UIButton {
                     button.accessibilityHint = accessibilityHint
                 }
                 
-                if viewModel.style.backgroundColor.forState(button.state) == UIColor.systemBackground
-                    && UIAccessibility.buttonShapesEnabled {
-                    button.configuration?.baseBackgroundColor = .systemGray6
-                } else {
-                    button.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(button.state)
-                }
+                button.buttonShapesEnabled(UIAccessibility.buttonShapesEnabled, viewModel: viewModel)
+                
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
             }
         }
