@@ -4,9 +4,7 @@ import UIKit
 
 @MainActor
 struct GDSCardTextTests {
-    @Test("""
-          Test default values
-    """)
+    @Test("Test default values")
     func defaultValues() throws {
         let viewModel = GDSCardTextViewModel(
             title: "test title"
@@ -23,9 +21,7 @@ struct GDSCardTextTests {
         #expect(sut.accessibilityIdentifier == "content-card-label")
     }
     
-    @Test("""
-          Test set values
-    """)
+    @Test("Test set values")
     func setValues() throws {
         let viewModel = GDSCardTextViewModel(
             title: "test title",
