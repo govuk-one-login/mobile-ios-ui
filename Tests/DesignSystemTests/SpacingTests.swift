@@ -46,6 +46,4 @@ struct SpacingTests {
         let sut = DesignSystem.Spacing.xLarge
         #expect(sut == expectedValue)
     }
-    
-    
 }

@@ -57,7 +57,6 @@ public struct GDSButtonStyle: Equatable {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
-    @_spi(unstable)
     public static var primary: Self {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.bodySemiBold,
@@ -69,27 +68,41 @@ extension GDSButtonStyle {
                 trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
-                normal: .systemBackground,
-                focused: DesignSystem.Color.Text.primary
+                normal: DesignSystem.Color.Buttons.primaryForeground,
+                highlighted: DesignSystem.Color.Buttons.primaryForeground,
+                focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
+                disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryBackground,
-                focused: DesignSystem.Color.Base.yellow1
+                highlighted: DesignSystem.Color.Buttons.primaryBackgroundHighlighted,
+                focused: DesignSystem.Color.Buttons.primaryBackgroundFocused,
+                disabled: DesignSystem.Color.Buttons.primaryBackgroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.primaryBackgroundFocusedHighlighted
             ),
-            cornerRadius: DesignSystem.Spacing.default
+            cornerRadius: DesignSystem.CornerRadius.primaryButton
         )
     }
 }
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
-    @_spi(unstable)
     public static var destructive: Self {
         primary.adjusting(
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Buttons.destructiveForeground,
+                highlighted: DesignSystem.Color.Buttons.destructiveForeground,
+                focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
+                disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.destructiveForegroundFocused
+            ),
             backgroundColor: ColorForState(
-                normal: DesignSystem.Color.Base.red1,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow1
+                normal: DesignSystem.Color.Buttons.destructiveBackground,
+                highlighted: DesignSystem.Color.Buttons.destructiveBackgroundHighlighted,
+                focused: DesignSystem.Color.Buttons.destructiveBackgroundFocused,
+                disabled: DesignSystem.Color.Buttons.destructiveBackgroundDisabled,
+                focusedHighlighted: DesignSystem.Color.Buttons.destructiveBackgroundFocusedHighlighted
             )
         )
     }

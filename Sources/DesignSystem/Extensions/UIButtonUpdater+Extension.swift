@@ -4,6 +4,11 @@ extension UIButton {
     private func titleWithIcon(viewModel: GDSButtonViewModel) -> AttributedString {
         var attrString = AttributedString(viewModel.title.forState(self.state))
         attrString.font = viewModel.style.font
+        
+        if UIAccessibility.buttonShapesEnabled {
+            attrString.underlineStyle = .single
+        }
+        
         return attrString.addIcon(
             iconStyle: viewModel.icon?.forState(self.state)
         ) ?? attrString
@@ -64,14 +69,16 @@ extension UIButton {
                 button.configuration?.attributedTitle = nil
                 button.configuration?.title = nil
                 button.configuration?.imagePlacement = .top
+                button.accessibilityLabel = "Loading"
+                button.accessibilityHint = nil
             } else {
                 var string = title
                 string.font = viewModel.style.font
                 button.configuration?.attributedTitle = string
-                
                 button.configuration?.titleAlignment = viewModel.style.alignment
                 button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
                 button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
+                button.accessibilityLabel = nil
                 
                 if let icon = viewModel.icon?.forState(button.state),
                    let accessibilityHint = icon.accessibilityHint {
