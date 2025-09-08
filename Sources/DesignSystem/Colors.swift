@@ -75,7 +75,6 @@ extension DesignSystem {
                 light: Color.Base.green8,
                 dark: Color.Base.green6
             )
-            public static let secondaryBackground = Color.Base.background
             public static let secondaryBackgroundFocused = Color.Base.yellow1
             public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
 
