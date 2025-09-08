@@ -131,7 +131,6 @@ extension GDSButtonStyle {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
-    @_spi(unstable)
     public static var dismiss: Self {
         secondary.adjusting(
             contentInsets: NSDirectionalEdgeInsets(
