@@ -17,7 +17,6 @@ struct GDSButtonStyleTests {
             ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryForeground,
-                highlighted: DesignSystem.Color.Buttons.primaryForeground,
                 focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
@@ -41,10 +40,9 @@ struct GDSButtonStyleTests {
         let expectation = GDSButtonStyle.primary.adjusting(
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveForeground,
-                highlighted: DesignSystem.Color.Buttons.destructiveForeground,
                 focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled,
-                focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
+                focusedHighlighted: DesignSystem.Color.Buttons.destructiveForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveBackground,
@@ -65,15 +63,15 @@ struct GDSButtonStyleTests {
             alignment: .center,
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryForeground,
-                focused: DesignSystem.Color.Text.primary
+                highlighted: DesignSystem.Color.Buttons.secondaryForegroundHighlighted,
+                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: .clear,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow1
+                focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
-            cornerRadius: DesignSystem.Spacing.xSmall,
-            border: nil
+            cornerRadius: DesignSystem.Spacing.xSmall
         )
         
         #expect(expectation == .secondary)

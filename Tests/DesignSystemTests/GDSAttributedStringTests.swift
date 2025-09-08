@@ -13,7 +13,7 @@ struct GDSAttributedStringTests {
             )
         ).attributedString
         
-        let expectedString = NSMutableAttributedString(string: " this is a string")
+        let expectedString = NSMutableAttributedString(string: GDSAttributedString.nonBreakingSpace + "this is a string")
         expectedString.insert(NSMutableAttributedString(
             attachment: NSTextAttachment(
                 image: UIImage(systemName: "exclamationmark.octagon") ?? UIImage()
@@ -33,7 +33,7 @@ struct GDSAttributedStringTests {
             )
         ).attributedString
         
-        let expectedString = NSMutableAttributedString(string: "this is a string ")
+        let expectedString = NSMutableAttributedString(string: "this is a string" + GDSAttributedString.nonBreakingSpace)
         expectedString.append(
             NSMutableAttributedString(
                 attachment: NSTextAttachment(
