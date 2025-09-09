@@ -4,33 +4,29 @@ import UIKit
 
 @MainActor
 struct GDSCardViewTests {
-    @Test("""
-        Check configuration of the outer stack view
-    """)
+    @Test("Check configuration of the outer stack view")
     func encasingStackConfig() throws {
         let viewModel = GDSCardViewModel(contentItems: { })
-        let sut = GDSCard(viewModel: viewModel)
+        let sut = viewModel.createUIView()
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
         #expect(cardStackView.spacing == .zero)
         #expect(cardStackView.alignment == .fill)
         #expect(cardStackView.distribution == .fill)
-        #expect(cardStackView.layer.cornerRadius == 12)
+        #expect(cardStackView.layer.cornerRadius == 14)
         #expect(cardStackView.layer.masksToBounds == true)
         #expect(cardStackView.translatesAutoresizingMaskIntoConstraints == false)
         #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
     }
     
-    @Test("""
-        Check shadow is show for the outer stack view
-    """)
+    @Test("Check shadow is show for the outer stack view")
     func encasingStackShadowAndBorder() throws {
         let viewModel = GDSCardViewModel(
             borderStyle: BorderStyle(width: 1, color: .black),
             showShadow: true,
             contentItems: { }
         )
-        let sut = GDSCard(viewModel: viewModel)
+        let sut = viewModel.createUIView()
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
         #expect(cardStackView.layer.borderWidth == 1)
@@ -42,13 +38,10 @@ struct GDSCardViewTests {
         #expect(cardStackView.layer.masksToBounds == false)
     }
     
-    @Test("""
-        Check first inner stack view config is correct
-    """)
+    @Test("Check first inner stack view config is correct")
     func innerStackViewConfig() throws {
         let title = GDSCardTextViewModel(
             title: "test title",
-            titleFont: DesignSystem.Font.Base.title1,
             verticalPadding: .vertical(.zero),
             horizontalPadding: .horizontal(.zero)
         )
@@ -56,7 +49,7 @@ struct GDSCardViewTests {
             showShadow: false,
             dismissAction: nil
         ) { title }
-        let sut = GDSCard(viewModel: viewModel)
+        let sut = viewModel.createUIView()
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         
         #expect(cardStackView.arrangedSubviews.count == 1)
@@ -73,19 +66,16 @@ struct GDSCardViewTests {
         
     }
     
-    @Test("""
-        Check the title stack view gets a dismiss button added as an arranged subview
-    """)
+    @Test("Check the title stack view gets a dismiss button added as an arranged subview")
     func titleLabelHasDismissButton() throws {
         let title = GDSCardTitleViewModel(
             title: "test title",
-            titleFont: DesignSystem.Font.Base.title1
         )
         let viewModel = GDSCardViewModel(
             showShadow: false,
             dismissAction: .action({ })
         ) { title }
-        let sut = GDSCard(viewModel: viewModel)
+        let sut = viewModel.createUIView()
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let titleStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
         let titleVStack = try #require(titleStackView.arrangedSubviews.first as? UIStackView)
@@ -95,9 +85,7 @@ struct GDSCardViewTests {
         #expect(titleStackView.arrangedSubviews[1] is GDSButton)
     }
     
-    @Test("""
-        Check the image stack view gets a dismiss button added as a subview and not the title
-    """)
+    @Test("Check the image stack view gets a dismiss button added as a subview and not the title")
     func imageLabelHasDismissButton() throws {
         let image = GDSCardImageViewModel(
             image: UIImage(),
@@ -115,7 +103,7 @@ struct GDSCardViewTests {
             image
             title
         }
-        let sut = GDSCard(viewModel: viewModel)
+        let sut = viewModel.createUIView()
         let cardStackView = try #require(sut.subviews.first as? UIStackView)
         let imageStackView = try #require(cardStackView.arrangedSubviews.first as? UIStackView)
         let imageView = try #require(imageStackView.subviews.first as? UIImageView)

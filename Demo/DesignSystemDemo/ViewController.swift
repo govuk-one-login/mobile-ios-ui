@@ -59,8 +59,7 @@ class ViewController: UIViewController {
                     dismissAction: .action({ })
                 ) {
                     GDSCardTitleViewModel(
-                        title: "A title for the component for a quick introduction",
-                        titleFont: DesignSystem.Font.Base.title2Bold,
+                        title: "A title for the component",
                         verticalPadding: .bottom(8),
                         horizontalPadding: .leading(16)
                     )
@@ -70,7 +69,6 @@ class ViewController: UIViewController {
                     )
                     GDSCardDividerViewModel(
                         verticalPadding: .bottom(8)
-                        
                     )
                     GDSButtonViewModel(
                         title: "Secondary Button",
