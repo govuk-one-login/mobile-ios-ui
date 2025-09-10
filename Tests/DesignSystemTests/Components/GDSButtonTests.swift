@@ -164,7 +164,8 @@ struct GDSButtonTests {
         let sut = GDSButton(viewModel: viewModel)
         
         sut.buttonShapesEnabled(true, viewModel: viewModel)
-        #expect(sut.configuration?.baseBackgroundColor == .systemGray6)
+        #expect(sut.configuration?.baseBackgroundColor?.lightColor == DesignSystem.Color.Base.grey4)
+        #expect(sut.configuration?.baseBackgroundColor?.darkColor == DesignSystem.Color.Base.charcoal2)
     }
     
     @Test("Button Shapes is disabled & background colour is clear should default to normal state")
@@ -198,7 +199,8 @@ struct GDSButtonTests {
         let sut = GDSButton(viewModel: viewModel)
         
         sut.buttonShapesEnabled(true, viewModel: viewModel)
-        #expect(sut.configuration?.baseBackgroundColor == .systemGray6)
+        #expect(sut.configuration?.baseBackgroundColor?.lightColor == DesignSystem.Color.Base.grey4)
+        #expect(sut.configuration?.baseBackgroundColor?.darkColor == DesignSystem.Color.Base.charcoal2)
     }
     
     @Test("Button Shapes is disabled & colour is systemBackground should default to normal state")
