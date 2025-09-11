@@ -14,8 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = GDSScreen(
-            viewModel: GDSCentreAlignedScreenViewModel(
-                title: "Title",
+            viewModel: GDSLeftAlignedScreenViewModel(
                 body: [
                     GDSCardViewModel(
                         showShadow: true,
@@ -49,7 +48,43 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             verticalPadding: .bottom(8),
                             horizontalPadding: .horizontal(16)
                         )
+                    },
+                    GDSCardViewModel(
+                        showShadow: true,
+                        dismissAction: .action({ })
+                    ) {
+                        GDSCardTitleViewModel(
+                            title: "A title for the component",
+                            verticalPadding: .bottom(8),
+                            horizontalPadding: .leading(16)
+                        )
+                        GDSCardTextViewModel(
+                            title: "A subtitle for the componenet which can be used to describe it's purpose",
+                            verticalPadding: .bottom(8)
+                        )
+                        GDSCardDividerViewModel(
+                            verticalPadding: .bottom(8)
+                        )
+                        GDSButtonViewModel(
+                            title: "Secondary Button",
+                            icon: .arrowUpRight,
+                            style: .secondary.adjusting(
+                                alignment: .leading,
+                                contentInsets: NSDirectionalEdgeInsets(
+                                    top: DesignSystem.Spacing.small,
+                                    leading: .zero,
+                                    bottom: DesignSystem.Spacing.small,
+                                    trailing: DesignSystem.Spacing.default
+                                )
+                            ),
+                            buttonAction: .action({ }),
+                            verticalPadding: .bottom(8),
+                            horizontalPadding: .horizontal(16)
+                        )
                     }
+                ], movableFooter: [
+                    GDSCardTextViewModel(title: "this is some footer text"),
+                    GDSCardTextViewModel(title: "this is some more footer text")
                 ],
                 footer: [
                     GDSButtonViewModel(

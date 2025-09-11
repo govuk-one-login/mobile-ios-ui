@@ -22,7 +22,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     private lazy var scrollView: UIScrollView = {
         let result = UIScrollView()
-        result.contentLayoutGuide.widthAnchor.constraint(equalTo: result.widthAnchor).isActive = true
         result.addSubview(scrollViewOuterStackView)
         scrollViewOuterStackView.bindToSuperviewEdges()
         result.accessibilityIdentifier = "gds-screen-container-scrollview"
@@ -30,27 +29,19 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     }()
     
     private lazy var scrollViewOuterStackView: UIStackView = {
+        var subviews = [
+            scrollViewInnerStackView,
+            UIView()
+        ]
+        if viewModel is GDSCentreAlignedScreenViewModel {
+            subviews.insert(UIView(), at: .zero)
+        }
         let result = UIStackView(
-            views: [
-                topSpacer,
-                scrollViewInnerStackView,
-                bottomSpacer
-            ],
+            views: subviews,
+            spacing: .zero,
             distribution: .equalSpacing
         )
         result.accessibilityIdentifier = "gds-screen-outer-stack-view"
-        return result
-    }()
-    
-    private lazy var topSpacer: UIView = {
-        let result = UIView()
-        result.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        return result
-    }()
-    
-    private lazy var bottomSpacer: UIView = {
-        let result = UIView()
-        result.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return result
     }()
     
@@ -73,7 +64,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     private lazy var bottomStackView: UIStackView = {
         let result = UIStackView(
-            views: viewModel.footer.map { $0.createUIView() },
+            views: movableFooterViews + viewModel.footer.map { $0.createUIView() },
             spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
@@ -87,6 +78,18 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
     }()
+    
+    private lazy var movableFooterViews: [UIView] = {
+        viewModel.movableFooter.map { $0.createUIView() }
+    }()
+    
+    private var movableFooterViewsHeight: CGFloat {
+        movableFooterViews
+            .map(\.intrinsicContentSize.height)
+            .reduce(0, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
+    }
+    
+    var isMovableContentInScrollView = false
     
     public init(
         viewModel: GDSScreenViewModel
@@ -112,8 +115,63 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     }
     
     private func addRelativeViewConstraints() {
-        scrollViewOuterStackView.heightAnchor.constraint(
-            greaterThanOrEqualTo: scrollView.heightAnchor
-        ).isActive = true
+        NSLayoutConstraint.activate([
+            scrollViewOuterStackView.heightAnchor.constraint(
+                greaterThanOrEqualTo: scrollView.heightAnchor
+            ),
+            scrollViewOuterStackView.widthAnchor.constraint(
+                greaterThanOrEqualTo: scrollView.widthAnchor
+            )
+        ])
+    }
+        
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        checkBottomStackHeight()
+    }
+    
+    private func checkBottomStackHeight() {
+        let screenHeight = UIScreen.main.bounds.height
+        let bottomStackHeight = bottomStackView.frame.height
+        
+        // if bottom stack covers more than 1/3 of screen
+        if bottomStackHeight > screenHeight / 3,
+           !isMovableContentInScrollView {
+            moveFootnoteToScrollView()
+        } else if bottomStackHeight + movableFooterViewsHeight < screenHeight / 3,
+                  isMovableContentInScrollView {
+            moveFootnoteToBottomStackView()
+        }
+    }
+    
+    private func moveFootnoteToScrollView() {
+        // remove footnote from bottom stack
+        for index in movableFooterViews {
+            bottomStackView.removeArrangedSubview(index)
+            index.removeFromSuperview()
+        }
+        
+        // add to scroll view
+        for index in movableFooterViews.reversed() {
+            scrollViewInnerStackView.addArrangedSubview(index)
+        }
+        
+        isMovableContentInScrollView = true
+    }
+    
+    private func moveFootnoteToBottomStackView() {
+        // remove from scroll view
+        for index in movableFooterViews {
+            scrollViewInnerStackView.removeArrangedSubview(index)
+            index.removeFromSuperview()
+        }
+        
+        // add to stack
+        for index in movableFooterViews {
+            bottomStackView.insertArrangedSubview(index, at: .zero)
+        }
+        
+        view.layoutIfNeeded()
+        isMovableContentInScrollView = false
     }
 }
