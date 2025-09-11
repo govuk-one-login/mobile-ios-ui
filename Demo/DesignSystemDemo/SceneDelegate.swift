@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = GDSScreen(
-            viewModel: GDSLeftAlignedScreenViewModel(
+            viewModel: GDSCentreAlignedScreenViewModel(
                 body: [
                     GDSCardViewModel(
                         showShadow: true,

@@ -83,14 +83,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         viewModel.movableFooter.map { $0.createUIView() }
     }()
     
-    private var movableFooterViewsHeight: CGFloat {
-        movableFooterViews
-            .map(\.intrinsicContentSize.height)
-            .reduce(0, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
-    }
-    
-    var isMovableContentInScrollView = false
-    
     public init(
         viewModel: GDSScreenViewModel
     ) {
@@ -125,10 +117,18 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         ])
     }
         
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
         checkBottomStackHeight()
     }
+    
+    private var movableFooterViewsHeight: CGFloat {
+        movableFooterViews
+            .map(\.intrinsicContentSize.height)
+            .reduce(0, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
+    }
+    
+    var isMovableContentInScrollView = false
     
     private func checkBottomStackHeight() {
         let screenHeight = UIScreen.main.bounds.height
@@ -152,7 +152,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         }
         
         // add to scroll view
-        for index in movableFooterViews.reversed() {
+        for index in movableFooterViews {
             scrollViewInnerStackView.addArrangedSubview(index)
         }
         
