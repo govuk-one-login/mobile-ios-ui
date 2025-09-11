@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -12,7 +13,53 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController() // Your initial view controller.
+        window.rootViewController = GDSScreen(
+            viewModel: GDSCentreAlignedScreenViewModel(
+                title: "Title",
+                body: [
+                    GDSCardViewModel(
+                        showShadow: true,
+                        dismissAction: .action({ })
+                    ) {
+                        GDSCardTitleViewModel(
+                            title: "A title for the component",
+                            verticalPadding: .bottom(8),
+                            horizontalPadding: .leading(16)
+                        )
+                        GDSCardTextViewModel(
+                            title: "A subtitle for the componenet which can be used to describe it's purpose",
+                            verticalPadding: .bottom(8)
+                        )
+                        GDSCardDividerViewModel(
+                            verticalPadding: .bottom(8)
+                        )
+                        GDSButtonViewModel(
+                            title: "Secondary Button",
+                            icon: .arrowUpRight,
+                            style: .secondary.adjusting(
+                                alignment: .leading,
+                                contentInsets: NSDirectionalEdgeInsets(
+                                    top: DesignSystem.Spacing.small,
+                                    leading: .zero,
+                                    bottom: DesignSystem.Spacing.small,
+                                    trailing: DesignSystem.Spacing.default
+                                )
+                            ),
+                            buttonAction: .action({ }),
+                            verticalPadding: .bottom(8),
+                            horizontalPadding: .horizontal(16)
+                        )
+                    }
+                ],
+                footer: [
+                    GDSButtonViewModel(
+                        title: "Primary Button",
+                        style: .primary,
+                        buttonAction: .action({})
+                    )
+                ]
+            )
+        ) // Your initial view controller.
         window.makeKeyAndVisible()
         self.window = window
     }

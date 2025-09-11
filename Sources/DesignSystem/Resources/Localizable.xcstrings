@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "GDSCommonBackButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cy-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yn ôl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
