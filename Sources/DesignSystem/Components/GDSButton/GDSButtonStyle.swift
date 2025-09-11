@@ -69,7 +69,6 @@ extension GDSButtonStyle {
             ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.primaryForeground,
-                highlighted: DesignSystem.Color.Buttons.primaryForeground,
                 focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
@@ -92,7 +91,6 @@ extension GDSButtonStyle {
         primary.adjusting(
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveForeground,
-                highlighted: DesignSystem.Color.Buttons.destructiveForeground,
                 focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.destructiveForegroundFocused
@@ -110,19 +108,26 @@ extension GDSButtonStyle {
 
 /// The design of specific button styles is not complete and are therefore subject to change
 extension GDSButtonStyle {
-    @_spi(unstable)
     public static var secondary: Self {
         GDSButtonStyle(
             font: DesignSystem.Font.Base.body,
             alignment: .center,
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
+            ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryForeground,
-                focused: DesignSystem.Color.Text.primary
+                highlighted: DesignSystem.Color.Buttons.secondaryForegroundHighlighted,
+                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused,
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryForegroundFocused
             ),
             backgroundColor: ColorForState(
                 normal: .clear,
-                highlighted: .systemGray6,
-                focused: DesignSystem.Color.Base.yellow1
+                focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
             cornerRadius: DesignSystem.Spacing.xSmall
         )

@@ -26,22 +26,13 @@ extension UIButton {
     
     func general(viewModel: GDSButtonViewModel) {
         if let insets = viewModel.style.contentInsets {
-            
             self.configuration?.contentInsets = insets
-            
-            if insets.leading < DesignSystem.Spacing.xSmall {
-                switch (UIAccessibility.buttonShapesEnabled, self.state.contains(.focused)) {
-                case (true, _), (_, true):
-                    self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-                default:
-                    break
-                }
-            }
         }
         
         if (self.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall,
-           UIAccessibility.buttonShapesEnabled {
+           UIAccessibility.buttonShapesEnabled || self.state.contains(.focused) {
             self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
+            self.configuration?.contentInsets.trailing = DesignSystem.Spacing.xSmall
         }
 
         self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(self.state)
@@ -57,7 +48,10 @@ extension UIButton {
         self.configuration?.baseBackgroundColor =
         (enabled &&
          (viewModel.style.backgroundColor.forState(self.state) == UIColor.systemBackground ||
-          viewModel.style.backgroundColor.forState(self.state) == UIColor.clear)) ? .systemGray6
+          viewModel.style.backgroundColor.forState(self.state) == UIColor.clear)) ? UIColor(
+            light: DesignSystem.Color.Base.grey4,
+            dark: DesignSystem.Color.Base.charcoal2
+          )
         : viewModel.style.backgroundColor.forState(self.state)
     }
     
@@ -70,8 +64,7 @@ extension UIButton {
             let title = button.titleWithIcon(viewModel: viewModel)
             
             if let button = button as? GDSButton,
-               button.state.contains(.disabled) &&
-                button.isLoading {
+               button.state.contains(.disabled) && button.isLoading {
                 button.configuration?.titleAlignment = .center
                 button.contentHorizontalAlignment = .center
                 button.configuration?.attributedTitle = nil

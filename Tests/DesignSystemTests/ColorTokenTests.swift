@@ -42,7 +42,7 @@ struct ColorTokenTests {
 
     @Test func test_ColorToken_Background_Card() async throws {
         let expectedLightColor = DesignSystem.Color.Base.white
-        let expectedDarkColor = DesignSystem.Color.Base.charcoal
+        let expectedDarkColor = DesignSystem.Color.Base.charcoal1
         let sut = DesignSystem.Color.Backgrounds.card
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)
@@ -96,7 +96,7 @@ struct ColorTokenTests {
     }
     
     @Test func test_ColorToken_Buttons_primaryForegroundDisabled() async throws {
-        let expectedColor = DesignSystem.Color.Base.charcoal
+        let expectedColor = DesignSystem.Color.Base.charcoal1
         let sut = DesignSystem.Color.Buttons.primaryForegroundDisabled
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
@@ -189,7 +189,7 @@ struct ColorTokenTests {
     }
     
     @Test func test_ColorToken_Buttons_destructiveForegroundDisabled() async throws {
-        let expectedColor = DesignSystem.Color.Base.charcoal
+        let expectedColor = DesignSystem.Color.Base.charcoal1
         let sut = DesignSystem.Color.Buttons.destructiveForegroundDisabled
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)

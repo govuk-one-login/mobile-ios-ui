@@ -15,7 +15,7 @@ import UIKit
 /// attributes: [("This text is bold", [.font: UIFont.bodyBold])])
 /// ```
 struct GDSAttributedString {
-    static let space: String = "\u{0020}"
+    static let nonBreakingSpace: String = "\u{00A0}"
     
     let localisedString: String
     let stringAttributes: GDSStringAttributes
@@ -34,11 +34,11 @@ struct GDSAttributedString {
             
             switch stringAttributes.position {
             case .leading:
-                let attrString = NSMutableAttributedString(string: Self.space + localisedString)
+                let attrString = NSMutableAttributedString(string: Self.nonBreakingSpace + localisedString)
                 attrString.insert(sfSymbol, at: .zero)
                 mutableAttributeString = attrString
             case .trailing:
-                let attrString = NSMutableAttributedString(string: localisedString + Self.space)
+                let attrString = NSMutableAttributedString(string: localisedString + Self.nonBreakingSpace)
                 attrString.append(sfSymbol)
                 mutableAttributeString = attrString
             }

@@ -7,7 +7,7 @@ extension DesignSystem {
         public enum Backgrounds {
             public static let card = UIColor(
                 light: Color.Base.white,
-                dark: Color.Base.charcoal
+                dark: Color.Base.charcoal1
             )
             
             public static let statusOverlay = Color.Base.grey1
@@ -53,7 +53,7 @@ extension DesignSystem {
         public enum Buttons {
             public static let primaryForeground = Color.Base.white
             public static let primaryForegroundFocused = Color.Base.black1
-            public static let primaryForegroundDisabled = Color.Base.charcoal
+            public static let primaryForegroundDisabled = Color.Base.charcoal1
             public static let primaryBackground = UIColor(
                 light: Color.Base.green1,
                 dark: Color.Base.green2
@@ -75,13 +75,12 @@ extension DesignSystem {
                 light: Color.Base.green8,
                 dark: Color.Base.green6
             )
-            public static let secondaryBackground = Color.Base.background
             public static let secondaryBackgroundFocused = Color.Base.yellow1
             public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
 
             public static let destructiveForeground = Color.Base.white
             public static let destructiveForegroundFocused = Color.Base.black1
-            public static let destructiveForegroundDisabled = Color.Base.charcoal
+            public static let destructiveForegroundDisabled = Color.Base.charcoal1
             public static let destructiveBackground = Color.Base.red1
             public static let destructiveBackgroundFocused = Color.Base.yellow1
             public static let destructiveBackgroundHighlighted = Color.Base.red4
@@ -151,7 +150,8 @@ extension DesignSystem {
             public static let blackAlpha20 = blackAlpha.withAlphaComponent(0.2)
             public static let blackAlpha30 = blackAlpha.withAlphaComponent(0.3)
             
-            public static let charcoal = UIColor.fromHex("#262626")
+            public static let charcoal1 = UIColor.fromHex("#262626")
+            public static let charcoal2 = UIColor.fromHex("#3C3C3C")
             
             public static let green1 = UIColor.fromHex("#00703C")
             public static let green2 = UIColor.fromHex("#008547")
