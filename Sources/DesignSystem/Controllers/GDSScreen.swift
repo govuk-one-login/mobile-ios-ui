@@ -117,9 +117,12 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         ])
     }
         
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        checkBottomStackHeight()
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Defer to ensure layout is finished
+        Task {
+            checkBottomStackHeight()
+        }
     }
     
     private var movableFooterViewsHeight: CGFloat {
