@@ -63,8 +63,9 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     }()
     
     private lazy var bottomStackView: UIStackView = {
+        let footerContent = movableFooterViews + viewModel.footer.map { $0.createUIView() }
         let result = UIStackView(
-            views: movableFooterViews + viewModel.footer.map { $0.createUIView() },
+            views: footerContent,
             spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
@@ -75,6 +76,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             right: DesignSystem.Spacing.default
         )
         result.isLayoutMarginsRelativeArrangement = true
+        result.isHidden = footerContent.isEmpty
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
     }()
@@ -109,10 +111,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     private func addRelativeViewConstraints() {
         NSLayoutConstraint.activate([
             scrollViewOuterStackView.heightAnchor.constraint(
-                greaterThanOrEqualTo: scrollView.heightAnchor
+                equalTo: scrollView.heightAnchor
             ),
             scrollViewOuterStackView.widthAnchor.constraint(
-                greaterThanOrEqualTo: scrollView.widthAnchor
+                equalTo: scrollView.widthAnchor
             )
         ])
     }
