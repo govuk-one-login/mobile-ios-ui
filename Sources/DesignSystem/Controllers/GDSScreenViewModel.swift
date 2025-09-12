@@ -4,15 +4,31 @@ import UIKit
 @MainActor
 public protocol GDSScreenViewModel {
     var body: [any ContentViewModel] { get }
-    var verticalAlignment: VerticalScreenAlignment { get }
-    var horizontalAlignment: UIStackView.Alignment { get }
+    var screenStyle: GDSScreenStyle { get }
     var movableFooter: [any ContentViewModel] { get }
     var footer: [any ContentViewModel] { get }
 }
 
-extension GDSScreenViewModel {
-    public var verticalAlignment: VerticalScreenAlignment { .top }
-    public var horizontalAlignment: UIStackView.Alignment { .fill }
+public struct GDSScreenStyle {
+    let verticalAlignment: VerticalScreenAlignment
+    let horizontalAlignment: UIStackView.Alignment
+    
+    public init(
+        verticalAlignment: VerticalScreenAlignment,
+        horizontalAlignment: UIStackView.Alignment
+    ) {
+        self.verticalAlignment = verticalAlignment
+        self.horizontalAlignment = horizontalAlignment
+    }
+}
+
+extension GDSScreenStyle {
+    public static var standardTop: Self {
+        GDSScreenStyle(
+            verticalAlignment: .top,
+            horizontalAlignment: .fill
+        )
+    }
 }
 
 public enum VerticalScreenAlignment {
@@ -21,18 +37,18 @@ public enum VerticalScreenAlignment {
 
 public struct GDSDemoScreenViewModel: GDSScreenViewModel {
     public let body: [any ContentViewModel]
-    public let verticalAlignment: VerticalScreenAlignment
+    public let screenStyle: GDSScreenStyle
     public let movableFooter: [any ContentViewModel]
     public let footer: [any ContentViewModel]
     
     public init(
         body: [any ContentViewModel],
-        verticalAlignment: VerticalScreenAlignment,
+        screenStyle: GDSScreenStyle = .standardTop,
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel]
     ) {
         self.body = body
-        self.verticalAlignment = verticalAlignment
+        self.screenStyle = screenStyle
         self.movableFooter = movableFooter
         self.footer = footer
     }

@@ -33,7 +33,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             scrollViewInnerStackView,
             UIView()
         ]
-        if viewModel.verticalAlignment == .center {
+        if viewModel.screenStyle.verticalAlignment == .center {
             subviews.insert(UIView(), at: .zero)
         }
         let result = UIStackView(
@@ -48,8 +48,8 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     private lazy var scrollViewInnerStackView: UIStackView = {
         let result = UIStackView(
             views: viewModel.body.map { configureAsStackView($0) },
-            spacing: DesignSystem.Spacing.small,
-            alignment: viewModel.horizontalAlignment,
+            spacing: .zero,
+            alignment: viewModel.screenStyle.horizontalAlignment,
             distribution: .equalSpacing
         )
         result.accessibilityIdentifier = "gds-screen-inner-stack-view"
@@ -60,7 +60,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         let footerContent = movableFooterViews + viewModel.footer.map { configureAsStackView($0) }
         let result = UIStackView(
             views: footerContent,
-            spacing: DesignSystem.Spacing.small,
+            spacing: .zero,
             distribution: .fill
         )
         result.isHidden = footerContent.isEmpty
