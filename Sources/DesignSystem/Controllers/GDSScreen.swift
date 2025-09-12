@@ -33,7 +33,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             scrollViewInnerStackView,
             UIView()
         ]
-        if viewModel is GDSCentreAlignedScreenViewModel {
+        if viewModel.verticalAlignment == .center {
             subviews.insert(UIView(), at: .zero)
         }
         let result = UIStackView(
@@ -49,7 +49,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         let result = UIStackView(
             views: viewModel.body.map { $0.createUIView() },
             spacing: DesignSystem.Spacing.small,
-            alignment: viewModel.alignment,
+            alignment: viewModel.horizontalAlignment,
             distribution: .equalSpacing
         )
         result.layoutMargins = UIEdgeInsets(

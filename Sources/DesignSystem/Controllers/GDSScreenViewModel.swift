@@ -4,42 +4,35 @@ import UIKit
 @MainActor
 public protocol GDSScreenViewModel {
     var body: [any ContentViewModel] { get }
-    var alignment: UIStackView.Alignment { get }
+    var verticalAlignment: VerticalScreenAlignment { get }
+    var horizontalAlignment: UIStackView.Alignment { get }
     var movableFooter: [any ContentViewModel] { get }
     var footer: [any ContentViewModel] { get }
 }
 
 extension GDSScreenViewModel {
-    public var alignment: UIStackView.Alignment { .fill }
+    public var verticalAlignment: VerticalScreenAlignment { .top }
+    public var horizontalAlignment: UIStackView.Alignment { .fill }
 }
 
-public struct GDSCentreAlignedScreenViewModel: GDSScreenViewModel {
+public enum VerticalScreenAlignment {
+    case top, center
+}
+
+public struct GDSDemoScreenViewModel: GDSScreenViewModel {
     public let body: [any ContentViewModel]
+    public let verticalAlignment: VerticalScreenAlignment
     public let movableFooter: [any ContentViewModel]
     public let footer: [any ContentViewModel]
     
     public init(
         body: [any ContentViewModel],
+        verticalAlignment: VerticalScreenAlignment,
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel]
     ) {
         self.body = body
-        self.movableFooter = movableFooter
-        self.footer = footer
-    }
-}
-
-public struct GDSLeftAlignedScreenViewModel: GDSScreenViewModel {
-    public let body: [any ContentViewModel]
-    public let movableFooter: [any ContentViewModel]
-    public let footer: [any ContentViewModel]
-    
-    public init(
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
-    ) {
-        self.body = body
+        self.verticalAlignment = verticalAlignment
         self.movableFooter = movableFooter
         self.footer = footer
     }
