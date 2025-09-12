@@ -35,7 +35,7 @@ public final class GDSCardImageView: UIImageView, ContentView {
         
         self.image = viewModel.image
         self.contentMode = viewModel.contentMode
-        self.layer.cornerRadius = 12
+        self.layer.cornerRadius = DesignSystem.CornerRadius.card
         self.layer.masksToBounds = true
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.translatesAutoresizingMaskIntoConstraints = false
