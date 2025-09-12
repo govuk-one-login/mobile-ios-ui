@@ -1,9 +1,16 @@
+import UIKit
+
 /// Protocol for the view model required to initilise ``GDSLeftAlignedScreen``
 @MainActor
 public protocol GDSScreenViewModel {
     var body: [any ContentViewModel] { get }
+    var alignment: UIStackView.Alignment { get }
     var movableFooter: [any ContentViewModel] { get }
     var footer: [any ContentViewModel] { get }
+}
+
+extension GDSScreenViewModel {
+    public var alignment: UIStackView.Alignment { .fill }
 }
 
 public struct GDSCentreAlignedScreenViewModel: GDSScreenViewModel {

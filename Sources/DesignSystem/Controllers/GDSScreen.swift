@@ -49,6 +49,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         let result = UIStackView(
             views: viewModel.body.map { $0.createUIView() },
             spacing: DesignSystem.Spacing.small,
+            alignment: viewModel.alignment,
             distribution: .equalSpacing
         )
         result.layoutMargins = UIEdgeInsets(
@@ -114,7 +115,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
                 greaterThanOrEqualTo: scrollView.heightAnchor
             ),
             scrollViewOuterStackView.widthAnchor.constraint(
-                greaterThanOrEqualTo: scrollView.widthAnchor
+                equalTo: scrollView.widthAnchor
             )
         ])
     }
