@@ -111,10 +111,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     private func addRelativeViewConstraints() {
         NSLayoutConstraint.activate([
             scrollViewOuterStackView.heightAnchor.constraint(
-                equalTo: scrollView.heightAnchor
+                greaterThanOrEqualTo: scrollView.heightAnchor
             ),
             scrollViewOuterStackView.widthAnchor.constraint(
-                equalTo: scrollView.widthAnchor
+                greaterThanOrEqualTo: scrollView.widthAnchor
             )
         ])
     }
