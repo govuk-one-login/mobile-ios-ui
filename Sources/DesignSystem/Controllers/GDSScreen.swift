@@ -24,7 +24,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         let result = UIScrollView()
         result.addSubview(scrollViewOuterStackView)
         scrollViewOuterStackView.bindToSuperviewEdges()
-        result.accessibilityIdentifier = "gds-screen-container-scrollview"
+        result.accessibilityIdentifier = "gds-screen-scrollview"
         return result
     }()
     
@@ -68,6 +68,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
+    private lazy var movableFooterViews: [UIView] = {
+        viewModel.movableFooter.map { configureAsStackView($0) }
+    }()
+    
     private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
         let stackView = UIStackView(
             views: view.createUIView(),
@@ -84,10 +88,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         )
         return stackView
     }
-    
-    private lazy var movableFooterViews: [UIView] = {
-        viewModel.movableFooter.map { configureAsStackView($0) }
-    }()
     
     public init(
         viewModel: GDSScreenViewModel
@@ -140,7 +140,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     }
         
     private func checkBottomStackHeight() {
-        let screenHeight = UIScreen.main.bounds.height
+        let screenHeight = containerStackView.frame.height
         let bottomStackHeight = bottomStackView.frame.height
         
         // if bottom stack covers more than 1/3 of screen
