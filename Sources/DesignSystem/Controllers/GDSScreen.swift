@@ -47,43 +47,46 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     private lazy var scrollViewInnerStackView: UIStackView = {
         let result = UIStackView(
-            views: viewModel.body.map { $0.createUIView() },
+            views: viewModel.body.map { configureAsStackView($0) },
             spacing: DesignSystem.Spacing.small,
             alignment: viewModel.horizontalAlignment,
             distribution: .equalSpacing
         )
-        result.layoutMargins = UIEdgeInsets(
-            top: DesignSystem.Spacing.small,
-            left: DesignSystem.Spacing.default,
-            bottom: DesignSystem.Spacing.small,
-            right: DesignSystem.Spacing.default
-        )
-        result.isLayoutMarginsRelativeArrangement = true
         result.accessibilityIdentifier = "gds-screen-inner-stack-view"
         return result
     }()
     
     private lazy var bottomStackView: UIStackView = {
-        let footerContent = movableFooterViews + viewModel.footer.map { $0.createUIView() }
+        let footerContent = movableFooterViews + viewModel.footer.map { configureAsStackView($0) }
         let result = UIStackView(
             views: footerContent,
             spacing: DesignSystem.Spacing.small,
             distribution: .fill
         )
-        result.layoutMargins = UIEdgeInsets(
-            top: DesignSystem.Spacing.small,
-            left: DesignSystem.Spacing.default,
-            bottom: DesignSystem.Spacing.default,
-            right: DesignSystem.Spacing.default
-        )
-        result.isLayoutMarginsRelativeArrangement = true
         result.isHidden = footerContent.isEmpty
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
     }()
     
+    private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
+        let stackView = UIStackView(
+            views: view.createUIView(),
+            spacing: .zero,
+            alignment: .fill,
+            distribution: .fill
+        )
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+            top: view.verticalPadding?.topPadding ?? .zero,
+            leading: view.horizontalPadding?.leadingPadding ?? .zero,
+            bottom: view.verticalPadding?.bottomPadding ?? .zero,
+            trailing: view.horizontalPadding?.trailingPadding ?? .zero
+        )
+        return stackView
+    }
+    
     private lazy var movableFooterViews: [UIView] = {
-        viewModel.movableFooter.map { $0.createUIView() }
+        viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
     public init(
@@ -132,7 +135,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     private var movableFooterViewsHeight: CGFloat {
         movableFooterViews
-            .map(\.intrinsicContentSize.height)
+            .map(\.frame.height)
             .reduce(.zero, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
     }
         
