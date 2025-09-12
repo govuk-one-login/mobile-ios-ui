@@ -13,7 +13,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
                 scrollView,
                 bottomStackView
             ],
-            spacing: 0,
+            spacing: .zero,
             distribution: .fill
         )
         result.accessibilityIdentifier = "gds-screen-container-stack-view"
@@ -125,14 +125,14 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         }
     }
     
+    private(set) var isMovableContentInScrollView = false
+    
     private var movableFooterViewsHeight: CGFloat {
         movableFooterViews
             .map(\.intrinsicContentSize.height)
-            .reduce(0, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
+            .reduce(.zero, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
     }
-    
-    var isMovableContentInScrollView = false
-    
+        
     private func checkBottomStackHeight() {
         let screenHeight = UIScreen.main.bounds.height
         let bottomStackHeight = bottomStackView.frame.height
