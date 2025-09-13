@@ -52,6 +52,8 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             alignment: viewModel.screenStyle.horizontalAlignment,
             distribution: .equalSpacing
         )
+        result.isLayoutMarginsRelativeArrangement = true
+        result.directionalLayoutMargins.bottom = DesignSystem.Spacing.small
         result.accessibilityIdentifier = "gds-screen-inner-stack-view"
         return result
     }()
@@ -63,6 +65,8 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             spacing: .zero,
             distribution: .fill
         )
+        result.isLayoutMarginsRelativeArrangement = true
+        result.directionalLayoutMargins.bottom = DesignSystem.Spacing.default
         result.isHidden = footerContent.isEmpty
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
@@ -136,7 +140,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     private var movableFooterViewsHeight: CGFloat {
         movableFooterViews
             .map(\.frame.height)
-            .reduce(.zero, +) + (Double(movableFooterViews.count) * DesignSystem.Spacing.small)
+            .reduce(.zero, +)
     }
         
     private func checkBottomStackHeight() {
