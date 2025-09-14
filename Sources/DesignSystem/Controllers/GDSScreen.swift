@@ -135,7 +135,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         }
     }
     
-    private(set) var isMovableContentInScrollView = false
+    private(set) var isMovableFooterInScrollView = false
     
     private var movableFooterViewsHeight: CGFloat {
         movableFooterViews
@@ -148,16 +148,15 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         let bottomStackHeight = bottomStackView.frame.height
         
         // if bottom stack covers more than 1/3 of screen
-        if bottomStackHeight > screenHeight / 3,
-           !isMovableContentInScrollView {
-            moveFootnoteToScrollView()
-        } else if bottomStackHeight + movableFooterViewsHeight < screenHeight / 3,
-                  isMovableContentInScrollView {
-            moveFootnoteToBottomStackView()
+        if !isMovableFooterInScrollView, bottomStackHeight > screenHeight / 3 {
+            movableFooterToScrollView()
+        } else if isMovableFooterInScrollView,
+                  screenHeight / 3 > bottomStackHeight + movableFooterViewsHeight {
+            movableFooterToBottomStackView()
         }
     }
     
-    private func moveFootnoteToScrollView() {
+    private func movableFooterToScrollView() {
         // remove footnote from bottom stack
         for index in movableFooterViews {
             bottomStackView.removeArrangedSubview(index)
@@ -169,10 +168,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             scrollViewInnerStackView.addArrangedSubview(index)
         }
         
-        isMovableContentInScrollView = true
+        isMovableFooterInScrollView = true
     }
     
-    private func moveFootnoteToBottomStackView() {
+    private func movableFooterToBottomStackView() {
         // remove from scroll view
         for index in movableFooterViews {
             scrollViewInnerStackView.removeArrangedSubview(index)
@@ -185,6 +184,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         }
         
         view.layoutIfNeeded()
-        isMovableContentInScrollView = false
+        isMovableFooterInScrollView = false
     }
 }
