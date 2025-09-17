@@ -7,7 +7,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         scrollViewInnerStackView.arrangedSubviews.first ?? UIView()
     }
     
-    private lazy var containerStackView: UIStackView = {
+    private(set) lazy var containerStackView: UIStackView = {
         let result = UIStackView(
             views: [
                 scrollView,
@@ -20,7 +20,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private lazy var scrollView: UIScrollView = {
+    private(set) lazy var scrollView: UIScrollView = {
         let result = UIScrollView()
         result.addSubview(scrollViewOuterStackView)
         scrollViewOuterStackView.bindToSuperviewEdges()
@@ -28,7 +28,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private lazy var scrollViewOuterStackView: UIStackView = {
+    private(set) lazy var scrollViewOuterStackView: UIStackView = {
         var subviews = [
             scrollViewInnerStackView,
             UIView()
@@ -45,7 +45,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private lazy var scrollViewInnerStackView: UIStackView = {
+    private(set) lazy var scrollViewInnerStackView: UIStackView = {
         let result = UIStackView(
             views: viewModel.body.map { configureAsStackView($0) },
             spacing: .zero,
@@ -58,7 +58,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private lazy var bottomStackView: UIStackView = {
+    private(set) lazy var bottomStackView: UIStackView = {
         let footerContent = movableFooterViews + viewModel.footer.map { configureAsStackView($0) }
         let result = UIStackView(
             views: footerContent,
@@ -72,7 +72,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private lazy var movableFooterViews: [UIView] = {
+    private(set) lazy var movableFooterViews: [UIView] = {
         viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
@@ -85,10 +85,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         )
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
-            top: view.verticalPadding?.topPadding ?? .zero,
-            leading: view.horizontalPadding?.leadingPadding ?? .zero,
-            bottom: view.verticalPadding?.bottomPadding ?? .zero,
-            trailing: view.horizontalPadding?.trailingPadding ?? .zero
+            top: view.verticalPadding?.topPadding ?? viewModel.screenStyle.defaultVerticalPadding.topPadding,
+            leading: view.horizontalPadding?.leadingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.leadingPadding,
+            bottom: view.verticalPadding?.bottomPadding ?? viewModel.screenStyle.defaultVerticalPadding.bottomPadding,
+            trailing: view.horizontalPadding?.trailingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.trailingPadding
         )
         return stackView
     }
@@ -126,18 +126,20 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             )
         ])
     }
+    
+    public private(set) var asyncTask: Task<Void, Never>?
         
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // Defer to ensure layout is finished
-        Task {
+        asyncTask = Task {
             checkBottomStackHeight()
         }
     }
     
     private(set) var isMovableFooterInScrollView = false
     
-    private var movableFooterViewsHeight: CGFloat {
+    var movableFooterViewsHeight: CGFloat {
         movableFooterViews
             .map(\.frame.height)
             .reduce(.zero, +)

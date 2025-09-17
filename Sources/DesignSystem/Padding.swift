@@ -5,21 +5,21 @@ public enum HorizontalPadding {
     case leading(CGFloat)
     case trailing(CGFloat)
     
-    var leadingPadding: CGFloat? {
+    var leadingPadding: CGFloat {
         switch self {
         case .horizontal(let cGFloat), .leading(let cGFloat):
             cGFloat
         case .trailing:
-            nil
+                .zero
         }
     }
     
-    var trailingPadding: CGFloat? {
+    var trailingPadding: CGFloat {
         switch self {
         case .horizontal(let cGFloat), .trailing(let cGFloat):
             cGFloat
         case .leading:
-            nil
+                .zero
         }
     }
 }
@@ -29,21 +29,22 @@ public enum VerticalPadding {
     case top(CGFloat)
     case bottom(CGFloat)
     
-    var topPadding: CGFloat? {
+    var topPadding: CGFloat {
         switch self {
         case .vertical(let cGFloat), .top(let cGFloat):
             cGFloat
         case .bottom:
-            nil
+                .zero
         }
     }
     
-    var bottomPadding: CGFloat? {
+    var bottomPadding: CGFloat {
         switch self {
         case .vertical(let cGFloat), .bottom(let cGFloat):
             cGFloat
         case .top:
-            nil
+                .zero
         }
     }
 }
+
