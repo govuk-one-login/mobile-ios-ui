@@ -3,14 +3,6 @@ import UIKit
 open class GDSScreen: BaseViewController, VoiceOverFocus {
     public let viewModel: GDSScreenViewModel
     
-    private(set) var isMovableFooterInScrollView = false
-    
-    var movableFooterViewsHeight: CGFloat {
-        movableFooterViews
-            .map(\.frame.height)
-            .reduce(.zero, +)
-    }
-    
     public var initialVoiceOverView: UIView {
         scrollViewInnerStackView.arrangedSubviews.first ?? UIView()
     }
@@ -66,10 +58,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
-    private(set) lazy var movableFooterViews: [UIView] = {
-        viewModel.movableFooter.map { configureAsStackView($0) }
-    }()
-    
     private(set) lazy var bottomStackView: UIStackView = {
         let footerContent = movableFooterViews + viewModel.footer.map { configureAsStackView($0) }
         let result = UIStackView(
@@ -83,6 +71,18 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
     }()
+    
+    private(set) lazy var movableFooterViews: [UIView] = {
+        viewModel.movableFooter.map { configureAsStackView($0) }
+    }()
+    
+    var movableFooterViewsHeight: CGFloat {
+        movableFooterViews
+            .map(\.frame.height)
+            .reduce(.zero, +)
+    }
+    
+    private(set) var isMovableFooterInScrollView = false
     
     public init(
         viewModel: GDSScreenViewModel
