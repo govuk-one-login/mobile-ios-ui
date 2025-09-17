@@ -1,24 +1,12 @@
 @testable import DesignSystem
-import UIKit
 import Testing
+import UIKit
 
 struct TestGDSScreenViewModel: GDSScreenViewModel {
     let screenStyle: GDSScreenStyle
     let body: [any ContentViewModel]
     let movableFooter: [any ContentViewModel]
     let footer: [any ContentViewModel]
-    
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
-    ) {
-        self.screenStyle = screenStyle
-        self.body = body
-        self.movableFooter = movableFooter
-        self.footer = footer
-    }
 }
 
 @MainActor
