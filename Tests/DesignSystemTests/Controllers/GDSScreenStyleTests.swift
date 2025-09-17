@@ -3,7 +3,7 @@ import Testing
 
 struct GDSScreenStyleTests {
     @Test
-    func centred()  {
+    func centred() {
         let sut = GDSScreenStyle.centred
         #expect(sut.verticalAlignment == .center)
         #expect(sut.horizontalAlignment == .fill)
@@ -14,21 +14,21 @@ struct GDSScreenStyleTests {
     }
     
     @Test
-    func topCentred()  {
+    func topCentred() {
         let sut = GDSScreenStyle.topCentred
         #expect(sut.verticalAlignment == .top)
         #expect(sut.horizontalAlignment == .fill)
     }
     
     @Test
-    func topLeadingAligned()  {
+    func topLeadingAligned() {
         let sut = GDSScreenStyle.topLeadingAligned
         #expect(sut.verticalAlignment == .top)
         #expect(sut.horizontalAlignment == .leading)
     }
     
     @Test
-    func centreLeadingAligned()  {
+    func centreLeadingAligned() {
         let sut = GDSScreenStyle.centreLeadingAligned
         #expect(sut.verticalAlignment == .center)
         #expect(sut.horizontalAlignment == .leading)
