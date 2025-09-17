@@ -11,8 +11,8 @@ struct TestGDSScreenViewModel: GDSScreenViewModel {
 
 @MainActor
 struct GDSScreenTests {
-    @Test
-    func noInputScreen() async throws {
+    @Test("Top centred with empty arrays (no input) configures the view correctly")
+    func topCentredNoInput() async throws {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .topCentred,
             body: [],
@@ -27,8 +27,8 @@ struct GDSScreenTests {
         #expect(sut.bottomStackView.arrangedSubviews.isEmpty)
     }
     
-    @Test
-    func noInput() async throws {
+    @Test("Centred with empty arrays (no input) configures the view correctly")
+    func centredNoInput() async throws {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .centred,
             body: [],
@@ -40,8 +40,8 @@ struct GDSScreenTests {
         #expect(sut.scrollViewOuterStackView.arrangedSubviews.count == 3)
     }
     
-    @Test
-    func input() async throws {
+    @Test("Top centred screen configures the view correctly")
+    func inputConfiguresCorrectly() async throws {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .topCentred,
             body: [GDSCardTextViewModel(title: "test body text")],
@@ -67,5 +67,33 @@ struct GDSScreenTests {
         let bottomItemStack = try #require(sut.bottomStackView.arrangedSubviews[1] as? UIStackView)
         let bottomButtonItem = try #require(bottomItemStack.arrangedSubviews.first as? GDSButton)
         #expect(bottomButtonItem.titleLabel?.text == "test button text")
+    }
+    
+    @Test("Calling the move content functions reconfigure the view correctly")
+    func moveContentMethods() {
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .topCentred,
+            body: [GDSCardTextViewModel(title: "test body text")],
+            movableFooter: [GDSCardTextViewModel(title: "test footer text")],
+            footer: [GDSButtonViewModel(
+                title: "test button text",
+                style: .primary,
+                buttonAction: .action({})
+            )]
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+        
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 2)
+        
+        sut.movableFooterToScrollView()
+        
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 2)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 1)
+        
+        sut.movableFooterToBottomStackView()
+        
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 2)
     }
 }

@@ -139,7 +139,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         }
     }
     
-    private func movableFooterToScrollView() {
+    func movableFooterToScrollView() {
         // remove footnote from bottom stack
         for index in movableFooterViews {
             bottomStackView.removeArrangedSubview(index)
@@ -154,7 +154,7 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         isMovableFooterInScrollView = true
     }
     
-    private func movableFooterToBottomStackView() {
+    func movableFooterToBottomStackView() {
         // remove from scroll view
         for index in movableFooterViews {
             scrollViewInnerStackView.removeArrangedSubview(index)
