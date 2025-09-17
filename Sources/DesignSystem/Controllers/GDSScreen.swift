@@ -1,8 +1,6 @@
 import UIKit
 
 open class GDSScreen: BaseViewController, VoiceOverFocus {
-    public let viewModel: GDSScreenViewModel
-    
     public var initialVoiceOverView: UIView {
         scrollViewInnerStackView.arrangedSubviews.first ?? UIView()
     }
@@ -83,6 +81,8 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     }
     
     private(set) var isMovableFooterInScrollView = false
+    
+    public let viewModel: GDSScreenViewModel
     
     public init(
         viewModel: GDSScreenViewModel

@@ -12,7 +12,7 @@ struct TestGDSScreenViewModel: GDSScreenViewModel {
 @MainActor
 struct GDSScreenTests {
     @Test("Top centred with empty arrays (no input) configures the view correctly")
-    func topCentredNoInput() async throws {
+    func topCentredNoInput() {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .topCentred,
             body: [],
@@ -28,7 +28,7 @@ struct GDSScreenTests {
     }
     
     @Test("Centred with empty arrays (no input) configures the view correctly")
-    func centredNoInput() async throws {
+    func centredNoInput() {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .centred,
             body: [],
@@ -40,8 +40,33 @@ struct GDSScreenTests {
         #expect(sut.scrollViewOuterStackView.arrangedSubviews.count == 3)
     }
     
+    @Test("Ensure that when the content item's padding is not set, default padding is applied")
+    func defaultPadding() throws {
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .centred,
+            body: [GDSCardTextViewModel(
+                title: "test body text",
+                verticalPadding: nil,
+                horizontalPadding: nil
+            )],
+            movableFooter: [],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+        
+        let bodyItemStack = try #require(sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView)
+        #expect(
+            bodyItemStack.directionalLayoutMargins == NSDirectionalEdgeInsets(
+                top: 8,
+                leading: 16,
+                bottom: 8,
+                trailing: 16
+            )
+        )
+    }
+    
     @Test("Top centred screen configures the view correctly")
-    func inputConfiguresCorrectly() async throws {
+    func inputConfiguresCorrectly() throws {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .topCentred,
             body: [GDSCardTextViewModel(title: "test body text")],
