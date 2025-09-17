@@ -3,6 +3,14 @@ import UIKit
 open class GDSScreen: BaseViewController, VoiceOverFocus {
     public let viewModel: GDSScreenViewModel
     
+    private(set) var isMovableFooterInScrollView = false
+    
+    var movableFooterViewsHeight: CGFloat {
+        movableFooterViews
+            .map(\.frame.height)
+            .reduce(.zero, +)
+    }
+    
     public var initialVoiceOverView: UIView {
         scrollViewInnerStackView.arrangedSubviews.first ?? UIView()
     }
@@ -76,6 +84,31 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
+    public init(
+        viewModel: GDSScreenViewModel
+    ) {
+        self.viewModel = viewModel
+        super.init(
+            viewModel: viewModel as? BaseViewModel,
+            nibName: nil,
+            bundle: Bundle.module
+        )
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+    }
+    
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Defer to ensure layout is finished
+        Task {
+            checkBottomStackHeight()
+        }
+    }
+    
     private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
         let stackView = UIStackView(
             views: view.createUIView(),
@@ -91,22 +124,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
             trailing: view.horizontalPadding?.trailingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.trailingPadding
         )
         return stackView
-    }
-    
-    public init(
-        viewModel: GDSScreenViewModel
-    ) {
-        self.viewModel = viewModel
-        super.init(
-            viewModel: viewModel as? BaseViewModel,
-            nibName: nil,
-            bundle: Bundle.module
-        )
-    }
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
     }
     
     private func setup() {
@@ -127,24 +144,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         ])
     }
     
-    public private(set) var asyncTask: Task<Void, Never>?
-        
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Defer to ensure layout is finished
-        asyncTask = Task {
-            checkBottomStackHeight()
-        }
-    }
-    
-    private(set) var isMovableFooterInScrollView = false
-    
-    var movableFooterViewsHeight: CGFloat {
-        movableFooterViews
-            .map(\.frame.height)
-            .reduce(.zero, +)
-    }
-        
     private func checkBottomStackHeight() {
         let screenHeight = containerStackView.frame.height
         let bottomStackHeight = bottomStackView.frame.height
