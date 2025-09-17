@@ -66,6 +66,10 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         return result
     }()
     
+    private(set) lazy var movableFooterViews: [UIView] = {
+        viewModel.movableFooter.map { configureAsStackView($0) }
+    }()
+    
     private(set) lazy var bottomStackView: UIStackView = {
         let footerContent = movableFooterViews + viewModel.footer.map { configureAsStackView($0) }
         let result = UIStackView(
@@ -78,10 +82,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         result.isHidden = footerContent.isEmpty
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
         return result
-    }()
-    
-    private(set) lazy var movableFooterViews: [UIView] = {
-        viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
     public init(
@@ -100,30 +100,12 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         setup()
     }
     
-    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // Defer to ensure layout is finished
         Task {
             checkBottomStackHeight()
         }
-    }
-    
-    private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
-        let stackView = UIStackView(
-            views: view.createUIView(),
-            spacing: .zero,
-            alignment: .fill,
-            distribution: .fill
-        )
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
-            top: view.verticalPadding?.topPadding ?? viewModel.screenStyle.defaultVerticalPadding.topPadding,
-            leading: view.horizontalPadding?.leadingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.leadingPadding,
-            bottom: view.verticalPadding?.bottomPadding ?? viewModel.screenStyle.defaultVerticalPadding.bottomPadding,
-            trailing: view.horizontalPadding?.trailingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.trailingPadding
-        )
-        return stackView
     }
     
     private func setup() {
@@ -186,5 +168,22 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         
         view.layoutIfNeeded()
         isMovableFooterInScrollView = false
+    }
+    
+    private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
+        let stackView = UIStackView(
+            views: view.createUIView(),
+            spacing: .zero,
+            alignment: .fill,
+            distribution: .fill
+        )
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+            top: view.verticalPadding?.topPadding ?? viewModel.screenStyle.defaultVerticalPadding.topPadding,
+            leading: view.horizontalPadding?.leadingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.leadingPadding,
+            bottom: view.verticalPadding?.bottomPadding ?? viewModel.screenStyle.defaultVerticalPadding.bottomPadding,
+            trailing: view.horizontalPadding?.trailingPadding ?? viewModel.screenStyle.defaultHorizontalPadding.trailingPadding
+        )
+        return stackView
     }
 }
