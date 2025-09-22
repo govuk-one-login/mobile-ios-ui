@@ -13,35 +13,33 @@ public protocol GDSCentreAlignedViewModel: BaseViewModel, GDSScreenViewModel {
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString?,
+        backButtonIsHidden: Bool,
+        didAppearAction: (() -> Void)?,
+        didDismissAction: (() -> Void)?
     )
 }
 
 extension GDSCentreAlignedViewModel {
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
-    ) {
-        self = Self(
-            screenStyle: screenStyle,
-            body: body,
-            movableFooter: movableFooter,
-            footer: footer
-        )
-    }
-    
     public init(
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString? = nil,
+        backButtonIsHidden: Bool = true,
+        didAppearAction: (() -> Void)? = nil,
+        didDismissAction: (() -> Void)? = nil
     ) {
         self = Self(
             screenStyle: .topCentred,
             body: body,
             movableFooter: movableFooter,
-            footer: footer
+            footer: footer,
+            rightBarButtonTitle: rightBarButtonTitle,
+            backButtonIsHidden: backButtonIsHidden,
+            didAppearAction: didAppearAction,
+            didDismissAction: didDismissAction
         )
     }
 }
@@ -51,35 +49,33 @@ public protocol GDSLeftAlignedViewModel: BaseViewModel, GDSScreenViewModel {
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString?,
+        backButtonIsHidden: Bool,
+        didAppearAction: (() -> Void)?,
+        didDismissAction: (() -> Void)?
     )
 }
 
 extension GDSLeftAlignedViewModel {
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
-    ) {
-        self = Self(
-            screenStyle: screenStyle,
-            body: body,
-            movableFooter: movableFooter,
-            footer: footer
-        )
-    }
-    
     public init(
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString? = nil,
+        backButtonIsHidden: Bool = true,
+        didAppearAction: (() -> Void)? = nil,
+        didDismissAction: (() -> Void)? = nil
     ) {
         self = Self(
             screenStyle: .topLeadingAligned,
             body: body,
             movableFooter: movableFooter,
-            footer: footer
+            footer: footer,
+            rightBarButtonTitle: rightBarButtonTitle,
+            backButtonIsHidden: backButtonIsHidden,
+            didAppearAction: didAppearAction,
+            didDismissAction: didDismissAction
         )
     }
 }
@@ -89,36 +85,34 @@ public protocol GDSErrorScreenViewModel: BaseViewModel, GDSScreenViewModel {
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString?,
+        backButtonIsHidden: Bool,
+        didAppearAction: (() -> Void)?,
+        didDismissAction: (() -> Void)?
     )
 }
 
 extension GDSErrorScreenViewModel {
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
-    ) {
-        self = Self(
-            screenStyle: screenStyle,
-            body: body,
-            movableFooter: movableFooter,
-            footer: footer
-        )
-    }
-    
     public init(
         icon: GDSImageViewModel,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel]
+        footer: [any ContentViewModel],
+        rightBarButtonTitle: GDSLocalisedString? = nil,
+        backButtonIsHidden: Bool = true,
+        didAppearAction: (() -> Void)? = nil,
+        didDismissAction: (() -> Void)? = nil
     ) {
         self = Self(
             screenStyle: .error,
             body: [icon] + body,
             movableFooter: movableFooter,
-            footer: footer
+            footer: footer,
+            rightBarButtonTitle: rightBarButtonTitle,
+            backButtonIsHidden: backButtonIsHidden,
+            didAppearAction: didAppearAction,
+            didDismissAction: didDismissAction
         )
     }
 }
