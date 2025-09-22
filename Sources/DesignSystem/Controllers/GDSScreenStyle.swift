@@ -47,6 +47,8 @@ extension GDSScreenStyle {
             horizontalAlignment: .leading
         )
     }
+    
+    public static var error: Self { .centred }
 }
 
 public enum VerticalScreenAlignment {

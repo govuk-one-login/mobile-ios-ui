@@ -1,5 +1,7 @@
 import UIKit
 
+public typealias GDSTextViewModel = GDSCardTextViewModel
+
 public struct GDSCardTextViewModel: ContentViewModel {
     public typealias ViewType = GDSCardTextView
     
@@ -26,6 +28,8 @@ public struct GDSCardTextViewModel: ContentViewModel {
         self.horizontalPadding = horizontalPadding
     }
 }
+
+public typealias GDSTextView = GDSCardTextView
 
 public final class GDSCardTextView: UILabel, ContentView {
     public init(viewModel: GDSCardTextViewModel) {

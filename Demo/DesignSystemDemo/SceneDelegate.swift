@@ -25,3 +25,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
     }
 }
+
+struct GDSDemoScreenViewModel: GDSScreenViewModel {
+    public let screenStyle: GDSScreenStyle
+    public let body: [any ContentViewModel]
+    public let movableFooter: [any ContentViewModel]
+    public let footer: [any ContentViewModel]
+    
+    public init(
+        screenStyle: GDSScreenStyle = .topCentred,
+        body: [any ContentViewModel],
+        movableFooter: [any ContentViewModel],
+        footer: [any ContentViewModel]
+    ) {
+        self.screenStyle = screenStyle
+        self.body = body
+        self.movableFooter = movableFooter
+        self.footer = footer
+    }
+}
