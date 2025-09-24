@@ -1,0 +1,83 @@
+@testable import DesignSystem
+import Testing
+import UIKit
+
+@MainActor
+struct BaseViewTests {
+    @Test
+    func rightBarButtonContents() throws {
+        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
+        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        let rightBarButton: UIBarButtonItem = try #require(sut.navigationItem.rightBarButtonItem)
+        #expect(rightBarButton.title == "right bar button")
+    }
+    
+    @Test
+    func backButtonContents() throws {
+        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
+        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        #expect(sut.navigationItem.backButtonTitle == "back button")
+    }
+    
+    @Test
+    func rightBarButtonSetsAccessbilityIDOnViewLoad() {
+        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
+        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        
+        #expect(sut.navigationItem.rightBarButtonItem?.accessibilityIdentifier == nil)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        #expect(sut.navigationItem.rightBarButtonItem?.accessibilityIdentifier == "right-bar-button")
+    }
+    
+    @Test
+    func didAppear() {
+        var didAppear = false
+        
+        let viewModel = TestBaseViewModel(appearAction: { didAppear = true }, dismissAction: { })
+        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        
+        #expect(!didAppear)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        #expect(didAppear)
+    }
+    
+    @Test
+    func didDismiss() {
+        var didDismiss = false
+        
+        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { didDismiss = true })
+        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        #expect(!didDismiss)
+        _ = sut.navigationItem.rightBarButtonItem?.target?.perform(sut.navigationItem.rightBarButtonItem?.action)
+        #expect(didDismiss)
+    }
+}
+
+struct TestBaseViewModel: BaseViewModel {
+    var rightBarButtonTitle: GDSLocalisedString? = "right bar button"
+    var backButtonTitle: GDSLocalisedString? = "back button"
+    var backButtonIsHidden: Bool = false
+    
+    let appearAction: () -> Void
+    let dismissAction: () -> Void
+    
+    func didAppear() {
+        appearAction()
+    }
+    
+    func didDismiss() {
+        dismissAction()
+    }
+}

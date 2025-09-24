@@ -6,7 +6,7 @@ import UIKit
 /// view model must conform to `BaseViewModel`.
 /// Screen view controllers should generally inherit from ``BaseViewController`` instead of `UIViewController`
 /// unless the functionality of the screen needs to be intentionally different from standard screens.
-open class BaseViewController: UIViewController {
+open class BaseView: UIViewController {
     private let viewModel: BaseViewModel?
     
     public init(viewModel: BaseViewModel?, bundle: Bundle?) {
@@ -42,8 +42,10 @@ open class BaseViewController: UIViewController {
         super.viewIsAppearing(animated)
         Task { @MainActor in
             if let screen = self as? VoiceOverFocus {
-                UIAccessibility.post(notification: .screenChanged,
-                                     argument: try screen.initialVoiceOverView)
+                UIAccessibility.post(
+                    notification: .screenChanged,
+                    argument: try screen.initialVoiceOverView
+                )
             }
         }
     }
