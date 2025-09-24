@@ -34,14 +34,14 @@ extension GDSScreenStyle {
         )
     }
     
-    public static var topLeadingAligned: Self {
+    public static var topLeading: Self {
         GDSScreenStyle(
             verticalAlignment: .top,
             horizontalAlignment: .leading
         )
     }
     
-    public static var centreLeadingAligned: Self {
+    public static var centreLeading: Self {
         GDSScreenStyle(
             verticalAlignment: .center,
             horizontalAlignment: .leading

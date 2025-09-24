@@ -9,9 +9,9 @@ import UIKit
 open class BaseViewController: UIViewController {
     private let viewModel: BaseViewModel?
     
-    public init(viewModel: BaseViewModel?, nibName: String?, bundle: Bundle?) {
+    public init(viewModel: BaseViewModel?, bundle: Bundle?) {
         self.viewModel = viewModel
-        super.init(nibName: nibName, bundle: bundle)
+        super.init(nibName: nil, bundle: bundle)
     }
     
     @available(*, unavailable, renamed: "init(viewModel:)")
@@ -24,7 +24,10 @@ open class BaseViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         
-        setBackButtonTitle(isHidden: viewModel?.backButtonIsHidden ?? false)
+        setBackButtonTitle(
+            title: viewModel?.backButtonTitle,
+            isHidden: viewModel?.backButtonIsHidden ?? false
+        )
         
         if viewModel?.rightBarButtonTitle != nil {
             self.navigationItem.rightBarButtonItem = .init(title: viewModel?.rightBarButtonTitle?.value,
@@ -40,7 +43,7 @@ open class BaseViewController: UIViewController {
         Task { @MainActor in
             if let screen = self as? VoiceOverFocus {
                 UIAccessibility.post(notification: .screenChanged,
-                                     argument: screen.initialVoiceOverView)
+                                     argument: try screen.initialVoiceOverView)
             }
         }
     }
@@ -57,8 +60,13 @@ open class BaseViewController: UIViewController {
 }
 
 extension UIViewController {
-    func setBackButtonTitle(isHidden: Bool = false) {
-        navigationItem.backButtonTitle = NSLocalizedString(key: "GDSCommonBackButton", bundle: .module)
+    func setBackButtonTitle(
+        title: GDSLocalisedString?,
+        isHidden: Bool = false
+    ) {
+        if let title {
+            navigationItem.backButtonTitle = title.value
+        }
         navigationItem.hidesBackButton = isHidden
     }
 }

@@ -1,9 +1,14 @@
 import UIKit
 
 open class GDSScreen: BaseViewController, VoiceOverFocus {
-    public var initialVoiceOverView: UIView {
-        scrollViewInnerStackView.arrangedSubviews.first ?? UIView()
+public var initialVoiceOverView: UIView {
+    get throws {
+        guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
+            throw VoiceOverFocusError.notAvailable
+        }
+        return firstView
     }
+}
     
     private(set) lazy var containerStackView: UIStackView = {
         let result = UIStackView(
@@ -90,7 +95,6 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
         self.viewModel = viewModel
         super.init(
             viewModel: viewModel as? BaseViewModel,
-            nibName: nil,
             bundle: Bundle.module
         )
     }
@@ -141,14 +145,14 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     func movableFooterToScrollView() {
         // remove footnote from bottom stack
-        for index in movableFooterViews {
-            bottomStackView.removeArrangedSubview(index)
-            index.removeFromSuperview()
+        for view in movableFooterViews {
+            bottomStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
         
         // add to scroll view
-        for index in movableFooterViews {
-            scrollViewInnerStackView.addArrangedSubview(index)
+        for view in movableFooterViews {
+            scrollViewInnerStackView.addArrangedSubview(view)
         }
         
         isMovableFooterInScrollView = true
@@ -156,14 +160,14 @@ open class GDSScreen: BaseViewController, VoiceOverFocus {
     
     func movableFooterToBottomStackView() {
         // remove from scroll view
-        for index in movableFooterViews {
-            scrollViewInnerStackView.removeArrangedSubview(index)
-            index.removeFromSuperview()
+        for view in movableFooterViews {
+            scrollViewInnerStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
         
         // add to stack
-        for index in movableFooterViews {
-            bottomStackView.insertArrangedSubview(index, at: .zero)
+        for view in movableFooterViews {
+            bottomStackView.insertArrangedSubview(view, at: .zero)
         }
         
         view.layoutIfNeeded()

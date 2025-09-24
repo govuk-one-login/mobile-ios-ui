@@ -58,6 +58,7 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
     let footer: [any ContentViewModel]
     
     let rightBarButtonTitle: GDSLocalisedString?
+    let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
     init(
@@ -66,6 +67,7 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel],
         rightBarButtonTitle: GDSLocalisedString?,
+        backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
         didAppearAction: (() -> Void)?,
         didDismissAction: (() -> Void)?
@@ -75,6 +77,7 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
         self.movableFooter = movableFooter
         self.footer = footer
         self.rightBarButtonTitle = rightBarButtonTitle
+        self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
     }
     
@@ -89,6 +92,7 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
     let footer: [any ContentViewModel]
     
     let rightBarButtonTitle: GDSLocalisedString?
+    let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
     init(
@@ -97,6 +101,7 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel],
         rightBarButtonTitle: GDSLocalisedString?,
+        backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
         didAppearAction: (() -> Void)?,
         didDismissAction: (() -> Void)?
@@ -106,6 +111,7 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
         self.movableFooter = movableFooter
         self.footer = footer
         self.rightBarButtonTitle = rightBarButtonTitle
+        self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
     }
     
@@ -120,6 +126,7 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
     let footer: [any ContentViewModel]
     
     let rightBarButtonTitle: GDSLocalisedString?
+    let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
     init(
@@ -128,6 +135,7 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel],
         rightBarButtonTitle: GDSLocalisedString?,
+        backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
         didAppearAction: (() -> Void)?,
         didDismissAction: (() -> Void)?
@@ -137,6 +145,7 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
         self.movableFooter = movableFooter
         self.footer = footer
         self.rightBarButtonTitle = rightBarButtonTitle
+        self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
     }
     

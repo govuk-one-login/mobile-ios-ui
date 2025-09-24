@@ -22,14 +22,14 @@ struct GDSScreenStyleTests {
     
     @Test
     func topLeadingAligned() {
-        let sut = GDSScreenStyle.topLeadingAligned
+        let sut = GDSScreenStyle.topLeading
         #expect(sut.verticalAlignment == .top)
         #expect(sut.horizontalAlignment == .leading)
     }
     
     @Test
     func centreLeadingAligned() {
-        let sut = GDSScreenStyle.centreLeadingAligned
+        let sut = GDSScreenStyle.centreLeading
         #expect(sut.verticalAlignment == .center)
         #expect(sut.horizontalAlignment == .leading)
     }
