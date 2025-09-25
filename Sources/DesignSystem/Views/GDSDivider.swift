@@ -1,7 +1,9 @@
 import UIKit
 
-public struct GDSCardDividerViewModel: ContentViewModel {
-    public typealias ViewType = GDSCardDividerView
+public typealias GDSCardDividerViewModel = GDSDividerViewModel
+
+public struct GDSDividerViewModel: ContentViewModel {
+    public typealias ViewType = GDSDividerView
     
     let height: CGFloat
     let colour: UIColor
@@ -21,13 +23,15 @@ public struct GDSCardDividerViewModel: ContentViewModel {
     }
 }
 
-public final class GDSCardDividerView: UIView, ContentView {
-    public init(viewModel: GDSCardDividerViewModel) {
+public typealias GDSCardDividerView = GDSDividerView
+
+public final class GDSDividerView: UIView, ContentView {
+    public init(viewModel: GDSDividerViewModel) {
         super.init(frame: .zero)
         
         self.backgroundColor = viewModel.colour
         self.heightAnchor.constraint(equalToConstant: viewModel.height).isActive = true
-        self.accessibilityIdentifier = "divider"
+        self.accessibilityIdentifier = "gds-divider-view"
     }
     
     required init?(coder: NSCoder) {

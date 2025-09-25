@@ -1,9 +1,9 @@
 import UIKit
 
-public typealias GDSImageViewModel = GDSCardImageViewModel
+public typealias GDSCardImageViewModel = GDSImageViewModel
 
-public struct GDSCardImageViewModel: ContentViewModel {
-    public typealias ViewType = GDSCardImageView
+public struct GDSImageViewModel: ContentViewModel {
+    public typealias ViewType = GDSImageView
     
     let image: UIImage
     let accessibilityLabel: String?
@@ -34,10 +34,10 @@ public struct GDSCardImageViewModel: ContentViewModel {
     }
 }
 
-public typealias GDSImageView = GDSCardImageView
+public typealias GDSCardImageView = GDSImageView
 
-public final class GDSCardImageView: UIImageView, ContentView {
-    public init(viewModel: GDSCardImageViewModel) {
+public final class GDSImageView: UIImageView, ContentView {
+    public init(viewModel: GDSImageViewModel) {
         super.init(frame: .zero)
         
         self.image = viewModel.image
@@ -57,6 +57,7 @@ public final class GDSCardImageView: UIImageView, ContentView {
             self.isAccessibilityElement = true
             self.accessibilityLabel = accessibilityLabel
         }
+        self.accessibilityIdentifier = "gds-image-view"
     }
     
     required init?(coder: NSCoder) {

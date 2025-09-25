@@ -1,9 +1,9 @@
 import UIKit
 
-public typealias GDSTextViewModel = GDSCardTextViewModel
+public typealias GDSCardTextViewModel = GDSTextViewModel
 
-public struct GDSCardTextViewModel: ContentViewModel {
-    public typealias ViewType = GDSCardTextView
+public struct GDSTextViewModel: ContentViewModel {
+    public typealias ViewType = GDSTextView
     
     let title: GDSLocalisedString
     let titleFont: UIFont
@@ -29,10 +29,10 @@ public struct GDSCardTextViewModel: ContentViewModel {
     }
 }
 
-public typealias GDSTextView = GDSCardTextView
+public typealias GDSCardTextView = GDSTextView
 
-public final class GDSCardTextView: UILabel, ContentView {
-    public init(viewModel: GDSCardTextViewModel) {
+public final class GDSTextView: UILabel, ContentView {
+    public init(viewModel: GDSTextViewModel) {
         super.init(frame: .zero)
         
         self.font = viewModel.titleFont
@@ -49,7 +49,7 @@ public final class GDSCardTextView: UILabel, ContentView {
         if let accessibilityTraits = viewModel.accessibilityTraits {
             self.accessibilityTraits = accessibilityTraits
         }
-        self.accessibilityIdentifier = "content-card-label"
+        self.accessibilityIdentifier = "gds-text-view"
     }
     
     required init?(coder: NSCoder) {
