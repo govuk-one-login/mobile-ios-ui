@@ -38,11 +38,12 @@ public final class GDSSymbolView: UIImageView, ContentView {
         
         self.image = viewModel.image
         self.tintColor = viewModel.imageColour
+        self.contentMode = viewModel.contentMode
+        
         if let accessibilityLabel = viewModel.accessibilityLabel {
             self.isAccessibilityElement = true
             self.accessibilityLabel = accessibilityLabel
         }
-        self.contentMode = viewModel.contentMode
         
         var heightConstraint: CGFloat {
             if let value = viewModel.imageHeightConstraint {

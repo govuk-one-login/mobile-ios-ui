@@ -3,14 +3,14 @@ import Testing
 import UIKit
 
 @MainActor
-struct GDSCardImageTests {
+struct GDSImageTests {
     @Test("Test default values")
     func defaultValues() throws {
-        let viewModel = GDSCardImageViewModel(
+        let viewModel = GDSImageViewModel(
             image: UIImage(),
             contentMode: .scaleAspectFill
         )
-        let sut = GDSCardImageView(viewModel: viewModel)
+        let sut = GDSImageView(viewModel: viewModel)
         #expect(sut.image == UIImage())
         #expect(sut.contentMode == .scaleAspectFill)
         #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.card)
@@ -22,12 +22,12 @@ struct GDSCardImageTests {
     
     @Test("Test set values")
     func setValues() throws {
-        let viewModel = GDSCardImageViewModel(
+        let viewModel = GDSImageViewModel(
             image: UIImage(),
             accessibilityLabel: "accessibility string",
             contentMode: .scaleAspectFit
         )
-        let sut = GDSCardImageView(viewModel: viewModel)
+        let sut = GDSImageView(viewModel: viewModel)
         #expect(sut.image == UIImage())
         #expect(sut.contentMode == .scaleAspectFit)
         #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.card)
