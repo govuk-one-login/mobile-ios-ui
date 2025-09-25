@@ -1,6 +1,6 @@
 import UIKit
 
-open class GDSScreen: BaseView, VoiceOverFocus {
+open class GDSScreen: BaseScreen, VoiceOverFocus {
 public var initialVoiceOverView: UIView {
     get throws {
         guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {

@@ -61,6 +61,9 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
+    let didAppear: ButtonAction?
+    let didDismiss: ButtonAction?
+    
     init(
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
@@ -69,8 +72,8 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppearAction: (() -> Void)?,
-        didDismissAction: (() -> Void)?
+        didAppear: ButtonAction?,
+        didDismiss: ButtonAction?
     ) {
         self.screenStyle = screenStyle
         self.body = body
@@ -79,10 +82,9 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
         self.rightBarButtonTitle = rightBarButtonTitle
         self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
+        self.didAppear = didAppear
+        self.didDismiss = didDismiss
     }
-    
-    func didAppear() { }
-    func didDismiss() { }
 }
 
 struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
@@ -95,6 +97,9 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
+    let didAppear: ButtonAction?
+    let didDismiss: ButtonAction?
+    
     init(
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
@@ -103,8 +108,8 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppearAction: (() -> Void)?,
-        didDismissAction: (() -> Void)?
+        didAppear: ButtonAction? = nil,
+        didDismiss: ButtonAction? = nil
     ) {
         self.screenStyle = screenStyle
         self.body = body
@@ -113,10 +118,9 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
         self.rightBarButtonTitle = rightBarButtonTitle
         self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
+        self.didAppear = didAppear
+        self.didDismiss = didDismiss
     }
-    
-    func didAppear() { }
-    func didDismiss() { }
 }
 
 struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
@@ -129,6 +133,9 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
+    let didAppear: ButtonAction?
+    let didDismiss: ButtonAction?
+    
     init(
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
@@ -137,8 +144,8 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppearAction: (() -> Void)?,
-        didDismissAction: (() -> Void)?
+        didAppear: ButtonAction? = nil,
+        didDismiss: ButtonAction? = nil
     ) {
         self.screenStyle = screenStyle
         self.body = body
@@ -147,8 +154,7 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
         self.rightBarButtonTitle = rightBarButtonTitle
         self.backButtonTitle = backButtonTitle
         self.backButtonIsHidden = backButtonIsHidden
+        self.didAppear = didAppear
+        self.didDismiss = didDismiss
     }
-    
-    func didAppear() { }
-    func didDismiss() { }
 }

@@ -1,13 +1,25 @@
 import UIKit
 
-/// `BaseViewController` provides standard lifecycle functionality for other view controllers to inherit from
+/// `BaseScreen` provides standard lifecycle functionality for other view controllers to inherit from
 /// The view controller is configured with a  `BaseViewModel`
-/// For the functionality of `BaseViewController` to work, the concrete implementation of
+/// For the functionality of `BaseScreen` to work, the concrete implementation of
 /// view model must conform to `BaseViewModel`.
 /// Screen view controllers should generally inherit from ``BaseViewController`` instead of `UIViewController`
 /// unless the functionality of the screen needs to be intentionally different from standard screens.
-open class BaseView: UIViewController {
+open class BaseScreen: UIViewController {
     private let viewModel: BaseViewModel?
+    
+    public private(set) var appearAsyncTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
+    
+    public private(set) var dismissAsyncTask: Task<Void, Never>? {
+        didSet {
+            oldValue?.cancel()
+        }
+    }
     
     public init(viewModel: BaseViewModel?, bundle: Bundle?) {
         self.viewModel = viewModel
@@ -52,12 +64,32 @@ open class BaseView: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel?.didAppear()
+        
+        switch viewModel?.didAppear {
+        case .action(let action):
+            action()
+        case .asyncAction(let asyncAction):
+            appearAsyncTask = Task {
+                await asyncAction()
+            }
+        case .none:
+            return
+        }
     }
     
     @objc private func dismissScreen() {
         self.dismiss(animated: true)
-        viewModel?.didDismiss()
+        
+        switch viewModel?.didDismiss {
+        case .action(let action):
+            action()
+        case .asyncAction(let asyncAction):
+            dismissAsyncTask = Task {
+                await asyncAction()
+            }
+        case .none:
+            return
+        }
     }
 }
 

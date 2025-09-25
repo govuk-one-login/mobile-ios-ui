@@ -6,8 +6,8 @@ import UIKit
 struct BaseViewTests {
     @Test
     func rightBarButtonContents() throws {
-        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
-        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -17,8 +17,8 @@ struct BaseViewTests {
     
     @Test
     func backButtonContents() throws {
-        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
-        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -27,8 +27,8 @@ struct BaseViewTests {
     
     @Test
     func rightBarButtonSetsAccessbilityIDOnViewLoad() {
-        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { })
-        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         #expect(sut.navigationItem.rightBarButtonItem?.accessibilityIdentifier == nil)
         sut.beginAppearanceTransition(true, animated: false)
@@ -40,8 +40,8 @@ struct BaseViewTests {
     func didAppear() {
         var didAppear = false
         
-        let viewModel = TestBaseViewModel(appearAction: { didAppear = true }, dismissAction: { })
-        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(didAppear: .action({ didAppear = true }), didDismiss: .action({ }))
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         #expect(!didAppear)
         sut.beginAppearanceTransition(true, animated: false)
@@ -53,8 +53,8 @@ struct BaseViewTests {
     func didDismiss() {
         var didDismiss = false
         
-        let viewModel = TestBaseViewModel(appearAction: { }, dismissAction: { didDismiss = true })
-        let sut = BaseView(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ didDismiss = true }))
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -70,14 +70,6 @@ struct TestBaseViewModel: BaseViewModel {
     var backButtonTitle: GDSLocalisedString? = "back button"
     var backButtonIsHidden: Bool = false
     
-    let appearAction: () -> Void
-    let dismissAction: () -> Void
-    
-    func didAppear() {
-        appearAction()
-    }
-    
-    func didDismiss() {
-        dismissAction()
-    }
+    let didAppear: ButtonAction?
+    let didDismiss: ButtonAction?
 }

@@ -7,8 +7,8 @@ public protocol GDSErrorScreenViewModel: BaseViewModel, GDSScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppearAction: (() -> Void)?,
-        didDismissAction: (() -> Void)?
+        didAppear: ButtonAction?,
+        didDismiss: ButtonAction?
     )
 }
 
@@ -21,8 +21,8 @@ extension GDSErrorScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString? = nil,
         backButtonTitle: GDSLocalisedString? = nil,
         backButtonIsHidden: Bool = true,
-        didAppearAction: (() -> Void)? = nil,
-        didDismissAction: (() -> Void)? = nil
+        didAppear: ButtonAction? = nil,
+        didDismiss: ButtonAction? = nil
     ) {
         self = Self(
             screenStyle: .error,
@@ -32,8 +32,8 @@ extension GDSErrorScreenViewModel {
             rightBarButtonTitle: rightBarButtonTitle,
             backButtonTitle: backButtonTitle,
             backButtonIsHidden: backButtonIsHidden,
-            didAppearAction: didAppearAction,
-            didDismissAction: didDismissAction
+            didAppear: didAppear,
+            didDismiss: didDismiss
         )
     }
 }

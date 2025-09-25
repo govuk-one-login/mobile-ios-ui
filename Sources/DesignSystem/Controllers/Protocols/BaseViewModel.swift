@@ -6,6 +6,6 @@ public protocol BaseViewModel {
     var backButtonTitle: GDSLocalisedString? { get }
     var backButtonIsHidden: Bool { get }
     
-    func didAppear()
-    func didDismiss()
+    var didAppear: ButtonAction? { get }
+    var didDismiss: ButtonAction? { get }
 }
