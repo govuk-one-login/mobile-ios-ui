@@ -142,6 +142,6 @@ struct TestBaseViewModel: BaseViewModel {
     var backButtonTitle: GDSLocalisedString? = "back button"
     var backButtonIsHidden: Bool = false
     
-    let didAppear: Action?
-    let didDismiss: Action?
+    let didAppear: DesignSystem.Action?
+    let didDismiss: DesignSystem.Action?
 }

@@ -3,6 +3,6 @@ extension DesignSystem {
         case action(() -> Void)
         case asyncAction(() async -> Void)
     }
-    
-    public typealias ButtonAction = Action
 }
+
+public typealias ButtonAction = DesignSystem.Action
