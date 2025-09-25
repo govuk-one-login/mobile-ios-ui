@@ -3,7 +3,7 @@ import Testing
 import UIKit
 
 @MainActor
-struct BaseViewTests {
+struct BaseScreenTests {
     @Test
     func rightBarButtonContents() throws {
         let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
@@ -50,6 +50,30 @@ struct BaseViewTests {
     }
     
     @Test
+    func asyncDidAppear() async {
+        var didAppear = false
+        
+        let viewModel = TestBaseViewModel(
+            didAppear: .asyncAction({
+                do {
+                    try await Task.sleep(seconds: 1)
+                    didAppear = true
+                } catch {
+                    return
+                }
+            }),
+            didDismiss: .action({ })
+        )
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        
+        #expect(!didAppear)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        await sut.appearAsyncTask?.value
+        #expect(didAppear)
+    }
+    
+    @Test
     func didDismiss() {
         var didDismiss = false
         
@@ -61,6 +85,32 @@ struct BaseViewTests {
         
         #expect(!didDismiss)
         _ = sut.navigationItem.rightBarButtonItem?.target?.perform(sut.navigationItem.rightBarButtonItem?.action)
+        #expect(didDismiss)
+    }
+    
+    @Test
+    func asyncDidDismiss() async {
+        var didDismiss = false
+
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ }),
+            didDismiss: .asyncAction({
+                do {
+                    try await Task.sleep(seconds: 1)
+                    didDismiss = true
+                } catch {
+                    return
+                }
+            })
+        )
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        #expect(!didDismiss)
+        _ = sut.navigationItem.rightBarButtonItem?.target?.perform(sut.navigationItem.rightBarButtonItem?.action)
+        await sut.dismissAsyncTask?.value
         #expect(didDismiss)
     }
 }
