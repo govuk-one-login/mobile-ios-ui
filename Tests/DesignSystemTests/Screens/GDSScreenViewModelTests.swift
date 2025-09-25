@@ -61,8 +61,8 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
-    let didAppear: ButtonAction?
-    let didDismiss: ButtonAction?
+    let didAppear: Action?
+    let didDismiss: Action?
 }
 
 struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
@@ -75,8 +75,8 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
-    let didAppear: ButtonAction?
-    let didDismiss: ButtonAction?
+    let didAppear: Action?
+    let didDismiss: Action?
 }
 
 struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
@@ -89,6 +89,6 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
     let backButtonTitle: GDSLocalisedString?
     let backButtonIsHidden: Bool
     
-    let didAppear: ButtonAction?
-    let didDismiss: ButtonAction?
+    let didAppear: Action?
+    let didDismiss: Action?
 }

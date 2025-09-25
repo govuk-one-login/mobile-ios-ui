@@ -1,4 +1,4 @@
-public protocol GDSCentreAlignedViewModel: BaseViewModel, GDSScreenViewModel {
+public protocol GDSLeftAlignedViewModel: BaseViewModel, GDSScreenViewModel {
     init(
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
@@ -7,12 +7,12 @@ public protocol GDSCentreAlignedViewModel: BaseViewModel, GDSScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppear: ButtonAction?,
-        didDismiss: ButtonAction?
+        didAppear: Action?,
+        didDismiss: Action?
     )
 }
 
-extension GDSCentreAlignedViewModel {
+extension GDSLeftAlignedViewModel {
     public init(
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
@@ -20,11 +20,11 @@ extension GDSCentreAlignedViewModel {
         rightBarButtonTitle: GDSLocalisedString? = nil,
         backButtonTitle: GDSLocalisedString? = nil,
         backButtonIsHidden: Bool = true,
-        didAppear: ButtonAction? = nil,
-        didDismiss: ButtonAction? = nil
+        didAppear: Action? = nil,
+        didDismiss: Action? = nil
     ) {
         self = Self(
-            screenStyle: .topCentred,
+            screenStyle: .topLeading,
             body: body,
             movableFooter: movableFooter,
             footer: footer,

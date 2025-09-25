@@ -6,8 +6,14 @@ import UIKit
 struct BaseScreenTests {
     @Test
     func rightBarButtonContents() throws {
-        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
-        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ }),
+            didDismiss: .action({ })
+        )
+        let sut = BaseScreen(
+            viewModel: viewModel,
+            bundle: .module
+        )
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -17,8 +23,14 @@ struct BaseScreenTests {
     
     @Test
     func backButtonContents() throws {
-        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
-        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ }),
+            didDismiss: .action({ })
+        )
+        let sut = BaseScreen(
+            viewModel: viewModel,
+            bundle: .module
+        )
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -27,8 +39,14 @@ struct BaseScreenTests {
     
     @Test
     func rightBarButtonSetsAccessbilityIDOnViewLoad() {
-        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ }))
-        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ }),
+            didDismiss: .action({ })
+        )
+        let sut = BaseScreen(
+            viewModel: viewModel,
+            bundle: .module
+        )
         
         #expect(sut.navigationItem.rightBarButtonItem?.accessibilityIdentifier == nil)
         sut.beginAppearanceTransition(true, animated: false)
@@ -40,7 +58,10 @@ struct BaseScreenTests {
     func didAppear() {
         var didAppear = false
         
-        let viewModel = TestBaseViewModel(didAppear: .action({ didAppear = true }), didDismiss: .action({ }))
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ didAppear = true }),
+            didDismiss: .action({ })
+        )
         let sut = BaseScreen(viewModel: viewModel, bundle: .module)
         
         #expect(!didAppear)
@@ -60,7 +81,10 @@ struct BaseScreenTests {
             }),
             didDismiss: .action({ })
         )
-        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let sut = BaseScreen(
+            viewModel: viewModel,
+            bundle: .module
+        )
         
         #expect(!didAppear)
         sut.beginAppearanceTransition(true, animated: false)
@@ -73,8 +97,14 @@ struct BaseScreenTests {
     func didDismiss() {
         var didDismiss = false
         
-        let viewModel = TestBaseViewModel(didAppear: .action({ }), didDismiss: .action({ didDismiss = true }))
-        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let viewModel = TestBaseViewModel(
+            didAppear: .action({ }),
+            didDismiss: .action({ didDismiss = true })
+        )
+        let sut = BaseScreen(
+            viewModel: viewModel,
+            bundle: .module
+        )
         
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
@@ -112,6 +142,6 @@ struct TestBaseViewModel: BaseViewModel {
     var backButtonTitle: GDSLocalisedString? = "back button"
     var backButtonIsHidden: Bool = false
     
-    let didAppear: ButtonAction?
-    let didDismiss: ButtonAction?
+    let didAppear: Action?
+    let didDismiss: Action?
 }

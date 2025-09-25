@@ -1,4 +1,4 @@
-public protocol GDSLeftAlignedViewModel: BaseViewModel, GDSScreenViewModel {
+public protocol GDSErrorScreenViewModel: BaseViewModel, GDSScreenViewModel {
     init(
         screenStyle: GDSScreenStyle,
         body: [any ContentViewModel],
@@ -7,25 +7,26 @@ public protocol GDSLeftAlignedViewModel: BaseViewModel, GDSScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppear: ButtonAction?,
-        didDismiss: ButtonAction?
+        didAppear: Action?,
+        didDismiss: Action?
     )
 }
 
-extension GDSLeftAlignedViewModel {
+extension GDSErrorScreenViewModel {
     public init(
+        icon: GDSImageViewModel,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel],
         rightBarButtonTitle: GDSLocalisedString? = nil,
         backButtonTitle: GDSLocalisedString? = nil,
         backButtonIsHidden: Bool = true,
-        didAppear: ButtonAction? = nil,
-        didDismiss: ButtonAction? = nil
+        didAppear: Action? = nil,
+        didDismiss: Action? = nil
     ) {
         self = Self(
-            screenStyle: .topLeading,
-            body: body,
+            screenStyle: .error,
+            body: [icon] + body,
             movableFooter: movableFooter,
             footer: footer,
             rightBarButtonTitle: rightBarButtonTitle,
