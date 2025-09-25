@@ -63,28 +63,6 @@ struct TestGDSCentreAlignedScreenViewModel: GDSCentreAlignedViewModel {
     
     let didAppear: ButtonAction?
     let didDismiss: ButtonAction?
-    
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel],
-        rightBarButtonTitle: GDSLocalisedString?,
-        backButtonTitle: GDSLocalisedString?,
-        backButtonIsHidden: Bool,
-        didAppear: ButtonAction?,
-        didDismiss: ButtonAction?
-    ) {
-        self.screenStyle = screenStyle
-        self.body = body
-        self.movableFooter = movableFooter
-        self.footer = footer
-        self.rightBarButtonTitle = rightBarButtonTitle
-        self.backButtonTitle = backButtonTitle
-        self.backButtonIsHidden = backButtonIsHidden
-        self.didAppear = didAppear
-        self.didDismiss = didDismiss
-    }
 }
 
 struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
@@ -99,28 +77,6 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
     
     let didAppear: ButtonAction?
     let didDismiss: ButtonAction?
-    
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel],
-        rightBarButtonTitle: GDSLocalisedString?,
-        backButtonTitle: GDSLocalisedString?,
-        backButtonIsHidden: Bool,
-        didAppear: ButtonAction? = nil,
-        didDismiss: ButtonAction? = nil
-    ) {
-        self.screenStyle = screenStyle
-        self.body = body
-        self.movableFooter = movableFooter
-        self.footer = footer
-        self.rightBarButtonTitle = rightBarButtonTitle
-        self.backButtonTitle = backButtonTitle
-        self.backButtonIsHidden = backButtonIsHidden
-        self.didAppear = didAppear
-        self.didDismiss = didDismiss
-    }
 }
 
 struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
@@ -135,26 +91,4 @@ struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
     
     let didAppear: ButtonAction?
     let didDismiss: ButtonAction?
-    
-    init(
-        screenStyle: GDSScreenStyle,
-        body: [any ContentViewModel],
-        movableFooter: [any ContentViewModel],
-        footer: [any ContentViewModel],
-        rightBarButtonTitle: GDSLocalisedString?,
-        backButtonTitle: GDSLocalisedString?,
-        backButtonIsHidden: Bool,
-        didAppear: ButtonAction? = nil,
-        didDismiss: ButtonAction? = nil
-    ) {
-        self.screenStyle = screenStyle
-        self.body = body
-        self.movableFooter = movableFooter
-        self.footer = footer
-        self.rightBarButtonTitle = rightBarButtonTitle
-        self.backButtonTitle = backButtonTitle
-        self.backButtonIsHidden = backButtonIsHidden
-        self.didAppear = didAppear
-        self.didDismiss = didDismiss
-    }
 }
