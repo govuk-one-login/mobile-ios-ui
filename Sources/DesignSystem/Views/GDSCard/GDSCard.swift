@@ -85,7 +85,7 @@ public final class GDSCard: UIView, ContentView {
     private func addDismissButton(
         type: StackViewType,
         stackView: UIStackView,
-        action: Action
+        action: DesignSystem.Action
     ) {
         let dismissButton = GDSButtonViewModel(
             title: .init(),

@@ -1,6 +1,8 @@
-public enum Action {
-    case action(() -> Void)
-    case asyncAction(() async -> Void)
+extension DesignSystem {
+    public enum Action {
+        case action(() -> Void)
+        case asyncAction(() async -> Void)
+    }
+    
+    public typealias ButtonAction = Action
 }
-
-public typealias ButtonAction = Action

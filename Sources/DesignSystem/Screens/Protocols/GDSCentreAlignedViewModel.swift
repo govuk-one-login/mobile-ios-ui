@@ -7,8 +7,8 @@ public protocol GDSCentreAlignedViewModel: BaseViewModel, GDSScreenViewModel {
         rightBarButtonTitle: GDSLocalisedString?,
         backButtonTitle: GDSLocalisedString?,
         backButtonIsHidden: Bool,
-        didAppear: Action?,
-        didDismiss: Action?
+        didAppear: DesignSystem.Action?,
+        didDismiss: DesignSystem.Action?
     )
 }
 
@@ -20,8 +20,8 @@ extension GDSCentreAlignedViewModel {
         rightBarButtonTitle: GDSLocalisedString? = nil,
         backButtonTitle: GDSLocalisedString? = nil,
         backButtonIsHidden: Bool = true,
-        didAppear: Action? = nil,
-        didDismiss: Action? = nil
+        didAppear: DesignSystem.Action? = nil,
+        didDismiss: DesignSystem.Action? = nil
     ) {
         self = Self(
             screenStyle: .topCentred,
