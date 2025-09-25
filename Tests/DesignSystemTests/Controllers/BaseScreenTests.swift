@@ -55,12 +55,8 @@ struct BaseScreenTests {
         
         let viewModel = TestBaseViewModel(
             didAppear: .asyncAction({
-                do {
-                    try await Task.sleep(seconds: 1)
-                    didAppear = true
-                } catch {
-                    return
-                }
+                try? await Task.sleep(seconds: 1)
+                didAppear = true
             }),
             didDismiss: .action({ })
         )
@@ -95,12 +91,8 @@ struct BaseScreenTests {
         let viewModel = TestBaseViewModel(
             didAppear: .action({ }),
             didDismiss: .asyncAction({
-                do {
-                    try await Task.sleep(seconds: 1)
-                    didDismiss = true
-                } catch {
-                    return
-                }
+                try? await Task.sleep(seconds: 1)
+                didDismiss = true
             })
         )
         let sut = BaseScreen(viewModel: viewModel, bundle: .module)
