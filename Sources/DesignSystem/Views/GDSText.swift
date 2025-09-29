@@ -1,5 +1,6 @@
 import UIKit
 
+@available(*, deprecated, renamed: "GDSTextViewModel", message: "to be removed October 2025")
 public typealias GDSCardTextViewModel = GDSTextViewModel
 
 public struct GDSTextViewModel: ContentViewModel {
@@ -9,6 +10,7 @@ public struct GDSTextViewModel: ContentViewModel {
     let titleFont: UIFont
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
+    
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -29,6 +31,7 @@ public struct GDSTextViewModel: ContentViewModel {
     }
 }
 
+@available(*, deprecated, renamed: "GDSTextView", message: "to be removed October 2025")
 public typealias GDSCardTextView = GDSTextView
 
 public final class GDSTextView: UILabel, ContentView {

@@ -89,8 +89,8 @@ struct GDSCardViewTests {
     func imageLabelHasDismissButton() throws {
         let image = GDSCardImageViewModel(
             image: UIImage(),
-            accessibilityLabel: "test image",
-            contentMode: .scaleAspectFit
+            contentMode: .scaleAspectFit,
+            accessibilityLabel: "test image"
         )
         let title = GDSCardTextViewModel(
             title: "test title",
