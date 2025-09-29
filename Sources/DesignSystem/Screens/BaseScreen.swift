@@ -4,7 +4,7 @@ import UIKit
 /// The view controller is configured with a  `BaseViewModel`
 /// For the functionality of `BaseScreen` to work, the concrete implementation of
 /// view model must conform to `BaseViewModel`.
-/// Screen view controllers should generally inherit from ``BaseViewController`` instead of `UIViewController`
+/// Screen view controllers should generally inherit from ``BaseScreen`` instead of `UIViewController`
 /// unless the functionality of the screen needs to be intentionally different from standard screens.
 open class BaseScreen: UIViewController {
     private let viewModel: BaseViewModel?
