@@ -166,7 +166,7 @@ public var initialVoiceOverView: UIView {
         }
         
         // add to stack
-        for view in movableFooterViews {
+        for view in movableFooterViews.reversed() {
             bottomStackView.insertArrangedSubview(view, at: .zero)
         }
         
