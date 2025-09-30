@@ -11,6 +11,7 @@ extension DesignSystem {
             )
             
             public static let statusOverlay = Color.Base.grey1
+            public static let qrScanner = Color.Base.black2Alpha70
         }
         
         public enum Dividers {
@@ -41,6 +42,7 @@ extension DesignSystem {
             )
             
             public static let statusOverlay = Color.Base.white
+            public static let qrScanner = Color.Base.white
         }
         
         public enum Links {
@@ -137,18 +139,19 @@ extension DesignSystem {
         }
         
         public enum Shadows {
-            public static let card = Color.Base.blackAlpha15
+            public static let card = Color.Base.black2Alpha15
         }
         
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
-            
-            static let blackAlpha = UIColor.fromHex("#000000")
-            public static let blackAlpha5 = blackAlpha.withAlphaComponent(0.05)
-            public static let blackAlpha12 = blackAlpha.withAlphaComponent(0.12)
-            public static let blackAlpha15 = blackAlpha.withAlphaComponent(0.15)
-            public static let blackAlpha20 = blackAlpha.withAlphaComponent(0.2)
-            public static let blackAlpha30 = blackAlpha.withAlphaComponent(0.3)
+            public static let black2 = UIColor.fromHex("#000000")
+            public static let black2Alpha5 = black2.withAlphaComponent(0.05)
+            public static let black2Alpha12 = black2.withAlphaComponent(0.12)
+            public static let black2Alpha15 = black2.withAlphaComponent(0.15)
+            public static let black2Alpha20 = black2.withAlphaComponent(0.2)
+            public static let black2Alpha30 = black2.withAlphaComponent(0.3)
+            public static let black2Alpha50 = black2.withAlphaComponent(0.5)
+            public static let black2Alpha70 = black2.withAlphaComponent(0.7)
             
             public static let charcoal1 = UIColor.fromHex("#262626")
             public static let charcoal2 = UIColor.fromHex("#3C3C3C")
@@ -176,6 +179,7 @@ extension DesignSystem {
             public static let grey4 = UIColor.fromHex("#F3F2F1")
             public static let grey5 = UIColor.fromHex("#F2F2F7")
             public static let grey6 = UIColor.fromHex("#939393")
+            public static let grey7 = UIColor.fromHex("#E7E6E5")
             
             public static let red1 = UIColor.fromHex("#D4351C")
             public static let red2 = UIColor.fromHex("#FF6961")
@@ -201,7 +205,7 @@ extension DesignSystem {
             public static let ministryOfDefense = UIColor.fromHex("#532A45")
             public static let homeOffice = UIColor.fromHex("#732282")
             public static let hmRevenueAndCustoms = UIColor.fromHex("#008476")
-            public static let departmentOfTransport = UIColor.fromHex("#006853")
+            public static let departmentForTransport = UIColor.fromHex("#006853")
         }
     }
 }
