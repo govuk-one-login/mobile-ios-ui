@@ -7,6 +7,7 @@ public struct GDSCardTitleViewModel: ContentViewModel {
     let titleFont: UIFont
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
+    
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     

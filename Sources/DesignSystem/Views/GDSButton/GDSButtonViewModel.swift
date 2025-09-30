@@ -6,7 +6,7 @@ public struct GDSButtonViewModel: ContentViewModel {
     public let title: TitleForState
     public let icon: IconForState?
     public let style: GDSButtonStyle
-    public let buttonAction: ButtonAction
+    public let buttonAction: DesignSystem.Action
     public let haptic: Haptic?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
@@ -15,7 +15,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         title: String,
         icon: IconStyle? = nil,
         style: GDSButtonStyle,
-        buttonAction: ButtonAction,
+        buttonAction: DesignSystem.Action,
         haptic: Haptic? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -37,7 +37,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         title: TitleForState,
         icon: IconForState? = nil,
         style: GDSButtonStyle,
-        buttonAction: ButtonAction,
+        buttonAction: DesignSystem.Action,
         haptic: Haptic? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)

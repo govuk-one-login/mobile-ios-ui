@@ -3,19 +3,21 @@ import UIKit
 public struct GDSCardViewModel: ContentViewModel {
     public typealias ViewType = GDSCard
     
-    public let backgroundColour: UIColor
-    public let borderStyle: BorderStyle?
-    public let showShadow: Bool
-    public let dismissAction: ButtonAction?
+    let backgroundColour: UIColor
+    let borderStyle: BorderStyle?
+    let showShadow: Bool
+    let dismissAction: DesignSystem.Action?
+    
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
-    public let contentItems: [any ContentViewModel]
+    
+    let contentItems: [any ContentViewModel]
     
     public init(
         backgroundColour: UIColor = DesignSystem.Color.Backgrounds.card,
         borderStyle: BorderStyle? = nil,
         showShadow: Bool = false,
-        dismissAction: ButtonAction? = nil,
+        dismissAction: DesignSystem.Action? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0),
         @ContentItemBuilder contentItems: () -> [any ContentViewModel]

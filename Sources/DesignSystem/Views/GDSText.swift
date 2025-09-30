@@ -1,12 +1,16 @@
 import UIKit
 
-public struct GDSCardTextViewModel: ContentViewModel {
-    public typealias ViewType = GDSCardTextView
+@available(*, deprecated, renamed: "GDSTextViewModel", message: "to be removed October 2025")
+public typealias GDSCardTextViewModel = GDSTextViewModel
+
+public struct GDSTextViewModel: ContentViewModel {
+    public typealias ViewType = GDSTextView
     
     let title: GDSLocalisedString
     let titleFont: UIFont
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
+    
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -27,8 +31,11 @@ public struct GDSCardTextViewModel: ContentViewModel {
     }
 }
 
-public final class GDSCardTextView: UILabel, ContentView {
-    public init(viewModel: GDSCardTextViewModel) {
+@available(*, deprecated, renamed: "GDSTextView", message: "to be removed October 2025")
+public typealias GDSCardTextView = GDSTextView
+
+public final class GDSTextView: UILabel, ContentView {
+    public init(viewModel: GDSTextViewModel) {
         super.init(frame: .zero)
         
         self.font = viewModel.titleFont
@@ -45,7 +52,7 @@ public final class GDSCardTextView: UILabel, ContentView {
         if let accessibilityTraits = viewModel.accessibilityTraits {
             self.accessibilityTraits = accessibilityTraits
         }
-        self.accessibilityIdentifier = "content-card-label"
+        self.accessibilityIdentifier = "gds-text-view"
     }
     
     required init?(coder: NSCoder) {

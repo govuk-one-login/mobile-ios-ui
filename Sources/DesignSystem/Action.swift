@@ -1,0 +1,8 @@
+extension DesignSystem {
+    public enum Action {
+        case action(() -> Void)
+        case asyncAction(() async -> Void)
+    }
+}
+
+public typealias ButtonAction = DesignSystem.Action

@@ -1,7 +1,8 @@
+import DesignSystem
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
 
     func scene(
@@ -12,8 +13,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController() // Your initial view controller.
+        window.rootViewController = GDSScreen(
+            viewModel: GDSDemoScreenViewModel(
+                screenStyle: .centred,
+                body: [],
+                movableFooter: [],
+                footer: []
+            )
+        ) // Your initial view controller.
         window.makeKeyAndVisible()
         self.window = window
+    }
+}
+
+struct GDSDemoScreenViewModel: GDSScreenViewModel {
+    public let screenStyle: GDSScreenStyle
+    public let body: [any ContentViewModel]
+    public let movableFooter: [any ContentViewModel]
+    public let footer: [any ContentViewModel]
+    
+    public init(
+        screenStyle: GDSScreenStyle = .topCentred,
+        body: [any ContentViewModel],
+        movableFooter: [any ContentViewModel],
+        footer: [any ContentViewModel]
+    ) {
+        self.screenStyle = screenStyle
+        self.body = body
+        self.movableFooter = movableFooter
+        self.footer = footer
     }
 }
