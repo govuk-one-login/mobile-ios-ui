@@ -2,8 +2,8 @@
 import Testing
 import UIKit
 
+// swiftlint:disable type_body_length
 struct ColorTokenTests {
-    
     // MARK: - Text Tokens
     
     @Test func test_ColorToken_Text_Primary() async throws {
@@ -358,3 +358,4 @@ struct ColorTokenTests {
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
 }
+// swiftlint:enable type_body_length
