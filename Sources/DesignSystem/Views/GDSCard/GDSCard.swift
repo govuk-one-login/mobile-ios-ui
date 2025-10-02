@@ -26,7 +26,7 @@ public final class GDSCard: UIView, ContentView {
             )
             if let dismissAction = viewModel.dismissAction {
                 if viewModel.contentItems.first is GDSCardImageViewModel {
-                    if item is GDSCardImageViewModel {
+                    if item is GDSImageViewModel {
                         addDismissButton(
                             type: .image,
                             stackView: stack,

@@ -144,12 +144,31 @@ extension DesignSystem {
         
         public enum Base {
             public static let black1 = UIColor.fromHex("#0B0C0C")
+            
+            @available(*, deprecated, renamed: "black2", message: "to be removed October 2025")
+            public static let blackAlpha = black2
             public static let black2 = UIColor.fromHex("#000000")
+            
+            @available(*, deprecated, renamed: "black2Alpha5", message: "to be removed October 2025")
+            public static let blackAlpha5 = black2Alpha5
             public static let black2Alpha5 = black2.withAlphaComponent(0.05)
+            
+            @available(*, deprecated, renamed: "black2Alpha12", message: "to be removed October 2025")
+            public static let blackAlpha12 = black2Alpha12
             public static let black2Alpha12 = black2.withAlphaComponent(0.12)
+            
+            @available(*, deprecated, renamed: "black2Alpha15", message: "to be removed October 2025")
+            public static let blackAlpha15 = black2Alpha15
             public static let black2Alpha15 = black2.withAlphaComponent(0.15)
+            
+            @available(*, deprecated, renamed: "black2Alpha20", message: "to be removed October 2025")
+            public static let blackAlpha20 = black2Alpha20
             public static let black2Alpha20 = black2.withAlphaComponent(0.2)
+            
+            @available(*, deprecated, renamed: "black2Alpha30", message: "to be removed October 2025")
+            public static let blackAlpha30 = black2Alpha30
             public static let black2Alpha30 = black2.withAlphaComponent(0.3)
+            
             public static let black2Alpha50 = black2.withAlphaComponent(0.5)
             public static let black2Alpha70 = black2.withAlphaComponent(0.7)
             
@@ -205,6 +224,9 @@ extension DesignSystem {
             public static let ministryOfDefense = UIColor.fromHex("#532A45")
             public static let homeOffice = UIColor.fromHex("#732282")
             public static let hmRevenueAndCustoms = UIColor.fromHex("#008476")
+            
+            @available(*, deprecated, renamed: "departmentForTransport", message: "to be removed October 2025")
+            public static let departmentOfTransport = departmentForTransport
             public static let departmentForTransport = UIColor.fromHex("#006853")
         }
     }
