@@ -2,8 +2,8 @@
 import Testing
 import UIKit
 
+// swiftlint:disable type_body_length
 struct ColorTokenTests {
-    
     // MARK: - Text Tokens
     
     @Test func test_ColorToken_Text_Primary() async throws {
@@ -30,9 +30,17 @@ struct ColorTokenTests {
         #expect(sut.darkColor.cgColor == expectedColor.darkColor.cgColor)
     }
     
-    @Test func test_ColorToken_Text_Overlay() async throws {
+    @Test func test_ColorToken_Text_Status_Overlay() async throws {
         let expectedColor = DesignSystem.Color.Base.white
         let sut = DesignSystem.Color.Text.statusOverlay
+        
+        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_ColorToken_Text_QR_Scanner() async throws {
+        let expectedColor = DesignSystem.Color.Base.white
+        let sut = DesignSystem.Color.Text.qrScanner
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
@@ -49,9 +57,17 @@ struct ColorTokenTests {
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
     }
     
-    @Test func test_ColorToken_Background_Overlay() async throws {
+    @Test func test_ColorToken_Background_Status_Overlay() async throws {
         let expectedColor = DesignSystem.Color.Base.grey1
         let sut = DesignSystem.Color.Backgrounds.statusOverlay
+        
+        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_ColorToken_Background_QR_Scanner() async throws {
+        let expectedColor = DesignSystem.Color.Base.black2Alpha70
+        let sut = DesignSystem.Color.Backgrounds.qrScanner
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
@@ -335,10 +351,11 @@ struct ColorTokenTests {
     // MARK: - Shadow tokens
     
     @Test func test_ColorToken_Shadow_Card() async throws {
-        let expectedColor = DesignSystem.Color.Base.blackAlpha15
+        let expectedColor = DesignSystem.Color.Base.black2Alpha15
         let sut = DesignSystem.Color.Shadows.card
         
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
 }
+// swiftlint:enable type_body_length
