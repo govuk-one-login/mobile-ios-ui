@@ -2,6 +2,7 @@
 import Testing
 import UIKit
 
+// swiftlint:disable type_body_length
 struct ColorTests {
     @Test func test_Color_Black1() async throws {
         let expectedColor = UIColor.fromHex("#0B0C0C")
@@ -367,3 +368,4 @@ struct ColorTests {
         #expect(sut.cgColor == expectedColor.cgColor)
     }
 }
+// swiftlint:enable type_body_length
