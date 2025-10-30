@@ -26,12 +26,14 @@ struct GDSTextTests {
         let viewModel = GDSTextViewModel(
             title: "test title",
             titleFont: DesignSystem.Font.Base.caption1,
+            textColor: DesignSystem.Color.Text.secondary,
             alignment: .center,
             accessibilityTraits: .header
         )
         let sut = GDSTextView(viewModel: viewModel)
         #expect(sut.text == "test title")
         #expect(sut.font == DesignSystem.Font.Base.caption1)
+        #expect(sut.textColor == DesignSystem.Color.Text.secondary)
         #expect(sut.textAlignment == .center)
         #expect(sut.accessibilityTraits == .header)
     }
