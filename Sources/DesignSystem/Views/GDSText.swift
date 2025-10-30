@@ -8,6 +8,7 @@ public struct GDSTextViewModel: ContentViewModel {
     
     let title: GDSLocalisedString
     let titleFont: UIFont
+    let textColor: UIColor
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
     
@@ -17,6 +18,7 @@ public struct GDSTextViewModel: ContentViewModel {
     public init(
         title: GDSLocalisedString,
         titleFont: UIFont = DesignSystem.Font.Base.body,
+        textColor: UIColor = DesignSystem.Color.Text.primary,
         alignment: NSTextAlignment = .left,
         accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(8),
@@ -24,6 +26,7 @@ public struct GDSTextViewModel: ContentViewModel {
     ) {
         self.title = title
         self.titleFont = titleFont
+        self.textColor = textColor
         self.alignment = alignment
         self.accessibilityTraits = accessibilityTraits
         self.verticalPadding = verticalPadding
@@ -39,7 +42,7 @@ public final class GDSTextView: UILabel, ContentView {
         super.init(frame: .zero)
         
         self.font = viewModel.titleFont
-        self.textColor = DesignSystem.Color.Text.primary
+        self.textColor = viewModel.textColor
         if let attributedTitle = viewModel.title.attributedValue {
             self.attributedText = attributedTitle
         } else {
