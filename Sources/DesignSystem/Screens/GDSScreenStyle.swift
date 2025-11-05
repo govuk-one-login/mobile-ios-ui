@@ -20,6 +20,14 @@ public struct GDSScreenStyle {
 }
 
 extension GDSScreenStyle {
+    public static var top: Self {
+        GDSScreenStyle(
+            verticalAlignment: .top,
+            horizontalAlignment: .fill
+        )
+    }
+    
+    @available(*, deprecated, renamed: "top", message: "Will be removed December 2025 - please use `top` style instead")
     public static var topCentred: Self {
         GDSScreenStyle(
             verticalAlignment: .top,
@@ -34,6 +42,7 @@ extension GDSScreenStyle {
         )
     }
     
+    @available(*, deprecated, message: "Will be removed December 2025 - please use `top` style instead")
     public static var topLeading: Self {
         GDSScreenStyle(
             verticalAlignment: .top,

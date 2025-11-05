@@ -14,6 +14,13 @@ struct GDSScreenStyleTests {
     }
     
     @Test
+    func top() {
+        let sut = GDSScreenStyle.top
+        #expect(sut.verticalAlignment == .top)
+        #expect(sut.horizontalAlignment == .fill)
+    }
+    
+    @Test
     func topCentred() {
         let sut = GDSScreenStyle.topCentred
         #expect(sut.verticalAlignment == .top)
