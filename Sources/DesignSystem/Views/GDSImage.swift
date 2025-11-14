@@ -10,7 +10,6 @@ public struct GDSImageViewModel: ContentViewModel {
     let imageColour: UIColor?
     let contentMode: UIView.ContentMode
     let imageHeightConstraint: CGFloat?
-//    let imageWidthConstraint: CGFloat?
     let cornerMask: CACornerMask?
     let accessibilityLabel: String?
     
