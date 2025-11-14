@@ -10,6 +10,7 @@ public struct GDSImageViewModel: ContentViewModel {
     let imageColour: UIColor?
     let contentMode: UIView.ContentMode
     let imageHeightConstraint: CGFloat?
+//    let imageWidthConstraint: CGFloat?
     let cornerMask: CACornerMask?
     let accessibilityLabel: String?
     
@@ -60,7 +61,7 @@ public final class GDSImageView: UIImageView, ContentView {
         
         if viewModel.contentMode == .scaleAspectFit {
             if let imageHeightConstraint = viewModel.imageHeightConstraint {
-                heightAnchor.constraint(greaterThanOrEqualToConstant: imageHeightConstraint).isActive = true
+                heightAnchor.constraint(lessThanOrEqualToConstant: imageHeightConstraint).isActive = true
             } else {
                 heightAnchor.constraint(equalTo: widthAnchor, multiplier: viewModel.aspectRatio).isActive = true
             }
