@@ -2,7 +2,7 @@ name: Run Quality Report
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -12,14 +12,14 @@ jobs:
   build:
     name: Run Quality Report
     runs-on: macos-26
-    steps:
+    steps: 
       - name: Add path globally
         run: echo "/usr/local/bin" >> $GITHUB_PATH
 
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # pin@v4
         with:
-          lfs: "true"
+          lfs: 'true'
 
       - name: Xcode select
         run: |
@@ -52,13 +52,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   increment_version:
-    needs: [build]
-    name: Increment Version
+    needs: build
     runs-on: macos-26
     steps:
-      - name: Increment Version
+      - name: Increment version
         id: versioning
-        uses: Oliver-Binns/Versioning@b6152639f8a9674571ba9794e27a47e2593ceb43 # pin@v1.3.3
+        uses: Oliver-Binns/Versioning@ae52d69cfa22993e2c001c9e6556ef9bc7dd0ce2 # pin@v1.4.2
         with:
-          ACTION_TYPE: "Release"
+          ACTION_TYPE: 'Release'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
