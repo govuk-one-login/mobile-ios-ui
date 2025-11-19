@@ -55,6 +55,10 @@ jobs:
     needs: build
     runs-on: macos-26
     steps:
+      - name: Xcode select
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.app
+            
       - name: Increment version
         id: versioning
         uses: Oliver-Binns/Versioning@ae52d69cfa22993e2c001c9e6556ef9bc7dd0ce2 # pin@v1.4.2
