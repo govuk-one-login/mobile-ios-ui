@@ -13,10 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = GDSScreen(
+        window.rootViewController =      
+        GDSScreen(
             viewModel: GDSDemoScreenViewModel(
                 screenStyle: .centred,
-                body: [],
+                body: [GDSRowViewModel()],
                 movableFooter: [],
                 footer: []
             )
