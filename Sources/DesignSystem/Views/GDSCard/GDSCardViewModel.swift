@@ -5,7 +5,6 @@ public struct GDSCardViewModel: ContentViewModel {
     let borderStyle: BorderStyle?
     let showShadow: Bool
     let dismissAction: DesignSystem.Action?
-    let listStyle: ListStyle
     
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
