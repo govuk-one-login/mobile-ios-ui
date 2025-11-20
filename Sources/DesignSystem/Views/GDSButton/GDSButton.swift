@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSButton: UIButton, ContentView {
+public final class GDSButton: UIButton {
     let viewModel: GDSButtonViewModel
     
     public private(set) var asyncTask: Task<Void, Never>?

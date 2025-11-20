@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSCard: UIView, ContentView {
+public final class GDSCard: UIView {
     let viewModel: GDSCardViewModel
     
     lazy var stackView: UIStackView = {

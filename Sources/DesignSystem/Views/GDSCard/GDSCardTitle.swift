@@ -1,8 +1,6 @@
 import UIKit
 
 public struct GDSCardTitleViewModel: ContentViewModel {
-    public typealias ViewType = GDSCardTitleView
-    
     let title: GDSLocalisedString
     let titleFont: UIFont
     let alignment: NSTextAlignment
@@ -26,9 +24,13 @@ public struct GDSCardTitleViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
+    
+    public func createUIView() -> UIView {
+        GDSCardTitleView(viewModel: self)
+    }
 }
 
-public final class GDSCardTitleView: UIStackView, ContentView {
+public final class GDSCardTitleView: UIStackView {
     public init(viewModel: GDSCardTitleViewModel) {
         super.init(frame: .zero)
         

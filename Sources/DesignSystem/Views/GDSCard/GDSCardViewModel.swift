@@ -1,12 +1,11 @@
 import UIKit
 
 public struct GDSCardViewModel: ContentViewModel {
-    public typealias ViewType = GDSCard
-    
     let backgroundColour: UIColor
     let borderStyle: BorderStyle?
     let showShadow: Bool
     let dismissAction: DesignSystem.Action?
+    let listStyle: ListStyle
     
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
@@ -29,5 +28,9 @@ public struct GDSCardViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
         self.contentItems = contentItems()
+    }
+    
+    public func createUIView() -> UIView {
+        GDSCard(viewModel: self)
     }
 }

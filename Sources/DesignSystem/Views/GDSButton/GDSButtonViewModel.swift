@@ -1,8 +1,6 @@
 import UIKit
 
 public struct GDSButtonViewModel: ContentViewModel {
-    public typealias ViewType = GDSButton
-    
     public let title: TitleForState
     public let icon: IconForState?
     public let style: GDSButtonStyle
@@ -49,5 +47,9 @@ public struct GDSButtonViewModel: ContentViewModel {
         self.haptic = haptic
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
+    }
+    
+    public func createUIView() -> UIView {
+        GDSButton(viewModel: self)
     }
 }

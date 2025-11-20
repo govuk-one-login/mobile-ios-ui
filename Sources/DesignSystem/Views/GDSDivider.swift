@@ -4,8 +4,6 @@ import UIKit
 public typealias GDSCardDividerViewModel = GDSDividerViewModel
 
 public struct GDSDividerViewModel: ContentViewModel {
-    public typealias ViewType = GDSDividerView
-    
     let height: CGFloat
     let colour: UIColor
     
@@ -23,12 +21,16 @@ public struct GDSDividerViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
+    
+    public func createUIView() -> UIView {
+        GDSDividerView(viewModel: self)
+    }
 }
 
 @available(*, deprecated, renamed: "GDSDividerView", message: "to be removed October 2025")
 public typealias GDSCardDividerView = GDSDividerView
 
-public final class GDSDividerView: UIView, ContentView {
+public final class GDSDividerView: UIView {
     public init(viewModel: GDSDividerViewModel) {
         super.init(frame: .zero)
         

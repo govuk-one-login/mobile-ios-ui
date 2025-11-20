@@ -4,8 +4,6 @@ import UIKit
 public typealias GDSCardImageViewModel = GDSImageViewModel
 
 public struct GDSImageViewModel: ContentViewModel {
-    public typealias ViewType = GDSImageView
-    
     let image: UIImage
     let imageColour: UIColor?
     let contentMode: UIView.ContentMode
@@ -39,12 +37,16 @@ public struct GDSImageViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
+    
+    public func createUIView() -> UIView {
+        GDSImageView(viewModel: self)
+    }
 }
 
 @available(*, deprecated, renamed: "GDSImageView", message: "to be removed October 2025")
 public typealias GDSCardImageView = GDSImageView
 
-public final class GDSImageView: UIImageView, ContentView {
+public final class GDSImageView: UIImageView {
     public init(viewModel: GDSImageViewModel) {
         super.init(frame: .zero)
         

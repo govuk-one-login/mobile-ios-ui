@@ -4,8 +4,6 @@ import UIKit
 public typealias GDSCardTextViewModel = GDSTextViewModel
 
 public struct GDSTextViewModel: ContentViewModel {
-    public typealias ViewType = GDSTextView
-    
     let title: GDSLocalisedString
     let titleFont: UIFont
     let textColor: UIColor
@@ -32,12 +30,16 @@ public struct GDSTextViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
+    
+    public func createUIView() -> UIView {
+        GDSTextView(viewModel: self)
+    }
 }
 
 @available(*, deprecated, renamed: "GDSTextView", message: "to be removed October 2025")
 public typealias GDSCardTextView = GDSTextView
 
-public final class GDSTextView: UILabel, ContentView {
+public final class GDSTextView: UILabel {
     public init(viewModel: GDSTextViewModel) {
         super.init(frame: .zero)
         
