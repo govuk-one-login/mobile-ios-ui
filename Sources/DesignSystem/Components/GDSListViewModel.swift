@@ -5,18 +5,27 @@ public typealias TitleConfig = (font: UIFont, isHeader: Bool)
 public enum ListStyle {
     case numbered
     case bulleted
+    
+    var identifierPrefix: String {
+        switch self {
+            case .numbered:
+                return "numbered"
+            case .bulleted:
+                return "bulleted"
+        }
+    }
 }
 
 @MainActor
-public protocol ListViewModel: ContentViewModel {
+public protocol GDSListViewModel: ContentViewModel {
     var title: GDSLocalisedString? { get }
     var titleConfig: TitleConfig? { get }
     var items: [GDSLocalisedString] { get }
     var style: ListStyle { get }
 }
 
-public struct DefaultListViewModel: ListViewModel {
-    public typealias ViewType = ListView<DefaultListViewModel>
+public struct DefaultGDSListViewModel: GDSListViewModel {
+    public typealias ViewType = GDSListView<DefaultGDSListViewModel>
         
     public var title: GDSLocalisedString?
     public var titleConfig: TitleConfig?
@@ -42,6 +51,6 @@ public struct DefaultListViewModel: ListViewModel {
     }
     
     public func createUIView() -> UIView {
-        ListView(viewModel: self)
+        GDSListView(viewModel: self)
     }
 }
