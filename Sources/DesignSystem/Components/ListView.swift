@@ -1,7 +1,7 @@
 import UIKit
 
 public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
-    public typealias Content = ViewModel
+    public typealias ViewType = ViewModel
     
     let viewModel: ViewModel
     
@@ -37,7 +37,10 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
     }()
     
     private lazy var listStackView: UIStackView = {
-        let result = UIStackView()
+        let result = UIStackView(
+            spacing: viewModel.style == .numbered ? 8 : 16,
+            distribution: .fillProportionally
+        )
         result.isLayoutMarginsRelativeArrangement = true
         result.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         return result
@@ -101,7 +104,7 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
                     axis: .horizontal,
                     spacing: 20,
                     alignment: .top,
-                    distribution: .fillProportionally
+                    distribution: .fill
                 )
                 listRowStack.isAccessibilityElement = true
                 listRowStack.accessibilityLabel = {
@@ -135,12 +138,8 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
         let rows = viewModel.items.enumerated().map { index, item -> UIStackView in
             let row = UIStackView()
             row.axis = .horizontal
-            row.alignment = .top
+            row.alignment = .firstBaseline
             row.spacing = 20
-            
-            let indent = UIView()
-            indent.widthAnchor.constraint(equalToConstant: 10).isActive = true
-            row.addArrangedSubview(indent)
             
             let bullet = UIImageView(image: bulletSymbol)
             bullet.tintColor = .label
