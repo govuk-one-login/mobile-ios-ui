@@ -87,27 +87,27 @@ class ViewController: UIViewController {
 //                        horizontalPadding: .horizontal(16)
 //                    )
 //                },
-                DefaultListViewModel(
+                DefaultGDSListViewModel(
                     title: "Numbered List",
                     titleConfig: (font: UIFont.preferredFont(forTextStyle: .body), isHeader: true),
                     items: [
                         "Item 1",
-                        "Item 2",
+                        "This is bold, this is not",
                         "Item 3"
                     ],
                     style: .numbered
                 ),
-                DefaultListViewModel(
+                DefaultGDSListViewModel(
                     title: "Bulleted List",
                     titleConfig: (font: UIFont.preferredFont(forTextStyle: .headline), isHeader: true),
                     items: [
                         "Item 1",
-                        "Item 2",
+                        "Item 2 -  this is an example of a numbered list without a title, long texts should wrap this is an example of a numbered list without a title, long texts should wrap",
                         "Item 3"
                     ],
                     style: .bulleted
                 ),
-                DefaultListViewModel(
+                DefaultGDSListViewModel(
                     titleConfig: (font: UIFont.preferredFont(forTextStyle: .body), isHeader: false),
                     items: [
                         "Item 1 - this is an example of a numbered list without a title, long texts should wrap this is an example of a numbered list without a title, long texts should wrap",
@@ -115,7 +115,7 @@ class ViewController: UIViewController {
                         "Item 3"
                     ],
                     style: .numbered
-                ),
+                )
             ],
             moveableFooter: [],
             footer: []

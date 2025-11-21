@@ -1,6 +1,6 @@
 import UIKit
 
-public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
+public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView {
     public typealias ViewType = ViewModel
     
     let viewModel: ViewModel
@@ -32,13 +32,13 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
         } else {
             result.isHidden = true
         }
-        result.accessibilityIdentifier = "list-title-label"
+        result.accessibilityIdentifier = "\(viewModel.style.identifierPrefix)-list-title-label"
         return result
     }()
     
     private lazy var listStackView: UIStackView = {
         let result = UIStackView(
-            spacing: viewModel.style == .numbered ? 8 : 16,
+            spacing: 8,
             distribution: .fillProportionally
         )
         result.isLayoutMarginsRelativeArrangement = true
@@ -46,6 +46,18 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
         return result
     }()
     
+    private var maxNumberWidth: CGFloat {
+        viewModel.items.indices
+            .map { index in
+                let number = UILabel()
+                number.text = "\(index + 1)."
+                number.font = UIFont.preferredFont(forTextStyle: .body)
+                number.adjustsFontForContentSizeCategory = true
+                return number
+            }
+            .map(\UILabel.intrinsicContentSize.width)
+            .max() ?? 0
+    }
     
     public required init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -67,11 +79,14 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
         containerStackView.addArrangedSubview(listStackView)
         
         switch viewModel.style {
-            case .numbered: createNumberedlist()
-            case .bulleted: createBulletedList()
+        case .numbered:
+            createNumberedlist()
+        case .bulleted:
+            createBulletedList()
         }
     }
     
+    // swiftlint:disable:next function_body_length
     private func createNumberedlist() {
         let rows = viewModel.items.enumerated()
             .map { index, string in
@@ -135,52 +150,52 @@ public final class ListView<ViewModel: ListViewModel>: UIView, ContentView {
             UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
         )
         
-        let rows = viewModel.items.enumerated().map { index, item -> UIStackView in
-            let row = UIStackView()
-            row.axis = .horizontal
-            row.alignment = .firstBaseline
-            row.spacing = 20
+        let rows = viewModel.items.enumerated().map { index, item in
+            let listRowStack = UIStackView(
+                views: [
+                    {
+                        let bullet = UIImageView(image: bulletSymbol)
+                        bullet.tintColor = .label
+                        bullet.setContentHuggingPriority(.required, for: .horizontal)
+                        bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        return bullet
+                    }(),
+                    {
+                        let textLabel = UILabel()
+                        textLabel.numberOfLines = 0
+                        textLabel.font = UIFont.preferredFont(forTextStyle: .body)
+                        textLabel.adjustsFontForContentSizeCategory = true
+                        
+                        if let attributed = item.attributedValue {
+                            textLabel.attributedText = attributed
+                        } else {
+                            textLabel.text = item.value
+                        }
+                        return textLabel
+                    }()
+                ],
+                axis: .horizontal,
+                spacing: 20,
+                alignment: .top,
+                distribution: .fill
+            )
             
-            let bullet = UIImageView(image: bulletSymbol)
-            bullet.tintColor = .label
-            bullet.setContentHuggingPriority(.required, for: .horizontal)
-            bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
-            row.addArrangedSubview(bullet)
+            listRowStack.isAccessibilityElement = true
+            let summaryLabel = GDSLocalisedString(
+                stringKey: "BulletedList",
+                String(viewModel.items.count),
+                bundle: .module
+            )
+            let listLabel = item.value
+            listRowStack.accessibilityLabel = index == 0
+            ? "\(summaryLabel) \(listLabel)"
+            : listLabel
             
-            let textLabel = UILabel()
-            textLabel.numberOfLines = 0
-            textLabel.font = UIFont.preferredFont(forTextStyle: .body)
-            textLabel.adjustsFontForContentSizeCategory = true
+            listRowStack.accessibilityIdentifier = "bulleted-list-row-stack-view-\(index + 1)"
             
-            if let attributed = item.attributedValue {
-                textLabel.attributedText = attributed
-            } else {
-                textLabel.text = item.value
-            }
-            
-            row.addArrangedSubview(textLabel)
-            
-            row.isAccessibilityElement = true
-            row.accessibilityLabel = index == 0
-                ? "bulleted list \(viewModel.items.count) items bullet \(item.value)"
-                : "bullet \(item.value)"
-            
-            return row
+            return listRowStack
         }
         
         rows.forEach { listStackView.addArrangedSubview($0) }
-    }
-
-    private var maxNumberWidth: CGFloat {
-        viewModel.items.indices
-            .map { index in
-                let number = UILabel()
-                number.text = "\(index + 1)."
-                number.font = UIFont.preferredFont(forTextStyle: .body)
-                number.adjustsFontForContentSizeCategory = true
-                return number
-            }
-            .map(\UILabel.intrinsicContentSize.width)
-            .max() ?? 0
     }
 }
