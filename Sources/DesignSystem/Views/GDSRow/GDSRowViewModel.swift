@@ -7,19 +7,27 @@ public struct GDSRowViewModel: ContentViewModel {
     var titleFont: UIFont?
     var subtitle: String?
     var detail: String?
-    var image: UIImage?
+    var image: String?
     var icon: String?
+    var type: RowType
+    var isGrouped: Bool
     
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
     
+    public var verticalPaddingValue: CGFloat {
+        type.verticalPadding(hasSubtitle: subtitle != nil)
+    }
+        
     public init(
         title: String = "HM Armed Forces Veteran Card",
         titleFont: UIFont? = nil,
-        subtitle: String? = nil,
-        detail: String? = nil,
-        image: UIImage? = nil,
-        icon: String? = nil,
+        subtitle: String? = "Inactive since 30 October 2025",
+        detail: String? = "Detail",
+        image: String? = "exampleImage",
+        icon: String? = "arrow.up.right",
+        type: RowType = .tall,
+        isGrouped: Bool = false,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -29,7 +37,33 @@ public struct GDSRowViewModel: ContentViewModel {
         self.detail = detail
         self.image = image
         self.icon = icon
+        self.type = type
+        self.isGrouped = isGrouped
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
+    }
+        
+}
+
+public enum RowType {
+    case regular
+    case tall
+    
+    public var minRowHeight: CGFloat {
+        switch self {
+        case .regular:
+            44
+        case .tall:
+            60
+        }
+    }
+    
+    public func verticalPadding(hasSubtitle: Bool) -> CGFloat {
+        switch self {
+        case .regular:
+            hasSubtitle ? 4 : 11
+        case .tall:
+            hasSubtitle ? 9 : 19
+        }
     }
 }
