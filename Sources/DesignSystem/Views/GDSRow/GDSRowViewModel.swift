@@ -23,7 +23,7 @@ public struct GDSRowViewModel: ContentViewModel {
         title: String = "HM Armed Forces Veteran Card",
         titleFont: UIFont? = nil,
         subtitle: String? = "Inactive since 30 October 2025",
-        detail: String? = "Detail",
+        detail: String? = "14",
         image: String? = "exampleImage",
         icon: String? = "arrow.up.right",
         type: RowType = .tall,
