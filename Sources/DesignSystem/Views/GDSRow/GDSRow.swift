@@ -3,16 +3,16 @@ import UIKit
 public final class GDSRow: UIView, ContentView {
     let viewModel: GDSRowViewModel
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.font = DesignSystem.Font.Base.body
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -22,9 +22,9 @@ public final class GDSRow: UIView, ContentView {
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        label.font = DesignSystem.Font.Base.footnote
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -34,9 +34,10 @@ public final class GDSRow: UIView, ContentView {
         return label
     }()
     
-    private let detailLabel: UILabel = {
+    private lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.font = DesignSystem.Font.Base.body
+        label.textColor = .tertiaryLabel
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -47,16 +48,26 @@ public final class GDSRow: UIView, ContentView {
         return label
     }()
     
-    private let iconView: UIImageView = {
+    private lazy var iconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.setContentHuggingPriority(.required, for: .horizontal)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let symbolConfig = UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.bodySemiBold)
+        
+        if let icon = viewModel.icon {
+            imageView.image = UIImage(systemName: icon, withConfiguration: symbolConfig)
+            imageView.tintColor = .tertiaryLabel
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+            
+        } else {
+            imageView.isHidden = true
+        }
+ 
         return imageView
     }()
     
-    private let verticalStack: UIStackView = {
+    private lazy var verticalStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 4
@@ -86,12 +97,6 @@ public final class GDSRow: UIView, ContentView {
         }
         
         detailLabel.text = viewModel.detail
-        
-        if let icon = viewModel.icon {
-            iconView.image = UIImage(systemName: icon)
-        } else {
-            iconView.isHidden = true
-        }
     }
     
     required init?(coder: NSCoder) {
