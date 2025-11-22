@@ -3,134 +3,141 @@ import UIKit
 public final class GDSRow: UIView, ContentView {
     let viewModel: GDSRowViewModel
     
-    private lazy var textStackView: UIStackView = {
-        let result = UIStackView(
-            views: [titleLabel, subtitleLabel],
-            axis: .vertical,
-            spacing: 0,
-            distribution: .fill
-        )
-        result.isLayoutMarginsRelativeArrangement = true
-        result.translatesAutoresizingMaskIntoConstraints = false
-        result.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        return result
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
-    private lazy var titleLabel: UILabel = {
-        let result = UILabel()
-        result.text = viewModel.title
-        result.font = DesignSystem.Font.Base.body
-        result.adjustsFontForContentSizeCategory = true
-        result.textAlignment = .left
-        result.numberOfLines = 0
-        
-        return result
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    // optional
-    private lazy var subtitleLabel: UILabel = {
-        let result = UILabel()
-        if let subtitle = viewModel.subtitle {
-            result.text = subtitle
-            result.font = DesignSystem.Font.Base.footnote
-            result.adjustsFontForContentSizeCategory = true
-            result.textAlignment = .left
-            result.numberOfLines = 0
-        } else {
-            result.isHidden = true
-        }
-        return result
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    private lazy var detailLabel: UILabel = {
-        let result = UILabel()
-
-        if let detail = viewModel.detail {
-            result.text = detail
-            result.font = DesignSystem.Font.Base.body
-            result.adjustsFontForContentSizeCategory = true
-            result.textAlignment = .left
-            result.numberOfLines = 0
-            result.translatesAutoresizingMaskIntoConstraints = false
-            result.widthAnchor.constraint(lessThanOrEqualToConstant: 45).isActive = true
-        } else {
-            result.isHidden = true
-        }
-        return result
+    private let detailLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .right
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    // optional
-    private lazy var leadingImageView: UIImageView = {
-        let result = UIImageView()
-        if let image = viewModel.image {
-            result.image = UIImage(named: image)
-            result.contentMode = .scaleAspectFit
-            result.clipsToBounds = true
-            result.translatesAutoresizingMaskIntoConstraints = false
-            result.widthAnchor.constraint(lessThanOrEqualToConstant: 42).isActive = true
-            result.heightAnchor.constraint(lessThanOrEqualToConstant: 42).isActive = true
-        } else {
-            result.isHidden = true
-        }
-        return result
+    private let iconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
-    // optional
-    private lazy var trailingIconView: UIImageView = {
-        let result = UIImageView()
-        let symbolConfig = UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.bodySemiBold)
-        
-        if let icon = viewModel.icon {
-            result.image = UIImage(systemName: icon, withConfiguration: symbolConfig)
-            result.tintColor = .tertiaryLabel
-            result.contentMode = .scaleAspectFit
-            result.translatesAutoresizingMaskIntoConstraints = false
-            result.setContentHuggingPriority(.defaultLow, for: .horizontal)
-            result.setContentCompressionResistancePriority(.required, for: .horizontal)
-        } else {
-            result.isHidden = true
-        }
-        return result
+    private let verticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 4
+        stack.alignment = .leading
+        stack.distribution = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
-    
     
     public init(viewModel: GDSRowViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
-        self.layer.cornerRadius = 10
-        self.layer.cornerCurve = .continuous
-        self.backgroundColor = .secondarySystemBackground
+        setupView()
         
-        let verticalPadding: CGFloat = viewModel.verticalPaddingValue
-        let minRowHeight: CGFloat = viewModel.type.minRowHeight
+        if let image = viewModel.image {
+            imageView.image = UIImage(named: image)
+        } else {
+            imageView.isHidden = true
+        }
         
-        self.addSubview(leadingImageView)
-        self.addSubview(textStackView)
-        self.addSubview(detailLabel)
-        self.addSubview(trailingIconView)
-        self.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            self.heightAnchor.constraint(greaterThanOrEqualToConstant: minRowHeight),
-            
-            leadingImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            leadingImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-
-            textStackView.leadingAnchor.constraint(equalTo: leadingImageView.trailingAnchor, constant: 12),
-            textStackView.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
-            textStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalPadding),
-
-            detailLabel.leadingAnchor.constraint(equalTo: textStackView.trailingAnchor, constant: 8),
-            detailLabel.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
-            detailLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalPadding),
-            
-            trailingIconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 16),
-            trailingIconView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            trailingIconView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+        titleLabel.text = viewModel.title
+        
+        if let subtitle = viewModel.subtitle {
+            subtitleLabel.text = subtitle
+        } else {
+            subtitleLabel.isHidden = true
+        }
+        
+        detailLabel.text = viewModel.detail
+        
+        if let icon = viewModel.icon {
+            iconView.image = UIImage(systemName: icon)
+        } else {
+            iconView.isHidden = true
+        }
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("not implemented")
+    }
+    
+    private func setupView() {
+        backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+        layer.cornerRadius = 8
+        clipsToBounds = true
+
+        addSubview(imageView)
+        addSubview(verticalStack)
+        addSubview(detailLabel)
+        addSubview(iconView)
+        
+        verticalStack.addArrangedSubview(titleLabel)
+        verticalStack.addArrangedSubview(subtitleLabel)
+        
+        let imageRatio = (imageView.image?.size.width ?? 1) / (imageView.image?.size.height ?? 1)
+        
+        NSLayoutConstraint.activate([
+            // ImageView constraints
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
+            imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+            imageView.widthAnchor.constraint(equalToConstant: 42),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
+            
+            // Vertical stack constraints
+            verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
+            verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
+            verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+            verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor, constant: -8),
+            verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            // Detail label constraints
+            detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
+            detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            // IconView constraints
+            iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 8),
+            iconView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 }
