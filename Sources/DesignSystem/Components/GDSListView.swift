@@ -51,7 +51,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
             .map { index in
                 let number = UILabel()
                 number.text = "\(index + 1)."
-                number.font = UIFont.preferredFont(forTextStyle: .body)
+                number.font = DesignSystem.Font.Base.body
                 number.adjustsFontForContentSizeCategory = true
                 return number
             }
@@ -72,17 +72,13 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
         backgroundColor = .systemBackground
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
-        
-        if !titleLabel.isHidden {
-            containerStackView.addArrangedSubview(titleLabel)
-        }
         containerStackView.addArrangedSubview(listStackView)
         
         switch viewModel.style {
-        case .numbered:
-            createNumberedlist()
-        case .bulleted:
-            createBulletedList()
+            case .numbered:
+                createNumberedlist()
+            case .bulleted:
+                createBulletedList()
         }
     }
     
@@ -96,7 +92,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                         {
                             let number = UILabel()
                             number.text = "\(indexIncremented)."
-                            number.font = UIFont.preferredFont(forTextStyle: .body)
+                            number.font = DesignSystem.Font.Base.body
                             number.textAlignment = .right
                             number.adjustsFontForContentSizeCategory = true
                             number.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
@@ -104,7 +100,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                         }(),
                         {
                             let content = UILabel()
-                            content.font = UIFont.preferredFont(forTextStyle: .body)
+                            content.font = DesignSystem.Font.Base.body
                             if let attributedString = string.attributedValue {
                                 content.attributedText = attributedString
                             } else {
@@ -142,7 +138,6 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
         rows.forEach { listStackView.addArrangedSubview($0) }
     }
     
-    
     private func createBulletedList() {
         let fontMetrics = UIFontMetrics(forTextStyle: .body)
         let scaledSize = fontMetrics.scaledValue(for: 6)
@@ -163,7 +158,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                     {
                         let textLabel = UILabel()
                         textLabel.numberOfLines = 0
-                        textLabel.font = UIFont.preferredFont(forTextStyle: .body)
+                        textLabel.font = DesignSystem.Font.Base.body
                         textLabel.adjustsFontForContentSizeCategory = true
                         
                         if let attributed = item.attributedValue {

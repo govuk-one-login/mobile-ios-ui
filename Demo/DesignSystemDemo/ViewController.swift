@@ -89,28 +89,31 @@ class ViewController: UIViewController {
 //                },
                 DefaultGDSListViewModel(
                     title: "Numbered List",
-                    titleConfig: (font: UIFont.preferredFont(forTextStyle: .body), isHeader: true),
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
                         "Item 1",
-                        "This is bold, this is not",
+                        GDSLocalisedString(
+                            stringKey: "This is bold, this is not",
+                            stringAttributes: [("This is bold",
+                                                [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
                         "Item 3"
                     ],
                     style: .numbered
                 ),
                 DefaultGDSListViewModel(
                     title: "Bulleted List",
-                    titleConfig: (font: UIFont.preferredFont(forTextStyle: .headline), isHeader: true),
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
                         "Item 1",
-                        "Item 2 -  this is an example of a numbered list without a title, long texts should wrap this is an example of a numbered list without a title, long texts should wrap",
+                        "Item 2",
                         "Item 3"
                     ],
                     style: .bulleted
                 ),
                 DefaultGDSListViewModel(
-                    titleConfig: (font: UIFont.preferredFont(forTextStyle: .body), isHeader: false),
                     items: [
-                        "Item 1 - this is an example of a numbered list without a title, long texts should wrap this is an example of a numbered list without a title, long texts should wrap",
+                        "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
                         "Item 2",
                         "Item 3"
                     ],
