@@ -12,6 +12,7 @@ public final class GDSRow: UIView, ContentView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.text = viewModel.title
         label.font = DesignSystem.Font.Base.body
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
@@ -50,20 +51,12 @@ public final class GDSRow: UIView, ContentView {
     
     private lazy var iconView: UIImageView = {
         let imageView = UIImageView()
-        let symbolConfig = UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.bodySemiBold)
-        
-        if let icon = viewModel.icon {
-            imageView.image = UIImage(systemName: icon, withConfiguration: symbolConfig)
-            imageView.tintColor = .tertiaryLabel
-            imageView.contentMode = .scaleAspectFit
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-            
-        } else {
-            imageView.isHidden = true
-        }
- 
+        imageView.tintColor = .tertiaryLabel
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
         return imageView
     }()
     
@@ -81,22 +74,7 @@ public final class GDSRow: UIView, ContentView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setupView()
-        
-        if let image = viewModel.image {
-            imageView.image = UIImage(named: image)
-        } else {
-            imageView.isHidden = true
-        }
-        
-        titleLabel.text = viewModel.title
-        
-        if let subtitle = viewModel.subtitle {
-            subtitleLabel.text = subtitle
-        } else {
-            subtitleLabel.isHidden = true
-        }
-        
-        detailLabel.text = viewModel.detail
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -107,42 +85,89 @@ public final class GDSRow: UIView, ContentView {
         backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
         layer.cornerRadius = 8
         clipsToBounds = true
-
-        addSubview(imageView)
+        
+        if let image = viewModel.image {
+            imageView.image = UIImage(named: image)
+            addSubview(imageView)
+        }
+        
         addSubview(verticalStack)
-        addSubview(detailLabel)
-        addSubview(iconView)
+        
+        if let detail = viewModel.detail {
+            detailLabel.text = detail
+            addSubview(detailLabel)
+        }
+        
+        if let icon = viewModel.icon {
+            let config = UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.bodySemiBold)
+            iconView.image = UIImage(systemName: icon, withConfiguration: config)?
+                .withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
+            addSubview(iconView)
+        }
         
         verticalStack.addArrangedSubview(titleLabel)
-        verticalStack.addArrangedSubview(subtitleLabel)
         
-        let imageRatio = (imageView.image?.size.width ?? 1) / (imageView.image?.size.height ?? 1)
+        if let subtitle = viewModel.subtitle {
+            subtitleLabel.text = subtitle
+            verticalStack.addArrangedSubview(subtitleLabel)
+        }
+    }
+    
+    private func setupConstraints() {
+        let hasImage = viewModel.image != nil
+        let hasDetail = viewModel.detail != nil
+        let hasIcon = viewModel.icon != nil
+                
+        let leadingView: UIView = {
+            hasImage ? imageView : verticalStack
+        }()
+        
+        let trailingView: UIView = {
+            hasIcon ? iconView : (hasDetail ? detailLabel : verticalStack)
+        }()
+        
+        if hasImage {
+            let imageRatio = (imageView.image?.size.width ?? 1) / (imageView.image?.size.height ?? 1)
+            
+            NSLayoutConstraint.activate([
+                imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
+                imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+                imageView.widthAnchor.constraint(equalToConstant: 42),
+                imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
+                verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8)
+            ])
+        }
+        
+        if hasDetail {
+            NSLayoutConstraint.activate([
+                verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor, constant: -8),
+                detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
+                detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+            
+            if hasIcon {
+                NSLayoutConstraint.activate([
+                    iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 8),
+                    iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+                ])
+            }
+        } else if hasIcon {
+            NSLayoutConstraint.activate([
+                iconView.leadingAnchor.constraint(equalTo: verticalStack.trailingAnchor),
+                iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+        }
         
         NSLayoutConstraint.activate([
-            // ImageView constraints
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-
-            imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
-            imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
-            imageView.widthAnchor.constraint(equalToConstant: 42),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
+            leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             
             // Vertical stack constraints
-            verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
             verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
             verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
-            verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor, constant: -8),
             verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            // Detail label constraints
-            detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
-            detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            // IconView constraints
-            iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 8),
-            iconView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+
+            trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
         ])
     }
 }
