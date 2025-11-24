@@ -3,7 +3,7 @@ import UIKit
 public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView {
     public typealias ViewType = ViewModel
     
-    let viewModel: ViewModel
+    public let viewModel: ViewModel
     
     private lazy var containerStackView: UIStackView = {
         let result = UIStackView(
