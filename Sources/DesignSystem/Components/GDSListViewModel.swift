@@ -8,10 +8,10 @@ public enum ListStyle {
     
     var identifierPrefix: String {
         switch self {
-            case .numbered:
-                return "numbered"
-            case .bulleted:
-                return "bulleted"
+        case .numbered:
+            return "numbered"
+        case .bulleted:
+            return "bulleted"
         }
     }
 }

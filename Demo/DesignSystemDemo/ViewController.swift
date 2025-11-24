@@ -93,7 +93,7 @@ class ViewController: UIViewController {
                     items: [
                         "Item 1",
                         GDSLocalisedString(
-                            stringKey: "This is bold, this is not",
+                            stringLiteral: "This is bold, this is not",
                             stringAttributes: [("This is bold",
                                                 [.font: DesignSystem.Font.Base.bodyBold])]
                         ),

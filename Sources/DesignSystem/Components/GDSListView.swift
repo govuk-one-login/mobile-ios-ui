@@ -38,6 +38,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
     
     private lazy var listStackView: UIStackView = {
         let result = UIStackView(
+            views: makeRows(),
             spacing: 8,
             distribution: .fillProportionally
         )
@@ -72,125 +73,106 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
         backgroundColor = .systemBackground
         addSubview(containerStackView)
         containerStackView.bindToSuperviewEdges()
-        containerStackView.addArrangedSubview(listStackView)
-        
+    }
+    
+    private func makeRows() -> [UIStackView] {
         switch viewModel.style {
-            case .numbered:
-                createNumberedlist()
-            case .bulleted:
-                createBulletedList()
+        case .numbered:
+            createNumberedlist()
+        case .bulleted:
+            createBulletedList()
         }
     }
     
-    // swiftlint:disable:next function_body_length
-    private func createNumberedlist() {
-        let rows = viewModel.items.enumerated()
-            .map { index, string in
+    private func contentLabels(for item: GDSLocalisedString) -> UILabel {
+        let label = UILabel()
+        label.font = DesignSystem.Font.Base.body
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.adjustsFontForContentSizeCategory = true
+        
+        if let attributedString = item.attributedValue {
+            label.attributedText = attributedString
+        } else {
+            label.text = item.value
+        }
+        return label
+    }
+    
+    private func createNumberedlist() -> [UIStackView] {
+        return viewModel.items.enumerated()
+            .map { index, item in
                 let indexIncremented = index + 1
-                let listRowStack = UIStackView(
-                    views: [
-                        {
-                            let number = UILabel()
-                            number.text = "\(indexIncremented)."
-                            number.font = DesignSystem.Font.Base.body
-                            number.textAlignment = .right
-                            number.adjustsFontForContentSizeCategory = true
-                            number.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
-                            return number
-                        }(),
-                        {
-                            let content = UILabel()
-                            content.font = DesignSystem.Font.Base.body
-                            if let attributedString = string.attributedValue {
-                                content.attributedText = attributedString
-                            } else {
-                                content.text = string.value
-                            }
-                            content.numberOfLines = 0
-                            content.textAlignment = .left
-                            content.adjustsFontForContentSizeCategory = true
-                            return content
-                        }()
-                    ],
+                let numberLabel = UILabel()
+                numberLabel.text = "\(indexIncremented)."
+                numberLabel.font = DesignSystem.Font.Base.body
+                numberLabel.textAlignment = .right
+                numberLabel.adjustsFontForContentSizeCategory = true
+                numberLabel.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
+                
+                let textLabel = contentLabels(for: item)
+                let row = UIStackView(
+                    views: [numberLabel, textLabel],
                     axis: .horizontal,
                     spacing: 20,
                     alignment: .top,
                     distribution: .fill
                 )
-                listRowStack.isAccessibilityElement = true
-                listRowStack.accessibilityLabel = {
-                    let summaryLabel = GDSLocalisedString(
-                        stringKey: "NumberedList",
-                        String(viewModel.items.count),
-                        bundle: .module
-                    )
-                    let number = NSLocalizedString(
-                        key: String(indexIncremented),
-                        bundle: .module
-                    )
-                    let listLabel = "\(number), \(string.value)"
-                    return indexIncremented == 1 ? "\(summaryLabel.value) \(listLabel)" : listLabel
-                }()
-                listRowStack.accessibilityIdentifier = "numbered-list-row-stack-view-\(indexIncremented)"
-                return listRowStack
+                
+                row.isAccessibilityElement = true
+                let summaryLabel = GDSLocalisedString(
+                    stringKey: "NumberedList",
+                    String(viewModel.items.count),
+                    bundle: .module
+                )
+                let number = NSLocalizedString(
+                    key: String(indexIncremented),
+                    bundle: .module
+                )
+                let listLabel = "\(number), \(item.value)"
+                row.accessibilityLabel = indexIncremented == 0 ? "\(summaryLabel.value) \(listLabel)" : listLabel
+                row.accessibilityIdentifier = "numbered-list-row-stack-view-\(indexIncremented)"
+                return row
             }
-        
-        rows.forEach { listStackView.addArrangedSubview($0) }
     }
     
-    private func createBulletedList() {
+    private func createBulletedList() -> [UIStackView] {
         let fontMetrics = UIFontMetrics(forTextStyle: .body)
         let scaledSize = fontMetrics.scaledValue(for: 6)
         let bulletSymbol = UIImage(systemName: "circle.fill")?.withConfiguration(
             UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
         )
         
-        let rows = viewModel.items.enumerated().map { index, item in
-            let listRowStack = UIStackView(
-                views: [
-                    {
-                        let bullet = UIImageView(image: bulletSymbol)
-                        bullet.tintColor = .label
-                        bullet.setContentHuggingPriority(.required, for: .horizontal)
-                        bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
-                        return bullet
-                    }(),
-                    {
-                        let textLabel = UILabel()
-                        textLabel.numberOfLines = 0
-                        textLabel.font = DesignSystem.Font.Base.body
-                        textLabel.adjustsFontForContentSizeCategory = true
-                        
-                        if let attributed = item.attributedValue {
-                            textLabel.attributedText = attributed
-                        } else {
-                            textLabel.text = item.value
-                        }
-                        return textLabel
-                    }()
-                ],
+        return viewModel.items.enumerated().map { index, item in
+            let bullet = UIImageView(image: bulletSymbol)
+            bullet.tintColor = .label
+            bullet.setContentHuggingPriority(.required, for: .horizontal)
+            bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
+            
+            
+            let textLabel = contentLabels(for: item)
+            let row = UIStackView(
+                views: [bullet, textLabel],
                 axis: .horizontal,
                 spacing: 20,
                 alignment: .top,
                 distribution: .fill
             )
             
-            listRowStack.isAccessibilityElement = true
+            row.isAccessibilityElement = true
             let summaryLabel = GDSLocalisedString(
                 stringKey: "BulletedList",
                 String(viewModel.items.count),
                 bundle: .module
             )
             let listLabel = item.value
-            listRowStack.accessibilityLabel = index == 0
+            row.accessibilityLabel = index == 0
             ? "\(summaryLabel) \(listLabel)"
             : listLabel
             
-            listRowStack.accessibilityIdentifier = "bulleted-list-row-stack-view-\(index + 1)"
+            row.accessibilityIdentifier = "bulleted-list-row-stack-view-\(index + 1)"
             
-            return listRowStack
+            return row
         }
-        
-        rows.forEach { listStackView.addArrangedSubview($0) }
     }
 }
