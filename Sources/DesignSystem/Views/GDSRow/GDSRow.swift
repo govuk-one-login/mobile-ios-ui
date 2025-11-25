@@ -60,14 +60,25 @@ public final class GDSRow: UIView, ContentView {
         return imageView
     }()
     
-    public lazy var verticalStack: UIStackView = {
+    private lazy var verticalStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 4
+        stack.spacing = 0
         stack.alignment = .leading
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
+    }()
+    
+    private lazy var divider: UIView = {
+        let divider = GDSDividerView(
+            viewModel: GDSDividerViewModel(
+                height: 0.5,
+                colour: .separator
+            )
+        )
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        return divider
     }()
     
     public init(viewModel: GDSRowViewModel) {
@@ -82,8 +93,6 @@ public final class GDSRow: UIView, ContentView {
     }
     
     private func setupView() {
-//        backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
-//        layer.cornerRadius = 8
         clipsToBounds = true
         
         if let image = viewModel.image {
@@ -111,8 +120,11 @@ public final class GDSRow: UIView, ContentView {
             subtitleLabel.text = subtitle
             verticalStack.addArrangedSubview(subtitleLabel)
         }
+        
+        addSubview(divider)
     }
     
+    // swiftlint:disable:next function_body_length
     private func setupConstraints() {
         let hasImage = viewModel.image != nil
         let hasDetail = viewModel.detail != nil
@@ -138,20 +150,20 @@ public final class GDSRow: UIView, ContentView {
                 imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
                 imageView.widthAnchor.constraint(equalToConstant: 42),
                 imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
-                verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8)
+                verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12)
             ])
         }
         
         if hasDetail {
             NSLayoutConstraint.activate([
-                verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor, constant: -8),
+                verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor),
                 detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
             
             if hasIcon {
                 NSLayoutConstraint.activate([
-                    iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 8),
+                    iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 16),
                     iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
                 ])
             }
@@ -164,14 +176,23 @@ public final class GDSRow: UIView, ContentView {
         
         NSLayoutConstraint.activate([
             heightAnchor.constraint(greaterThanOrEqualToConstant: minRowHeight),
-            leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
             // Vertical stack constraints
             verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
             verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
             verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            // Divider constraints
+            divider.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: trailingAnchor),
+            divider.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
+    
+    public func removeDivider() {
+            divider.removeFromSuperview()
+        }
 }

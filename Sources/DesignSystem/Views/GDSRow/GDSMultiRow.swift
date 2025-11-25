@@ -6,7 +6,7 @@ public final class GDSMultiRow: UIView, ContentView {
     private lazy var verticalStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.alignment = .leading
+        stack.alignment = .fill
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -41,12 +41,8 @@ public final class GDSMultiRow: UIView, ContentView {
             let rowView = GDSRow(viewModel: row)
             verticalStack.addArrangedSubview(rowView)
             
-            if index < viewModel.rows.count - 1 {
-                let divider = UIView()
-                divider.backgroundColor = DesignSystem.Color.Dividers.default
-                divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-//                divider.leadingAnchor.constraint(equalTo: rowView.verticalStack.leadingAnchor).isActive = true
-                verticalStack.addArrangedSubview(divider)
+            if index == viewModel.rows.count - 1 {
+                rowView.removeDivider()
             }
         }
     }

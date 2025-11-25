@@ -13,7 +13,7 @@ public struct GDSMultiRowViewModel: ContentViewModel {
     
     public init(
         rows: [GDSRowViewModel] = [GDSRowViewModel(), GDSRowViewModel()],
-        backgroundColor: UIColor = .lightGray.withAlphaComponent(0.2),
+        backgroundColor: UIColor = .secondarySystemBackground,
         cornerRadius: CGFloat = 8,
         verticalPadding: VerticalPadding? = nil,
         horizontalPadding: HorizontalPadding? = nil
