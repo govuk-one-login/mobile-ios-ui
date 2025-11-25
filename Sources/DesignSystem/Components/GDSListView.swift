@@ -121,7 +121,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                 
                 row.isAccessibilityElement = true
                 let summaryLabel = GDSLocalisedString(
-                    stringKey: "NumberedList",
+                    stringKey: "Numbered List",
                     String(viewModel.items.count),
                     bundle: .module
                 )
@@ -130,7 +130,7 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                     bundle: .module
                 )
                 let listLabel = "\(number), \(item.value)"
-                row.accessibilityLabel = indexIncremented == 0 ? "\(summaryLabel.value) \(listLabel)" : listLabel
+                row.accessibilityLabel = indexIncremented == 1 ? "\(summaryLabel.value) \(listLabel)" : listLabel
                 row.accessibilityIdentifier = "numbered-list-row-stack-view-\(indexIncremented)"
                 return row
             }
@@ -161,11 +161,15 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
             
             row.isAccessibilityElement = true
             let summaryLabel = GDSLocalisedString(
-                stringKey: "BulletedList",
+                stringKey: "Bulleted List",
                 String(viewModel.items.count),
                 bundle: .module
             )
-            let listLabel = item.value
+            let number = NSLocalizedString(
+                key: String(index + 1),
+                bundle: .module
+            )
+            let listLabel = "\(number), \(item.value)"
             row.accessibilityLabel = index == 0
             ? "\(summaryLabel) \(listLabel)"
             : listLabel

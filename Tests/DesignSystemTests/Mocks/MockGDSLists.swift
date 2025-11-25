@@ -16,13 +16,13 @@ struct MockNumberedListViewModel: GDSListViewModel {
         title: GDSLocalisedString? = "Test numbered list view",
         titleConfig: TitleConfig? = (font: DesignSystem.Font.Base.headline, isHeader: true),
         items: [GDSLocalisedString] = [
-            "first numbered list element",
+            "first numbered list item",
             GDSLocalisedString(
-                stringLiteral: "second numbered list element",
-                stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.body])]
+                stringLiteral: "second numbered list item",
+                stringAttributes: [("list item", [.font: DesignSystem.Font.Base.bodyBold])]
             ),
-            "third numbered list element",
-            "fourth numbered list element"
+            "third numbered list item",
+            "fourth numbered list item"
         ]
     ) {
         self.title = title
@@ -50,13 +50,13 @@ struct MockBulletedListViewModel: GDSListViewModel {
         title: GDSLocalisedString? = "Test bulleted list view",
         titleConfig: TitleConfig? = (font: DesignSystem.Font.Base.headline, isHeader: true),
         items: [GDSLocalisedString] = [
-            "first bulleted list element",
+            "first bulleted list item",
             GDSLocalisedString(
-                stringLiteral: "second bulleted list element",
-                stringAttributes: [("bulleted list", [.font: DesignSystem.Font.Base.body])]
+                stringLiteral: "second bulleted list item",
+                stringAttributes: [("list item", [.font: DesignSystem.Font.Base.bodyBold])]
             ),
-            "third bulleted list element",
-            "fourth bulleted list element"
+            "third bulleted list item",
+            "fourth bulleted list item"
         ]
     ) {
         self.title = title
