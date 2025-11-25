@@ -60,7 +60,7 @@ public final class GDSRow: UIView, ContentView {
         return imageView
     }()
     
-    private lazy var verticalStack: UIStackView = {
+    public lazy var verticalStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 4
@@ -82,8 +82,8 @@ public final class GDSRow: UIView, ContentView {
     }
     
     private func setupView() {
-        backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
-        layer.cornerRadius = 8
+//        backgroundColor = UIColor.lightGray.withAlphaComponent(0.2)
+//        layer.cornerRadius = 8
         clipsToBounds = true
         
         if let image = viewModel.image {
@@ -117,7 +117,10 @@ public final class GDSRow: UIView, ContentView {
         let hasImage = viewModel.image != nil
         let hasDetail = viewModel.detail != nil
         let hasIcon = viewModel.icon != nil
-                
+        
+        let verticalPadding = viewModel.verticalPaddingValue
+        let minRowHeight = viewModel.type.minRowHeight
+        
         let leadingView: UIView = {
             hasImage ? imageView : verticalStack
         }()
@@ -131,8 +134,8 @@ public final class GDSRow: UIView, ContentView {
             
             NSLayoutConstraint.activate([
                 imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
-                imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+                imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
+                imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
                 imageView.widthAnchor.constraint(equalToConstant: 42),
                 imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
                 verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8)
@@ -160,11 +163,12 @@ public final class GDSRow: UIView, ContentView {
         }
         
         NSLayoutConstraint.activate([
+            heightAnchor.constraint(greaterThanOrEqualToConstant: minRowHeight),
             leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             
             // Vertical stack constraints
-            verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 8),
-            verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -8),
+            verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
+            verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
             verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
