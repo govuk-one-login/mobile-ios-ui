@@ -12,9 +12,9 @@ public struct GDSMultiRowViewModel: ContentViewModel {
     public var horizontalPadding: HorizontalPadding?
     
     public init(
-        rows: [GDSRowViewModel] = [GDSRowViewModel(), GDSRowViewModel()],
+        rows: [GDSRowViewModel] = [],
         backgroundColor: UIColor = .secondarySystemBackground,
-        cornerRadius: CGFloat = 8,
+        cornerRadius: CGFloat = DesignSystem.CornerRadius.row,
         verticalPadding: VerticalPadding? = nil,
         horizontalPadding: HorizontalPadding? = nil
     ) {

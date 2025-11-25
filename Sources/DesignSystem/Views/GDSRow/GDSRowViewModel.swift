@@ -6,9 +6,15 @@ public struct GDSRowViewModel: ContentViewModel {
     var title: String
     var titleFont: UIFont?
     var subtitle: String?
+    var subtitleFont: UIFont?
+    var subtitleColour: UIColor?
     var detail: String?
+    var detailFont: UIFont?
+    var detailColour: UIColor?
     var image: String?
     var icon: String?
+    var iconFont: UIFont?
+    var iconColour: UIColor?
     var type: RowType
     
     public var verticalPadding: VerticalPadding?
@@ -19,30 +25,38 @@ public struct GDSRowViewModel: ContentViewModel {
     }
         
     public init(
-        title: String = "HM Armed Forces Veteran Card",
-        titleFont: UIFont? = nil,
-        subtitle: String? =
-//        nil,
-        "Inactive since 30 October 2025",
-        detail: String? =
-//        nil,
-        "14",
-        image: String? =
-//        nil,
-        "exampleImage",
-        icon: String? =
-//        nil,
-        "arrow.up.right",
-        type: RowType = .regular,
+        title: String,
+        titleFont: UIFont? = DesignSystem.Font.Base.body,
+        titleColour: UIColor? = .label,
+        subtitle: String? = nil,
+        subtitleFont: UIFont? = nil,
+        subtitleColour: UIColor? = nil,
+        detail: String? = nil,
+        detailFont: UIFont? = DesignSystem.Font.Base.body,
+        detailColour: UIColor? = .secondaryLabel,
+        image: String? = nil,
+        icon: String? = nil,
+        iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
+        iconColour: UIColor? = .tertiaryLabel,
+        type: RowType = .tall,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
+        let defaultSubtitleFont = type.subtitleFont
+        let defaultSubtitleColour = type.subtitleColour
+        
         self.title = title
         self.titleFont = titleFont
         self.subtitle = subtitle
+        self.subtitleFont = subtitleFont ?? defaultSubtitleFont
+        self.subtitleColour = subtitleColour ?? defaultSubtitleColour
         self.detail = detail
+        self.detailFont = detailFont
+        self.detailColour = detailColour
         self.image = image
         self.icon = icon
+        self.iconFont = iconFont
+        self.iconColour = iconColour
         self.type = type
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
@@ -60,6 +74,24 @@ public enum RowType {
             44
         case .tall:
             60
+        }
+    }
+    
+    public var subtitleFont: UIFont {
+        switch self {
+        case .regular:
+            DesignSystem.Font.Base.footnote
+        case .tall:
+            DesignSystem.Font.Base.subheadline
+        }
+    }
+    
+    public var subtitleColour: UIColor {
+        switch self {
+        case .regular:
+                .label
+        case .tall:
+                .secondaryLabel
         }
     }
     

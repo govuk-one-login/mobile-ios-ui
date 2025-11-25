@@ -13,7 +13,7 @@ public final class GDSRow: UIView, ContentView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = viewModel.title
-        label.font = DesignSystem.Font.Base.body
+        label.font = viewModel.titleFont
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -25,7 +25,8 @@ public final class GDSRow: UIView, ContentView {
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = DesignSystem.Font.Base.footnote
+        label.font = viewModel.subtitleFont
+        label.textColor = viewModel.subtitleColour
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -37,8 +38,8 @@ public final class GDSRow: UIView, ContentView {
     
     private lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.font = DesignSystem.Font.Base.body
-        label.textColor = .tertiaryLabel
+        label.font = viewModel.detailFont
+        label.textColor = viewModel.detailColour
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -51,7 +52,7 @@ public final class GDSRow: UIView, ContentView {
     
     private lazy var iconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .tertiaryLabel
+        imageView.tintColor = viewModel.iconColour
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -107,8 +108,8 @@ public final class GDSRow: UIView, ContentView {
             addSubview(detailLabel)
         }
         
-        if let icon = viewModel.icon {
-            let config = UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.bodySemiBold)
+        if let icon = viewModel.icon, let iconFont = viewModel.iconFont {
+            let config = UIImage.SymbolConfiguration(font: iconFont)
             iconView.image = UIImage(systemName: icon, withConfiguration: config)?
                 .withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
             addSubview(iconView)
@@ -142,7 +143,7 @@ public final class GDSRow: UIView, ContentView {
         }()
         
         if hasImage {
-            let imageRatio = (imageView.image?.size.width ?? 1) / (imageView.image?.size.height ?? 1)
+            let imageRatio = (imageView.image?.size.height ?? 1) / (imageView.image?.size.width ?? 1)
             
             NSLayoutConstraint.activate([
                 imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -156,14 +157,14 @@ public final class GDSRow: UIView, ContentView {
         
         if hasDetail {
             NSLayoutConstraint.activate([
-                verticalStack.trailingAnchor.constraint(lessThanOrEqualTo: detailLabel.leadingAnchor),
+                verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor),
                 detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
             
             if hasIcon {
                 NSLayoutConstraint.activate([
-                    iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: 16),
+                    iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: DesignSystem.Spacing.default),
                     iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
                 ])
             }
@@ -176,7 +177,7 @@ public final class GDSRow: UIView, ContentView {
         
         NSLayoutConstraint.activate([
             heightAnchor.constraint(greaterThanOrEqualToConstant: minRowHeight),
-            leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            leadingView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DesignSystem.Spacing.default),
             
             // Vertical stack constraints
             verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
@@ -188,7 +189,7 @@ public final class GDSRow: UIView, ContentView {
             divider.trailingAnchor.constraint(equalTo: trailingAnchor),
             divider.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DesignSystem.Spacing.default)
         ])
     }
     
