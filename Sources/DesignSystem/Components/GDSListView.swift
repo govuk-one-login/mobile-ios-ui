@@ -155,9 +155,12 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
                 views: [bullet, textLabel],
                 axis: .horizontal,
                 spacing: 20,
-                alignment: .top,
+                alignment: .center,
                 distribution: .fill
             )
+        
+            row.layoutMargins.left = 10
+            row.isLayoutMarginsRelativeArrangement = true
             
             row.isAccessibilityElement = true
             let summaryLabel = GDSLocalisedString(
