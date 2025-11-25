@@ -1,9 +1,7 @@
 import UIKit
 
-public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView {
-    public typealias ViewType = ViewModel
-    
-    public let viewModel: ViewModel
+public final class GDSListView: UIView, ContentView {
+    public let viewModel: GDSListViewModel
     
     private lazy var containerStackView: UIStackView = {
         let result = UIStackView(
@@ -60,10 +58,35 @@ public final class GDSListView<ViewModel: GDSListViewModel>: UIView, ContentView
             .max() ?? 0
     }
     
-    public required init(viewModel: ViewModel) {
+    public required init(viewModel: GDSListViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
+        
+        NotificationCenter
+            .default
+            .addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
+                Task { @MainActor in
+                    guard let self else { return }
+                    
+                    
+                    self.listStackView.arrangedSubviews.forEach {
+                        self.listStackView.removeArrangedSubview($0)
+                        $0.removeFromSuperview()
+                    }
+                    
+                    let newRows = self.makeRows()
+                    
+                    newRows.forEach { self.listStackView.addArrangedSubview($0) }
+                    
+                    self.listStackView.layoutIfNeeded()
+                    self.listStackView.setNeedsLayout()
+                }
+            }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @available(*, unavailable)

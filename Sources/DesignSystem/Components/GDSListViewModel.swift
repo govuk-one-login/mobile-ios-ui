@@ -17,15 +17,8 @@ public enum ListStyle {
 }
 
 @MainActor
-public protocol GDSListViewModel: ContentViewModel {
-    var title: GDSLocalisedString? { get }
-    var titleConfig: TitleConfig? { get }
-    var items: [GDSLocalisedString] { get }
-    var style: ListStyle { get }
-}
-
-public struct DefaultGDSListViewModel: GDSListViewModel {
-    public typealias ViewType = GDSListView<DefaultGDSListViewModel>
+public struct GDSListViewModel: ContentViewModel {
+    public typealias ViewType = GDSListView
         
     public var title: GDSLocalisedString?
     public var titleConfig: TitleConfig?

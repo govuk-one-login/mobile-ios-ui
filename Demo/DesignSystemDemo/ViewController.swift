@@ -11,114 +11,132 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
-//                GDSCardViewModel(
-//                    showShadow: true,
-//                    dismissAction: .action({ })
-//                ) {
-//                    GDSCardImageViewModel(
-//                        image: UIImage(named: "placeholder") ?? UIImage(),
-//                        contentMode: .scaleAspectFit
-//                    )
-//                    GDSCardTextViewModel(
-//                        title: GDSLocalisedString(
-//                            stringLiteral: "Here is the caption for the picture",
-//                            stringAttributes: [("Here is the caption for the picture",
-//                                                [.foregroundColor: DesignSystem.Color.Icons.success])]
-//                        ),
-//                        verticalPadding: .vertical(8)
-//                    )
-//                    GDSCardTextViewModel(
-//                        title: "A title for the component for a quick introduction",
-//                        titleFont: DesignSystem.Font.Base.title1Bold,
-//                        verticalPadding: .bottom(8)
-//                    )
-//                    GDSCardTextViewModel(
-//                        title: "A subtitle for the componenet which can be used to describe it's purpose",
-//                        verticalPadding: .bottom(8)
-//                    )
-//                    GDSCardDividerViewModel(
-//                        verticalPadding: .bottom(8)
-//                    )
-//                    GDSButtonViewModel(
-//                        title: "Secondary Button",
-//                        style: .secondary,
-//                        buttonAction: .action({ }),
-//                        verticalPadding: .bottom(8),
-//                        horizontalPadding: .horizontal(16)
-//                    )
-//                    GDSButtonViewModel(
-//                        title: "Primary Button",
-//                        style: .primary,
-//                        buttonAction: .action({ }),
-//                        verticalPadding: .bottom(16),
-//                        horizontalPadding: .horizontal(16)
-//                    )
-//                },
-//                GDSCardViewModel(
-//                    showShadow: true,
-//                    dismissAction: .action({ })
-//                ) {
-//                    GDSCardTitleViewModel(
-//                        title: "A title for the component",
-//                        verticalPadding: .bottom(8),
-//                        horizontalPadding: .leading(16)
-//                    )
-//                    GDSCardTextViewModel(
-//                        title: "A subtitle for the componenet which can be used to describe it's purpose",
-//                        verticalPadding: .bottom(8)
-//                    )
-//                    GDSCardDividerViewModel(
-//                        verticalPadding: .bottom(8)
-//                    )
-//                    GDSButtonViewModel(
-//                        title: "Secondary Button",
-//                        icon: .arrowUpRight,
-//                        style: .secondary.adjusting(
-//                            alignment: .leading,
-//                            contentInsets: NSDirectionalEdgeInsets(
-//                                top: DesignSystem.Spacing.small,
-//                                leading: .zero,
-//                                bottom: DesignSystem.Spacing.small,
-//                                trailing: DesignSystem.Spacing.default
-//                            )
-//                        ),
-//                        buttonAction: .action({ }),
-//                        verticalPadding: .bottom(8),
-//                        horizontalPadding: .horizontal(16)
-//                    )
-//                },
-                DefaultGDSListViewModel(
+                //                GDSCardViewModel(
+                //                    showShadow: true,
+                //                    dismissAction: .action({ })
+                //                ) {
+                //                    GDSCardImageViewModel(
+                //                        image: UIImage(named: "placeholder") ?? UIImage(),
+                //                        contentMode: .scaleAspectFit
+                //                    )
+                //                    GDSCardTextViewModel(
+                //                        title: GDSLocalisedString(
+                //                            stringLiteral: "Here is the caption for the picture",
+                //                            stringAttributes: [("Here is the caption for the picture",
+                //                                                [.foregroundColor: DesignSystem.Color.Icons.success])]
+                //                        ),
+                //                        verticalPadding: .vertical(8)
+                //                    )
+                //                    GDSCardTextViewModel(
+                //                        title: "A title for the component for a quick introduction",
+                //                        titleFont: DesignSystem.Font.Base.title1Bold,
+                //                        verticalPadding: .bottom(8)
+                //                    )
+                //                    GDSCardTextViewModel(
+                //                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                //                        verticalPadding: .bottom(8)
+                //                    )
+                //                    GDSCardDividerViewModel(
+                //                        verticalPadding: .bottom(8)
+                //                    )
+                //                    GDSButtonViewModel(
+                //                        title: "Secondary Button",
+                //                        style: .secondary,
+                //                        buttonAction: .action({ }),
+                //                        verticalPadding: .bottom(8),
+                //                        horizontalPadding: .horizontal(16)
+                //                    )
+                //                    GDSButtonViewModel(
+                //                        title: "Primary Button",
+                //                        style: .primary,
+                //                        buttonAction: .action({ }),
+                //                        verticalPadding: .bottom(16),
+                //                        horizontalPadding: .horizontal(16)
+                //                    )
+                //                },
+                //                GDSCardViewModel(
+                //                    showShadow: true,
+                //                    dismissAction: .action({ })
+                //                ) {
+                //                    GDSCardTitleViewModel(
+                //                        title: "A title for the component",
+                //                        verticalPadding: .bottom(8),
+                //                        horizontalPadding: .leading(16)
+                //                    )
+                //                    GDSCardTextViewModel(
+                //                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                //                        verticalPadding: .bottom(8)
+                //                    )
+                //                    GDSCardDividerViewModel(
+                //                        verticalPadding: .bottom(8)
+                //                    )
+                //                    GDSButtonViewModel(
+                //                        title: "Secondary Button",
+                //                        icon: .arrowUpRight,
+                //                        style: .secondary.adjusting(
+                //                            alignment: .leading,
+                //                            contentInsets: NSDirectionalEdgeInsets(
+                //                                top: DesignSystem.Spacing.small,
+                //                                leading: .zero,
+                //                                bottom: DesignSystem.Spacing.small,
+                //                                trailing: DesignSystem.Spacing.default
+                //                            )
+                //                        ),
+                //                        buttonAction: .action({ }),
+                //                        verticalPadding: .bottom(8),
+                //                        horizontalPadding: .horizontal(16)
+                //                    )
+                //                },
+                GDSListViewModel(
                     title: "Numbered List",
                     titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
                         "Item 1",
                         GDSLocalisedString(
-                            stringLiteral: "This is bold, this is not",
+                            stringKey: "This is bold, this is not",
                             stringAttributes: [("This is bold",
-                                                [.font: DesignSystem.Font.Base.bodyBold])]
+                                                [.font: UIFont(.body, weight: .bold)])]
                         ),
+                        "Item 2",
                         "Item 3"
                     ],
                     style: .numbered
                 ),
-                DefaultGDSListViewModel(
+                GDSListViewModel(
                     title: "Bulleted List",
                     titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
                         "Item 1",
-                        "Item 2",
+                        GDSLocalisedString(
+                            stringKey: "second numbered list item",
+                            stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
                         "Item 3"
                     ],
                     style: .bulleted
                 ),
-                DefaultGDSListViewModel(
+                GDSListViewModel(
                     items: [
-                        "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
+                        GDSLocalisedString(
+                            stringKey: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
+                            stringAttributes: [("wrap!", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
                         "Item 2",
                         "Item 3"
                     ],
                     style: .numbered
-                )
+                ),
+                GDSListViewModel(
+                    items: [
+                        "Item 1",
+                        GDSLocalisedString(
+                            stringKey: "second bulleted list item",
+                            stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
+                        "Item 3"
+                    ],
+                    style: .bulleted
+                ),
             ],
             moveableFooter: [],
             footer: []
