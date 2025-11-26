@@ -9,7 +9,7 @@ public final class GDSListView: UIView, ContentView {
                 titleLabel,
                 listStackView
             ],
-            spacing: 12,
+            spacing: DesignSystem.Spacing.Explicit.twelve,
             distribution: .fillProportionally
         )
         return result
@@ -37,7 +37,7 @@ public final class GDSListView: UIView, ContentView {
     private lazy var listStackView: UIStackView = {
         let result = UIStackView(
             views: makeRows(),
-            spacing: 8,
+            spacing: DesignSystem.Spacing.small,
             distribution: .fillProportionally
         )
         result.isLayoutMarginsRelativeArrangement = true
@@ -62,30 +62,39 @@ public final class GDSListView: UIView, ContentView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
-        
         NotificationCenter
             .default
             .addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
                 Task { @MainActor in
-                    self?.listStackView.arrangedSubviews.forEach {
-                        self?.listStackView.removeArrangedSubview($0)
-                        $0.removeFromSuperview()
-                    }
-                    
-                    let newRows = self?.makeRows()
-                    
-                    newRows?.forEach { self?.listStackView.addArrangedSubview($0) }
-                    self?.listStackView.layoutIfNeeded()
-                    self?.listStackView.setNeedsLayout()
+                    self?.reloadListView()
                 }
             }
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError() }
     
     deinit {
         NotificationCenter.default.removeObserver(UIContentSizeCategory.didChangeNotification)
+    }
+    
+    private func reloadListView() {
+        debugPrint("reloadListView")
+        self.listStackView.arrangedSubviews.forEach {
+            //            self.listStackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+        
+        let newRows = self.makeRows()
+        
+        newRows.forEach {
+            self.listStackView.addArrangedSubview($0)
+        }
+        self.listStackView.layer.setNeedsLayout()
+        self.listStackView.setNeedsLayout()
+        self.listStackView.layoutIfNeeded()
+        self.listStackView.setNeedsDisplay()
+        
     }
     
     private func setup() {
@@ -133,7 +142,7 @@ public final class GDSListView: UIView, ContentView {
                 let row = UIStackView(
                     views: [numberLabel, textLabel],
                     axis: .horizontal,
-                    spacing: 20,
+                    spacing: DesignSystem.Spacing.Explicit.twenty,
                     alignment: .top,
                     distribution: .fill
                 )
@@ -173,12 +182,12 @@ public final class GDSListView: UIView, ContentView {
             let row = UIStackView(
                 views: [bullet, textLabel],
                 axis: .horizontal,
-                spacing: 20,
+                spacing: DesignSystem.Spacing.Explicit.twenty,
                 alignment: .center,
                 distribution: .fill
             )
         
-            row.layoutMargins.left = 10
+            row.layoutMargins.left = DesignSystem.Spacing.Explicit.ten
             row.isLayoutMarginsRelativeArrangement = true
             
             row.isAccessibilityElement = true

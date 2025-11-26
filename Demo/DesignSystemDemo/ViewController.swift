@@ -1,4 +1,5 @@
 @_spi(unstable) import DesignSystem
+import Foundation
 import UIKit
 
 public struct TestViewControllerViewModel: ScreenViewModel {
@@ -32,7 +33,7 @@ class ViewController: UIViewController {
                     items: [
                         "Item 1",
                         GDSLocalisedString(
-                            stringKey: "second numbered list item",
+                            stringLiteral: "second numbered list item",
                             stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
                         ),
                         "Item 3"
@@ -42,7 +43,7 @@ class ViewController: UIViewController {
                 GDSListViewModel(
                     items: [
                         GDSLocalisedString(
-                            stringKey: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
+                            stringLiteral: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
                             stringAttributes: [("wrap!", [.font: DesignSystem.Font.Base.bodyBold])]
                         ),
                         "Item 2",
