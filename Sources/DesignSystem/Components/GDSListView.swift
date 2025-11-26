@@ -79,9 +79,8 @@ public final class GDSListView: UIView, ContentView {
     }
     
     private func reloadListView() {
-        debugPrint("reloadListView")
         self.listStackView.arrangedSubviews.forEach {
-            //            self.listStackView.removeArrangedSubview($0)
+            self.listStackView.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         

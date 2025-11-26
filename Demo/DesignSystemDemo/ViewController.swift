@@ -29,7 +29,7 @@ class ViewController: UIViewController {
                 ),
                 GDSListViewModel(
                     title: "Bulleted List",
-                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
+                    titleConfig: (font: DesignSystem.Font.Base.body, isHeader: false),
                     items: [
                         "Item 1",
                         GDSLocalisedString(

@@ -21,7 +21,7 @@ struct GDSListViewTests {
         GDSListViewModel(
         title: GDSLocalisedString(stringKey: "Test bulleted list view"),
         titleConfig: TitleConfig(
-            font: DesignSystem.Font.Base.headline, isHeader: true),
+            font: DesignSystem.Font.Base.body, isHeader: false),
         items: [
             GDSLocalisedString(stringKey: "first bulleted list item"),
             GDSLocalisedString(stringKey: "second bulleted list item")],
@@ -97,10 +97,17 @@ struct GDSListViewTests {
         let sut = GDSListView(viewModel: bulletedListViewModel())
         let titleLabel: UILabel? = sut[child: "bulleted-list-title-label"]
         #expect(titleLabel?.text == "Test bulleted list view")
-        #expect(titleLabel?.font == DesignSystem.Font.Base.headline)
+        #expect(titleLabel?.font == DesignSystem.Font.Base.body)
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
         #expect(titleLabel?.textAlignment == .left)
         #expect(titleLabel?.numberOfLines == 0)
+    }
+    
+    @Test("Numbered list title has header accessibility trait")
+    func test_bulleted_title_headerTrait_false() throws {
+        let sut = GDSListView(viewModel: bulletedListViewModel())
+        let titleLabel: UILabel? = sut[child: "bulleted-list-title-label"]
+        #expect(titleLabel?.accessibilityTraits.contains(.header) == false)
     }
     
    @Test("Accessibility label for first row in numbered List")
