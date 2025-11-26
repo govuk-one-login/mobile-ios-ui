@@ -7,6 +7,13 @@ public final class GDSRow: UIView, ContentView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isAccessibilityElement = false
+        
+        if let altText = viewModel.imageAltText {
+            self.isAccessibilityElement = true
+            self.accessibilityLabel = altText
+        }
+        
         return imageView
     }()
     
@@ -14,6 +21,7 @@ public final class GDSRow: UIView, ContentView {
         let label = UILabel()
         label.text = viewModel.title
         label.font = viewModel.titleFont
+        label.textColor = viewModel.titleColour
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -68,6 +76,13 @@ public final class GDSRow: UIView, ContentView {
         stack.alignment = .leading
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.accessibilityLabel = {
+            let title = titleLabel.text ?? ""
+            if let subtitle = subtitleLabel.text {
+                return "\(title), \(subtitle)"
+            }
+            return title
+        }()
         return stack
     }()
     
@@ -158,7 +173,7 @@ public final class GDSRow: UIView, ContentView {
         if hasDetail {
             NSLayoutConstraint.activate([
                 verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor),
-                detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50),
+                detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 45),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
             

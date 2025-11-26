@@ -5,6 +5,7 @@ public struct GDSRowViewModel: ContentViewModel {
     
     var title: String
     var titleFont: UIFont?
+    var titleColour: UIColor?
     var subtitle: String?
     var subtitleFont: UIFont?
     var subtitleColour: UIColor?
@@ -12,6 +13,7 @@ public struct GDSRowViewModel: ContentViewModel {
     var detailFont: UIFont?
     var detailColour: UIColor?
     var image: String?
+    var imageAltText: String?
     var icon: String?
     var iconFont: UIFont?
     var iconColour: UIColor?
@@ -35,6 +37,7 @@ public struct GDSRowViewModel: ContentViewModel {
         detailFont: UIFont? = DesignSystem.Font.Base.body,
         detailColour: UIColor? = .secondaryLabel,
         image: String? = nil,
+        imageAltText: String? = nil,
         icon: String? = nil,
         iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
         iconColour: UIColor? = .tertiaryLabel,
@@ -47,6 +50,7 @@ public struct GDSRowViewModel: ContentViewModel {
         
         self.title = title
         self.titleFont = titleFont
+        self.titleColour = titleColour
         self.subtitle = subtitle
         self.subtitleFont = subtitleFont ?? defaultSubtitleFont
         self.subtitleColour = subtitleColour ?? defaultSubtitleColour
@@ -54,6 +58,7 @@ public struct GDSRowViewModel: ContentViewModel {
         self.detailFont = detailFont
         self.detailColour = detailColour
         self.image = image
+        self.imageAltText = imageAltText
         self.icon = icon
         self.iconFont = iconFont
         self.iconColour = iconColour
