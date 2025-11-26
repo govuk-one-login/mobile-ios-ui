@@ -17,6 +17,8 @@ public struct GDSRowViewModel: ContentViewModel {
     var icon: String?
     var iconFont: UIFont?
     var iconColour: UIColor?
+    var accessibilityTraits: UIAccessibilityTraits
+    var accessibilityHint: String?
     var type: RowType
     
     public var verticalPadding: VerticalPadding?
@@ -41,12 +43,15 @@ public struct GDSRowViewModel: ContentViewModel {
         icon: String? = nil,
         iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
         iconColour: UIColor? = .tertiaryLabel,
+        accessibilityTraits: UIAccessibilityTraits = [.button],
+        accessibilityHint: String? = nil,
         type: RowType = .tall,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
         let defaultSubtitleFont = type.subtitleFont
         let defaultSubtitleColour = type.subtitleColour
+        let openLinkHint = icon == "arrow.up.right" ? "Opens in web browser" : nil
         
         self.title = title
         self.titleFont = titleFont
@@ -62,6 +67,8 @@ public struct GDSRowViewModel: ContentViewModel {
         self.icon = icon
         self.iconFont = iconFont
         self.iconColour = iconColour
+        self.accessibilityTraits = accessibilityTraits
+        self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding

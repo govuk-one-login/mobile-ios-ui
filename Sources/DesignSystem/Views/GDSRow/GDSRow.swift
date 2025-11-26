@@ -9,11 +9,6 @@ public final class GDSRow: UIView, ContentView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isAccessibilityElement = false
         
-        if let altText = viewModel.imageAltText {
-            self.isAccessibilityElement = true
-            self.accessibilityLabel = altText
-        }
-        
         return imageView
     }()
     
@@ -76,13 +71,6 @@ public final class GDSRow: UIView, ContentView {
         stack.alignment = .leading
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.accessibilityLabel = {
-            let title = titleLabel.text ?? ""
-            if let subtitle = subtitleLabel.text {
-                return "\(title), \(subtitle)"
-            }
-            return title
-        }()
         return stack
     }()
     
@@ -102,6 +90,7 @@ public final class GDSRow: UIView, ContentView {
         super.init(frame: .zero)
         setupView()
         setupConstraints()
+        setupAccessibility()
     }
     
     required init?(coder: NSCoder) {
@@ -206,6 +195,19 @@ public final class GDSRow: UIView, ContentView {
             
             trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DesignSystem.Spacing.default)
         ])
+    }
+    
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = viewModel.accessibilityTraits
+        accessibilityHint = viewModel.accessibilityHint
+        
+        let image = viewModel.imageAltText ?? ""
+        let title = titleLabel.text ?? ""
+        let subtitle = viewModel.subtitle ?? ""
+        let detail = viewModel.detail ?? ""
+        
+        accessibilityLabel = " \(image), \(title), \(subtitle), \(detail)"
     }
     
     public func removeDivider() {

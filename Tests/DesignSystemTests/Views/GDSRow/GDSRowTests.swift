@@ -45,6 +45,7 @@ struct GDSRowTests {
         
         let verticalStack = try #require(sut.subviews[0] as? UIStackView)
         #expect(verticalStack.arrangedSubviews.count == 2)
+        #expect(verticalStack.accessibilityLabel == "\(expectedTitle), \(expectedSubtitle)")
         
         let subtitleLabel = try #require(verticalStack.arrangedSubviews[1] as? UILabel)
         #expect(subtitleLabel.text == expectedSubtitle)
