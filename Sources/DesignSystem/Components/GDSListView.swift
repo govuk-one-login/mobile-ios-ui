@@ -62,25 +62,13 @@ public final class GDSListView: UIView, ContentView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setup()
-        NotificationCenter
-            .default
-            .addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
-                Task { @MainActor in
-                    self?.reloadListView()
-                }
-            }
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError() }
     
-    deinit {
-        NotificationCenter.default.removeObserver(UIContentSizeCategory.didChangeNotification)
-    }
-    
     private func reloadListView() {
         self.listStackView.arrangedSubviews.forEach {
-            self.listStackView.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
         
@@ -89,11 +77,6 @@ public final class GDSListView: UIView, ContentView {
         newRows.forEach {
             self.listStackView.addArrangedSubview($0)
         }
-        self.listStackView.layer.setNeedsLayout()
-        self.listStackView.setNeedsLayout()
-        self.listStackView.layoutIfNeeded()
-        self.listStackView.setNeedsDisplay()
-        
     }
     
     private func setup() {
@@ -117,6 +100,7 @@ public final class GDSListView: UIView, ContentView {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.adjustsFontForContentSizeCategory = true
+        label.lineBreakMode = .byWordWrapping
         
         if let attributedString = item.attributedValue {
             label.attributedText = attributedString
@@ -124,6 +108,12 @@ public final class GDSListView: UIView, ContentView {
             label.text = item.value
         }
         return label
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        reloadListView()
     }
     
     private func createNumberedlist() -> [UIStackView] {
