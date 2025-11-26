@@ -67,30 +67,26 @@ public final class GDSListView: UIView, ContentView {
             .default
             .addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
                 Task { @MainActor in
-                    guard let self else { return }
-                    
-                    
-                    self.listStackView.arrangedSubviews.forEach {
-                        self.listStackView.removeArrangedSubview($0)
+                    self?.listStackView.arrangedSubviews.forEach {
+                        self?.listStackView.removeArrangedSubview($0)
                         $0.removeFromSuperview()
                     }
                     
-                    let newRows = self.makeRows()
+                    let newRows = self?.makeRows()
                     
-                    newRows.forEach { self.listStackView.addArrangedSubview($0) }
-                    
-                    self.listStackView.layoutIfNeeded()
-                    self.listStackView.setNeedsLayout()
+                    newRows?.forEach { self?.listStackView.addArrangedSubview($0) }
+                    self?.listStackView.layoutIfNeeded()
+                    self?.listStackView.setNeedsLayout()
                 }
             }
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError() }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(UIContentSizeCategory.didChangeNotification)
+    }
     
     private func setup() {
         backgroundColor = .systemBackground

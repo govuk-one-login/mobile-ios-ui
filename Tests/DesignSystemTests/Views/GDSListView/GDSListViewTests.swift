@@ -40,6 +40,13 @@ struct GDSListViewTests {
         #expect(titleLabel?.numberOfLines == 0)
     }
     
+    @Test("Numbered list title has header accessibility trait")
+    func test_numbered_title_headerTrait() throws {
+        let sut = GDSListView(viewModel: numberedListViewModel())
+        let titleLabel: UILabel? = sut[child: "numbered-list-title-label"]
+        #expect(titleLabel?.accessibilityTraits.contains(.header) == true)
+    }
+    
     @Test("Accessibility label for first row in numbered List")
     func test_numberedList_firstRow_accessibilityLabel() throws {
         let sut = GDSListView(viewModel: numberedListViewModel())
@@ -53,7 +60,6 @@ struct GDSListViewTests {
         let sut = GDSListView(viewModel: numberedListViewModel())
         let secondRow: UIStackView? = sut[child: "numbered-list-row-stack-view-2"]
         
-        // discrepancy between first and second rows whyyy???????!!!
         #expect(secondRow?.accessibilityLabel == "2, second numbered list item")
     }
     
@@ -72,6 +78,18 @@ struct GDSListViewTests {
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
     }
+    
+    @Test("Number labels all share the same width")
+    func test_numberLabels_equalWidths() throws {
+        let sut = GDSListView(viewModel: numberedListViewModel())
+        let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
+        let secondRow: UIStackView? = sut[child: "numbered-list-row-stack-view-2"]
+        let firstNumber = firstRow?.arrangedSubviews[0] as? UILabel
+        let secondNumber = secondRow?.arrangedSubviews[0] as? UILabel
+        
+        #expect(firstNumber?.frame.width == secondNumber?.frame.width)
+    }
+    
     
     // Bulleted List Tests
     @Test("Numbered list title is set correctly")
@@ -108,13 +126,12 @@ struct GDSListViewTests {
         let bullet = firstRow?.arrangedSubviews[0] as? UIImageView
         let label = firstRow?.arrangedSubviews[1] as? UILabel
         
-        #expect(bullet != nil)
+        #expect(bullet?.image != nil)
+        #expect(bullet?.contentHuggingPriority(for: .horizontal) == .required)
         #expect(label?.text == "first bulleted list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
         #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
     }
-    
-    // Additional tests to consider - header trait and partial bold text, notification observer?
 }
