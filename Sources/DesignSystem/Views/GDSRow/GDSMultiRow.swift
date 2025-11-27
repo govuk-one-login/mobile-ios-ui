@@ -27,13 +27,7 @@ public final class GDSMultiRow: UIView, ContentView {
         backgroundColor = viewModel.backgroundColor
         layer.cornerRadius = viewModel.cornerRadius
         addSubview(verticalStack)
-        
-        NSLayoutConstraint.activate([
-            verticalStack.topAnchor.constraint(equalTo: topAnchor),
-            verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor),
-            verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        verticalStack.bindToSuperviewEdges()
     }
     
     func applyRows() {
