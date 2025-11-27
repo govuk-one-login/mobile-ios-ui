@@ -18,7 +18,7 @@ public enum ListStyle {
 
 @MainActor
 public struct GDSListViewModel: ContentViewModel {
-    public typealias ViewType = GDSListView
+    public typealias ViewType = GDSList
         
     public var title: GDSLocalisedString?
     public var titleConfig: TitleConfig?
@@ -44,6 +44,6 @@ public struct GDSListViewModel: ContentViewModel {
     }
     
     public func createUIView() -> UIView {
-        GDSListView(viewModel: self)
+        GDSList(viewModel: self)
     }
 }

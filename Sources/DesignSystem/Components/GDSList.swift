@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSListView: UIView, ContentView {
+public final class GDSList: UIView, ContentView {
     public let viewModel: GDSListViewModel
     
     private lazy var containerStackView: UIStackView = {
@@ -9,7 +9,7 @@ public final class GDSListView: UIView, ContentView {
                 titleLabel,
                 listStackView
             ],
-            spacing: DesignSystem.Spacing.Explicit.twelve,
+            spacing: DesignSystem.Spacing.GDSList.betweenRows,
             distribution: .fillProportionally
         )
         return result
@@ -41,7 +41,7 @@ public final class GDSListView: UIView, ContentView {
             distribution: .fillProportionally
         )
         result.isLayoutMarginsRelativeArrangement = true
-        result.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        result.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin
         return result
     }()
     
@@ -131,7 +131,7 @@ public final class GDSListView: UIView, ContentView {
                 let row = UIStackView(
                     views: [numberLabel, textLabel],
                     axis: .horizontal,
-                    spacing: DesignSystem.Spacing.Explicit.twenty,
+                    spacing: DesignSystem.Spacing.GDSList.beforeLabel,
                     alignment: .top,
                     distribution: .fill
                 )
@@ -171,13 +171,10 @@ public final class GDSListView: UIView, ContentView {
             let row = UIStackView(
                 views: [bullet, textLabel],
                 axis: .horizontal,
-                spacing: DesignSystem.Spacing.Explicit.twenty,
+                spacing: DesignSystem.Spacing.GDSList.beforeLabel,
                 alignment: .center,
                 distribution: .fill
             )
-        
-            row.layoutMargins.left = DesignSystem.Spacing.Explicit.ten
-            row.isLayoutMarginsRelativeArrangement = true
             
             row.isAccessibilityElement = true
             let summaryLabel = GDSLocalisedString(
