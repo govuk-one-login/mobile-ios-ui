@@ -49,13 +49,13 @@ public final class GDSList: UIView, ContentView {
         : 0
     }
     
-    private let bulletImage: UIImage? = {
+    private var bulletImage: UIImage? {
         let fontMetrics = UIFontMetrics(forTextStyle: .body)
         let scaledSize = fontMetrics.scaledValue(for: 6)
         return UIImage(systemName: "circle.fill")?.withConfiguration(
             UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
         )
-    }()
+    }
     
     public required init(viewModel: GDSListViewModel) {
         self.viewModel = viewModel
@@ -109,9 +109,10 @@ public final class GDSList: UIView, ContentView {
             .map { index, item in
                 let rowNumber = index + 1
                 
-                let marker = viewModel.style == .numbered ? numberMarker(for: rowNumber) : bulletMarker()
+                let marker = viewModel.style == .numbered
+                ? numberMarker(for: rowNumber)
+                : bulletMarker()
                 let label = contentLabels(for: item)
-                
                 let row = createRow(marker: marker, label: label)
                 
                 let summaryLabel = GDSLocalisedString(
@@ -130,8 +131,8 @@ public final class GDSList: UIView, ContentView {
                 ? "\(summaryLabel) \(listLabel)"
                 : listLabel
                 
-                row.accessibilityIdentifier = viewModel.style == .numbered ?
-                "numbered-list-row-stack-view-\(rowNumber)"
+                row.accessibilityIdentifier = viewModel.style == .numbered
+                ? "numbered-list-row-stack-view-\(rowNumber)"
                 : "bulleted-list-row-stack-view-\(rowNumber)"
                 
                 return row
