@@ -2,18 +2,9 @@ import UIKit
 
 public typealias TitleConfig = (font: UIFont, isHeader: Bool)
 
-public enum ListStyle {
+public enum ListStyle: String {
     case numbered
     case bulleted
-    
-    var identifierPrefix: String {
-        switch self {
-        case .numbered:
-            return "numbered"
-        case .bulleted:
-            return "bulleted"
-        }
-    }
 }
 
 @MainActor

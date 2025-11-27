@@ -20,6 +20,7 @@ public final class GDSList: UIView, ContentView {
         if let title = viewModel.title {
             result.text = title.value
             result.font = viewModel.titleConfig?.font
+            result.textColor = DesignSystem.Color.GDSList.title
             result.adjustsFontForContentSizeCategory = true
             result.textAlignment = .left
             result.numberOfLines = 0
@@ -30,7 +31,7 @@ public final class GDSList: UIView, ContentView {
         } else {
             result.isHidden = true
         }
-        result.accessibilityIdentifier = "\(viewModel.style.identifierPrefix)-list-title-label"
+        result.accessibilityIdentifier = "\(viewModel.style.rawValue)-list-title-label"
         return result
     }()
     
@@ -46,6 +47,7 @@ public final class GDSList: UIView, ContentView {
     }()
     
     private var maxNumberWidth: CGFloat {
+        viewModel.style == .numbered ?
         viewModel.items.indices
             .map { index in
                 let number = UILabel()
@@ -56,6 +58,7 @@ public final class GDSList: UIView, ContentView {
             }
             .map(\UILabel.intrinsicContentSize.width)
             .max() ?? 0
+        : 0
     }
     
     public required init(viewModel: GDSListViewModel) {
@@ -97,6 +100,7 @@ public final class GDSList: UIView, ContentView {
     private func contentLabels(for item: GDSLocalisedString) -> UILabel {
         let label = UILabel()
         label.font = DesignSystem.Font.Base.body
+        label.textColor = DesignSystem.Color.GDSList.label
         label.numberOfLines = 0
         label.textAlignment = .left
         label.adjustsFontForContentSizeCategory = true
@@ -123,6 +127,7 @@ public final class GDSList: UIView, ContentView {
                 let numberLabel = UILabel()
                 numberLabel.text = "\(indexIncremented)."
                 numberLabel.font = DesignSystem.Font.Base.body
+                numberLabel.textColor = DesignSystem.Color.GDSList.marker
                 numberLabel.textAlignment = .right
                 numberLabel.adjustsFontForContentSizeCategory = true
                 numberLabel.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
@@ -162,7 +167,7 @@ public final class GDSList: UIView, ContentView {
         
         return viewModel.items.enumerated().map { index, item in
             let bullet = UIImageView(image: bulletSymbol)
-            bullet.tintColor = .label
+            bullet.tintColor = DesignSystem.Color.GDSList.marker
             bullet.setContentHuggingPriority(.required, for: .horizontal)
             bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
             
