@@ -15,18 +15,22 @@ public final class GDSList: UIView, ContentView {
         } else {
             result.isHidden = true
         }
-        result.accessibilityIdentifier = "\(viewModel.style.rawValue)-list-title-label"
+        result.accessibilityIdentifier = "list-title-label"
         return result
     }()
     
     private lazy var listStackView: UIStackView = {
-        let views = [titleLabel] + makeRows()
+        let views = list()
         let result = UIStackView(
             views: [],
             spacing: DesignSystem.Spacing.small,
             distribution: .fillProportionally
         )
+        result.addArrangedSubview(titleLabel)
         result.setCustomSpacing(DesignSystem.Spacing.GDSList.betweenRows, after: titleLabel)
+        views.forEach {
+            result.addArrangedSubview($0)
+        }
         return result
     }()
     
@@ -45,6 +49,14 @@ public final class GDSList: UIView, ContentView {
         : 0
     }
     
+    private let bulletImage: UIImage? = {
+        let fontMetrics = UIFontMetrics(forTextStyle: .body)
+        let scaledSize = fontMetrics.scaledValue(for: 6)
+        return UIImage(systemName: "circle.fill")?.withConfiguration(
+            UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
+        )
+    }()
+    
     public required init(viewModel: GDSListViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -59,7 +71,7 @@ public final class GDSList: UIView, ContentView {
             $0.removeFromSuperview()
         }
         
-        let newRows = self.makeRows()
+        let newRows = self.list()
         listStackView.addArrangedSubview(titleLabel)
         listStackView.setCustomSpacing(DesignSystem.Spacing.GDSList.betweenRows, after: titleLabel)
         newRows.forEach {
@@ -71,15 +83,6 @@ public final class GDSList: UIView, ContentView {
         backgroundColor = .systemBackground
         addSubview(listStackView)
         listStackView.bindToSuperviewEdges()
-    }
-    
-    private func makeRows() -> [UIStackView] {
-        switch viewModel.style {
-        case .numbered:
-            createNumberedlist()
-        case .bulleted:
-            createBulletedList()
-        }
     }
     
     private func contentLabels(for item: GDSLocalisedString) -> UILabel {
@@ -100,6 +103,58 @@ public final class GDSList: UIView, ContentView {
         reloadListView()
     }
     
+    private func list() -> [UIStackView] {
+        return viewModel.items
+            .enumerated()
+            .map { index, item in
+                let rowNumber = index + 1
+                
+                let marker = viewModel.style == .numbered ? numberMarker(for: rowNumber) : bulletMarker()
+                let label = contentLabels(for: item)
+                
+                let row = createRow(marker: marker, label: label)
+                
+                let summaryLabel = GDSLocalisedString(
+                    stringKey: viewModel.style == .numbered
+                    ? "Numbered List"
+                    : "Bulleted List",
+                    String(viewModel.items.count),
+                    bundle: .module
+                )
+                let number = NSLocalizedString(
+                    key: String(rowNumber),
+                    bundle: .module
+                )
+                let listLabel = "\(number), \(item.value)"
+                row.accessibilityLabel = index == 0
+                ? "\(summaryLabel) \(listLabel)"
+                : listLabel
+                
+                row.accessibilityIdentifier = viewModel.style == .numbered ?
+                "numbered-list-row-stack-view-\(rowNumber)"
+                : "bulleted-list-row-stack-view-\(rowNumber)"
+                
+                return row
+            }
+    }
+    
+    private func bulletMarker() -> UIView {
+        let bullet = UIImageView(image: bulletImage)
+        bullet.tintColor = DesignSystem.Color.GDSList.marker
+        bullet.setContentHuggingPriority(.required, for: .horizontal)
+        bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        return bullet
+    }
+    
+    private func numberMarker(for number: Int) -> UIView {
+        let marker = UILabel(colour: DesignSystem.Color.GDSList.marker)
+        marker.text = "\(number)."
+        marker.font = DesignSystem.Font.Base.body
+        marker.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
+        return marker
+    }
+    
     private func createRow(marker: UIView, label: UIView) -> UIStackView {
         let row = UIStackView(
             views: [marker, label],
@@ -114,74 +169,5 @@ public final class GDSList: UIView, ContentView {
         
         row.isAccessibilityElement = true
         return row
-    }
-    
-    private func createNumberedlist() -> [UIStackView] {
-        return viewModel.items
-            .enumerated()
-            .map { index, item in
-                let indexIncremented = index + 1
-                let marker = UILabel(colour: DesignSystem.Color.GDSList.marker)
-                marker.text = "\(indexIncremented)."
-                marker.font = DesignSystem.Font.Base.body
-                marker.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
-                
-                let label = contentLabels(for: item)
-                
-                let row = createRow(marker: marker, label: label)
-                
-                let summaryLabel = GDSLocalisedString(
-                    stringKey: "Numbered List",
-                    String(viewModel.items.count),
-                    bundle: .module
-                )
-                let number = NSLocalizedString(
-                    key: String(indexIncremented),
-                    bundle: .module
-                )
-                let listLabel = "\(number), \(item.value)"
-                row.accessibilityLabel = indexIncremented == 1 ? "\(summaryLabel.value) \(listLabel)" : listLabel
-                row.accessibilityIdentifier = "numbered-list-row-stack-view-\(indexIncremented)"
-                return row
-            }
-    }
-    
-    private func createBulletedList() -> [UIStackView] {
-        let fontMetrics = UIFontMetrics(forTextStyle: .body)
-        let scaledSize = fontMetrics.scaledValue(for: 6)
-        let bulletSymbol = UIImage(systemName: "circle.fill")?.withConfiguration(
-            UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
-        )
-        
-        return viewModel.items
-            .enumerated()
-            .map { index, item in
-            let bullet = UIImageView(image: bulletSymbol)
-            bullet.tintColor = DesignSystem.Color.GDSList.marker
-            bullet.setContentHuggingPriority(.required, for: .horizontal)
-            bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
-            
-            let label = contentLabels(for: item)
-
-            let row = createRow(marker: bullet, label: label)
-                
-            let summaryLabel = GDSLocalisedString(
-                stringKey: "Bulleted List",
-                String(viewModel.items.count),
-                bundle: .module
-            )
-            let number = NSLocalizedString(
-                key: String(index + 1),
-                bundle: .module
-            )
-            let listLabel = "\(number), \(item.value)"
-            row.accessibilityLabel = index == 0
-            ? "\(summaryLabel) \(listLabel)"
-            : listLabel
-            
-            row.accessibilityIdentifier = "bulleted-list-row-stack-view-\(index + 1)"
-            
-            return row
-        }
     }
 }

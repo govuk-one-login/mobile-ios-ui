@@ -3,7 +3,7 @@ import Testing
 import UIKit
 
 @MainActor
-struct GDSListViewTests {
+struct GDSListTests {
     
     private func numberedListViewModel() -> GDSListViewModel {
         GDSListViewModel(
@@ -32,7 +32,8 @@ struct GDSListViewTests {
     @Test("Numbered list title is set correctly")
     func test_numbered_title() throws {
         let sut = GDSList(viewModel: numberedListViewModel())
-        let titleLabel: UILabel? = sut[child: "numbered-list-title-label"]
+        dump(sut)
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
         #expect(titleLabel?.text == "Test numbered list view")
         #expect(titleLabel?.font == DesignSystem.Font.Base.headline)
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
@@ -43,7 +44,7 @@ struct GDSListViewTests {
     @Test("Numbered list title has header accessibility trait")
     func test_numbered_title_headerTrait() throws {
         let sut = GDSList(viewModel: numberedListViewModel())
-        let titleLabel: UILabel? = sut[child: "numbered-list-title-label"]
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
         #expect(titleLabel?.accessibilityTraits.contains(.header) == true)
     }
     
@@ -92,10 +93,10 @@ struct GDSListViewTests {
     
     
     // Bulleted List Tests
-    @Test("Numbered list title is set correctly")
+    @Test("Bulleted list title is set correctly")
     func test_bulleted_title() throws {
         let sut = GDSList(viewModel: bulletedListViewModel())
-        let titleLabel: UILabel? = sut[child: "bulleted-list-title-label"]
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
         #expect(titleLabel?.text == "Test bulleted list view")
         #expect(titleLabel?.font == DesignSystem.Font.Base.body)
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
@@ -103,14 +104,14 @@ struct GDSListViewTests {
         #expect(titleLabel?.numberOfLines == 0)
     }
     
-    @Test("Numbered list title has header accessibility trait")
+    @Test("Bulleted list title has header accessibility trait")
     func test_bulleted_title_headerTrait_false() throws {
         let sut = GDSList(viewModel: bulletedListViewModel())
-        let titleLabel: UILabel? = sut[child: "bulleted-list-title-label"]
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
         #expect(titleLabel?.accessibilityTraits.contains(.header) == false)
     }
     
-   @Test("Accessibility label for first row in numbered List")
+   @Test("Accessibility label for first row in Bulleted List")
     func test_bulletedList_firstRow_accessibilityLabel() throws {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
