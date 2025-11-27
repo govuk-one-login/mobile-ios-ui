@@ -21,6 +21,7 @@ public struct GDSRowViewModel: ContentViewModel {
     var accessibilityTraits: UIAccessibilityTraits
     var accessibilityHint: String?
     var type: RowType
+    var action: (() async -> Void)?
     
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
@@ -48,6 +49,7 @@ public struct GDSRowViewModel: ContentViewModel {
         accessibilityTraits: UIAccessibilityTraits = [.button],
         accessibilityHint: String? = nil,
         type: RowType = .tall,
+        action: (() async -> Void)? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -73,6 +75,7 @@ public struct GDSRowViewModel: ContentViewModel {
         self.accessibilityTraits = accessibilityTraits
         self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
+        self.action = action
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }

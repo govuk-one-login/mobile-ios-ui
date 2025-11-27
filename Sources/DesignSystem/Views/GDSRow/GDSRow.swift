@@ -82,6 +82,7 @@ public final class GDSRow: UIView, ContentView {
         setupView()
         setupConstraints()
         setupAccessibility()
+        setupActionIfNeeded()
     }
     
     required init?(coder: NSCoder) {
@@ -203,6 +204,23 @@ public final class GDSRow: UIView, ContentView {
         .compactMap { $0 != nil ? $0 : nil }
         
         accessibilityLabel = labels.joined(separator: ", ")
+    }
+    
+    private func setupActionIfNeeded() {
+        if viewModel.action != nil {
+            isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
+            self.addGestureRecognizer(tap)
+        } else {
+            accessibilityTraits.remove(.button)
+        }
+    }
+    
+    @MainActor
+    @objc private func didTap() {
+        Task {
+            await viewModel.action?()
+        }
     }
     
     public func removeDivider() {

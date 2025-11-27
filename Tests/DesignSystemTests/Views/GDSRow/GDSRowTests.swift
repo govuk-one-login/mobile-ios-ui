@@ -32,6 +32,7 @@ struct GDSRowTests {
         }))
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle)"))
+        #expect(sut.accessibilityTraits == [])
     }
     
     @Test("Initialise a Tall row with only title, subtitle and icon")
@@ -58,6 +59,7 @@ struct GDSRowTests {
         #expect(iconView.tintColor == .tertiaryLabel)
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle)"))
+        #expect(sut.accessibilityTraits == [])
     }
     
     @Test("Initialise a Tall row with image, title, subtitle, detail and icon")
@@ -96,6 +98,7 @@ struct GDSRowTests {
         }))
         
         #expect(sut.accessibilityLabel == ("\(expectedImageAltText), \(expectedTitle), \(expectedSubtitle), \(expectedDetail)"))
+        #expect(sut.accessibilityTraits == [])
     }
     
     @Test("Initialise a Regular row with only title, subtitle and icon")
@@ -103,13 +106,17 @@ struct GDSRowTests {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let expectedIconAltText = "icon alt text"
+        let action = {
+                _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
+            }
         let viewModel = GDSRowViewModel(
             title: expectedTitle,
             subtitle: expectedSubtitle,
             icon: "arrow.up.right",
             iconColour: .secondaryLabel,
             iconAltText: expectedIconAltText,
-            type: .regular
+            type: .regular,
+            action: action
         )
         let sut = viewModel.createUIView()
         
@@ -127,6 +134,6 @@ struct GDSRowTests {
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
         #expect(sut.accessibilityHint == ("Opens in web browser"))
-
+        #expect(sut.accessibilityTraits == [.button])
     }
 }
