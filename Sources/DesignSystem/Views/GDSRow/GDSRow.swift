@@ -13,43 +13,34 @@ public final class GDSRow: UIView, ContentView {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = viewModel.title
-        label.font = viewModel.titleFont
-        label.textColor = viewModel.titleColour
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        let label = UILabel(
+            text: viewModel.title,
+            font: viewModel.titleFont,
+            color: viewModel.titleColour
+        )
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = viewModel.subtitleFont
-        label.textColor = viewModel.subtitleColour
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        let label = UILabel(
+            font: viewModel.subtitleFont,
+            color: viewModel.subtitleColour
+        )
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var detailLabel: UILabel = {
-        let label = UILabel()
-        label.font = viewModel.detailFont
-        label.textColor = viewModel.detailColour
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .right
+        let label = UILabel(
+            font: viewModel.detailFont,
+            color: viewModel.detailColour,
+            alignment: .right
+        )
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
