@@ -3,27 +3,11 @@ import UIKit
 public final class GDSList: UIView, ContentView {
     public let viewModel: GDSListViewModel
     
-    private lazy var containerStackView: UIStackView = {
-        let result = UIStackView(
-            views: [
-                titleLabel,
-                listStackView
-            ],
-            spacing: DesignSystem.Spacing.GDSList.betweenRows,
-            distribution: .fillProportionally
-        )
-        return result
-    }()
-    
     private lazy var titleLabel: UILabel = {
-        let result = UILabel()
+        let result = UILabel(colour: DesignSystem.Color.GDSList.title)
         if let title = viewModel.title {
             result.text = title.value
             result.font = viewModel.titleConfig?.font
-            result.textColor = DesignSystem.Color.GDSList.title
-            result.adjustsFontForContentSizeCategory = true
-            result.textAlignment = .left
-            result.numberOfLines = 0
             if let isHeader = viewModel.titleConfig?.isHeader,
                isHeader {
                 result.accessibilityTraits = [.header]
@@ -36,13 +20,13 @@ public final class GDSList: UIView, ContentView {
     }()
     
     private lazy var listStackView: UIStackView = {
+        let views = [titleLabel] + makeRows()
         let result = UIStackView(
-            views: makeRows(),
+            views: [],
             spacing: DesignSystem.Spacing.small,
             distribution: .fillProportionally
         )
-        result.isLayoutMarginsRelativeArrangement = true
-        result.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin
+        result.setCustomSpacing(DesignSystem.Spacing.GDSList.betweenRows, after: titleLabel)
         return result
     }()
     
@@ -76,7 +60,8 @@ public final class GDSList: UIView, ContentView {
         }
         
         let newRows = self.makeRows()
-        
+        listStackView.addArrangedSubview(titleLabel)
+        listStackView.setCustomSpacing(DesignSystem.Spacing.GDSList.betweenRows, after: titleLabel)
         newRows.forEach {
             self.listStackView.addArrangedSubview($0)
         }
@@ -84,8 +69,8 @@ public final class GDSList: UIView, ContentView {
     
     private func setup() {
         backgroundColor = .systemBackground
-        addSubview(containerStackView)
-        containerStackView.bindToSuperviewEdges()
+        addSubview(listStackView)
+        listStackView.bindToSuperviewEdges()
     }
     
     private func makeRows() -> [UIStackView] {
@@ -98,13 +83,8 @@ public final class GDSList: UIView, ContentView {
     }
     
     private func contentLabels(for item: GDSLocalisedString) -> UILabel {
-        let label = UILabel()
+        let label = UILabel(colour: DesignSystem.Color.GDSList.label)
         label.font = DesignSystem.Font.Base.body
-        label.textColor = DesignSystem.Color.GDSList.label
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.adjustsFontForContentSizeCategory = true
-        label.lineBreakMode = .byWordWrapping
         
         if let attributedString = item.attributedValue {
             label.attributedText = attributedString
@@ -120,28 +100,36 @@ public final class GDSList: UIView, ContentView {
         reloadListView()
     }
     
+    private func createRow(marker: UIView, label: UIView) -> UIStackView {
+        let row = UIStackView(
+            views: [marker, label],
+            axis: .horizontal,
+            spacing: DesignSystem.Spacing.GDSList.beforeLabel,
+            alignment: viewModel.style == .numbered ? .top : .center,
+            distribution: .fill
+        )
+        
+        row.isLayoutMarginsRelativeArrangement = true
+        row.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin
+        
+        row.isAccessibilityElement = true
+        return row
+    }
+    
     private func createNumberedlist() -> [UIStackView] {
-        return viewModel.items.enumerated()
+        return viewModel.items
+            .enumerated()
             .map { index, item in
                 let indexIncremented = index + 1
-                let numberLabel = UILabel()
-                numberLabel.text = "\(indexIncremented)."
-                numberLabel.font = DesignSystem.Font.Base.body
-                numberLabel.textColor = DesignSystem.Color.GDSList.marker
-                numberLabel.textAlignment = .right
-                numberLabel.adjustsFontForContentSizeCategory = true
-                numberLabel.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
+                let marker = UILabel(colour: DesignSystem.Color.GDSList.marker)
+                marker.text = "\(indexIncremented)."
+                marker.font = DesignSystem.Font.Base.body
+                marker.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
                 
-                let textLabel = contentLabels(for: item)
-                let row = UIStackView(
-                    views: [numberLabel, textLabel],
-                    axis: .horizontal,
-                    spacing: DesignSystem.Spacing.GDSList.beforeLabel,
-                    alignment: .top,
-                    distribution: .fill
-                )
+                let label = contentLabels(for: item)
                 
-                row.isAccessibilityElement = true
+                let row = createRow(marker: marker, label: label)
+                
                 let summaryLabel = GDSLocalisedString(
                     stringKey: "Numbered List",
                     String(viewModel.items.count),
@@ -165,23 +153,18 @@ public final class GDSList: UIView, ContentView {
             UIImage.SymbolConfiguration(pointSize: scaledSize, weight: .semibold)
         )
         
-        return viewModel.items.enumerated().map { index, item in
+        return viewModel.items
+            .enumerated()
+            .map { index, item in
             let bullet = UIImageView(image: bulletSymbol)
             bullet.tintColor = DesignSystem.Color.GDSList.marker
             bullet.setContentHuggingPriority(.required, for: .horizontal)
             bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
             
-            
-            let textLabel = contentLabels(for: item)
-            let row = UIStackView(
-                views: [bullet, textLabel],
-                axis: .horizontal,
-                spacing: DesignSystem.Spacing.GDSList.beforeLabel,
-                alignment: .center,
-                distribution: .fill
-            )
-            
-            row.isAccessibilityElement = true
+            let label = contentLabels(for: item)
+
+            let row = createRow(marker: bullet, label: label)
+                
             let summaryLabel = GDSLocalisedString(
                 stringKey: "Bulleted List",
                 String(viewModel.items.count),
