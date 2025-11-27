@@ -17,6 +17,7 @@ public struct GDSRowViewModel: ContentViewModel {
     var icon: String?
     var iconFont: UIFont?
     var iconColour: UIColor?
+    var iconAltText: String?
     var accessibilityTraits: UIAccessibilityTraits
     var accessibilityHint: String?
     var type: RowType
@@ -43,6 +44,7 @@ public struct GDSRowViewModel: ContentViewModel {
         icon: String? = nil,
         iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
         iconColour: UIColor? = .tertiaryLabel,
+        iconAltText: String? = nil,
         accessibilityTraits: UIAccessibilityTraits = [.button],
         accessibilityHint: String? = nil,
         type: RowType = .tall,
@@ -67,6 +69,7 @@ public struct GDSRowViewModel: ContentViewModel {
         self.icon = icon
         self.iconFont = iconFont
         self.iconColour = iconColour
+        self.iconAltText = iconAltText
         self.accessibilityTraits = accessibilityTraits
         self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
@@ -83,9 +86,9 @@ public enum RowType {
     public var minRowHeight: CGFloat {
         switch self {
         case .regular:
-            44
+            DesignSystem.Size.GDSRow.regularHeight
         case .tall:
-            60
+            DesignSystem.Size.GDSRow.tallHeight
         }
     }
     
@@ -108,11 +111,11 @@ public enum RowType {
     }
     
     public func verticalPadding(hasSubtitle: Bool) -> CGFloat {
-        switch self {
-        case .regular:
-            hasSubtitle ? 4 : 11
-        case .tall:
-            hasSubtitle ? 9 : 19
+        switch (self, hasSubtitle) {
+        case (.regular, true): DesignSystem.Spacing.GDSRow.regularWithSubtitle
+        case (.regular, false): DesignSystem.Spacing.GDSRow.regularWithoutSubtitle
+        case (.tall, true): DesignSystem.Spacing.GDSRow.tallWithSubtitle
+        case (.tall, false): DesignSystem.Spacing.GDSRow.tallWithoutSubtitle
         }
     }
 }

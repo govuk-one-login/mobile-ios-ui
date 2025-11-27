@@ -153,16 +153,16 @@ public final class GDSRow: UIView, ContentView {
                 imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
                 imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
                 imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
-                imageView.widthAnchor.constraint(equalToConstant: 42),
+                imageView.widthAnchor.constraint(equalToConstant: DesignSystem.Size.GDSRow.imageWidth),
                 imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageRatio),
-                verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12)
+                verticalStack.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: DesignSystem.Spacing.GDSRow.imageToTitleSpacing)
             ])
         }
         
         if hasDetail {
             NSLayoutConstraint.activate([
                 verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor),
-                detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 45),
+                detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: DesignSystem.Size.GDSRow.detailWidth),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ])
             
@@ -202,12 +202,16 @@ public final class GDSRow: UIView, ContentView {
         accessibilityTraits = viewModel.accessibilityTraits
         accessibilityHint = viewModel.accessibilityHint
         
-        let image = viewModel.imageAltText ?? ""
-        let title = titleLabel.text ?? ""
-        let subtitle = viewModel.subtitle ?? ""
-        let detail = viewModel.detail ?? ""
+        let labels = [
+            viewModel.imageAltText,
+            titleLabel.text,
+            viewModel.subtitle,
+            viewModel.detail,
+            viewModel.iconAltText
+        ]
+        .compactMap { $0 != nil ? $0 : nil }
         
-        accessibilityLabel = " \(image), \(title), \(subtitle), \(detail)"
+        accessibilityLabel = labels.joined(separator: ", ")
     }
     
     public func removeDivider() {

@@ -30,10 +30,12 @@ struct GDSRowTests {
         #expect(divider.constraints.contains(where: {
             $0.firstAttribute == .height && $0.constant == 0.5 && $0.isActive
         }))
+        
+        #expect(sut.accessibilityLabel == ("\(expectedTitle)"))
     }
     
     @Test("Initialise a Tall row with only title, subtitle and icon")
-    func titleSubtitleRowConfig() throws {
+    func tallTitleSubtitleRowConfig() throws {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let viewModel = GDSRowViewModel(
@@ -45,7 +47,6 @@ struct GDSRowTests {
         
         let verticalStack = try #require(sut.subviews[0] as? UIStackView)
         #expect(verticalStack.arrangedSubviews.count == 2)
-        #expect(verticalStack.accessibilityLabel == "\(expectedTitle), \(expectedSubtitle)")
         
         let subtitleLabel = try #require(verticalStack.arrangedSubviews[1] as? UILabel)
         #expect(subtitleLabel.text == expectedSubtitle)
@@ -55,6 +56,8 @@ struct GDSRowTests {
         let iconView = try #require(sut.subviews[1] as? UIImageView)
         #expect(iconView.image?.isSymbolImage == true)
         #expect(iconView.tintColor == .tertiaryLabel)
+        
+        #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle)"))
     }
     
     @Test("Initialise a Tall row with image, title, subtitle, detail and icon")
@@ -62,11 +65,13 @@ struct GDSRowTests {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let expectedDetail = "14"
+        let expectedImageAltText = "veteran card icon"
         let viewModel = GDSRowViewModel(
             title: expectedTitle,
             subtitle: expectedSubtitle,
             detail: expectedDetail,
             image: "vetCard",
+            imageAltText: expectedImageAltText,
             icon: "chevron.right"
         )
         let sut = viewModel.createUIView()
@@ -89,5 +94,39 @@ struct GDSRowTests {
         #expect(detailLabel.constraints.contains(where: {
             $0.firstAttribute == .width && $0.constant == 45 && $0.isActive
         }))
+        
+        #expect(sut.accessibilityLabel == ("\(expectedImageAltText), \(expectedTitle), \(expectedSubtitle), \(expectedDetail)"))
+    }
+    
+    @Test("Initialise a Regular row with only title, subtitle and icon")
+    func regularTitleSubtitleIconRowConfig() throws {
+        let expectedTitle = "Test Title"
+        let expectedSubtitle = "Test Subtitle"
+        let expectedIconAltText = "icon alt text"
+        let viewModel = GDSRowViewModel(
+            title: expectedTitle,
+            subtitle: expectedSubtitle,
+            icon: "arrow.up.right",
+            iconColour: .secondaryLabel,
+            iconAltText: expectedIconAltText,
+            type: .regular
+        )
+        let sut = viewModel.createUIView()
+        
+        let verticalStack = try #require(sut.subviews[0] as? UIStackView)
+        #expect(verticalStack.arrangedSubviews.count == 2)
+        
+        let subtitleLabel = try #require(verticalStack.arrangedSubviews[1] as? UILabel)
+        #expect(subtitleLabel.text == expectedSubtitle)
+        #expect(subtitleLabel.font == DesignSystem.Font.Base.footnote)
+        #expect(subtitleLabel.textColor == .label)
+        
+        let iconView = try #require(sut.subviews[1] as? UIImageView)
+        #expect(iconView.image?.isSymbolImage == true)
+        #expect(iconView.tintColor == .secondaryLabel)
+        
+        #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
+        #expect(sut.accessibilityHint == ("Opens in web browser"))
+
     }
 }

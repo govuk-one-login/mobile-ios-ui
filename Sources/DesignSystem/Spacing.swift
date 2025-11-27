@@ -2,6 +2,16 @@ import Foundation
 
 extension DesignSystem {
     public enum Spacing {
+        
+        public enum GDSRow {
+            public static let regularWithSubtitle: Double = 4
+            public static let regularWithoutSubtitle: Double = 11
+            public static let tallWithSubtitle: Double = 9
+            public static let tallWithoutSubtitle: Double = 19
+            
+            public static let imageToTitleSpacing: Double = 12
+        }
+        
         public static let xSmall: Double = 4
         public static let small: Double = 8
         public static let `default`: Double = 16, medium: Double = 16

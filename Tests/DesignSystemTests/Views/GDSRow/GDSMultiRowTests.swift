@@ -14,6 +14,11 @@ struct GDSMultiRowTests {
             type: .regular
         )]
         let viewModel = GDSMultiRowViewModel(rows: rowViewModel)
+        let sut = GDSMultiRow(viewModel: viewModel)
+        #expect(sut.backgroundColor == .secondarySystemBackground)
+        #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.row)
+        let stack = try #require(sut.subviews.first as? UIStackView)
+        #expect(stack.subviews.count == 1)
     }
     
     @Test("initiate multiple rows")
@@ -40,5 +45,10 @@ struct GDSMultiRowTests {
         ]
             
         let viewModel = GDSMultiRowViewModel(rows: rowViewModels)
+        let sut = GDSMultiRow(viewModel: viewModel)
+        #expect(sut.backgroundColor == .secondarySystemBackground)
+        #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.row)
+        let stack = try #require(sut.subviews.first as? UIStackView)
+        #expect(stack.subviews.count == 3)
     }
 }
