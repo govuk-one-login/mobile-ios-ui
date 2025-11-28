@@ -1,4 +1,5 @@
 @_spi(unstable) import DesignSystem
+import Foundation
 import UIKit
 
 public struct TestViewControllerViewModel: ScreenViewModel {
@@ -11,6 +12,56 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
+                GDSListViewModel(
+                    title: "Numbered List",
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
+                    items: [
+                        "Item 1",
+                        GDSLocalisedString(
+                            stringKey: "This is bold, this is not",
+                            stringAttributes: [("This is bold",
+                                                [.font: UIFont(.body, weight: .bold)])]
+                        ),
+                        "Item 2",
+                        "Item 3"
+                    ],
+                    style: .numbered
+                ),
+                GDSListViewModel(
+                    title: "Bulleted List",
+                    titleConfig: (font: DesignSystem.Font.Base.body, isHeader: false),
+                    items: [
+                        "Item 1",
+                        GDSLocalisedString(
+                            stringLiteral: "second numbered list item",
+                            stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
+                        "Item 3"
+                    ],
+                    style: .bulleted
+                ),
+                GDSListViewModel(
+                    items: [
+                        GDSLocalisedString(
+                            stringLiteral: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
+                            stringAttributes: [("wrap!", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
+                        "Item 2",
+                        "Item 3"
+                    ],
+                    style: .numbered
+                ),
+                GDSListViewModel(
+                    items: [
+                        "Item 1",
+                        GDSLocalisedString(
+                            stringKey: "second bulleted list item",
+                            stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                        ),
+                        "Item 3"
+                    ],
+                    style: .bulleted
+                ),
                 GDSCardViewModel(
                     showShadow: true,
                     dismissAction: .action({ })

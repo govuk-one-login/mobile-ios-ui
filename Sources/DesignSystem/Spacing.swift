@@ -9,3 +9,11 @@ extension DesignSystem {
         public static let xLarge: Double = 32
     }
 }
+
+extension DesignSystem.Spacing {
+    public enum GDSList {
+        public static let leadingMargin: Double = 10
+        public static let betweenRows: Double = 12
+        public static let beforeLabel: Double = 20
+    }
+}

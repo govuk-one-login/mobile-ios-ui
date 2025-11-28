@@ -231,3 +231,11 @@ extension DesignSystem {
         }
     }
 }
+
+extension DesignSystem.Color {
+    public enum GDSList {
+        public static let marker: UIColor = DesignSystem.Color.Text.primary
+        public static let label: UIColor = DesignSystem.Color.Text.primary
+        public static let title: UIColor = DesignSystem.Color.Text.primary
+    }
+}
