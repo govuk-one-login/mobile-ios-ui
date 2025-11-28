@@ -99,8 +99,10 @@ public final class GDSList: UIView, ContentView {
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
-        reloadListView()
+        guard previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) ?? false else {
+            reloadListView()
+            return
+        }
     }
     
     private func list() -> [UIStackView] {
