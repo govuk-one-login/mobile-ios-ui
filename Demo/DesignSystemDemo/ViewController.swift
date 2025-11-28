@@ -12,6 +12,29 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
+                GDSMultiRowViewModel(rows: [
+                    GDSRowViewModel(
+                        title: "Test Title Label 1",
+                        detail: "20",
+                        icon: "chevron.right",
+                        type: .regular
+                    ),
+                    GDSRowViewModel(
+                        title: "Test Title Label 2",
+                        subtitle: "Test Subtitle",
+                        detail: "14",
+                        image: "exampleImage",
+                        icon: "arrow.up.right"
+                    ),
+                    GDSRowViewModel(
+                        title: "Test Title Label 3",
+                        image: "vetCard",
+                        icon: "arrow.up.right",
+                        action: {
+                            _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
+                        }
+                    )
+                ]),
                 GDSListViewModel(
                     title: "Numbered List",
                     titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
