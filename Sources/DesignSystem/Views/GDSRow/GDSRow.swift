@@ -156,7 +156,7 @@ public final class GDSRow: UIView, ContentView {
         
         if hasDetail {
             NSLayoutConstraint.activate([
-                verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor, constant: -DesignSystem.Spacing.xSmall),
+                verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor, constant: -DesignSystem.Spacing.small),
                 detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: DesignSystem.Size.GDSRow.detailWidth),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
                 heightAnchor.constraint(greaterThanOrEqualTo: detailLabel.heightAnchor, constant: DesignSystem.Spacing.small)
@@ -171,7 +171,7 @@ public final class GDSRow: UIView, ContentView {
             }
         } else if hasIcon {
             NSLayoutConstraint.activate([
-                iconView.leadingAnchor.constraint(equalTo: verticalStack.trailingAnchor),
+                iconView.leadingAnchor.constraint(equalTo: verticalStack.trailingAnchor, constant: DesignSystem.Spacing.small),
                 iconView.centerYAnchor.constraint(equalTo: centerYAnchor),
                 heightAnchor.constraint(greaterThanOrEqualTo: iconView.heightAnchor, constant: DesignSystem.Spacing.small)
             ])
