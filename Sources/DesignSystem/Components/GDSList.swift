@@ -24,7 +24,7 @@ public final class GDSList: UIView, ContentView {
         let result = UIStackView(
             views: [],
             spacing: DesignSystem.Spacing.small,
-            distribution: .fillProportionally
+            distribution: .fill
         )
         result.addArrangedSubview(titleLabel)
         result.setCustomSpacing(DesignSystem.Spacing.GDSList.betweenRows, after: titleLabel)
@@ -47,6 +47,19 @@ public final class GDSList: UIView, ContentView {
             .map(\UILabel.intrinsicContentSize.width)
             .max() ?? 0
         : 0
+    }
+    
+    private var singleLineHeight: CGFloat {
+        let number = UILabel()
+        number.text = "Label"
+        number.font = DesignSystem.Font.Base.body
+        number.adjustsFontForContentSizeCategory = true
+        return number.intrinsicContentSize.height
+    }
+    
+    private var bulletHeight: CGFloat {
+        let bullet = bulletMarker()
+        return bullet.intrinsicContentSize.height
     }
     
     private var bulletImage: UIImage? {
@@ -83,6 +96,7 @@ public final class GDSList: UIView, ContentView {
         backgroundColor = .systemBackground
         addSubview(listStackView)
         listStackView.bindToSuperviewEdges()
+        reloadListView()
     }
     
     private func contentLabels(for item: GDSLocalisedString) -> UILabel {
@@ -103,7 +117,7 @@ public final class GDSList: UIView, ContentView {
             reloadListView()
         }
     }
-    
+
     private func list() -> [UIStackView] {
         return viewModel.items
             .enumerated()
@@ -120,16 +134,22 @@ public final class GDSList: UIView, ContentView {
                     stringKey: viewModel.style == .numbered
                     ? "Numbered List"
                     : "Bulleted List",
-                    String(viewModel.items.count),
                     bundle: .module
                 )
+                
+                let itemCount = "\(viewModel.items.count) items"
+                
                 let number = NSLocalizedString(
                     key: String(rowNumber),
                     bundle: .module
                 )
-                let listLabel = "\(number), \(item.value)"
+                let markerLabel = viewModel.style == .numbered
+                    ? number : "bullet"
+                
+                let listLabel = "\(markerLabel), \(item.value)"
+                
                 row.accessibilityLabel = index == 0
-                ? "\(summaryLabel) \(listLabel)"
+                ? "\(summaryLabel) \(itemCount), \(listLabel)"
                 : listLabel
                 
                 row.accessibilityIdentifier = viewModel.style == .numbered
@@ -143,7 +163,9 @@ public final class GDSList: UIView, ContentView {
     private func bulletMarker() -> UIView {
         let bullet = UIImageView(image: bulletImage)
         bullet.tintColor = DesignSystem.Color.GDSList.marker
-        bullet.setContentHuggingPriority(.required, for: .horizontal)
+        bullet.contentMode = .scaleAspectFit
+        bullet.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        bullet.setContentHuggingPriority(.defaultLow, for: .vertical)
         bullet.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         return bullet
@@ -152,6 +174,7 @@ public final class GDSList: UIView, ContentView {
     private func numberMarker(for number: Int) -> UIView {
         let marker = UILabel(colour: DesignSystem.Color.GDSList.marker)
         marker.text = "\(number)."
+        marker.textAlignment = .right
         marker.font = DesignSystem.Font.Base.body
         marker.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
         return marker
@@ -162,9 +185,19 @@ public final class GDSList: UIView, ContentView {
             views: [marker, label],
             axis: .horizontal,
             spacing: DesignSystem.Spacing.GDSList.beforeLabel,
-            alignment: viewModel.style == .numbered ? .top : .center,
+            alignment: .top,
             distribution: .fill
         )
+        
+        if viewModel.style == .bulleted {
+            NSLayoutConstraint.activate(
+                [
+                    marker.heightAnchor.constraint(equalToConstant: bulletHeight),
+                    marker.widthAnchor.constraint(equalToConstant: bulletHeight),
+                    marker.centerYAnchor.constraint(equalTo: label.topAnchor, constant: singleLineHeight / 2)
+                ]
+            )
+        }
         
         row.isLayoutMarginsRelativeArrangement = true
         row.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin

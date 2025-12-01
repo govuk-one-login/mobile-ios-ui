@@ -2,6 +2,7 @@ import UIKit
 
 extension UIView {
     public func bindToSuperviewEdges(
+        edges: NSDirectionalRectEdge = .all,
         padding: CGFloat = 0
     ) {
         guard let superview = self.superview else {
@@ -11,24 +12,41 @@ extension UIView {
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            self.leadingAnchor.constraint(
-                equalTo: superview.leadingAnchor,
-                constant: padding
-            ),
-            self.trailingAnchor.constraint(
-                equalTo: superview.trailingAnchor,
-                constant: -padding
-            ),
-            self.topAnchor.constraint(
-                equalTo: superview.topAnchor,
-                constant: padding
-            ),
-            self.bottomAnchor.constraint(
-                equalTo: superview.bottomAnchor,
-                constant: -padding
-            )
-        ])
+        if edges.contains(.top) {
+            NSLayoutConstraint.activate([
+                self.topAnchor.constraint(
+                    equalTo: superview.topAnchor,
+                    constant: padding
+                )
+            ])
+        }
+        
+        if edges.contains(.bottom) {
+            NSLayoutConstraint.activate([
+                self.bottomAnchor.constraint(
+                    equalTo: superview.bottomAnchor,
+                    constant: -padding
+                )
+            ])
+        }
+        
+        if edges.contains(.leading) {
+            NSLayoutConstraint.activate([
+                self.leadingAnchor.constraint(
+                    equalTo: superview.leadingAnchor,
+                    constant: padding
+                )
+            ])
+        }
+        
+        if edges.contains(.trailing) {
+            NSLayoutConstraint.activate([
+                self.trailingAnchor.constraint(
+                    equalTo: superview.trailingAnchor,
+                    constant: -padding
+                )
+            ])
+        }
     }
     
     public func bindToSuperviewSafeArea(

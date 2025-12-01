@@ -16,7 +16,7 @@ class ViewController: UIViewController {
                     title: "Numbered List",
                     titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
-                        "Item 1",
+                        "take a photo",
                         GDSLocalisedString(
                             stringKey: "This is bold, this is not",
                             stringAttributes: [("This is bold",
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
                     title: "Bulleted List",
                     titleConfig: (font: DesignSystem.Font.Base.body, isHeader: false),
                     items: [
-                        "Item 1",
+                        "take a photo",
                         GDSLocalisedString(
                             stringLiteral: "second numbered list item",
                             stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
