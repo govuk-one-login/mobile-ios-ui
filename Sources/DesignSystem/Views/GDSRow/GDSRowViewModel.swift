@@ -79,6 +79,4 @@ public struct GDSRowViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
-    
-    }
 }
