@@ -26,7 +26,7 @@ struct GDSScreenViewModelTests {@Test()
         let sut = GDSScreen(viewModel: viewModel)
         
         #expect(sut.scrollViewOuterStackView.arrangedSubviews.count == 2)
-        #expect(sut.scrollViewInnerStackView.alignment == .leading)
+        #expect(sut.scrollViewInnerStackView.alignment == .fill)
     }
     
     @Test()

@@ -14,7 +14,7 @@ struct GDSScreenTests {
     @Test("Top centred with empty arrays (no input) configures the view correctly")
     func topCentredNoInput() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .topCentred,
+            screenStyle: .top,
             body: [],
             movableFooter: [],
             footer: []
@@ -44,7 +44,7 @@ struct GDSScreenTests {
     func defaultPadding() throws {
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .centred,
-            body: [GDSCardTextViewModel(
+            body: [GDSTextViewModel(
                 title: "test body text",
                 verticalPadding: nil,
                 horizontalPadding: nil
@@ -68,9 +68,9 @@ struct GDSScreenTests {
     @Test("Top centred screen configures the view correctly")
     func inputConfiguresCorrectly() throws {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .topCentred,
-            body: [GDSCardTextViewModel(title: "test body text")],
-            movableFooter: [GDSCardTextViewModel(title: "test footer text")],
+            screenStyle: .top,
+            body: [GDSTextViewModel(title: "test body text")],
+            movableFooter: [GDSTextViewModel(title: "test footer text")],
             footer: [GDSButtonViewModel(
                 title: "test button text",
                 style: .primary,
@@ -81,12 +81,12 @@ struct GDSScreenTests {
         
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
         let bodyItemStack = try #require(sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView)
-        let bodyTextItem = try #require(bodyItemStack.arrangedSubviews.first as? GDSCardTextView)
+        let bodyTextItem = try #require(bodyItemStack.arrangedSubviews.first as? GDSTextView)
         #expect(bodyTextItem.text == "test body text")
         
         #expect(sut.bottomStackView.arrangedSubviews.count == 2)
         let footerItemStack = try #require(sut.bottomStackView.arrangedSubviews.first as? UIStackView)
-        let footerButtonItem = try #require(footerItemStack.arrangedSubviews.first as? GDSCardTextView)
+        let footerButtonItem = try #require(footerItemStack.arrangedSubviews.first as? GDSTextView)
         #expect(footerButtonItem.text == "test footer text")
         
         let bottomItemStack = try #require(sut.bottomStackView.arrangedSubviews[1] as? UIStackView)
@@ -97,9 +97,9 @@ struct GDSScreenTests {
     @Test("Calling the move content functions reconfigure the view correctly")
     func moveContentMethods() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .topCentred,
-            body: [GDSCardTextViewModel(title: "test body text")],
-            movableFooter: [GDSCardTextViewModel(title: "test footer text")],
+            screenStyle: .top,
+            body: [GDSTextViewModel(title: "test body text")],
+            movableFooter: [GDSTextViewModel(title: "test footer text")],
             footer: [GDSButtonViewModel(
                 title: "test button text",
                 style: .primary,

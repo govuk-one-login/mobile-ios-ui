@@ -14,7 +14,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha() async throws {
         let expectedColor = UIColor.fromHex("#000000")
         
-        let sut = DesignSystem.Color.Base.blackAlpha
+        let sut = DesignSystem.Color.Base.black2
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -28,7 +28,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha5() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.05)
         
-        let sut = DesignSystem.Color.Base.blackAlpha5
+        let sut = DesignSystem.Color.Base.black2Alpha5
         #expect(sut.cgColor == expectedColor.cgColor)
     }
 
@@ -42,7 +42,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha12() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.12)
         
-        let sut = DesignSystem.Color.Base.blackAlpha12
+        let sut = DesignSystem.Color.Base.black2Alpha12
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -56,7 +56,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha15() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.15)
         
-        let sut = DesignSystem.Color.Base.blackAlpha15
+        let sut = DesignSystem.Color.Base.black2Alpha15
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -70,7 +70,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha20() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.2)
         
-        let sut = DesignSystem.Color.Base.blackAlpha20
+        let sut = DesignSystem.Color.Base.black2Alpha20
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -84,7 +84,7 @@ struct ColorTests {
     @Test func test_Color_BlackAlpha30() async throws {
         let expectedColor = UIColor.fromHex("#000000").withAlphaComponent(0.3)
         
-        let sut = DesignSystem.Color.Base.blackAlpha30
+        let sut = DesignSystem.Color.Base.black2Alpha30
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     

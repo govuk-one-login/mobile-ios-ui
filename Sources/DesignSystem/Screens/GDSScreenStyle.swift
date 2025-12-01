@@ -27,26 +27,10 @@ extension GDSScreenStyle {
         )
     }
     
-    @available(*, deprecated, renamed: "top", message: "Will be removed December 2025 - please use `top` style instead")
-    public static var topCentred: Self {
-        GDSScreenStyle(
-            verticalAlignment: .top,
-            horizontalAlignment: .fill
-        )
-    }
-    
     public static var centred: Self {
         GDSScreenStyle(
             verticalAlignment: .center,
             horizontalAlignment: .fill
-        )
-    }
-    
-    @available(*, deprecated, message: "Will be removed December 2025 - please use `top` style instead")
-    public static var topLeading: Self {
-        GDSScreenStyle(
-            verticalAlignment: .top,
-            horizontalAlignment: .leading
         )
     }
     
