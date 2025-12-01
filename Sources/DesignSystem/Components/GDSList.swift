@@ -96,6 +96,7 @@ public final class GDSList: UIView, ContentView {
         backgroundColor = .systemBackground
         addSubview(listStackView)
         listStackView.bindToSuperviewEdges()
+        reloadListView()
     }
     
     private func contentLabels(for item: GDSLocalisedString) -> UILabel {
