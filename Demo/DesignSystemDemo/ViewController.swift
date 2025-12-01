@@ -66,11 +66,11 @@ class ViewController: UIViewController {
                     showShadow: true,
                     dismissAction: .action({ })
                 ) {
-                    GDSCardImageViewModel(
+                    GDSImageViewModel(
                         image: UIImage(named: "placeholder") ?? UIImage(),
                         contentMode: .scaleAspectFit
                     )
-                    GDSCardTextViewModel(
+                    GDSTextViewModel(
                         title: GDSLocalisedString(
                             stringLiteral: "Here is the caption for the picture",
                             stringAttributes: [("Here is the caption for the picture",
@@ -78,16 +78,16 @@ class ViewController: UIViewController {
                         ),
                         verticalPadding: .vertical(8)
                     )
-                    GDSCardTextViewModel(
+                    GDSTextViewModel(
                         title: "A title for the component for a quick introduction",
                         titleFont: DesignSystem.Font.Base.title1Bold,
                         verticalPadding: .bottom(8)
                     )
-                    GDSCardTextViewModel(
+                    GDSTextViewModel(
                         title: "A subtitle for the componenet which can be used to describe it's purpose",
                         verticalPadding: .bottom(8)
                     )
-                    GDSCardDividerViewModel(
+                    GDSDividerViewModel(
                         verticalPadding: .bottom(8)
                     )
                     GDSButtonViewModel(
@@ -114,11 +114,11 @@ class ViewController: UIViewController {
                         verticalPadding: .bottom(8),
                         horizontalPadding: .leading(16)
                     )
-                    GDSCardTextViewModel(
+                    GDSTextViewModel(
                         title: "A subtitle for the componenet which can be used to describe it's purpose",
                         verticalPadding: .bottom(8)
                     )
-                    GDSCardDividerViewModel(
+                    GDSDividerViewModel(
                         verticalPadding: .bottom(8)
                     )
                     GDSButtonViewModel(
