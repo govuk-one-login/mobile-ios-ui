@@ -156,7 +156,7 @@ public final class GDSRow: UIView, ContentView {
         
         if hasDetail {
             NSLayoutConstraint.activate([
-                verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor),
+                verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor, constant: -DesignSystem.Spacing.xSmall),
                 detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: DesignSystem.Size.GDSRow.detailWidth),
                 detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
                 heightAnchor.constraint(greaterThanOrEqualTo: detailLabel.heightAnchor, constant: DesignSystem.Spacing.small)
