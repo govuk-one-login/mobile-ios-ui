@@ -161,7 +161,7 @@ extension View {
 
 extension [ViewImageConfig] {
     public static let standard: [ViewImageConfig] = [
-        .iPhone13ProMax(.portrait),
-        .iPhone13ProMax(.landscape)
+        .iPhone13(.portrait),
+        .iPhone13(.landscape)
     ]
 }
