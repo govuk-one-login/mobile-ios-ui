@@ -21,7 +21,7 @@ struct MultiRowSnapshotTests {
             title: "Test Title Label",
             subtitle: "Test Subtitle Label",
             detail: "20",
-            image: "placeholder",
+            image: "vetCard",
             icon: "chevron.right"
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -159,7 +159,7 @@ struct MultiRowSnapshotTests {
             ),
             GDSRowViewModel(
                 title: "Test Title Label 3",
-                image: "placeholder",
+                image: "vetCard",
                 icon: "arrow.up.right"
             )
         ]
