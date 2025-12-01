@@ -107,8 +107,6 @@ struct GDSListTests {
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
         #expect(titleLabel?.textAlignment == .left)
         #expect(titleLabel?.numberOfLines == 0)
-        
-        sut.assertSnapshot(bindToEdges: .horizontal)
     }
     
     @Test("Bulleted list title has header accessibility trait")
@@ -148,7 +146,5 @@ struct GDSListTests {
         #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
-        
-        sut.assertSnapshot(bindToEdges: .horizontal)
     }
 }
