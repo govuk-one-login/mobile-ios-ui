@@ -16,8 +16,9 @@ public final class GDSRow: UIView, ContentView {
         let label = UILabel(
             text: viewModel.title,
             font: viewModel.titleFont,
-            color: viewModel.titleColour
+            colour: viewModel.titleColour
         )
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         return label
@@ -26,8 +27,9 @@ public final class GDSRow: UIView, ContentView {
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel(
             font: viewModel.subtitleFont,
-            color: viewModel.subtitleColour
+            colour: viewModel.subtitleColour
         )
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         return label
@@ -36,9 +38,10 @@ public final class GDSRow: UIView, ContentView {
     private lazy var detailLabel: UILabel = {
         let label = UILabel(
             font: viewModel.detailFont,
-            color: viewModel.detailColour,
+            colour: viewModel.detailColour,
             alignment: .right
         )
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -155,19 +158,22 @@ public final class GDSRow: UIView, ContentView {
             NSLayoutConstraint.activate([
                 verticalStack.trailingAnchor.constraint(equalTo: detailLabel.leadingAnchor),
                 detailLabel.widthAnchor.constraint(lessThanOrEqualToConstant: DesignSystem.Size.GDSRow.detailWidth),
-                detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+                detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+                heightAnchor.constraint(greaterThanOrEqualTo: detailLabel.heightAnchor, constant: DesignSystem.Spacing.small)
             ])
             
             if hasIcon {
                 NSLayoutConstraint.activate([
                     iconView.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor, constant: DesignSystem.Spacing.default),
-                    iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+                    iconView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                    heightAnchor.constraint(greaterThanOrEqualTo: iconView.heightAnchor, constant: DesignSystem.Spacing.small)
                 ])
             }
         } else if hasIcon {
             NSLayoutConstraint.activate([
                 iconView.leadingAnchor.constraint(equalTo: verticalStack.trailingAnchor),
-                iconView.centerYAnchor.constraint(equalTo: centerYAnchor)
+                iconView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                heightAnchor.constraint(greaterThanOrEqualTo: iconView.heightAnchor, constant: DesignSystem.Spacing.small)
             ])
         }
         
