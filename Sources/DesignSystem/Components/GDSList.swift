@@ -117,8 +117,7 @@ public final class GDSList: UIView, ContentView {
             reloadListView()
         }
     }
-    
-    // TODO: Add welsh 
+
     private func list() -> [UIStackView] {
         return viewModel.items
             .enumerated()
