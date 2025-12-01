@@ -21,20 +21,6 @@ struct GDSScreenStyleTests {
     }
     
     @Test
-    func topCentred() {
-        let sut = GDSScreenStyle.topCentred
-        #expect(sut.verticalAlignment == .top)
-        #expect(sut.horizontalAlignment == .fill)
-    }
-    
-    @Test
-    func topLeadingAligned() {
-        let sut = GDSScreenStyle.topLeading
-        #expect(sut.verticalAlignment == .top)
-        #expect(sut.horizontalAlignment == .leading)
-    }
-    
-    @Test
     func centreLeadingAligned() {
         let sut = GDSScreenStyle.centreLeading
         #expect(sut.verticalAlignment == .center)

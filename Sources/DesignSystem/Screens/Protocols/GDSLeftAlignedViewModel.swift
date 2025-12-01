@@ -24,7 +24,7 @@ extension GDSLeftAlignedViewModel {
         didDismiss: DesignSystem.Action? = nil
     ) {
         self = Self(
-            screenStyle: .topLeading,
+            screenStyle: .top,
             body: body,
             movableFooter: movableFooter,
             footer: footer,

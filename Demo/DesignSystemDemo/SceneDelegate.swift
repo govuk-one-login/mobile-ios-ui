@@ -26,7 +26,7 @@ struct GDSDemoScreenViewModel: GDSScreenViewModel {
     public let footer: [any ContentViewModel]
     
     public init(
-        screenStyle: GDSScreenStyle = .topCentred,
+        screenStyle: GDSScreenStyle = .top,
         body: [any ContentViewModel],
         movableFooter: [any ContentViewModel],
         footer: [any ContentViewModel]

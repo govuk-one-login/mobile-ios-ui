@@ -24,7 +24,7 @@ extension GDSCentreAlignedViewModel {
         didDismiss: DesignSystem.Action? = nil
     ) {
         self = Self(
-            screenStyle: .topCentred,
+            screenStyle: .top,
             body: body,
             movableFooter: movableFooter,
             footer: footer,
