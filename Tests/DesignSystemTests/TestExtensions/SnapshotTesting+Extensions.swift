@@ -1,3 +1,4 @@
+import DesignSystem
 import SnapshotTesting
 import SwiftUI
 import UIKit
@@ -6,6 +7,7 @@ import UIKit
 extension UIView {
     public func assertSnapshot(
         in size: CGSize = CGSize(width: 500, height: 500),
+        bindToEdges: NSDirectionalRectEdge = .none,
         precision: Float = 0.995,
         perceptualPrecision: Float = 0.98,
         record recording: Bool? = nil,
@@ -24,7 +26,7 @@ extension UIView {
     ) {
         traitCollections.forEach {
             let traits = UITraitCollection(traitsFrom: $0)
-
+            
             let canvas = UIView(
                 frame: CGRect(
                     x: 0,
@@ -33,19 +35,21 @@ extension UIView {
                     height: size.height
                 )
             )
-
+            
             canvas.addSubview(self)
             canvas.backgroundColor = .clear
-
+            
             self.translatesAutoresizingMaskIntoConstraints = false
-
+            
+            self.bindToSuperviewEdges(edges: bindToEdges)
+            
             NSLayoutConstraint.activate(
                 [
                     self.centerXAnchor.constraint(equalTo: canvas.centerXAnchor),
                     self.centerYAnchor.constraint(equalTo: canvas.centerYAnchor)
                 ]
             )
-
+            
             SnapshotTesting.assertSnapshot(
                 of: canvas,
                 as: .image(

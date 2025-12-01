@@ -28,17 +28,20 @@ struct GDSListTests {
         style: .bulleted
         )
     }
+    
     // Numbered List Tests
+    
     @Test("Numbered list title is set correctly")
     func test_numbered_title() throws {
         let sut = GDSList(viewModel: numberedListViewModel())
-        dump(sut)
         let titleLabel: UILabel? = sut[child: "list-title-label"]
         #expect(titleLabel?.text == "Test numbered list view")
         #expect(titleLabel?.font == DesignSystem.Font.Base.headline)
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
         #expect(titleLabel?.textAlignment == .left)
         #expect(titleLabel?.numberOfLines == 0)
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
     }
     
     @Test("Numbered list title has header accessibility trait")
@@ -53,7 +56,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: numberedListViewModel())
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         
-        #expect(firstRow?.accessibilityLabel == "Numbered List 1, first numbered list item")
+        #expect(firstRow?.accessibilityLabel == "Numbered List 2 items, 1, first numbered list item")
     }
     
     @Test("Accessibility label for second row in numbered List")
@@ -78,6 +81,8 @@ struct GDSListTests {
         #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
     }
     
     @Test("Number labels all share the same width")
@@ -102,6 +107,8 @@ struct GDSListTests {
         #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
         #expect(titleLabel?.textAlignment == .left)
         #expect(titleLabel?.numberOfLines == 0)
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
     }
     
     @Test("Bulleted list title has header accessibility trait")
@@ -116,7 +123,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
         
-        #expect(firstRow?.accessibilityLabel == "Bulleted List 1, first bulleted list item")
+        #expect(firstRow?.accessibilityLabel == "Bulleted List 2 items, bullet, first bulleted list item")
     }
     
     @Test("Accessibility label for second row in bulleted List")
@@ -124,7 +131,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let secondRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-2"]
         
-        #expect(secondRow?.accessibilityLabel == "2, second bulleted list item")
+        #expect(secondRow?.accessibilityLabel == "bullet, second bulleted list item")
     }
     
     @Test("Bullet point and content label are set correctly")
@@ -135,11 +142,13 @@ struct GDSListTests {
         let label = firstRow?.arrangedSubviews[1] as? UILabel
         
         #expect(bullet?.image != nil)
-        #expect(bullet?.contentHuggingPriority(for: .horizontal) == .required)
+        #expect(bullet?.contentHuggingPriority(for: .horizontal) == .defaultLow)
         #expect(label?.text == "first bulleted list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
         #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
     }
 }
