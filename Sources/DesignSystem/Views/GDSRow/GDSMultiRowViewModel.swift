@@ -1,7 +1,5 @@
 import UIKit
 public struct GDSMultiRowViewModel: ContentViewModel {
-
-    
     public typealias ViewType = GDSMultiRow
     
     var rows: [GDSRowViewModel]

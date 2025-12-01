@@ -33,13 +33,13 @@ public struct GDSRowViewModel: ContentViewModel {
     public init(
         title: String,
         titleFont: UIFont? = DesignSystem.Font.Base.body,
-        titleColour: UIColor? = .label,
+        titleColour: UIColor? = DesignSystem.Color.GDSRow.title,
         subtitle: String? = nil,
         subtitleFont: UIFont? = nil,
         subtitleColour: UIColor? = nil,
         detail: String? = nil,
         detailFont: UIFont? = DesignSystem.Font.Base.body,
-        detailColour: UIColor? = .secondaryLabel,
+        detailColour: UIColor? = DesignSystem.Color.GDSRow.detail,
         image: String? = nil,
         imageAltText: String? = nil,
         icon: String? = nil,
@@ -79,46 +79,6 @@ public struct GDSRowViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
-        
-}
-
-public enum RowType {
-    case regular
-    case tall
     
-    public var minRowHeight: CGFloat {
-        switch self {
-        case .regular:
-            DesignSystem.Size.GDSRow.regularHeight
-        case .tall:
-            DesignSystem.Size.GDSRow.tallHeight
-        }
-    }
-    
-    public var subtitleFont: UIFont {
-        switch self {
-        case .regular:
-            DesignSystem.Font.Base.footnote
-        case .tall:
-            DesignSystem.Font.Base.subheadline
-        }
-    }
-    
-    public var subtitleColour: UIColor {
-        switch self {
-        case .regular:
-                .label
-        case .tall:
-                .secondaryLabel
-        }
-    }
-    
-    public func verticalPadding(hasSubtitle: Bool) -> CGFloat {
-        switch (self, hasSubtitle) {
-        case (.regular, true): DesignSystem.Spacing.GDSRow.regularWithSubtitle
-        case (.regular, false): DesignSystem.Spacing.GDSRow.regularWithoutSubtitle
-        case (.tall, true): DesignSystem.Spacing.GDSRow.tallWithSubtitle
-        case (.tall, false): DesignSystem.Spacing.GDSRow.tallWithoutSubtitle
-        }
     }
 }
