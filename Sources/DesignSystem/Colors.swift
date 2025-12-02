@@ -228,5 +228,6 @@ extension DesignSystem.Color {
         public static let regSubtitle: UIColor = UIColor.label
         public static let tallSubtitle: UIColor = UIColor.secondaryLabel
         public static let detail: UIColor = UIColor.secondaryLabel
+        public static let icon: UIColor = UIColor.tertiaryLabel
     }
 }

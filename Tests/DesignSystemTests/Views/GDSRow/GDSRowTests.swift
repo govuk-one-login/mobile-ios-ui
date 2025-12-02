@@ -8,7 +8,7 @@ struct GDSRowTests {
     @Test("Initialise a Tall row with only title")
     func basicRowConfig() throws {
         let expectedTitle = "Test Title"
-        let viewModel = GDSRowViewModel(title: expectedTitle)
+        let viewModel = GDSRowViewModel(titleConfig: StyledText(text: expectedTitle))
         let sut = viewModel.createUIView()
         
         #expect(sut.constraints.contains(where: {
@@ -34,9 +34,9 @@ struct GDSRowTests {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let viewModel = GDSRowViewModel(
-            title: expectedTitle,
-            subtitle: expectedSubtitle,
-            icon: "chevron.right"
+            titleConfig: StyledText(text: expectedTitle),
+            subtitleConfig: StyledText(text: expectedSubtitle),
+            iconConfig: StyledIcon(icon: "chevron.right")
         )
         let sut = viewModel.createUIView()
         
@@ -63,12 +63,12 @@ struct GDSRowTests {
         let expectedDetail = "14"
         let expectedImageAltText = "veteran card icon"
         let viewModel = GDSRowViewModel(
-            title: expectedTitle,
-            subtitle: expectedSubtitle,
-            detail: expectedDetail,
+            titleConfig: StyledText(text: expectedTitle),
+            subtitleConfig: StyledText(text: expectedSubtitle),
+            detailConfig: StyledText(text: expectedDetail),
             image: "vetCard",
             imageAltText: expectedImageAltText,
-            icon: "chevron.right"
+            iconConfig: StyledIcon(icon: "chevron.right")
         )
         let sut = viewModel.createUIView()
         
@@ -104,11 +104,9 @@ struct GDSRowTests {
                 UIApplication.shared.open(URL(string: "https://www.google.com")!)
             }
         let viewModel = GDSRowViewModel(
-            title: expectedTitle,
-            subtitle: expectedSubtitle,
-            icon: "arrow.up.right",
-            iconColour: .secondaryLabel,
-            iconAltText: expectedIconAltText,
+            titleConfig: StyledText(text: expectedTitle),
+            subtitleConfig: StyledText(text: expectedSubtitle),
+            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: expectedIconAltText),
             type: .regular,
             action: action
         )

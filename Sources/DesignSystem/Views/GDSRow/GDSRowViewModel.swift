@@ -32,52 +32,39 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
     }
         
     public init(
-        title: String,
-        titleFont: UIFont? = DesignSystem.Font.Base.body,
-        titleColour: UIColor? = DesignSystem.Color.GDSRow.title,
-        subtitle: String? = nil,
-        subtitleFont: UIFont? = nil,
-        subtitleColour: UIColor? = nil,
-        detail: String? = nil,
-        detailFont: UIFont? = DesignSystem.Font.Base.body,
-        detailColour: UIColor? = DesignSystem.Color.GDSRow.detail,
+        titleConfig: StyledText,
+        subtitleConfig: StyledText? = nil,
+        detailConfig: StyledText? = nil,
         image: String? = nil,
         imageAltText: String? = nil,
-        icon: String? = nil,
-        iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
-        iconColour: UIColor? = .tertiaryLabel,
-        iconAltText: String? = nil,
+        iconConfig: StyledIcon? = nil,
         accessibilityTraits: UIAccessibilityTraits = [],
         accessibilityHint: String? = nil,
         type: RowType = .tall,
-        action: (() async -> Void)? = nil,
-        verticalPadding: VerticalPadding? = .vertical(0),
-        horizontalPadding: HorizontalPadding? = .horizontal(0)
+        action: (() async -> Void)? = nil
     ) {
         let defaultSubtitleFont = type.subtitleFont
         let defaultSubtitleColour = type.subtitleColour
-        let openLinkHint = icon == "arrow.up.right" ? "Opens in web browser" : nil
+        let openLinkHint = iconConfig?.icon == "arrow.up.right" ? "Opens in web browser" : nil
         
-        self.title = title
-        self.titleFont = titleFont
-        self.titleColour = titleColour
-        self.subtitle = subtitle
-        self.subtitleFont = subtitleFont ?? defaultSubtitleFont
-        self.subtitleColour = subtitleColour ?? defaultSubtitleColour
-        self.detail = detail
-        self.detailFont = detailFont
-        self.detailColour = detailColour
+        self.title = titleConfig.text
+        self.titleFont = titleConfig.font ?? DesignSystem.Font.Base.body
+        self.titleColour = titleConfig.colour ?? DesignSystem.Color.GDSRow.title
+        self.subtitle = subtitleConfig?.text
+        self.subtitleFont = subtitleConfig?.font ?? defaultSubtitleFont
+        self.subtitleColour = subtitleConfig?.colour ?? defaultSubtitleColour
+        self.detail = detailConfig?.text
+        self.detailFont = detailConfig?.font ?? DesignSystem.Font.Base.body
+        self.detailColour = detailConfig?.colour ?? DesignSystem.Color.GDSRow.detail
         self.image = image
         self.imageAltText = imageAltText
-        self.icon = icon
-        self.iconFont = iconFont
-        self.iconColour = iconColour
-        self.iconAltText = iconAltText
+        self.icon = iconConfig?.icon
+        self.iconFont = iconConfig?.font
+        self.iconColour = iconConfig?.colour
+        self.iconAltText = iconConfig?.altText
         self.accessibilityTraits = accessibilityTraits
         self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
         self.action = action
-        self.verticalPadding = verticalPadding
-        self.horizontalPadding = horizontalPadding
     }
 }

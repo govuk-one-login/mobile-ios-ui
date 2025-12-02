@@ -109,8 +109,7 @@ public final class GDSRow: UIView, ContentView {
         
         if let icon = viewModel.icon, let iconFont = viewModel.iconFont {
             let config = UIImage.SymbolConfiguration(font: iconFont)
-            iconView.image = UIImage(systemName: icon, withConfiguration: config)?
-                .withTintColor(.tertiaryLabel, renderingMode: .alwaysOriginal)
+            iconView.image = UIImage(systemName: icon, withConfiguration: config)
             addSubview(iconView)
         }
         
@@ -134,9 +133,13 @@ public final class GDSRow: UIView, ContentView {
             hasImage ? imageView : verticalStack
         }()
         
-        let trailingView: UIView = {
-            hasIcon ? iconView : (hasDetail ? detailLabel : verticalStack)
-        }()
+        let trailingView: UIView
+
+        if hasIcon {
+            trailingView = iconView
+        } else {
+            trailingView = hasDetail ? detailLabel : verticalStack
+        }
         
         if hasImage {
             let imageRatio = (imageView.image?.size.height ?? 1) / (imageView.image?.size.width ?? 1)

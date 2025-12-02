@@ -14,28 +14,28 @@ class ViewController: UIViewController {
             body: [
                 GDSMultiRowViewModel(rows: [
                     GDSRowViewModel(
-                        title: "Test Title Label 1",
-                        detail: "20",
-                        icon: "chevron.right",
+                        titleConfig: StyledText(text: "Test Title Label 1"),
+                        detailConfig: StyledText(text: "20"),
+                        iconConfig: StyledIcon(icon: "chevron.right"),
                         type: .regular
                     ),
                     GDSRowViewModel(
-                        title: "Test Title Label 2",
-                        subtitle: "Test Subtitle",
-                        detail: "14",
+                        titleConfig: StyledText(text: "Test Title Label 2", colour: .red),
+                        subtitleConfig: StyledText(text: "Test Subtitle"),
+                        detailConfig: StyledText(text: "14"),
                         image: "exampleImage",
-                        icon: "arrow.up.right"
+                        iconConfig: StyledIcon(icon: "arrow.up.right", colour: .blue, altText: "this is icon alt text")
                     ),
                     GDSRowViewModel(
-                        title: "Test Title Label 3",
+                        titleConfig: StyledText(text: "Test Title Label 3"),
                         image: "vetCard",
-                        icon: "arrow.up.right",
+                        iconConfig: StyledIcon(icon: "arrow.up.right"),
                         action: {
                             _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
                         }
                     ),
                     GDSRowViewModel(
-                        title: "Test Title Label 3"
+                        titleConfig: StyledText(text: "Test Title Label 4")
                     )
                 ]),
                 GDSListViewModel(

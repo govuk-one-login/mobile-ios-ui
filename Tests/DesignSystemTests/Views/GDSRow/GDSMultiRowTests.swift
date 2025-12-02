@@ -8,9 +8,9 @@ struct GDSMultiRowTests {
     @Test("initiate single row")
     func singleRow() throws {
         let rowViewModel = [GDSRowViewModel(
-            title: "Inactive documents",
-            detail: "20",
-            icon: "chevron.right",
+            titleConfig: StyledText(text: "Inactive documents"),
+            detailConfig: StyledText(text: "20"),
+            iconConfig: StyledIcon(icon: "chevron.right"),
             type: .regular
         )]
         let viewModel = GDSMultiRowViewModel(rows: rowViewModel)
@@ -25,22 +25,22 @@ struct GDSMultiRowTests {
     func multiRow() throws {
         let rowViewModels = [
             GDSRowViewModel(
-                title: "Inactive documents",
-                detail: "20",
-                icon: "chevron.right",
+                titleConfig: StyledText(text: "Inactive documents"),
+                detailConfig: StyledText(text: "20"),
+                iconConfig: StyledIcon(icon: "chevron.right"),
                 type: .regular
             ),
             GDSRowViewModel(
-                title: "HM Armed Forces Veteran Card",
-                subtitle: "Inactive since 30 October 2025",
-                detail: "14",
+                titleConfig: StyledText(text: "HM Armed Forces Veteran Card"),
+                subtitleConfig: StyledText(text: "Inactive since 30 October 2025"),
+                detailConfig: StyledText(text: "14"),
                 image: "exampleImage",
-                icon: "arrow.up.right"
+                iconConfig: StyledIcon(icon: "arrow.up.right")
             ),
             GDSRowViewModel(
-                title: "UK driving licence",
+                titleConfig: StyledText(text: "UK driving licence"),
                 image: "vetCard",
-                icon: "arrow.up.right"
+                iconConfig: StyledIcon(icon: "arrow.up.right")
             )
         ]
             
