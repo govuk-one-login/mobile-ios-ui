@@ -1,6 +1,6 @@
 import UIKit
 
-public struct GDSRowViewModel: ContentViewModel {
+public struct GDSRowViewModel: ContentViewModel, Identifiable {
     public typealias ViewType = GDSRow
     
     var title: String
@@ -23,6 +23,7 @@ public struct GDSRowViewModel: ContentViewModel {
     var type: RowType
     var action: (() async -> Void)?
     
+    public let id = UUID()
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
     
@@ -46,7 +47,7 @@ public struct GDSRowViewModel: ContentViewModel {
         iconFont: UIFont? = DesignSystem.Font.Base.bodySemiBold,
         iconColour: UIColor? = .tertiaryLabel,
         iconAltText: String? = nil,
-        accessibilityTraits: UIAccessibilityTraits = [.button],
+        accessibilityTraits: UIAccessibilityTraits = [],
         accessibilityHint: String? = nil,
         type: RowType = .tall,
         action: (() async -> Void)? = nil,

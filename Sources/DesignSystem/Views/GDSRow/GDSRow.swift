@@ -120,11 +120,8 @@ public final class GDSRow: UIView, ContentView {
             subtitleLabel.text = subtitle
             verticalStack.addArrangedSubview(subtitleLabel)
         }
-        
-        addSubview(divider)
     }
     
-    // swiftlint:disable:next function_body_length
     private func setupConstraints() {
         let hasImage = viewModel.image != nil
         let hasDetail = viewModel.detail != nil
@@ -182,9 +179,6 @@ public final class GDSRow: UIView, ContentView {
             verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
 
             // Divider constraints
-            divider.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: trailingAnchor),
-            divider.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DesignSystem.Spacing.default)
         ])
@@ -212,8 +206,7 @@ public final class GDSRow: UIView, ContentView {
             isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
             self.addGestureRecognizer(tap)
-        } else {
-            accessibilityTraits.remove(.button)
+            accessibilityTraits.insert(.button)
         }
     }
     
@@ -224,7 +217,12 @@ public final class GDSRow: UIView, ContentView {
         }
     }
     
-    public func removeDivider() {
-            divider.removeFromSuperview()
-        }
+    public func addDivider() {
+        addSubview(divider)
+        NSLayoutConstraint.activate([
+            divider.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            divider.trailingAnchor.constraint(equalTo: trailingAnchor),
+            divider.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
 }

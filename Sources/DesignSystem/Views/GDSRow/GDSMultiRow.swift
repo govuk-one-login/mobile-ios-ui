@@ -31,12 +31,12 @@ public final class GDSMultiRow: UIView, ContentView {
     }
     
     func applyRows() {
-        for (index, row) in viewModel.rows.enumerated() {
+        for row in viewModel.rows {
             let rowView = GDSRow(viewModel: row)
             verticalStack.addArrangedSubview(rowView)
             
-            if index == viewModel.rows.count - 1 {
-                rowView.removeDivider()
+            if viewModel.rows.last?.id != row.id {
+                rowView.addDivider()
             }
         }
     }

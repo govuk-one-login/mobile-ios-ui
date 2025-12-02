@@ -24,12 +24,6 @@ struct GDSRowTests {
         #expect(titleLabel.text == expectedTitle)
         #expect(titleLabel.font == DesignSystem.Font.Base.body)
         #expect(titleLabel.textColor == .label)
-
-        let divider = try #require(sut.subviews[1] as? GDSDividerView)
-        #expect(divider.backgroundColor == .separator)
-        #expect(divider.constraints.contains(where: {
-            $0.firstAttribute == .height && $0.constant == 0.5 && $0.isActive
-        }))
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle)"))
         #expect(sut.accessibilityTraits == [])
@@ -78,7 +72,7 @@ struct GDSRowTests {
         )
         let sut = viewModel.createUIView()
         
-        #expect(sut.subviews.count == 5)
+        #expect(sut.subviews.count == 4)
         
         let vetCardImageView = try #require(sut.subviews[0] as? UIImageView)
         let verticalStack = try #require(sut.subviews[1] as? UIStackView)
@@ -107,7 +101,7 @@ struct GDSRowTests {
         let expectedSubtitle = "Test Subtitle"
         let expectedIconAltText = "icon alt text"
         let action = {
-                _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
+                UIApplication.shared.open(URL(string: "https://www.google.com")!)
             }
         let viewModel = GDSRowViewModel(
             title: expectedTitle,
