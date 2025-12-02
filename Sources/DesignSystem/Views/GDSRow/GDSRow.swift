@@ -177,8 +177,6 @@ public final class GDSRow: UIView, ContentView {
             verticalStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: verticalPadding),
             verticalStack.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -verticalPadding),
             verticalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
-
-            // Divider constraints
             
             trailingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DesignSystem.Spacing.default)
         ])

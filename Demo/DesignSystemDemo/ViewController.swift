@@ -33,6 +33,9 @@ class ViewController: UIViewController {
                         action: {
                             _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
                         }
+                    ),
+                    GDSRowViewModel(
+                        title: "Test Title Label 3"
                     )
                 ]),
                 GDSListViewModel(

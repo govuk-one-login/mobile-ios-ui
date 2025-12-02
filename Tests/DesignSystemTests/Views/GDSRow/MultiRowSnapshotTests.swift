@@ -12,7 +12,9 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal)
     }
     
     @Test("Tall row with image, title, subtitle, detail and icon")
@@ -28,7 +30,8 @@ struct MultiRowSnapshotTests {
         let view = viewModel.createUIView()
         
         view.assertSnapshot(
-            in: CGSize(width: 700, height: 500)
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
         )
     }
     
@@ -43,7 +46,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Tall row with title, detail and icon")
@@ -56,7 +62,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Tall row with title and icon")
@@ -68,7 +77,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Regular row with only title")
@@ -80,7 +92,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Regular row with image, title, subtitle, detail and icon")
@@ -96,7 +111,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Regular row with title, subtitle, detail and icon")
@@ -111,7 +129,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Regular row with title, detail and icon")
@@ -125,7 +146,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Regular row with title and icon")
@@ -138,7 +162,10 @@ struct MultiRowSnapshotTests {
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
         
-        view.assertSnapshot()
+        view.assertSnapshot(
+            in: CGSize(width: 390, height: 500),
+            bindToEdges: .horizontal
+        )
     }
     
     @Test("Multiple rows with various styles")
@@ -167,7 +194,8 @@ struct MultiRowSnapshotTests {
         let view = viewModel.createUIView()
         
         view.assertSnapshot(
-            in: CGSize(width: 700, height: 700)
+            in: CGSize(width: 390, height: 700),
+            bindToEdges: .horizontal
         )
     }
 }
