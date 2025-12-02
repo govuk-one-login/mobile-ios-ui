@@ -5,7 +5,8 @@ import UIKit
 
 @MainActor
 struct MultiRowSnapshotTests {
-    
+    // TODO: DCMAW-17162 - Fix tests to show images from the row in snapshots
+
     @Test("Tall row with only title")
     func tallRowWithOnlyTitle() throws {
         let rowViewModel = GDSRowViewModel(titleConfig: StyledText(text: "Test Title Label"))
