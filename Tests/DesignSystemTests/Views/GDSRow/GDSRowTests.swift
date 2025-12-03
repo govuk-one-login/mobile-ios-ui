@@ -76,7 +76,7 @@ struct GDSRowTests {
         let vetCardImageView = try #require(sut.subviews[0] as? UIImageView)
         let verticalStack = try #require(sut.subviews[1] as? UIStackView)
         let detailLabel = try #require(sut.subviews[2] as? UILabel)
-        let iconView = try #require(sut.subviews[3] as? UIImageView)
+        #expect(sut.subviews[3] is UIImageView)
         
         #expect(vetCardImageView.constraints.contains(where: {
             $0.firstAttribute == .width && $0.constant == 42 && $0.isActive
