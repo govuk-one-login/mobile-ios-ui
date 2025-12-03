@@ -197,7 +197,7 @@ public final class GDSRow: UIView, ContentView {
             viewModel.detail,
             viewModel.iconAltText
         ]
-        .compactMap { $0 != nil ? $0 : nil }
+            .compactMap { $0 }
         
         accessibilityLabel = labels.joined(separator: ", ")
     }
