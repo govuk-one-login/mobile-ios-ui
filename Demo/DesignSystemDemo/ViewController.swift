@@ -31,7 +31,7 @@ class ViewController: UIViewController {
                         image: "vetCard",
                         iconConfig: StyledIcon(icon: "arrow.up.right"),
                         action: {
-                            _ = UIApplication.shared.open(URL(string: "https://www.google.com")!)
+                            UIApplication.shared.open(URL(string: "https://www.google.com")!)
                         }
                     ),
                     GDSRowViewModel(
