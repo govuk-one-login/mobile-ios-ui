@@ -4,7 +4,6 @@ import UIKit
 
 @MainActor
 struct GDSRowTests {
-    
     @Test("Initialise a Tall row with only title")
     func basicRowConfig() throws {
         let expectedTitle = "Test Title"

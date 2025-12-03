@@ -4,7 +4,6 @@ import UIKit
 
 @MainActor
 struct GDSMultiRowTests {
-    
     @Test("initiate single row")
     func singleRow() throws {
         let rowViewModel = [GDSRowViewModel(

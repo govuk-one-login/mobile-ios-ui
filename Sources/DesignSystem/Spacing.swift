@@ -1,7 +1,7 @@
 import Foundation
 
 extension DesignSystem {
-    public enum Spacing {        
+    public enum Spacing {
         public static let xSmall: Double = 4
         public static let small: Double = 8
         public static let `default`: Double = 16, medium: Double = 16
