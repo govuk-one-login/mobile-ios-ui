@@ -23,12 +23,12 @@ class ViewController: UIViewController {
                         titleConfig: StyledText(text: "Test Title Label 2", colour: .red),
                         subtitleConfig: StyledText(text: "Test Subtitle"),
                         detailConfig: StyledText(text: "14"),
-                        image: "exampleImage",
+                        image: UIImage(named: "exampleImage"),
                         iconConfig: StyledIcon(icon: "arrow.up.right", colour: .blue, altText: "this is icon alt text")
                     ),
                     GDSRowViewModel(
                         titleConfig: StyledText(text: "Test Title Label 3"),
-                        image: "vetCard",
+                        image: UIImage(named: "vetCard"),
                         iconConfig: StyledIcon(icon: "arrow.up.right"),
                         action: {
                             UIApplication.shared.open(URL(string: "https://www.google.com")!)

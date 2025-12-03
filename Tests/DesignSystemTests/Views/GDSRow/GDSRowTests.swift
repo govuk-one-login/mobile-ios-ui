@@ -65,7 +65,7 @@ struct GDSRowTests {
             titleConfig: StyledText(text: expectedTitle),
             subtitleConfig: StyledText(text: expectedSubtitle),
             detailConfig: StyledText(text: expectedDetail),
-            image: "vetCard",
+            image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
             imageAltText: expectedImageAltText,
             iconConfig: StyledIcon(icon: "chevron.right")
         )

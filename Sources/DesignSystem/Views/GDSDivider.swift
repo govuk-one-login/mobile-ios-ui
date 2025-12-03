@@ -33,7 +33,8 @@ public final class GDSDividerView: UIView, ContentView {
         super.init(frame: .zero)
         
         self.backgroundColor = viewModel.colour
-        self.heightAnchor.constraint(equalToConstant: viewModel.height).isActive = true
+        let scale = 1 / UIScreen.main.scale
+        self.heightAnchor.constraint(equalToConstant: (viewModel.height * scale)).isActive = true
         self.accessibilityIdentifier = "gds-divider-view"
     }
     

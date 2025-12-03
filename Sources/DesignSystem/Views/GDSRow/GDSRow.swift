@@ -71,8 +71,7 @@ public final class GDSRow: UIView, ContentView {
     private lazy var divider: UIView = {
         let divider = GDSDividerView(
             viewModel: GDSDividerViewModel(
-                height: 0.5,
-                colour: .separator
+                colour: DesignSystem.Color.Dividers.default
             )
         )
         divider.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +95,7 @@ public final class GDSRow: UIView, ContentView {
         clipsToBounds = true
         
         if let image = viewModel.image {
-            imageView.image = UIImage(named: image)
+            imageView.image = image
             addSubview(imageView)
         }
         

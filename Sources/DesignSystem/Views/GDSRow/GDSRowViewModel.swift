@@ -12,7 +12,7 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
     var detail: String?
     var detailFont: UIFont?
     var detailColour: UIColor?
-    var image: String?
+    var image: UIImage?
     var imageAltText: String?
     var icon: String?
     var iconFont: UIFont?
@@ -35,7 +35,7 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         titleConfig: StyledText,
         subtitleConfig: StyledText? = nil,
         detailConfig: StyledText? = nil,
-        image: String? = nil,
+        image: UIImage? = nil,
         imageAltText: String? = nil,
         iconConfig: StyledIcon? = nil,
         accessibilityTraits: UIAccessibilityTraits = [],

@@ -31,6 +31,9 @@ let package = Package(
             dependencies: [
                 "DesignSystem",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ],
+            resources: [
+                .process("Resources")
             ]
         )
     ]
