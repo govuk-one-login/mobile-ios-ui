@@ -16,4 +16,13 @@ extension DesignSystem.Spacing {
         public static let betweenRows: Double = 12
         public static let beforeLabel: Double = 20
     }
+    
+    public enum GDSRow {
+        public static let regularWithSubtitle: Double = 4
+        public static let regularWithoutSubtitle: Double = 11
+        public static let tallWithSubtitle: Double = 9
+        public static let tallWithoutSubtitle: Double = 19
+        
+        public static let imageToTitleSpacing: Double = 12
+    }
 }

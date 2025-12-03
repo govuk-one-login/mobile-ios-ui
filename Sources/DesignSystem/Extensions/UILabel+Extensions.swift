@@ -1,12 +1,21 @@
 import UIKit
 
 extension UILabel {
-    convenience public init(colour: UIColor, alignment: NSTextAlignment = .left) {
+    public convenience init(
+        text: String? = nil,
+        font: UIFont? = nil,
+        colour: UIColor? = nil,
+        alignment: NSTextAlignment = .left,
+        lineBreakMode: NSLineBreakMode = .byWordWrapping,
+        numberOfLines: Int = 0
+    ) {
         self.init()
-        self.adjustsFontForContentSizeCategory = true
-        self.numberOfLines = 0
-        self.textAlignment = alignment
-        self.lineBreakMode = .byWordWrapping
+        self.text = text
+        self.font = font
         self.textColor = colour
+        self.textAlignment = alignment
+        self.lineBreakMode = lineBreakMode
+        self.numberOfLines = numberOfLines
+        self.adjustsFontForContentSizeCategory = true
     }
 }

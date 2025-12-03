@@ -221,3 +221,13 @@ extension DesignSystem.Color {
         public static let title: UIColor = DesignSystem.Color.Text.primary
     }
 }
+
+extension DesignSystem.Color {
+    public enum GDSRow {
+        public static let title: UIColor = UIColor.label
+        public static let regSubtitle: UIColor = UIColor.label
+        public static let tallSubtitle: UIColor = UIColor.secondaryLabel
+        public static let detail: UIColor = UIColor.secondaryLabel
+        public static let icon: UIColor = UIColor.tertiaryLabel
+    }
+}
