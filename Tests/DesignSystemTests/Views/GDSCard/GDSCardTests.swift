@@ -40,7 +40,7 @@ struct GDSCardViewTests {
     
     @Test("Check first inner stack view config is correct")
     func innerStackViewConfig() throws {
-        let title = GDSCardTextViewModel(
+        let title = GDSTextViewModel(
             title: "test title",
             verticalPadding: .vertical(.zero),
             horizontalPadding: .horizontal(.zero)
@@ -87,12 +87,12 @@ struct GDSCardViewTests {
     
     @Test("Check the image stack view gets a dismiss button added as a subview and not the title")
     func imageLabelHasDismissButton() throws {
-        let image = GDSCardImageViewModel(
+        let image = GDSImageViewModel(
             image: UIImage(),
             contentMode: .scaleAspectFit,
             accessibilityLabel: "test image"
         )
-        let title = GDSCardTextViewModel(
+        let title = GDSTextViewModel(
             title: "test title",
             titleFont: DesignSystem.Font.Base.title1
         )

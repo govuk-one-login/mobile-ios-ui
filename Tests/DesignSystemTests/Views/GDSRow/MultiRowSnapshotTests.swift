@@ -5,7 +5,6 @@ import UIKit
 
 @MainActor
 struct MultiRowSnapshotTests {
-    // TODO: DCMAW-17162 - Fix tests to show images from the row in snapshots
     @Test("Tall row with only title")
     func tallRowWithOnlyTitle() throws {
         let rowViewModel = GDSRowViewModel(titleConfig: StyledText(text: "Test Title Label"))
@@ -23,7 +22,7 @@ struct MultiRowSnapshotTests {
             titleConfig: StyledText(text: "Test Title Label"),
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
-            image: "vetCard",
+            image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
             iconConfig: StyledIcon(icon: "chevron.right")
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -104,7 +103,7 @@ struct MultiRowSnapshotTests {
             titleConfig: StyledText(text: "Test Title Label"),
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
-            image: "vetCard",
+            image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
             iconConfig: StyledIcon(icon: "chevron.right"),
             type: .regular
         )
@@ -181,12 +180,12 @@ struct MultiRowSnapshotTests {
                 titleConfig: StyledText(text: "Test Title Label 2"),
                 subtitleConfig: StyledText(text: "Test Subtitle Label"),
                 detailConfig: StyledText(text: "14"),
-                image: "exampleImage",
+                image: UIImage(named: "exampleImage", in: .module, compatibleWith: nil),
                 iconConfig: StyledIcon(icon: "arrow.up.right")
             ),
             GDSRowViewModel(
                 titleConfig: StyledText(text: "Test Title Label 3"),
-                image: "vetCard",
+                image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
                 iconConfig: StyledIcon(icon: "arrow.up.right")
             )
         ]
