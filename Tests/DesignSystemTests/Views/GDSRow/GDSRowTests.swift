@@ -99,7 +99,7 @@ struct GDSRowTests {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let expectedIconAltText = "icon alt text"
-        let action = {
+        let closure = {
                 UIApplication.shared.open(URL(string: "https://www.google.com")!)
             }
         let viewModel = GDSRowViewModel(
@@ -107,7 +107,7 @@ struct GDSRowTests {
             subtitleConfig: StyledText(text: expectedSubtitle),
             iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: expectedIconAltText),
             type: .regular,
-            action: action
+            action: .action(closure)
         )
         let sut = viewModel.createUIView()
         

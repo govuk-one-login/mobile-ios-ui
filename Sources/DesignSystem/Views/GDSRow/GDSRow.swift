@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSRow: UIView, ContentView {
+public final class GDSRow: UIControl, ContentView {
     let viewModel: GDSRowViewModel
     
     private lazy var imageView: UIImageView = {
@@ -8,7 +8,7 @@ public final class GDSRow: UIView, ContentView {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isAccessibilityElement = false
-        
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -21,6 +21,7 @@ public final class GDSRow: UIView, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -32,6 +33,7 @@ public final class GDSRow: UIView, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -44,6 +46,7 @@ public final class GDSRow: UIView, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.isUserInteractionEnabled = false
         return label
     }()
     
@@ -54,7 +57,7 @@ public final class GDSRow: UIView, ContentView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
+        imageView.isUserInteractionEnabled = false
         return imageView
     }()
     
@@ -65,6 +68,7 @@ public final class GDSRow: UIView, ContentView {
         stack.alignment = .leading
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.isUserInteractionEnabled = false
         return stack
     }()
     
@@ -75,6 +79,7 @@ public final class GDSRow: UIView, ContentView {
             )
         )
         divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.isUserInteractionEnabled = false
         return divider
     }()
     
@@ -203,17 +208,24 @@ public final class GDSRow: UIView, ContentView {
     
     private func setupActionIfNeeded() {
         if viewModel.action != nil {
-            isUserInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
-            self.addGestureRecognizer(tap)
             accessibilityTraits.insert(.button)
         }
-    }
-    
-    @MainActor
-    @objc private func didTap() {
-        Task {
-            await viewModel.action?()
+        
+        switch viewModel.action {
+        case .action(let closure):
+            let action = UIAction { _ in
+                closure()
+            }
+            addAction(action, for: .touchUpInside)
+        case .asyncAction(let closure):
+            let action = UIAction { _ in
+                Task { @MainActor in
+                    await closure()
+                }
+            }
+            addAction(action, for: .touchUpInside)
+        case .none:
+            break
         }
     }
     
