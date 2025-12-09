@@ -21,7 +21,7 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
     var accessibilityTraits: UIAccessibilityTraits
     var accessibilityHint: String?
     var type: RowType
-    var action: (() async -> Void)?
+    var action: DesignSystem.Action?
     
     public let id = UUID()
     public var verticalPadding: VerticalPadding?
@@ -41,7 +41,7 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         accessibilityTraits: UIAccessibilityTraits = [],
         accessibilityHint: String? = nil,
         type: RowType = .tall,
-        action: (() async -> Void)? = nil
+        action: DesignSystem.Action? = nil
     ) {
         let defaultSubtitleFont = type.subtitleFont
         let defaultSubtitleColour = type.subtitleColour

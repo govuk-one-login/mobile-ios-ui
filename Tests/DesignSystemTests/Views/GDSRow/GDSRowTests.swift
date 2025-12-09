@@ -99,7 +99,7 @@ struct GDSRowTests {
         let expectedTitle = "Test Title"
         let expectedSubtitle = "Test Subtitle"
         let expectedIconAltText = "icon alt text"
-        let action = {
+        let closure = {
                 UIApplication.shared.open(URL(string: "https://www.google.com")!)
             }
         let viewModel = GDSRowViewModel(
@@ -107,7 +107,7 @@ struct GDSRowTests {
             subtitleConfig: StyledText(text: expectedSubtitle),
             iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: expectedIconAltText),
             type: .regular,
-            action: action
+            action: .action(closure)
         )
         let sut = viewModel.createUIView()
         
@@ -126,5 +126,42 @@ struct GDSRowTests {
         #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
         #expect(sut.accessibilityHint == ("Opens in web browser"))
         #expect(sut.accessibilityTraits == [.button])
+    }
+    
+    @Test("Action test")
+    func actionTest() async throws {
+        var didTapRow = false
+        
+        let viewModel = GDSRowViewModel(
+            titleConfig: StyledText(text: "expectedTitle"),
+            subtitleConfig: StyledText(text: "expectedSubtitle"),
+            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: "expectedIconAltText"),
+            type: .regular,
+            action: .action { didTapRow = true }
+        )
+        let sut = viewModel.createUIView() as? GDSRow
+        
+        #expect(didTapRow == false)
+        sut?.sendActions(for: .touchUpInside)
+        #expect(didTapRow)
+    }
+    
+    @Test("Async action test")
+    func asyncActionTest() async throws {
+        var didTapRow = false
+        
+        let viewModel = GDSRowViewModel(
+            titleConfig: StyledText(text: "expectedTitle"),
+            subtitleConfig: StyledText(text: "expectedSubtitle"),
+            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: "expectedIconAltText"),
+            type: .regular,
+            action: .asyncAction { didTapRow = true }
+        )
+        let sut = viewModel.createUIView() as? GDSRow
+        
+        #expect(didTapRow == false)
+        sut?.sendActions(for: .touchUpInside)
+        try await Task.sleep(seconds: 0.1)
+        #expect(didTapRow)
     }
 }
