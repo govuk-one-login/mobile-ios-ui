@@ -17,6 +17,23 @@
           }
         }
       }
+    },
+    "OpenInBrowserHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cy-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agor mewn porwr gwe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens in web browser"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

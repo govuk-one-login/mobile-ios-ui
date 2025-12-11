@@ -48,7 +48,7 @@ public var initialVoiceOverView: UIView {
         return result
     }()
     
-    private(set) lazy var scrollViewInnerStackView: UIStackView = {
+    public private(set) lazy var scrollViewInnerStackView: UIStackView = {
         let result = UIStackView(
             views: viewModel.body.map { configureAsStackView($0) },
             spacing: .zero,
