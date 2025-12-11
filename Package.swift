@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "DesignSystem",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v15)
     ],
@@ -22,6 +23,9 @@ let package = Package(
     targets: [
         .target(
             name: "DesignSystem",
+            resources: [
+                .process("Resources")
+            ],
             plugins: [
                 .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
