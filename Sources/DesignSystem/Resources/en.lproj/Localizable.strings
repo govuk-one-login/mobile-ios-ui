@@ -1,2 +1,7 @@
 //MARK: Row
 "externalLinkAccessibilityHint" = "opens in web browser";
+
+// MARK: List
+"bulletedList" = "bulleted list %@ items";
+"bullet" = "bullet";
+"numberedList" = "numbered list %@ items";
