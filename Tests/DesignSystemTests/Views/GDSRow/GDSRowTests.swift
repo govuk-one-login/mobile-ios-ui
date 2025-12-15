@@ -124,7 +124,7 @@ struct GDSRowTests {
         #expect(iconView.tintColor == .secondaryLabel)
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
-        #expect(sut.accessibilityHint == ("Opens in web browser"))
+        #expect(sut.accessibilityHint == ("opens in web browser"))
         #expect(sut.accessibilityTraits == [.button])
     }
     

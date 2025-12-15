@@ -56,7 +56,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: numberedListViewModel())
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         
-        #expect(firstRow?.accessibilityLabel == "Numbered List 2 items, 1, first numbered list item")
+        #expect(firstRow?.accessibilityLabel == "numbered list 2 items, 1, first numbered list item")
     }
     
     @Test("Accessibility label for second row in numbered List")
@@ -121,7 +121,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
         
-        #expect(firstRow?.accessibilityLabel == "Bulleted List 2 items, bullet, first bulleted list item")
+        #expect(firstRow?.accessibilityLabel == "bulleted list 2 items, bullet, first bulleted list item")
     }
     
     @Test("Accessibility label for second row in bulleted List")
