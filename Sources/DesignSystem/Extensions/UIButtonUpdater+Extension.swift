@@ -5,9 +5,12 @@ extension UIButton {
         var attrString = AttributedString(viewModel.title.forState(self.state))
         attrString.font = viewModel.style.font
         
-//        if UIAccessibility.buttonShapesEnabled {
-//            attrString.underlineStyle = .single
-//        }
+        if #unavailable(iOS 26) {
+            if UIAccessibility.buttonShapesEnabled {
+                attrString.underlineStyle = .single
+            }
+        }
+        
         
         return attrString.addIcon(
             iconStyle: viewModel.icon?.forState(self.state)
