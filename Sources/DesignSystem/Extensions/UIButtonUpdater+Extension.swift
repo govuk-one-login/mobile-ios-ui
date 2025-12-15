@@ -7,7 +7,9 @@ extension UIButton {
         
         if UIAccessibility.buttonShapesEnabled {
             if #available(iOS 26, *) {
-//                attrString.underlineStyle = .single
+                var container = AttributeContainer()
+                container.underlineStyle = .single
+                attrString.setAttributes(container)
             } else {
                 attrString.underlineStyle = .single
             }
