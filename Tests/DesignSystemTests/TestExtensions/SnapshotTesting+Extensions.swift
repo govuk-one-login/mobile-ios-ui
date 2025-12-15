@@ -1,7 +1,7 @@
 import DesignSystem
-//import SnapshotTesting
+import SnapshotTesting
 import SwiftUI
-import UIKit
+//import UIKit
 
 /// UIKit UIView extension
 extension UIView {
@@ -50,25 +50,25 @@ extension UIView {
                 ]
             )
             
-//            SnapshotTesting.assertSnapshot(
-//                of: canvas,
-//                as: .image(
-//                    precision: precision,
-//                    perceptualPrecision: perceptualPrecision,
-//                    size: CGSize(
-//                        width: size.width,
-//                        height: size.height
-//                    ),
-//                    traits: traits
-//                ),
-//                record: recording,
-//                timeout: timeout,
-//                fileID: fileID,
-//                file: filePath,
-//                testName: testName,
-//                line: line,
-//                column: column
-//            )
+            SnapshotTesting.assertSnapshot(
+                of: canvas,
+                as: .image(
+                    precision: precision,
+                    perceptualPrecision: perceptualPrecision,
+                    size: CGSize(
+                        width: size.width,
+                        height: size.height
+                    ),
+                    traits: traits
+                ),
+                record: recording,
+                timeout: timeout,
+                fileID: fileID,
+                file: filePath,
+                testName: testName,
+                line: line,
+                column: column
+            )
         }
     }
 }
@@ -76,7 +76,7 @@ extension UIView {
 /// UIKit UIViewController extension
 extension UIViewController {
     public func assertSnapshot(
-//        devices: [ViewImageConfig] = .standard,
+        devices: [ViewImageConfig] = .standard,
         precision: Float = 0.995,
         perceptualPrecision: Float = 0.98,
         record recording: Bool? = nil,
@@ -96,24 +96,24 @@ extension UIViewController {
         traitCollections.forEach {
             let traits = UITraitCollection(traitsFrom: $0)
 
-//            devices.forEach {
-//                SnapshotTesting.assertSnapshot(
-//                    of: self,
-//                    as: .image(
-//                        on: $0,
-//                        precision: precision,
-//                        perceptualPrecision: perceptualPrecision,
-//                        traits: traits
-//                    ),
-//                    record: recording,
-//                    timeout: timeout,
-//                    fileID: fileID,
-//                    file: filePath,
-//                    testName: testName,
-//                    line: line,
-//                    column: column
-//                )
-//            }
+            devices.forEach {
+                SnapshotTesting.assertSnapshot(
+                    of: self,
+                    as: .image(
+                        on: $0,
+                        precision: precision,
+                        perceptualPrecision: perceptualPrecision,
+                        traits: traits
+                    ),
+                    record: recording,
+                    timeout: timeout,
+                    fileID: fileID,
+                    file: filePath,
+                    testName: testName,
+                    line: line,
+                    column: column
+                )
+            }
         }
     }
 }
@@ -163,9 +163,9 @@ extension View {
     }
 }
 
-//extension [ViewImageConfig] {
-//    public static let standard: [ViewImageConfig] = [
-//        .iPhone13(.portrait),
-//        .iPhone13(.landscape)
-//    ]
-//}
+extension [ViewImageConfig] {
+    public static let standard: [ViewImageConfig] = [
+        .iPhone13(.portrait),
+        .iPhone13(.landscape)
+    ]
+}
