@@ -41,7 +41,7 @@ class ViewController: UIViewController {
                     )
                 ]),
                 GDSListViewModel(
-                    title: GDSLocalisedString(stringKey: "externalLinkAccessibilityHint"),
+                    title: "Numbered List",
                     titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                     items: [
                         "take a photo",
