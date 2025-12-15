@@ -23,7 +23,7 @@ jobs:
 
       - name: Xcode select
         run: |
-          sudo xcode-select -s /Applications/Xcode_16.4.app
+          sudo xcode-select -s /Applications/Xcode_26.1.app
 
       - name: Install and configure dependencies
         run: |
@@ -36,7 +36,7 @@ jobs:
           -workspace "DesignSystemDemo.xcworkspace" \
           -scheme DesignSystemDemo test \
           -skipPackagePluginValidation \
-          -destination "platform=iOS Simulator,name=iPhone 16,OS=18.6" \
+          -destination "platform=iOS Simulator,name=iPhone 17,OS=26.1" \
           -enableCodeCoverage YES \
           -resultBundlePath result.xcresult | xcbeautify
 
@@ -57,7 +57,7 @@ jobs:
     steps:
       - name: Xcode select
         run: |
-          sudo xcode-select -s /Applications/Xcode_26.0.app
+          sudo xcode-select -s /Applications/Xcode_26.1.app
             
       - name: Increment version
         id: versioning
