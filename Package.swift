@@ -14,10 +14,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMajor(from: "0.58.2")),
-//        .package(
-//            url: "https://github.com/pointfreeco/swift-snapshot-testing",
-//            from: "1.12.0"
-//        )
+        .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            from: "1.18.7"
+        )
     ],
     targets: [
         .target(
@@ -30,7 +30,7 @@ let package = Package(
             name: "DesignSystemTests",
             dependencies: [
                 "DesignSystem",
-//                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
             resources: [
                 .process("Resources")
