@@ -4,16 +4,7 @@ extension UIButton {
     private func titleWithIcon(viewModel: GDSButtonViewModel) -> AttributedString {
         var attrString = AttributedString(viewModel.title.forState(self.state))
         attrString.font = viewModel.style.font
-        
-//        if UIAccessibility.buttonShapesEnabled {
-//            if #available(iOS 26, *) {
-////                var container = AttributeContainer()
-////                container.underlineStyle = .single
-////                attrString.setAttributes(container)
-//            } else {
-//                attrString.underlineStyle = .single
-//            }
-//        }
+        attrString.underlineStyle = .single
         
         return attrString.addIcon(
             iconStyle: viewModel.icon?.forState(self.state)
