@@ -3,12 +3,16 @@ import UIKit
 public final class GDSRow: UIControl, ContentView {
     let viewModel: GDSRowViewModel
     
+    private var enableInteration: Bool {
+        viewModel.action == nil
+    }
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isAccessibilityElement = false
-        imageView.isUserInteractionEnabled = false
+        imageView.isUserInteractionEnabled = enableInteration
         return imageView
     }()
     
@@ -21,7 +25,7 @@ public final class GDSRow: UIControl, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.isUserInteractionEnabled = false
+        label.isUserInteractionEnabled = enableInteration
         return label
     }()
     
@@ -33,7 +37,7 @@ public final class GDSRow: UIControl, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        label.isUserInteractionEnabled = false
+        label.isUserInteractionEnabled = enableInteration
         return label
     }()
     
@@ -46,7 +50,7 @@ public final class GDSRow: UIControl, ContentView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.isUserInteractionEnabled = false
+        label.isUserInteractionEnabled = enableInteration
         return label
     }()
     
@@ -57,7 +61,7 @@ public final class GDSRow: UIControl, ContentView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        imageView.isUserInteractionEnabled = false
+        imageView.isUserInteractionEnabled = enableInteration
         return imageView
     }()
     
@@ -68,7 +72,7 @@ public final class GDSRow: UIControl, ContentView {
         stack.alignment = .leading
         stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.isUserInteractionEnabled = false
+        stack.isUserInteractionEnabled = enableInteration
         return stack
     }()
     
@@ -79,7 +83,7 @@ public final class GDSRow: UIControl, ContentView {
             )
         )
         divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.isUserInteractionEnabled = false
+        divider.isUserInteractionEnabled = enableInteration
         return divider
     }()
     
@@ -90,6 +94,8 @@ public final class GDSRow: UIControl, ContentView {
         setupConstraints()
         setupAccessibility()
         setupActionIfNeeded()
+        
+        self.isEnabled = viewModel.action != nil
     }
     
     required init?(coder: NSCoder) {
@@ -123,6 +129,8 @@ public final class GDSRow: UIControl, ContentView {
             subtitleLabel.text = subtitle
             verticalStack.addArrangedSubview(subtitleLabel)
         }
+        
+        
     }
     
     private func setupConstraints() {
