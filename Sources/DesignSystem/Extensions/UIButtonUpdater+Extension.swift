@@ -7,7 +7,7 @@ extension UIButton {
         
         if #unavailable(iOS 26) {
             if UIAccessibility.buttonShapesEnabled {
-                attrString.underlineStyle = .single
+//                attrString.underlineStyle = .single
             }
         }
         
