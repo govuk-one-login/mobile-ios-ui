@@ -30,7 +30,7 @@ let package = Package(
             name: "DesignSystemTests",
             dependencies: [
                 "DesignSystem",
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+//                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
             resources: [
                 .process("Resources")
