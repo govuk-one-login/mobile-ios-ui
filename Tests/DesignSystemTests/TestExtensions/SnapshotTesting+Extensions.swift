@@ -1,7 +1,6 @@
 import DesignSystem
 import SnapshotTesting
 import SwiftUI
-import UIKit
 
 /// UIKit UIView extension
 extension UIView {

@@ -16,7 +16,7 @@ let package = Package(
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMajor(from: "0.58.2")),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            from: "1.12.0"
+            from: "1.18.7"
         )
     ],
     targets: [

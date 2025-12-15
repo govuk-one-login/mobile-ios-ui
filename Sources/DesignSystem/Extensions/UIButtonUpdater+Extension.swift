@@ -6,7 +6,7 @@ extension UIButton {
         attrString.font = viewModel.style.font
         
         if UIAccessibility.buttonShapesEnabled {
-            attrString.underlineStyle = .single
+            attrString.uiKit.underlineStyle = .single
         }
         
         return attrString.addIcon(
