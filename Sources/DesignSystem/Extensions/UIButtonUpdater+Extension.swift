@@ -6,7 +6,11 @@ extension UIButton {
         attrString.font = viewModel.style.font
         
         if UIAccessibility.buttonShapesEnabled {
-            attrString.underlineStyle = .single
+            if #available(iOS 26, *) {
+//                attrString.underlineStyle = .single
+            } else {
+                attrString.underlineStyle = .single
+            }
         }
         
         return attrString.addIcon(
