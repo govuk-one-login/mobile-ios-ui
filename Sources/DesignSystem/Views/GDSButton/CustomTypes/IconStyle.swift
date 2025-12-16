@@ -31,7 +31,15 @@ public struct IconStyle: Sendable, Equatable {
 }
 
 extension IconStyle {
-    public static let arrowUpRight: Self = IconStyle(icon: "arrow.up.right", position: .trailing, accessibilityHint: "opens in web browser")
+    public static let arrowUpRight: Self = IconStyle(
+        icon: "arrow.up.right",
+        position: .trailing,
+        accessibilityHint: GDSLocalisedString(
+            stringKey: "externalLinkAccessibilityHint",
+            bundle: .designSystem
+        ).value
+    )
+    
     public static let qrCode: Self = IconStyle(icon: "qrcode", position: .leading)
     public static let xMark: Self = IconStyle(icon: "xmark", position: .leading, accessibilityHint: "close")
 }

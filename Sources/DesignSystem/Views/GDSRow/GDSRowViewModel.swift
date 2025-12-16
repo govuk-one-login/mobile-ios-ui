@@ -39,14 +39,12 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         imageAltText: String? = nil,
         iconConfig: StyledIcon? = nil,
         accessibilityTraits: UIAccessibilityTraits = [],
-        accessibilityHint: GDSLocalisedString? = nil,
         type: RowType = .tall,
         action: DesignSystem.Action? = nil
     ) {
         let defaultSubtitleFont = type.subtitleFont
         let defaultSubtitleColour = type.subtitleColour
-        let openLinkHint = iconConfig?.icon == "arrow.up.right" ? GDSLocalisedString(stringKey: "externalLinkAccessibilityHint", bundle: .designSystem) : nil
-        
+
         self.title = titleConfig.text
         self.titleFont = titleConfig.font ?? DesignSystem.Font.Base.body
         self.titleColour = titleConfig.colour ?? DesignSystem.Color.GDSRow.title
@@ -63,7 +61,6 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         self.iconColour = iconConfig?.colour
         self.iconAltText = iconConfig?.altText
         self.accessibilityTraits = accessibilityTraits
-        self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
         self.action = action
     }
