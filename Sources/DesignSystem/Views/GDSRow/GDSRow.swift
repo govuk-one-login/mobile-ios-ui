@@ -129,16 +129,21 @@ public final class GDSRow: UIControl, ContentView {
             subtitleLabel.text = subtitle
             verticalStack.addArrangedSubview(subtitleLabel)
         }
-        
-        
     }
     
     private func setupConstraints() {
         let hasImage = viewModel.image != nil
         let hasDetail = viewModel.detail != nil
         let hasIcon = viewModel.icon != nil
+        let verticalPaddingToUse: CGFloat
         
-        let verticalPadding = viewModel.verticalPaddingValue
+        if case .vertical(let value) = viewModel.verticalPadding {
+            verticalPaddingToUse = value
+        } else {
+            verticalPaddingToUse = viewModel.verticalPaddingValue
+        }
+        
+        let verticalPadding = verticalPaddingToUse
         let minRowHeight = viewModel.type.minRowHeight
         
         let leadingView: UIView = {
