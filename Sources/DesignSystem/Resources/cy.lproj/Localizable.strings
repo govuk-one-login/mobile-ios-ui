@@ -1,0 +1,7 @@
+//MARK: Row
+"externalLinkAccessibilityHint" = "Agor mewn porwr gwe";
+
+// MARK: List
+"bulletedList" = "rhestr bwledi %@ eitem";
+"bullet" = "bwledt";
+"numberedList" = "rhestr wedi'i rhifo %@ o eitemau";

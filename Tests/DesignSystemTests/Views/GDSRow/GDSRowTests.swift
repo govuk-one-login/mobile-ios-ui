@@ -35,7 +35,7 @@ struct GDSRowTests {
         let viewModel = GDSRowViewModel(
             titleConfig: StyledText(text: expectedTitle),
             subtitleConfig: StyledText(text: expectedSubtitle),
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let sut = viewModel.createUIView()
         
@@ -67,7 +67,7 @@ struct GDSRowTests {
             detailConfig: StyledText(text: expectedDetail),
             image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
             imageAltText: expectedImageAltText,
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let sut = viewModel.createUIView()
         
@@ -105,7 +105,7 @@ struct GDSRowTests {
         let viewModel = GDSRowViewModel(
             titleConfig: StyledText(text: expectedTitle),
             subtitleConfig: StyledText(text: expectedSubtitle),
-            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: expectedIconAltText),
+            iconStyle: IconStyle(icon: "arrow.up.right", colour: .secondaryLabel, accessibilityHint: expectedIconAltText),
             type: .regular,
             action: .action(closure)
         )
@@ -124,7 +124,7 @@ struct GDSRowTests {
         #expect(iconView.tintColor == .secondaryLabel)
         
         #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
-        #expect(sut.accessibilityHint == ("Opens in web browser"))
+        #expect(sut.accessibilityHint == ("icon alt text"))
         #expect(sut.accessibilityTraits == [.button])
     }
     
@@ -135,7 +135,7 @@ struct GDSRowTests {
         let viewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "expectedTitle"),
             subtitleConfig: StyledText(text: "expectedSubtitle"),
-            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: "expectedIconAltText"),
+            iconStyle: IconStyle(icon: "arrow.up.right", colour: .secondaryLabel, accessibilityHint: "expectedIconAltText"),
             type: .regular,
             action: .action { didTapRow = true }
         )
@@ -153,7 +153,7 @@ struct GDSRowTests {
         let viewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "expectedTitle"),
             subtitleConfig: StyledText(text: "expectedSubtitle"),
-            iconConfig: StyledIcon(icon: "arrow.up.right", colour: .secondaryLabel, altText: "expectedIconAltText"),
+            iconStyle: IconStyle(icon: "arrow.up.right", colour: .secondaryLabel, accessibilityHint: "expectedIconAltText"),
             type: .regular,
             action: .asyncAction { didTapRow = true }
         )

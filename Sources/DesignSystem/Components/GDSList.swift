@@ -130,26 +130,27 @@ public final class GDSList: UIView, ContentView {
                 let label = contentLabels(for: item)
                 let row = createRow(marker: marker, label: label)
                 
+                let itemCount = String(viewModel.items.count)
+                
                 let summaryLabel = GDSLocalisedString(
                     stringKey: viewModel.style == .numbered
-                    ? "Numbered List"
-                    : "Bulleted List",
-                    bundle: .module
+                    ? "numberedList"
+                    : "bulletedList",
+                    variableKeys: [itemCount],
+                    bundle: .designSystem
                 )
-                
-                let itemCount = "\(viewModel.items.count) items"
                 
                 let number = NSLocalizedString(
                     key: String(rowNumber),
                     bundle: .module
                 )
                 let markerLabel = viewModel.style == .numbered
-                    ? number : "bullet"
+                ? number : GDSLocalisedString(stringKey: "bullet", bundle: .designSystem).value
                 
                 let listLabel = "\(markerLabel), \(item.value)"
                 
                 row.accessibilityLabel = index == 0
-                ? "\(summaryLabel) \(itemCount), \(listLabel)"
+                ? "\(summaryLabel), \(listLabel)"
                 : listLabel
                 
                 row.accessibilityIdentifier = viewModel.style == .numbered

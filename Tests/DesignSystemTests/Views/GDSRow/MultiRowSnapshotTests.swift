@@ -23,7 +23,7 @@ struct MultiRowSnapshotTests {
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
             image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
@@ -40,7 +40,7 @@ struct MultiRowSnapshotTests {
             titleConfig: StyledText(text: "Test Title Label"),
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
@@ -56,7 +56,7 @@ struct MultiRowSnapshotTests {
         let rowViewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "Test Title Label"),
             detailConfig: StyledText(text: "20"),
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
@@ -71,7 +71,7 @@ struct MultiRowSnapshotTests {
     func tallRowWithTitleAndIcon() throws {
         let rowViewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "Test Title Label"),
-            iconConfig: StyledIcon(icon: "chevron.right")
+            iconStyle: IconStyle(icon: "chevron.right")
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
         let view = viewModel.createUIView()
@@ -104,7 +104,7 @@ struct MultiRowSnapshotTests {
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
             image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
-            iconConfig: StyledIcon(icon: "chevron.right"),
+            iconStyle: IconStyle(icon: "chevron.right"),
             type: .regular
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -122,7 +122,7 @@ struct MultiRowSnapshotTests {
             titleConfig: StyledText(text: "Test Title Label"),
             subtitleConfig: StyledText(text: "Test Subtitle Label"),
             detailConfig: StyledText(text: "20"),
-            iconConfig: StyledIcon(icon: "chevron.right"),
+            iconStyle: IconStyle(icon: "chevron.right"),
             type: .regular
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -139,7 +139,7 @@ struct MultiRowSnapshotTests {
         let rowViewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "Test Title Label"),
             detailConfig: StyledText(text: "20"),
-            iconConfig: StyledIcon(icon: "chevron.right"),
+            iconStyle: IconStyle(icon: "chevron.right"),
             type: .regular
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -155,7 +155,7 @@ struct MultiRowSnapshotTests {
     func regularRowWithTitleAndIcon() throws {
         let rowViewModel = GDSRowViewModel(
             titleConfig: StyledText(text: "Test Title Label"),
-            iconConfig: StyledIcon(icon: "chevron.right"),
+            iconStyle: IconStyle(icon: "chevron.right"),
             type: .regular
         )
         let viewModel = GDSMultiRowViewModel(rows: [rowViewModel])
@@ -173,7 +173,7 @@ struct MultiRowSnapshotTests {
             GDSRowViewModel(
                 titleConfig: StyledText(text: "Test Title Label 1"),
                 detailConfig: StyledText(text: "20"),
-                iconConfig: StyledIcon(icon: "chevron.right"),
+                iconStyle: IconStyle(icon: "chevron.right"),
                 type: .regular
             ),
             GDSRowViewModel(
@@ -181,12 +181,12 @@ struct MultiRowSnapshotTests {
                 subtitleConfig: StyledText(text: "Test Subtitle Label"),
                 detailConfig: StyledText(text: "14"),
                 image: UIImage(named: "exampleImage", in: .module, compatibleWith: nil),
-                iconConfig: StyledIcon(icon: "arrow.up.right")
+                iconStyle: IconStyle(icon: "arrow.up.right")
             ),
             GDSRowViewModel(
                 titleConfig: StyledText(text: "Test Title Label 3"),
                 image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
-                iconConfig: StyledIcon(icon: "arrow.up.right")
+                iconStyle: IconStyle(icon: "arrow.up.right")
             )
         ]
         let viewModel = GDSMultiRowViewModel(rows: rowViewModels)

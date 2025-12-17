@@ -14,12 +14,8 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
     var detailColour: UIColor?
     var image: UIImage?
     var imageAltText: String?
-    var icon: String?
-    var iconFont: UIFont?
-    var iconColour: UIColor?
-    var iconAltText: String?
+    var iconStyle: IconStyle?
     var accessibilityTraits: UIAccessibilityTraits
-    var accessibilityHint: String?
     var type: RowType
     var action: DesignSystem.Action?
     
@@ -37,16 +33,14 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         detailConfig: StyledText? = nil,
         image: UIImage? = nil,
         imageAltText: String? = nil,
-        iconConfig: StyledIcon? = nil,
+        iconStyle: IconStyle? = nil,
         accessibilityTraits: UIAccessibilityTraits = [],
-        accessibilityHint: String? = nil,
         type: RowType = .tall,
         action: DesignSystem.Action? = nil
     ) {
         let defaultSubtitleFont = type.subtitleFont
         let defaultSubtitleColour = type.subtitleColour
-        let openLinkHint = iconConfig?.icon == "arrow.up.right" ? "Opens in web browser" : nil
-        
+
         self.title = titleConfig.text
         self.titleFont = titleConfig.font ?? DesignSystem.Font.Base.body
         self.titleColour = titleConfig.colour ?? DesignSystem.Color.GDSRow.title
@@ -58,12 +52,8 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         self.detailColour = detailConfig?.colour ?? DesignSystem.Color.GDSRow.detail
         self.image = image
         self.imageAltText = imageAltText
-        self.icon = iconConfig?.icon
-        self.iconFont = iconConfig?.font
-        self.iconColour = iconConfig?.colour
-        self.iconAltText = iconConfig?.altText
+        self.iconStyle = iconStyle
         self.accessibilityTraits = accessibilityTraits
-        self.accessibilityHint = accessibilityHint ?? openLinkHint
         self.type = type
         self.action = action
     }
