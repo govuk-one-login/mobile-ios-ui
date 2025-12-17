@@ -29,7 +29,7 @@ class ViewController: UIViewController {
                     GDSRowViewModel(
                         titleConfig: StyledText(text: "Test Title Label 3"),
                         image: UIImage(named: "vetCard"),
-                        iconStyle: IconStyle(icon: "arrow.up.right"),
+                        iconStyle: .arrowUpRight,
                         action: .action(
                             {
                                 UIApplication.shared.open(URL(string: "https://www.google.com")!)
