@@ -2,21 +2,29 @@ import UIKit
 
 public struct IconStyle: Sendable, Equatable {
     public let icon: String
+    public let font: UIFont?
+    public let colour: UIColor?
     public let position: SymbolPosition
     public let accessibilityHint: String?
     
     public init(
         icon: String,
+        font: UIFont? = nil,
+        colour: UIColor? = nil,
         position: SymbolPosition,
         accessibilityHint: String? = nil
     ) {
         self.icon = icon
+        self.font = font
+        self.colour = colour
         self.position = position
         self.accessibilityHint = accessibilityHint
     }
     
     public init?(
         icon: String?,
+        font: UIFont? = nil,
+        colour: UIColor? = nil,
         position: SymbolPosition? = nil,
         accessibilityHint: String? = nil
     ) {
@@ -25,8 +33,9 @@ public struct IconStyle: Sendable, Equatable {
         } else { return nil }
         
         self.position = position ?? .trailing
-        
         self.accessibilityHint = accessibilityHint
+        self.font = font
+        self.colour = colour
     }
 }
 

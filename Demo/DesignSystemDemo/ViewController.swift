@@ -16,7 +16,7 @@ class ViewController: UIViewController {
                     GDSRowViewModel(
                         titleConfig: StyledText(text: "Test Title Label 1"),
                         detailConfig: StyledText(text: "20"),
-                        iconConfig: StyledIcon(icon: "chevron.right"),
+                        iconStyle: IconStyle(icon: "chevron.right"),
                         type: .regular
                     ),
                     GDSRowViewModel(
@@ -24,12 +24,12 @@ class ViewController: UIViewController {
                         subtitleConfig: StyledText(text: "Test Subtitle"),
                         detailConfig: StyledText(text: "14"),
                         image: UIImage(named: "exampleImage"),
-                        iconConfig: StyledIcon(icon: "arrow.up.right", colour: .blue, altText: "this is icon alt text")
+                        iconStyle: IconStyle(icon: "arrow.up.right", colour: .blue, accessibilityHint: "this is icon alt text")
                     ),
                     GDSRowViewModel(
                         titleConfig: StyledText(text: "Test Title Label 3"),
                         image: UIImage(named: "vetCard"),
-                        iconConfig: StyledIcon(icon: "arrow.up.right"),
+                        iconStyle: IconStyle(icon: "arrow.up.right"),
                         action: .action(
                             {
                                 UIApplication.shared.open(URL(string: "https://www.google.com")!)

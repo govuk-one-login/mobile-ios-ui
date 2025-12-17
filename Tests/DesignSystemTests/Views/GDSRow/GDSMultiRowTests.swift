@@ -9,7 +9,7 @@ struct GDSMultiRowTests {
         let rowViewModel = [GDSRowViewModel(
             titleConfig: StyledText(text: "Inactive documents"),
             detailConfig: StyledText(text: "20"),
-            iconConfig: StyledIcon(icon: "chevron.right"),
+            iconStyle: IconStyle(icon: "chevron.right"),
             type: .regular
         )]
         let viewModel = GDSMultiRowViewModel(rows: rowViewModel)
@@ -26,7 +26,7 @@ struct GDSMultiRowTests {
             GDSRowViewModel(
                 titleConfig: StyledText(text: "Inactive documents"),
                 detailConfig: StyledText(text: "20"),
-                iconConfig: StyledIcon(icon: "chevron.right"),
+                iconStyle: IconStyle(icon: "chevron.right"),
                 type: .regular
             ),
             GDSRowViewModel(
@@ -34,12 +34,12 @@ struct GDSMultiRowTests {
                 subtitleConfig: StyledText(text: "Inactive since 30 October 2025"),
                 detailConfig: StyledText(text: "14"),
                 image: UIImage(named: "exampleImage", in: .module, compatibleWith: nil),
-                iconConfig: StyledIcon(icon: "arrow.up.right")
+                iconStyle: IconStyle(icon: "arrow.up.right")
             ),
             GDSRowViewModel(
                 titleConfig: StyledText(text: "UK driving licence"),
                 image: UIImage(named: "vetCard", in: .module, compatibleWith: nil),
-                iconConfig: StyledIcon(icon: "arrow.up.right")
+                iconStyle: IconStyle(icon: "arrow.up.right")
             )
         ]
             
