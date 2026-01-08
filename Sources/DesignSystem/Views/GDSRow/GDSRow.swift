@@ -253,7 +253,7 @@ public final class GDSRow: UIControl, ContentView {
     private func setupAccessibility() {
         isAccessibilityElement = true
         accessibilityTraits = viewModel.accessibilityTraits
-        accessibilityHint = viewModel.iconStyle?.accessibilityHint
+//        accessibilityHint = viewModel.iconStyle?.accessibilityHint
         
         let labels = [
             viewModel.imageAltText,
