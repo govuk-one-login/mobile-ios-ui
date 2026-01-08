@@ -49,8 +49,16 @@ public var initialVoiceOverView: UIView {
     }()
     
     public private(set) lazy var scrollViewInnerStackView: UIStackView = {
+        // Use bodyWithIcon only if the viewModel is a GDSErrorScreenViewModel
+        let contentViews: [any ContentViewModel]
+        if let errorVM = viewModel as? GDSErrorScreenViewModel {
+            contentViews = errorVM.bodyWithIcon
+        } else {
+            contentViews = viewModel.body
+        }
+        
         let result = UIStackView(
-            views: viewModel.body.map { configureAsStackView($0) },
+            views: contentViews.map { configureAsStackView($0) },
             spacing: .zero,
             alignment: viewModel.screenStyle.horizontalAlignment,
             distribution: .equalSpacing

@@ -36,10 +36,10 @@ struct GDSScreenViewModelTests {@Test()
             contentMode: .scaleAspectFit
         )
         let viewModel = TestGDSErrorScreenViewModel(
-            icon: gdsImageViewModel,
             body: [],
             movableFooter: [],
-            footer: []
+            footer: [],
+            errorIcon: gdsImageViewModel
         )
         let sut = GDSScreen(viewModel: viewModel)
         
@@ -80,15 +80,16 @@ struct TestGDSLeftAlignedScreenViewModel: GDSLeftAlignedViewModel {
 }
 
 struct TestGDSErrorScreenViewModel: GDSErrorScreenViewModel {
-    let screenStyle: GDSScreenStyle
     let body: [any ContentViewModel]
     let movableFooter: [any ContentViewModel]
     let footer: [any ContentViewModel]
+    let errorIcon: GDSImageViewModel?
     
-    let rightBarButtonTitle: GDSLocalisedString?
-    let backButtonTitle: GDSLocalisedString?
-    let backButtonIsHidden: Bool
+    let screenStyle: GDSScreenStyle = .error
+    let rightBarButtonTitle: GDSLocalisedString? = nil
+    let backButtonTitle: GDSLocalisedString? = nil
+    let backButtonIsHidden: Bool = true
     
-    let didAppear: DesignSystem.Action?
-    let didDismiss: DesignSystem.Action?
+    let didAppear: DesignSystem.Action? = nil
+    let didDismiss: DesignSystem.Action? = nil
 }
