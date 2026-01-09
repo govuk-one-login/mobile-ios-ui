@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
-                ErrorScreenIcon.error,
+                GDSErrorScreenIconViewModel(icon: .error),
                 GDSTextViewModel(
                     title: "There is a problem",
                     titleFont: DesignSystem.Font.Base.title1Bold,

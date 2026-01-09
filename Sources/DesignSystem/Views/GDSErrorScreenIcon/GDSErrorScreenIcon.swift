@@ -1,29 +1,23 @@
-public enum ErrorScreenIcon: ContentViewModel {
-    case error
-    case warning
+import UIKit
+
+public final class GDSErrorScreenIcon: UIImageView, ContentView {
     
-    public typealias ViewType = ErrorScreenIconView
+    public init(viewModel: GDSErrorScreenIconViewModel) {
+        super.init(frame: .zero)
+        
+        let image = UIImage(systemName: viewModel.icon.iconImage)
+        self.image = image
+        self.tintColor = DesignSystem.Color.Icons.default
+        self.contentMode = .scaleAspectFit
+        
+        heightAnchor.constraint(equalToConstant: 64).isActive = true
+        
+        isAccessibilityElement = true
+        accessibilityLabel = viewModel.icon.voiceoverPrefix
+        
+        accessibilityIdentifier = "error-screen-icon"
+    }
     
-    public var verticalPadding: VerticalPadding? {
-        .vertical(DesignSystem.Spacing.default)
-    }
-    public var horizontalPadding: HorizontalPadding? {
-        .horizontal(DesignSystem.Spacing.default)
-    }
-    
-    var icon: String {
-        switch self {
-        case .error, .warning:
-            "exclamationmark.circle"
-        }
-    }
-    
-    var voiceoverPrefix: String {
-        switch self {
-        case .error:
-            NSLocalizedString(key: "voiceOverErrorPrefix", bundle: .designSystem)
-        case .warning:
-            NSLocalizedString(key: "voiceOverWarningPrefix", bundle: .designSystem)
-        }
-    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError() }
 }
