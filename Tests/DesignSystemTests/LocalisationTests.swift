@@ -58,4 +58,38 @@ struct LocalisationTests {
         
         #expect(key.getWelshString() == welsh)
     }
+    
+    @Test
+    func errorIconLocalisation() async throws {
+        let key = "voiceOverErrorPrefix"
+        let english = "Error"
+        let welsh = "Gwall"
+        
+        #expect(
+            GDSLocalisedString(
+                stringKey: key,
+                variableKeys: ["1"],
+                bundle: .designSystem
+            ).value == english
+        )
+        
+        #expect(key.getWelshString() == welsh)
+    }
+    
+    @Test
+    func warningIconLocalisation() async throws {
+        let key = "voiceOverWarningPrefix"
+        let english = "Warning"
+        let welsh = "Rhybudd"
+        
+        #expect(
+            GDSLocalisedString(
+                stringKey: key,
+                variableKeys: ["1"],
+                bundle: .designSystem
+            ).value == english
+        )
+        
+        #expect(key.getWelshString() == welsh)
+    }
 }

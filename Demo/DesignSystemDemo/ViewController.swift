@@ -12,6 +12,19 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
+                ErrorScreenIcon.error,
+                GDSTextViewModel(
+                    title: "There is a problem",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .center,
+                    verticalPadding: .bottom(8)
+                ),
+                GDSTextViewModel(
+                    title: "Please check your internet connection and try again.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .center,
+                    verticalPadding: .bottom(8)
+                ),
                 GDSMultiRowViewModel(rows: [
                     GDSRowViewModel(
                         titleConfig: StyledText(text: "Test Title Label 1"),
