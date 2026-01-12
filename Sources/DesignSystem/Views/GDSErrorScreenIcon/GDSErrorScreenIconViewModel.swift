@@ -1,8 +1,8 @@
-public enum ErrorScreenIcon: String {
+public enum ErrorScreenIcon {
     case error
     case warning
     
-    var iconImage: String {
+    var iconName: String {
         switch self {
         case .error, .warning:
             "exclamationmark.circle"

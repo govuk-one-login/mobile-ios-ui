@@ -5,7 +5,7 @@ public final class GDSErrorScreenIcon: UIImageView, ContentView {
     public init(viewModel: GDSErrorScreenIconViewModel) {
         super.init(frame: .zero)
         
-        let image = UIImage(systemName: viewModel.icon.iconImage)
+        let image = UIImage(systemName: viewModel.icon.iconName)
         self.image = image
         self.tintColor = DesignSystem.Color.Icons.default
         self.contentMode = .scaleAspectFit

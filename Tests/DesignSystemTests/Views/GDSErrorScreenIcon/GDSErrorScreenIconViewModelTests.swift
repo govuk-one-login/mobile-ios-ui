@@ -7,14 +7,14 @@ struct GDSErrorScreenIconViewModelTests {
     func usesCorrectErrorIconName() {
         let errorIcon = GDSErrorScreenIconViewModel(icon: .error)
 
-        #expect(errorIcon.icon.iconImage == "exclamationmark.circle")
+        #expect(errorIcon.icon.iconName == "exclamationmark.circle")
     }
 
     @Test("sets correct warning icon")
     func usesCorrectWarningIconName() {
         let errorIcon = GDSErrorScreenIconViewModel(icon: .warning)
 
-        #expect(errorIcon.icon.iconImage == "exclamationmark.circle")
+        #expect(errorIcon.icon.iconName == "exclamationmark.circle")
     }
 
     @Test("sets correct error icon voiceover prefix")
