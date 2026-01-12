@@ -1,3 +1,7 @@
+//Mark: Generic string
+"voiceOverErrorPrefix" = "Gwall";
+"voiceOverWarningPrefix" = "Rhybudd";
+
 //MARK: Row
 "externalLinkAccessibilityHint" = "Agor mewn porwr gwe";
 

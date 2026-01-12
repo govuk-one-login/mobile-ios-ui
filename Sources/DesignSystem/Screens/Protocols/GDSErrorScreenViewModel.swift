@@ -1,3 +1,5 @@
+@available(*, deprecated, message: "Use GDSScreenViewModel instead with GDSErrorScreenIcon")
+
 public protocol GDSErrorScreenViewModel: BaseViewModel, GDSScreenViewModel {
     init(
         screenStyle: GDSScreenStyle,
