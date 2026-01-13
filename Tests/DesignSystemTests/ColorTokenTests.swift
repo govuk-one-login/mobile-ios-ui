@@ -46,6 +46,15 @@ struct ColorTokenTests {
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
     
+    @Test func destructiveNativeTextHighlighted() async throws {
+        let expectedLightColor = DesignSystem.Color.Base.red4
+        let expectedDarkColor = DesignSystem.Color.Base.red5
+        let sut = DesignSystem.Color.Buttons.destructiveNativeTextHighlighted
+        
+        #expect(sut.lightColor.cgColor == expectedLightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedDarkColor.cgColor)
+    }
+    
     // MARK: - Background Tokens
 
     @Test func test_ColorToken_Background_Card() async throws {
@@ -160,8 +169,7 @@ struct ColorTokenTests {
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
-    
-    
+        
     @Test func test_ColorToken_Buttons_secondaryForeground() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
         let expectedDarkColor = DesignSystem.Color.Base.green3
@@ -203,7 +211,7 @@ struct ColorTokenTests {
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
-    
+
     @Test func test_ColorToken_Buttons_destructiveForegroundDisabled() async throws {
         let expectedColor = DesignSystem.Color.Base.charcoal1
         let sut = DesignSystem.Color.Buttons.destructiveForegroundDisabled

@@ -97,6 +97,10 @@ extension DesignSystem {
                 light: Color.Base.red1,
                 dark: Color.Base.red2
             )
+            public static let destructiveNativeTextHighlighted = UIColor(
+                light: Color.Base.red4,
+                dark: Color.Base.red5
+            )
         }
         
         public enum Icons {
@@ -187,6 +191,7 @@ extension DesignSystem {
             public static let red2 = UIColor.fromHex("#FF6961")
             public static let red3 = UIColor.fromHex("#55150B")
             public static let red4 = UIColor.fromHex("#9F2815")
+            public static let red5 = UIColor.fromHex("#CC544E")
             
             public static let pink1 = UIColor.fromHex("#F7DEE5")
             public static let pink2 = UIColor.fromHex("#FFF4FD")
