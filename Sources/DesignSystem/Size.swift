@@ -9,5 +9,11 @@ extension DesignSystem {
             public static let imageWidth: Double = 42
             public static let detailWidth: Double = 45
         }
+        
+        public enum GDSErrorIcon {
+            public static let iconTargetHeight: CGFloat = 100
+            
+            public static let sfSymbolPadding: CGFloat = 7
+        }
     }
 }

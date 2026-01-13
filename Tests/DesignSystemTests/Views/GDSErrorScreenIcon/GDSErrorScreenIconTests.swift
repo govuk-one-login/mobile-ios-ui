@@ -6,7 +6,7 @@ import UIKit
 struct GDSErrorScreenIconTests {
 
     @Test("sets correct image, layout and accessibility attributes")
-    func view_initialisesWithCorrectImage() {
+    func setsCorrectImageConfiguration() {
         let errorIconViewModel = GDSErrorScreenIconViewModel(icon: .error)
         let view = GDSErrorScreenIcon(viewModel: errorIconViewModel)
 
@@ -16,13 +16,29 @@ struct GDSErrorScreenIconTests {
         #expect(view.tintColor == DesignSystem.Color.Icons.default)
         
         let heightConstraints = view.constraints.filter {
-            $0.firstAttribute == .height && $0.constant == 107
+            $0.firstAttribute == .height && $0.constant == errorIconViewModel.renderedIconHeight
         }
 
         #expect(heightConstraints.count == 1)
         #expect(view.accessibilityIdentifier == "error-screen-icon")
         #expect(view.isAccessibilityElement == true)
         #expect(view.accessibilityLabel == ErrorScreenIcon.error.voiceoverPrefix)
+    }
+    @Test("supports custom icon height")
+    func supportsCustomHeight() {
+        let errorIconViewModel = GDSErrorScreenIconViewModel(
+            icon: .error,
+            iconHeight: 48
+        )
+        
+        let view = GDSErrorScreenIcon(viewModel: errorIconViewModel)
+        
+        let heightConstraints = view.constraints.first {
+            $0.firstAttribute == .height
+        }
+        
+        #expect(heightConstraints != nil)
+        #expect(heightConstraints?.constant == 48 + DesignSystem.Size.GDSErrorIcon.sfSymbolPadding)
     }
 
     @Test("set correct accessibility label for the warning icon")

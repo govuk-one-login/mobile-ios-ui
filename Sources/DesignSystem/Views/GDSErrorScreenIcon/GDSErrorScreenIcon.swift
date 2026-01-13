@@ -11,7 +11,7 @@ public final class GDSErrorScreenIcon: UIImageView, ContentView {
         self.contentMode = .scaleAspectFit
         self.adjustsImageSizeForAccessibilityContentSizeCategory = true
         
-        heightAnchor.constraint(greaterThanOrEqualToConstant: 107).isActive = true
+        heightAnchor.constraint(greaterThanOrEqualToConstant: viewModel.renderedIconHeight).isActive = true
         
         isAccessibilityElement = true
         accessibilityLabel = viewModel.icon.voiceoverPrefix
