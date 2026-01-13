@@ -30,4 +30,11 @@ struct GDSErrorScreenIconViewModelTests {
 
         #expect(errorIcon.icon.voiceoverPrefix.contains("Warning"))
     }
+    
+    @Test("rendered icon height includes SF Symbol padding")
+    func renderedHeightIncludesSFSymbolPadding() {
+        let errorIcon = GDSErrorScreenIconViewModel(icon: .error)
+
+        #expect(errorIcon.renderedIconHeight == DesignSystem.Size.GDSErrorIcon.iconTargetHeight + DesignSystem.Size.GDSErrorIcon.sfSymbolPadding)
+    }
 }
