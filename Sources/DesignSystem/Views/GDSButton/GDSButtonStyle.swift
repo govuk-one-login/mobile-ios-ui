@@ -104,6 +104,27 @@ extension GDSButtonStyle {
             )
         )
     }
+    
+    public static var secondaryDestructive: GDSButtonStyle {
+        secondary.adjusting(
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.default,
+                leading: .zero,
+                bottom: DesignSystem.Spacing.default,
+                trailing: .zero
+            ),
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Buttons.nativeButtonTextDestructive,
+                highlighted: DesignSystem.Color.Buttons.destructiveNativeTextHighlighted,
+                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused
+                
+            ),
+            backgroundColor: ColorForState(
+                normal: .clear,
+                focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused
+            )
+        )
+    }
 }
 
 /// The design of specific button styles is not complete and are therefore subject to change

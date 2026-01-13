@@ -85,6 +85,33 @@ struct GDSButtonStyleTests {
     }
     
     @Test
+    func secondaryDestructive() {
+        let expectation = GDSButtonStyle(
+            font: DesignSystem.Font.Base.body,
+            alignment: .center,
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.default,
+                leading: .zero,
+                bottom: DesignSystem.Spacing.default,
+                trailing: .zero
+            ),
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Buttons.nativeButtonTextDestructive,
+                highlighted: DesignSystem.Color.Buttons.destructiveNativeTextHighlighted,
+                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused
+                
+            ),
+            backgroundColor: ColorForState(
+                normal: .clear,
+                focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused
+            ),
+            cornerRadius: DesignSystem.Spacing.xSmall
+        )
+        
+        #expect(expectation == .secondaryDestructive)
+    }
+    
+    @Test
     func secondaryLeading() {
         let expectation = GDSButtonStyle.secondary.adjusting(
             alignment: .leading,
