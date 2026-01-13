@@ -90,10 +90,10 @@ struct GDSButtonStyleTests {
             font: DesignSystem.Font.Base.body,
             alignment: .center,
             contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.default,
-                leading: .zero,
-                bottom: DesignSystem.Spacing.default,
-                trailing: .zero
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.nativeButtonTextDestructive,
