@@ -91,7 +91,7 @@ extension GDSButtonStyle {
         primary.adjusting(
             foregroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.destructiveForeground,
-                focused: .blue,// DesignSystem.Color.Buttons.destructiveForegroundFocused,
+                focused: DesignSystem.Color.Buttons.destructiveForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.destructiveForegroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.destructiveForegroundFocused
             ),
