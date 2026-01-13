@@ -9,8 +9,9 @@ public final class GDSErrorScreenIcon: UIImageView, ContentView {
         self.image = image
         self.tintColor = DesignSystem.Color.Icons.default
         self.contentMode = .scaleAspectFit
+        self.adjustsImageSizeForAccessibilityContentSizeCategory = true
         
-        heightAnchor.constraint(equalToConstant: 64).isActive = true
+        heightAnchor.constraint(greaterThanOrEqualToConstant: 107).isActive = true
         
         isAccessibilityElement = true
         accessibilityLabel = viewModel.icon.voiceoverPrefix

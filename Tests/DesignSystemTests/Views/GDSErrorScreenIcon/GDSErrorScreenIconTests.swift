@@ -16,7 +16,7 @@ struct GDSErrorScreenIconTests {
         #expect(view.tintColor == DesignSystem.Color.Icons.default)
         
         let heightConstraints = view.constraints.filter {
-            $0.firstAttribute == .height && $0.constant == 64
+            $0.firstAttribute == .height && $0.constant == 107
         }
 
         #expect(heightConstraints.count == 1)
