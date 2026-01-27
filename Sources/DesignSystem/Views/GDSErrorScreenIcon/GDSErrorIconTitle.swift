@@ -1,33 +1,47 @@
 import UIKit
 
 public final class GDSErrorIconTitle: UIView, ContentView {
-    public init(viewModel: GDSErrorIconTitleViewModel) {
-        super.init(frame: .zero)
-
+    private let viewModel: GDSErrorIconTitleViewModel
+    
+    private lazy var iconView: UIImageView = {
         let iconView = UIImageView(
             image: UIImage(systemName: viewModel.icon.iconName)
         )
         iconView.tintColor = DesignSystem.Color.Icons.default
         iconView.contentMode = .scaleAspectFit
         iconView.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        iconView.isAccessibilityElement = false
+        iconView.accessibilityIdentifier = "error-screen-icon"
         iconView.heightAnchor
             .constraint(greaterThanOrEqualToConstant: viewModel.renderedIconHeight)
             .isActive = true
-     
-        let titleView = GDSTextView(viewModel: viewModel.errorTitle)
-
-        let stackView = UIStackView(arrangedSubviews: [iconView, titleView])
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = DesignSystem.Spacing.small
-        stackView.distribution = .equalSpacing
-  
-        stackView.isAccessibilityElement = true
-        stackView.shouldGroupAccessibilityChildren = true
-        stackView.accessibilityLabel = viewModel.accessibilityLabel
-        stackView.accessibilityTraits = viewModel.accessibilityTrait
-        stackView.accessibilityIdentifier = "error-screen-icon-title-stack-view"
         
+        return iconView
+    }()
+    
+    private lazy var titleView: GDSTextView = {
+        GDSTextView(viewModel: viewModel.errorTitle)
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [iconView, titleView])
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.spacing = DesignSystem.Spacing.small
+        stack.distribution = .equalSpacing
+  
+        stack.isAccessibilityElement = true
+        stack.shouldGroupAccessibilityChildren = true
+        stack.accessibilityLabel = viewModel.accessibilityLabel
+        stack.accessibilityTraits = viewModel.accessibilityTrait
+        stack.accessibilityIdentifier = "error-screen-icon-title-stack-view"
+        
+        return stack
+    }()
+    
+    public init(viewModel: GDSErrorIconTitleViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
