@@ -2,9 +2,10 @@
 import Foundation
 import UIKit
 
-public struct TestViewControllerViewModel: ScreenViewModel {
+public struct TestViewControllerViewModel: GDSScreenViewModel {
+    public let screenStyle: GDSScreenStyle = .top
     public let body: [any ContentViewModel]
-    public var moveableFooter: [any ContentViewModel]
+    public var movableFooter: [any ContentViewModel]
     public var footer: [any ContentViewModel]
 }
 
@@ -12,12 +13,27 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
-                GDSErrorScreenIconViewModel(icon: .error),
-                GDSTextViewModel(
+                GDSErrorIconTitleViewModel(icon: .error, errorTitle: GDSTextViewModel(
                     title: "There is a problem",
                     titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .center,
+                    accessibilityTraits: .header,
                     verticalPadding: .bottom(8)
+                )
+                ),
+                GDSTextViewModel(
+                    title: "Please check your internet connection and try again.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .center,
+                    verticalPadding: .bottom(8)
+                ),
+                GDSErrorIconTitleViewModel(icon: .warning, errorTitle: GDSTextViewModel(
+                    title: "There is a problem",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .center,
+                    accessibilityTraits: [.staticText],
+                    verticalPadding: .bottom(8)
+                )
                 ),
                 GDSTextViewModel(
                     title: "Please check your internet connection and try again.",
@@ -180,7 +196,7 @@ class ViewController: UIViewController {
                     )
                 }
             ],
-            moveableFooter: [],
+            movableFooter: [],
             footer: []
         )
     }
