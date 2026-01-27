@@ -15,6 +15,13 @@ public struct GDSTextViewModel: ContentViewModel {
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
+    var isHeaderDisabled: Bool? {
+        guard let accessibilityTraits else {
+            return nil
+        }
+        return !accessibilityTraits.contains(.header)
+    }
+    
     public init(
         title: GDSLocalisedString,
         titleFont: UIFont = DesignSystem.Font.Base.body,
