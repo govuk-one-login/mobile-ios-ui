@@ -54,12 +54,12 @@ struct GDSErrorIconTitleTests {
         
         let errorViewModel = GDSErrorIconTitleViewModel(
             icon: .error,
+            iconHeight: 48,
             errorTitle: GDSTextViewModel(
                 title: "There is a problem",
                 accessibilityTraits: .header,
             
             ),
-            iconHeight: 48,
         )
         
         let view = GDSErrorIconTitle(viewModel: errorViewModel)
@@ -92,6 +92,52 @@ struct GDSErrorIconTitleTests {
         let stackView = view.subviews.first as? UIStackView
         
         #expect(stackView?.accessibilityLabel == "Warning: There is a problem")
+    }
+    
+    
+    @Test("voiceover announces header when title has a header trait")
+    func announcesHeaderWhenExplicitlyProvided() {
+        
+        let view = GDSErrorIconTitle(viewModel: errorViewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        
+        #expect(stackView?.accessibilityTraits.contains(.header) == true)
+    }
+
+    @Test("voiceover announces header when title header trait is nil")
+    func announcesHeaderWhenHeaderTraitIsNil() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .error,
+            errorTitle: GDSTextViewModel(
+            title: "There is a problem",
+            accessibilityTraits: nil
+
+            )
+        )
+        
+        let view = GDSErrorIconTitle(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        
+        #expect(stackView?.accessibilityTraits.contains(.header) == true)
+    }
+
+    @Test("voiceover does not announcw header when accessibility trait is explictly opted out")
+    func suppressesAccessibilityHeaderTraitWhenOptedOut() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .error,
+            errorTitle: GDSTextViewModel(
+            title: "There is a problem",
+            accessibilityTraits: UIAccessibilityTraits.none
+            )
+        )
+        
+        let view = GDSErrorIconTitle(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        
+        #expect(stackView?.accessibilityTraits.contains(.header) == false)
     }
     
 }

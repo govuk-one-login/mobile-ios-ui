@@ -3,7 +3,7 @@ import Testing
 import UIKit
 
 @MainActor
-struct GDSErrorScreenIconViewModelTests {
+struct GDSErrorIconViewModelTests {
     
     let viewModel = GDSErrorIconTitleViewModel(
         icon: .error,
@@ -65,37 +65,5 @@ struct GDSErrorScreenIconViewModelTests {
         )
         
         #expect(viewModel.accessibilityLabel == "Warning: There is a problem")
-    }
-    
-    @Test("voiceover announces header when title explicitly has a header trait")
-    func announcesHeaderWhenExplicitlyProvided() {
-        
-        #expect(viewModel.accessibilityTrait.contains(.header))
-    }
-    
-    @Test("voiceover announces header when title header trait is nil")
-    func announcesHeaderWhenHeaderTraitIsNil() {
-        let viewModel = GDSErrorIconTitleViewModel(
-            icon: .error,
-            errorTitle: GDSTextViewModel(
-            title: "There is a problem",
-            accessibilityTraits: nil
-        
-            )
-        )
-        #expect(viewModel.accessibilityTrait.contains(.header))
-    }
-    
-    @Test("voiceover announces header when title header trait is opted out")
-    func suppressesHeaderWhenHeaderIsDisabled() {
-        let viewModel = GDSErrorIconTitleViewModel(
-            icon: .error,
-            errorTitle: GDSTextViewModel(
-            title: "There is a problem",
-            accessibilityTraits: [.staticText]
-            )
-        )
-        
-        #expect(!viewModel.accessibilityTrait.contains(.header))
     }
 }
