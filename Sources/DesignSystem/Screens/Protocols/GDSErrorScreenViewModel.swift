@@ -1,4 +1,4 @@
-@available(*, deprecated, message: "Use GDSScreenViewModel instead with GDSErrorScreenIcon")
+@available(*, deprecated, message: "Use GDSScreenViewModel instead with GDSErrorIconTitle content view")
 
 public protocol GDSErrorScreenViewModel: BaseViewModel, GDSScreenViewModel {
     init(

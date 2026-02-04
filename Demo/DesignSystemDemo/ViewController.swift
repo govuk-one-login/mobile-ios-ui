@@ -12,18 +12,25 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
-                GDSErrorScreenIconViewModel(icon: .error),
-                GDSTextViewModel(
+                GDSErrorIconTitleViewModel(
+                    icon: .error,
+                    errorTitle: GDSTextViewModel(
                     title: "There is a problem",
                     titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .center,
+                    accessibilityTraits: .header,
                     verticalPadding: .bottom(8)
+                    )
                 ),
-                GDSTextViewModel(
-                    title: "Please check your internet connection and try again.",
-                    titleFont: DesignSystem.Font.Base.body,
+                GDSErrorIconTitleViewModel(
+                    icon: .warning,
+                    errorTitle: GDSTextViewModel(
+                    title: "There is a problem",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .center,
+                    accessibilityTraits: UIAccessibilityTraits.none,
                     verticalPadding: .bottom(8)
+                    )
                 ),
                 GDSMultiRowViewModel(rows: [
                     GDSRowViewModel(
