@@ -25,4 +25,8 @@ extension DesignSystem.Spacing {
         
         public static let imageToTitleSpacing: Double = 12
     }
+    
+    public enum GDSWarningText {
+        public static let `default`: Double = 12
+    }
 }
