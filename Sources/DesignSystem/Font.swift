@@ -4,7 +4,6 @@ import UIKit
 extension DesignSystem {
     public enum Font {
         
-        // NOTE: Example mappings from existing
         public enum Base {
             public static let largeTitle: UIFont = UIFont(.largeTitle)
             public static let largeTitleBold: UIFont = UIFont(.largeTitle, weight: .bold)
