@@ -1,14 +1,14 @@
 import UIKit
 
 open class GDSScreen: BaseScreen, VoiceOverFocus {
-public var initialVoiceOverView: UIView {
-    get throws {
-        guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
-            throw VoiceOverFocusError.notAvailable
+    public var initialVoiceOverView: UIView {
+        get throws {
+            guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
+                throw VoiceOverFocusError.notAvailable
+            }
+            return firstView
         }
-        return firstView
     }
-}
     
     private(set) lazy var containerStackView: UIStackView = {
         let result = UIStackView(
@@ -99,12 +99,12 @@ public var initialVoiceOverView: UIView {
         )
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
     
-    public override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // Defer to ensure layout is finished
         Task {
