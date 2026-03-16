@@ -33,7 +33,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
         stack.spacing = DesignSystem.Spacing.default
         stack.backgroundColor = DesignSystem.Color.Backgrounds.statusOverlay
         
-        stack.layer.cornerRadius = DesignSystem.CornerRadius.default // TODO: confirm
+        stack.layer.cornerRadius = DesignSystem.CornerRadius.small
         stack.layer.masksToBounds = true
         
         stack.isLayoutMarginsRelativeArrangement = true
@@ -66,5 +66,21 @@ public final class GDSStatusOverlay: UIView, ContentView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension GDSStatusOverlay: GDSStatusOverlayPresenter {
+    public func present(onView view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(self)
+        
+        NSLayoutConstraint.activate([
+            self.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+            self?.removeFromSuperview()
+        }
     }
 }

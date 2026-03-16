@@ -27,3 +27,8 @@ public struct GDSStatusOverlayViewModel: ContentViewModel {
         self.statusOverlayText = statusText
     }
 }
+
+@MainActor
+public protocol GDSStatusOverlayPresenter {
+    func present(onView view: UIView)
+}
