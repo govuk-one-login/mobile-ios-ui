@@ -88,6 +88,8 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
+            // Make view interactive again
+            view.isUserInteractionEnabled = true
         }
     }
 }
