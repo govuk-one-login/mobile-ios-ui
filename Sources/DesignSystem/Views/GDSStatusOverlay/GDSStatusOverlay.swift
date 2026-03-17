@@ -85,11 +85,15 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
         
         // Make view the component is being displayed on top of not interactive
         view.isUserInteractionEnabled = false
+        // Treat this view as a modal in order to trap VoiceOver focus
+        self.accessibilityViewIsModal = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
             // Make view interactive again
             view.isUserInteractionEnabled = true
+            // View is no longer a modal
+            self?.accessibilityViewIsModal = false
         }
     }
 }
