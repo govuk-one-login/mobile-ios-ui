@@ -1,7 +1,7 @@
 //Mark: Generic string
 "voiceOverErrorPrefix" = "Gwall";
 "voiceOverWarningPrefix" = "Rhybudd";
-"voiceOverStatusOverlayPrefix" = "";
+"voiceOverStatusOverlayPrefix" = "Llwyddiant";
 
 //MARK: Row
 "externalLinkAccessibilityHint" = "Agor mewn porwr gwe";

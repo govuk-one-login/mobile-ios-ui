@@ -83,8 +83,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
         view.accessibilityElementsHidden = true
         
         self.isAccessibilityElement = true
-        
-        //UIAccessibility.post(notification: .screenChanged, argument: self)
+        self.accessibilityLabel = viewModel.accessibilityLabel
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
