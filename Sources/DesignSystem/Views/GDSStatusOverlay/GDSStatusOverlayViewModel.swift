@@ -3,7 +3,7 @@ import UIKit
 /// Creates a Status Overlay component
 ///
 /// - Parameters:
-///   - iconStyle: The style of the icon to display, defaulted to `.statusOverlay`.
+///   - iconStyle: The style of the icon to display, defaulted to `.statusOverlay`. With a new icon update the viewModels `accessibilityLabel`
 ///   - warningText: Type `GDSTextViewModel`, use font `bodySemiBold`, color: `statusOverlay` and alignment `centered`
 /// - remark: The position defined in IconStyle will not be respected by this component and will always be centered.
 public struct GDSStatusOverlayViewModel: ContentViewModel {
@@ -16,7 +16,7 @@ public struct GDSStatusOverlayViewModel: ContentViewModel {
     public var horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     
     public var accessibilityLabel: String {
-        "\(statusOverlayText.title)"
+        "\(NSLocalizedString(key: "voiceOverStatusOverlayPrefix", bundle: .designSystem)): \(statusOverlayText.title)"
     }
     
     public init(

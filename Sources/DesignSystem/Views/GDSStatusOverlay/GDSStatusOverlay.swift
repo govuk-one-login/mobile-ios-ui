@@ -1,10 +1,14 @@
 import UIKit
 
+// figure out why icon size not increasing
+// make background not interactive (focus trapped on icon until it disappers)
+
+// confirm both in idcheck
 public final class GDSStatusOverlay: UIView, ContentView {
     private let viewModel: GDSStatusOverlayViewModel
     
     private lazy var iconView: UIImageView = {
-        let font = viewModel.iconStyle?.font ?? DesignSystem.Font.Base.bodySemiBold
+        let font = viewModel.iconStyle?.font ?? UIFont.systemFont(ofSize: 65, weight: .thin)
         let config = UIImage.SymbolConfiguration(font: font)
         
         let iconView = UIImageView(image: UIImage(
@@ -37,12 +41,12 @@ public final class GDSStatusOverlay: UIView, ContentView {
         stack.layer.masksToBounds = true
         
         stack.isLayoutMarginsRelativeArrangement = true
-        stack.layoutMargins = UIEdgeInsets(top: 30, left: 0, bottom: 20, right: 0)
+        stack.layoutMargins = UIEdgeInsets(top: 30, left: 8, bottom: 20, right: 8)
         
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
         stack.accessibilityLabel = viewModel.accessibilityLabel
-        stack.accessibilityTraits = [.none] // confirm
+        stack.accessibilityTraits = [.none]
         stack.accessibilityIdentifier = "status-overlay-stack-view"
         
         return stack
@@ -59,7 +63,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            stackView.widthAnchor.constraint(equalToConstant: 170),
+            stackView.widthAnchor.constraint(equalToConstant: 200),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -78,6 +82,9 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
             self.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
+        // Make view the component is being displayed on top of not interactive
+        view.isUserInteractionEnabled = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
