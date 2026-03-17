@@ -67,9 +67,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension GDSStatusOverlay: GDSStatusOverlayPresenter {
+    
     public func present(onView view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(self)
@@ -83,8 +81,6 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
         view.isUserInteractionEnabled = false
         // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
-        // Treat this view as a modal in order to trap VoiceOver focus
-        self.accessibilityViewIsModal = true
         
         UIAccessibility.post(notification: .screenChanged, argument: self)
         
@@ -94,8 +90,6 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
             view.isUserInteractionEnabled = true
             // Unhide view elements for VoiceOver
             view.accessibilityElementsHidden = false
-            // Make view no longer a modal
-            self?.accessibilityViewIsModal = false
         }
     }
 }
