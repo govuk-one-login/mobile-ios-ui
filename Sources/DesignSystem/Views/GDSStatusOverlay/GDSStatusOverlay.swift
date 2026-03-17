@@ -1,15 +1,12 @@
 import UIKit
 
-// figure out why icon size not increasing
-// make background not interactive (focus trapped on icon until it disappers)
-
-// confirm both in idcheck
 public final class GDSStatusOverlay: UIView, ContentView {
     private let viewModel: GDSStatusOverlayViewModel
     
     private lazy var iconView: UIImageView = {
         let font = viewModel.iconStyle?.font ?? UIFont.systemFont(ofSize: 65, weight: .thin)
-        let config = UIImage.SymbolConfiguration(font: font)
+        let scaledFont = UIFontMetrics.default.scaledFont(for: font)
+        let config = UIImage.SymbolConfiguration(font: scaledFont)
         
         let iconView = UIImageView(image: UIImage(
             systemName: viewModel.iconStyle?.icon ?? "checkmark.circle",
