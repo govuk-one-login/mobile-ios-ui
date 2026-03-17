@@ -22,7 +22,6 @@ public final class GDSStatusOverlay: UIView, ContentView {
         return iconView
     }()
     
-
     private lazy var titleView: GDSTextView = {
         GDSTextView(viewModel: viewModel.statusOverlayText)
     }()
@@ -80,14 +79,14 @@ extension GDSStatusOverlay: GDSStatusOverlayPresenter {
             self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        
         // Make view the component is being displayed on top of not interactive
         view.isUserInteractionEnabled = false
         // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
         // Treat this view as a modal in order to trap VoiceOver focus
         self.accessibilityViewIsModal = true
-        self.isAccessibilityElement = true
+        
+        UIAccessibility.post(notification: .screenChanged, argument: self)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
