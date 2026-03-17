@@ -82,7 +82,9 @@ public final class GDSStatusOverlay: UIView, ContentView {
         // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
         
-        UIAccessibility.post(notification: .screenChanged, argument: self)
+        self.isAccessibilityElement = true
+        
+        //UIAccessibility.post(notification: .screenChanged, argument: self)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
