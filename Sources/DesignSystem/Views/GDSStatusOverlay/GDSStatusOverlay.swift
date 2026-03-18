@@ -69,28 +69,31 @@ public final class GDSStatusOverlay: UIView, ContentView {
     }
     
     public func present(onView view: UIView) {
-        translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        // Make view the component is being displayed on top of not interactive
+        view.isUserInteractionEnabled = false
+        
         view.addSubview(self)
         
         NSLayoutConstraint.activate([
             self.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        
-        // Make view the component is being displayed on top of not interactive
-        view.isUserInteractionEnabled = false
-        // Hide views elements from VoiceOver
-        view.accessibilityElementsHidden = true
-        
-        self.isAccessibilityElement = true
-        self.accessibilityLabel = viewModel.accessibilityLabel
-        
+
+        self.isAccessibilityElement = false
+        self.accessibilityViewIsModal = true
+        self.stackView.isAccessibilityElement = true
+        self.stackView.accessibilityLabel = viewModel.accessibilityLabel
+
+        // Delay the accessibility notification to ensure the view is fully presented and laid out
+//        DispatchQueue.main.async {
+//            UIAccessibility.post(notification: .screenChanged, argument: self.stackView)
+//        }
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
             // Make view interactive again
             view.isUserInteractionEnabled = true
-            // Unhide view elements for VoiceOver
-            view.accessibilityElementsHidden = false
         }
     }
 }
