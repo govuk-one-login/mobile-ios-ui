@@ -70,7 +70,8 @@ public final class GDSStatusOverlay: UIView, ContentView {
     
     /// The view passed in should be the apps navigation controller if the component will be shown while the screens change
     /// Or the view passed in should be the top view controller, if the component is being shown on the same screen
-    public func present(onView view: UIView) {
+    public func present(onView view: UIView,
+                        duration: TimeInterval = 4) {
         translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(self)
         
@@ -89,7 +90,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
         // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
             self?.removeFromSuperview()
             // Make view interactive again
             view.isUserInteractionEnabled = true
