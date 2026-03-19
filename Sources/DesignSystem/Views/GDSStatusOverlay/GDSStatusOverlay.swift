@@ -16,7 +16,7 @@ public final class GDSStatusOverlay: UIView, ContentView {
         iconView.contentMode = .center
         
         iconView.adjustsImageSizeForAccessibilityContentSizeCategory = true
-        iconView.isAccessibilityElement = false
+        iconView.isAccessibilityElement = true
         iconView.accessibilityIdentifier = "status-overlay-icon"
         
         return iconView
@@ -68,7 +68,9 @@ public final class GDSStatusOverlay: UIView, ContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func present(onView view: UIView) async {
+    /// The view passed in should be the apps navigation controller if the component will be shown while the screens change
+    /// Or the view passed in should be the top view controller, if the component is being shown on the same screen
+    public func present(onView view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(self)
         
@@ -77,126 +79,22 @@ public final class GDSStatusOverlay: UIView, ContentView {
             self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        // Hide background from VoiceOver
+        // Ensure VoiceOver announces the overlay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            UIAccessibility.post(notification: .announcement, argument: self?.viewModel.accessibilityLabel)
+        }
+        
+        // Make view the component is being displayed on top of not interactive
+        view.isUserInteractionEnabled = false
+        // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
-//
-//        // Make overlay accessible
-//        self.accessibilityViewIsModal = true
-//        self.accessibilityElements = [stackView]
-        
-        self.isAccessibilityElement = false
-        self.accessibilityViewIsModal = true
-        self.accessibilityElements = [stackView]
-
-        // Ensure VoiceOver focuses the overlay
-        DispatchQueue.main.async {
-            UIAccessibility.post(notification: .screenChanged, argument: self.stackView)
-        }
-
-        try? await Task.sleep(seconds: 4.0)
-        
-        self.removeFromSuperview()
-        // Restore accessibility
-        view.accessibilityElementsHidden = false
-    }
-    
-    
-    public func presentOverlayWhileScreenTransition() {
-        // Use apps window instead of its navigationController
-        guard let window = UIApplication.shared.connectedScenes
-            .compactMap({ ($0 as? UIWindowScene)?.windows.first })
-            .first else { return }
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        window.addSubview(self)
-        
-        NSLayoutConstraint.activate([
-            self.centerXAnchor.constraint(equalTo: window.centerXAnchor),
-            self.centerYAnchor.constraint(equalTo: window.centerYAnchor)
-        ])
-        
-        // Hide background from VoiceOver
-        window.accessibilityElementsHidden = true
-        
-        // Trap VoiceOver inside overlay
-        window.accessibilityViewIsModal = true
-        window.accessibilityElements = [stackView]
-        
-        // Ensure VoiceOver focuses the overlay
-        DispatchQueue.main.async {
-            UIAccessibility.post(notification: .screenChanged, argument: self.stackView)
-        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
             self?.removeFromSuperview()
+            // Make view interactive again
+            view.isUserInteractionEnabled = true
             // Restore accessibility
-            window.accessibilityElementsHidden = false
-        }
-    }
-    
-//    public func present(onView view: UIView) {
-//        translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(self)
-//        
-//        NSLayoutConstraint.activate([
-//            self.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            self.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-//        ])
-//        
-//        // Hide background from VoiceOver
-//        view.accessibilityElementsHidden = true
-//        
-//        // Trap VoiceOver inside overlay
-//        self.accessibilityViewIsModal = true
-//        self.accessibilityElements = [stackView]
-//        
-//        // Ensure VoiceOver focuses the overlay
-//        DispatchQueue.main.async {
-//            UIAccessibility.post(notification: .screenChanged, argument: self.stackView)
-//        }
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
-//            self?.removeFromSuperview()
-//            // Restore accessibility
-//            view.accessibilityElementsHidden = false
-//        }
-//    }
-}
-
-public final class GDSStatusViewController: UIViewController {
-    private let statusOverlay: GDSStatusOverlay
-    private let duration: TimeInterval
-    
-    public init(statusOverlay: GDSStatusOverlay,
-                duration: TimeInterval = 4) {
-        self.statusOverlay = statusOverlay
-        self.duration = duration
-        
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .clear
-        modalPresentationStyle = .overFullScreen
-        modalTransitionStyle = .crossDissolve
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.addSubview(statusOverlay)
-        statusOverlay.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            statusOverlay.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            statusOverlay.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        statusOverlay.accessibilityElements = [statusOverlay]
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
-            self?.dismiss(animated: true)
+            view.accessibilityElementsHidden = false
         }
     }
 }
