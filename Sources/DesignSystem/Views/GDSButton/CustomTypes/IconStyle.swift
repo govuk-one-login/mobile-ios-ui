@@ -57,4 +57,11 @@ extension IconStyle {
         font: DesignSystem.Font.Base.title1Bold,
         position: .leading
     )
+    
+    public static let statusOverlay: Self = IconStyle(
+        icon: "checkmark.circle",
+        font: UIFont.systemFont(ofSize: 65, weight: .thin),
+        colour: DesignSystem.Color.Icons.statusOverlay,
+        position: .leading
+    )
 }
