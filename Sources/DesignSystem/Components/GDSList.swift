@@ -202,8 +202,9 @@ public final class GDSList: UIView, ContentView {
         
         row.isLayoutMarginsRelativeArrangement = true
         row.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin
-        
         row.isAccessibilityElement = true
+        row.accessibilityRespondsToUserInteraction = false
+        
         return row
     }
 }

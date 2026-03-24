@@ -57,6 +57,7 @@ struct GDSListTests {
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         
         #expect(firstRow?.accessibilityLabel == "numbered list 2 items, 1, first numbered list item")
+        #expect(firstRow?.accessibilityRespondsToUserInteraction == false)
     }
     
     @Test("Accessibility label for second row in numbered List")
@@ -65,6 +66,7 @@ struct GDSListTests {
         let secondRow: UIStackView? = sut[child: "numbered-list-row-stack-view-2"]
         
         #expect(secondRow?.accessibilityLabel == "2, second numbered list item")
+        #expect(secondRow?.accessibilityRespondsToUserInteraction == false)
     }
     
     @Test("Number label and content label are set correctly")
@@ -122,6 +124,7 @@ struct GDSListTests {
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
         
         #expect(firstRow?.accessibilityLabel == "bulleted list 2 items, bullet, first bulleted list item")
+        #expect(firstRow?.accessibilityRespondsToUserInteraction == false)
     }
     
     @Test("Accessibility label for second row in bulleted List")
@@ -130,6 +133,7 @@ struct GDSListTests {
         let secondRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-2"]
         
         #expect(secondRow?.accessibilityLabel == "bullet, second bulleted list item")
+        #expect(secondRow?.accessibilityRespondsToUserInteraction == false)
     }
     
     @Test("Bullet point and content label are set correctly")
