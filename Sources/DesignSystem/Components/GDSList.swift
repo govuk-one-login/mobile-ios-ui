@@ -99,7 +99,9 @@ public final class GDSList: UIView, ContentView {
         reloadListView()
     }
     
-    private func contentLabels(for item: GDSLocalisedString) -> UILabel {
+    private func contentLabels(
+        for item: GDSLocalisedString
+    ) -> UILabel {
         let label = UILabel(colour: DesignSystem.Color.GDSList.label)
         label.font = DesignSystem.Font.Base.body
         
@@ -108,6 +110,7 @@ public final class GDSList: UIView, ContentView {
         } else {
             label.text = item.value
         }
+        
         return label
     }
     
@@ -157,6 +160,8 @@ public final class GDSList: UIView, ContentView {
                 ? "numbered-list-row-stack-view-\(rowNumber)"
                 : "bulleted-list-row-stack-view-\(rowNumber)"
                 
+                row.accessibilityRespondsToUserInteraction = false
+                
                 return row
             }
     }
@@ -178,6 +183,7 @@ public final class GDSList: UIView, ContentView {
         marker.textAlignment = .right
         marker.font = DesignSystem.Font.Base.body
         marker.widthAnchor.constraint(equalToConstant: maxNumberWidth).isActive = true
+        
         return marker
     }
     
@@ -203,7 +209,6 @@ public final class GDSList: UIView, ContentView {
         row.isLayoutMarginsRelativeArrangement = true
         row.layoutMargins.left = DesignSystem.Spacing.GDSList.leadingMargin
         row.isAccessibilityElement = true
-        row.accessibilityRespondsToUserInteraction = false
         
         return row
     }
