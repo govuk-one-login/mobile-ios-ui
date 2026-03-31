@@ -123,7 +123,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     /// Ensures Full Keyboard Access can focus inside the scroll view
     /// by marking the first accessibility element as responding to
     /// user interaction, providing an entry point for keyboard scrolling.
-    private func configureScrollViewAccessibility() {
+    func configureScrollViewAccessibility() {
         if let element = findFirstAccessibilityElement(in: scrollViewInnerStackView) {
             element.accessibilityRespondsToUserInteraction = true
         }
