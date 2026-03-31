@@ -24,10 +24,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     }()
     
     private(set) lazy var scrollView: UIScrollView = {
-        let result = UIScrollView()
+        let result = FocusableScrollView()
         result.addSubview(scrollViewOuterStackView)
         scrollViewOuterStackView.bindToSuperviewEdges()
-        result.accessibilityRespondsToUserInteraction = true
         result.accessibilityIdentifier = "gds-screen-scrollview"
         return result
     }()
