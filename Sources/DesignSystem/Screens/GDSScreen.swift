@@ -124,10 +124,21 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     /// by marking the first accessibility element as responding to
     /// user interaction, providing an entry point for keyboard scrolling.
     private func configureScrollViewAccessibility() {
-        guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
-            return
+        if let element = findFirstAccessibilityElement(in: scrollViewInnerStackView) {
+            element.accessibilityRespondsToUserInteraction = true
         }
-        firstView.accessibilityRespondsToUserInteraction = true
+    }
+    
+    private func findFirstAccessibilityElement(in view: UIView) -> UIView? {
+        if view.isAccessibilityElement {
+            return view
+        }
+        for subview in view.subviews {
+            if let found = findFirstAccessibilityElement(in: subview) {
+                return found
+            }
+        }
+        return nil
     }
     
     private func addRelativeViewConstraints() {
