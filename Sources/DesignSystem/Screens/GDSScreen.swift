@@ -102,6 +102,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     open override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        configureScrollViewAccessibility()
     }
     
     open override func viewDidLayoutSubviews() {
@@ -117,6 +118,27 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         containerStackView.bindToSuperviewSafeArea()
         view.backgroundColor = .systemBackground
         addRelativeViewConstraints()
+    }
+    
+    /// Ensures Full Keyboard Access can focus inside the scroll view
+    /// by marking the first accessibility element as responding to
+    /// user interaction, providing an entry point for keyboard scrolling.
+    func configureScrollViewAccessibility() {
+        if let element = findFirstAccessibilityElement(in: scrollViewInnerStackView) {
+            element.accessibilityRespondsToUserInteraction = true
+        }
+    }
+    
+    private func findFirstAccessibilityElement(in view: UIView) -> UIView? {
+        if view.isAccessibilityElement {
+            return view
+        }
+        for subview in view.subviews {
+            if let found = findFirstAccessibilityElement(in: subview) {
+                return found
+            }
+        }
+        return nil
     }
     
     private func addRelativeViewConstraints() {
