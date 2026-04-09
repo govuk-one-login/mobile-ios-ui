@@ -101,17 +101,27 @@ public final class GDSList: UIView, ContentView {
     
     private func contentLabels(
         for item: GDSLocalisedString
-    ) -> UILabel {
-        let label = UILabel(colour: DesignSystem.Color.GDSList.label)
-        label.font = DesignSystem.Font.Base.body
+    ) -> UITextView {
+        // Ensures UITextView has the correct color and font
+        let textView = UITextView()
+        textView.textColor = DesignSystem.Color.GDSList.label
+        textView.font = DesignSystem.Font.Base.body
+        
+        // Prevents UITextView from applying its default styling
+        textView.linkTextAttributes = [:]
+        
+        // Configure UITextView
+        textView.isScrollEnabled = false
+        textView.textContainerInset = .zero
+        textView.adjustsFontForContentSizeCategory = true
         
         if let attributedString = item.attributedValue {
-            label.attributedText = attributedString
+            textView.attributedText = attributedString
         } else {
-            label.text = item.value
+            textView.text = item.value
         }
         
-        return label
+        return textView
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -130,8 +140,8 @@ public final class GDSList: UIView, ContentView {
                 let marker = viewModel.style == .numbered
                 ? numberMarker(for: rowNumber)
                 : bulletMarker()
-                let label = contentLabels(for: item)
-                let row = createRow(marker: marker, label: label)
+                let textView = contentLabels(for: item)
+                let row = createRow(marker: marker, label: textView)
                 
                 let itemCount = String(viewModel.items.count)
                 
