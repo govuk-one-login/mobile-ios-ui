@@ -115,6 +115,9 @@ public final class GDSList: UIView, ContentView {
         textView.textContainerInset = .zero
         textView.adjustsFontForContentSizeCategory = true
         
+        // Allows the UITextView to detect taps on links
+        textView.isSelectable = true
+        
         if let attributedString = item.attributedValue {
             textView.attributedText = attributedString
         } else {
