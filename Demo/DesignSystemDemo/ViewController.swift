@@ -12,6 +12,18 @@ class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
             body: [
+                GDSButtonViewModel(
+                    title: "Push GDSScreen",
+                    style: .secondary,
+                    buttonAction: .action({ [weak self] in
+                        self?.pushGDSScreen()
+                    })
+                ),
+                GDSTextViewModel(
+                    title: "Simple test label",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                ),
                 GDSErrorIconTitleViewModel(
                     icon: .error,
                     errorTitle: GDSTextViewModel(
@@ -216,11 +228,68 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        title = "Design System Demo"
         
         scrollView.addSubview(stackview)
         view.addSubview(scrollView)
         configureConstraints()
         addViewsToStack()
+    }
+    
+    func pushGDSScreen() {
+        let viewModel = GDSDemoScreenViewModel(
+            body: [
+                GDSTextViewModel(
+                    title: "Simple test label",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                ),
+                GDSListViewModel(
+                    title: "Numbered List",
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
+                    items: [
+                        "Item 1",
+                        "Item 2",
+                        "Item 3"
+                    ],
+                    style: .numbered
+                ),
+                GDSCardViewModel(
+                    showShadow: true,
+                    dismissAction: .action({ })
+                ) {
+                    GDSCardTitleViewModel(
+                        title: "A title for the component",
+                        verticalPadding: .bottom(8),
+                        horizontalPadding: .leading(16)
+                    )
+                    GDSTextViewModel(
+                        title: "A subtitle for the componenet which can be used to describe it's purpose",
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSDividerViewModel(
+                        verticalPadding: .bottom(8)
+                    )
+                    GDSButtonViewModel(
+                        title: "Primary Button",
+                        style: .primary,
+                        buttonAction: .action({ }),
+                        verticalPadding: .bottom(16),
+                        horizontalPadding: .horizontal(16)
+                    )
+                }
+            ],
+            movableFooter: [],
+            footer: [
+                GDSButtonViewModel(
+                    title: "Footer Button",
+                    style: .primary,
+                    buttonAction: .action({ })
+                )
+            ]
+        )
+        let screen = GDSScreen(viewModel: viewModel)
+        navigationController?.pushViewController(screen, animated: true)
     }
     
     func addViewsToStack() {
