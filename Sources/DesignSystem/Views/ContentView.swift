@@ -10,7 +10,19 @@ public protocol ContentViewModel {
 
 extension ContentViewModel {
     public func createUIView() -> UIView {
-        ViewType(viewModel: self)
+        let view = ViewType(viewModel: self)
+        Self.enableAccessibilityInteraction(in: view)
+        return view
+    }
+    
+    private static func enableAccessibilityInteraction(in view: UIView) {
+        if view.isAccessibilityElement {
+            view.accessibilityRespondsToUserInteraction = true
+            return
+        }
+        for subview in view.subviews {
+            enableAccessibilityInteraction(in: subview)
+        }
     }
 }
 
