@@ -82,7 +82,6 @@ class ViewController: UIViewController {
 // MARK: - View Models
 
 extension ViewController {
-    // swiftlint:disable function_body_length
     var bodyContent: [any ContentViewModel] {
         [
             GDSButtonViewModel(
@@ -277,7 +276,6 @@ extension ViewController {
             }
         ]
     }
-    // swiftlint:enable function_body_length
 
     var gdsScreenViewModel: GDSDemoScreenViewModel {
         GDSDemoScreenViewModel(
