@@ -132,15 +132,10 @@ struct GDSScreenTests {
         )
         let sut = GDSScreen(viewModel: viewModel)
         
-        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
-        let textView = bodyItemStack?.arrangedSubviews.first as? GDSTextView
-        // UILabel.isAccessibilityElement is true at runtime but not in unit tests,
-        // so set it explicitly to simulate runtime behaviour
-        textView?.isAccessibilityElement = true
-        
         sut.configureScrollViewAccessibility()
         
-        #expect(textView?.accessibilityRespondsToUserInteraction == true)
+        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
+        #expect(bodyItemStack?.isAccessibilityElement == true)
     }
     
     @Test("First accessibility element in GDSList body responds to user interaction for Full Keyboard Access")
@@ -157,17 +152,10 @@ struct GDSScreenTests {
         )
         let sut = GDSScreen(viewModel: viewModel)
         
-        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
-        let list = bodyItemStack?.arrangedSubviews.first as? GDSList
-        // GDSList rows have isAccessibilityElement = true set in createRow()
-        // Find the first row stack view
-        let listStack = list?.subviews.first as? UIStackView
-        // First arranged subview after the title is the first row
-        let firstRow = listStack?.arrangedSubviews.first(where: { $0.isAccessibilityElement })
-        
         sut.configureScrollViewAccessibility()
         
-        #expect(firstRow?.accessibilityRespondsToUserInteraction == true)
+        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
+        #expect(bodyItemStack?.isAccessibilityElement == true)
     }
     
     @Test("Empty body does not crash when configuring scroll view accessibility")
