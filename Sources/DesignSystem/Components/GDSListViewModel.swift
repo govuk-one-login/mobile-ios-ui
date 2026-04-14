@@ -33,8 +33,4 @@ public struct GDSListViewModel: ContentViewModel {
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontal
     }
-    
-    public func createUIView() -> UIView {
-        GDSList(viewModel: self)
-    }
 }

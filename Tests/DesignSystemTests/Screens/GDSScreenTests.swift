@@ -122,63 +122,26 @@ struct GDSScreenTests {
         #expect(sut.bottomStackView.arrangedSubviews.count == 2)
     }
     
-    @Test("First accessibility element in scroll view responds to user interaction for Full Keyboard Access")
-    func scrollViewAccessibility_textBody() {
-        let viewModel = TestGDSScreenViewModel(
-            screenStyle: .top,
-            body: [GDSTextViewModel(title: "test body text")],
-            movableFooter: [],
-            footer: []
+    @Test("ContentView with isAccessibilityElement true gets accessibilityRespondsToUserInteraction set")
+    func contentView_accessibilityElementRespondsToUserInteraction() {
+        // GDSList rows explicitly set isAccessibilityElement = true in createRow(),
+        // so they get accessibilityRespondsToUserInteraction set at creation time
+        let viewModel = GDSListViewModel(
+            title: GDSLocalisedString(stringKey: "test"),
+            items: [GDSLocalisedString(stringKey: "item1")],
+            style: .numbered
         )
-        let sut = GDSScreen(viewModel: viewModel)
-        
-        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
-        let textView = bodyItemStack?.arrangedSubviews.first as? GDSTextView
-        // UILabel.isAccessibilityElement is true at runtime but not in unit tests,
-        // so set it explicitly to simulate runtime behaviour
-        textView?.isAccessibilityElement = true
-        
-        sut.configureScrollViewAccessibility()
-        
-        #expect(textView?.accessibilityRespondsToUserInteraction == true)
-    }
-    
-    @Test("First accessibility element in GDSList body responds to user interaction for Full Keyboard Access")
-    func scrollViewAccessibility_listBody() {
-        let viewModel = TestGDSScreenViewModel(
-            screenStyle: .top,
-            body: [GDSListViewModel(
-                title: GDSLocalisedString(stringKey: "test"),
-                items: [GDSLocalisedString(stringKey: "item1")],
-                style: .numbered
-            )],
-            movableFooter: [],
-            footer: []
-        )
-        let sut = GDSScreen(viewModel: viewModel)
-        
-        let bodyItemStack = sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView
-        let list = bodyItemStack?.arrangedSubviews.first as? GDSList
-        // GDSList rows have isAccessibilityElement = true set in createRow()
-        // Find the first row stack view
-        let listStack = list?.subviews.first as? UIStackView
-        // First arranged subview after the title is the first row
+        let view = viewModel.createUIView() as? GDSList
+        let listStack = view?.subviews.first as? UIStackView
         let firstRow = listStack?.arrangedSubviews.first(where: { $0.isAccessibilityElement })
-        
-        sut.configureScrollViewAccessibility()
         
         #expect(firstRow?.accessibilityRespondsToUserInteraction == true)
     }
     
-    @Test("Empty body does not crash when configuring scroll view accessibility")
-    func scrollViewAccessibility_emptyBody() {
-        let viewModel = TestGDSScreenViewModel(
-            screenStyle: .top,
-            body: [],
-            movableFooter: [],
-            footer: []
-        )
-        let sut = GDSScreen(viewModel: viewModel)
-        sut.configureScrollViewAccessibility()
+    @Test("ContentView without accessibility elements does not crash")
+    func contentView_noAccessibilityElements() {
+        let viewModel = GDSTextViewModel(title: "test text")
+        // Should not crash even if isAccessibilityElement is false in test environment
+        _ = viewModel.createUIView()
     }
 }

@@ -260,7 +260,6 @@ public final class GDSRow: UIControl, ContentView {
             titleLabel.text,
             viewModel.subtitle,
             viewModel.detail,
-            viewModel.iconStyle?.accessibilityHint
         ]
             .compactMap { $0 }
         

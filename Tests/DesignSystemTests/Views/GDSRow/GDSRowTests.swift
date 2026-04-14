@@ -123,7 +123,7 @@ struct GDSRowTests {
         #expect(iconView.image?.isSymbolImage == true)
         #expect(iconView.tintColor == .secondaryLabel)
         
-        #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle), \(expectedIconAltText)"))
+        #expect(sut.accessibilityLabel == ("\(expectedTitle), \(expectedSubtitle)"))
         #expect(sut.accessibilityHint == ("icon alt text"))
         #expect(sut.accessibilityTraits == [.button])
     }
