@@ -1,6 +1,6 @@
 import UIKit
 
-public final class GDSList: UIView, ContentView {
+public final class GDSList: UIView, ContentView, UITextViewDelegate {
     public let viewModel: GDSListViewModel
     
     private lazy var titleLabel: UILabel = {
@@ -114,9 +114,11 @@ public final class GDSList: UIView, ContentView {
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
         textView.adjustsFontForContentSizeCategory = true
+        textView.isEditable = false
         
         // Allows the UITextView to detect taps
         textView.isSelectable = true
+        textView.delegate = self
         
         if let attributedString = item.attributedValue {
             textView.attributedText = attributedString
@@ -125,6 +127,13 @@ public final class GDSList: UIView, ContentView {
         }
         
         return textView
+    }
+    
+    public func textViewDidChangeSelection(_ textView: UITextView) {
+        // Prevents users from highlighting text
+        if textView.selectedTextRange != nil {
+            textView.selectedTextRange = nil
+        }
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
