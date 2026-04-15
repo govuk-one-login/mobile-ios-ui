@@ -2,6 +2,8 @@ import UIKit
 
 public final class GDSList: UIView, ContentView, UITextViewDelegate {
     public let viewModel: GDSListViewModel
+    var rowContainsAttributedString: Bool = false
+    var rowContainsSymbol: Bool = false
     
     private lazy var titleLabel: UILabel = {
         let result = UILabel(colour: DesignSystem.Color.GDSList.title)
@@ -120,9 +122,18 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
         textView.isSelectable = true
         textView.delegate = self
         
+        // Setting variables to ensure voiceover is read out correctly for stringAttributes
+        if item.stringAttributes?.symbol != nil {
+            rowContainsSymbol = true
+        } else {
+            rowContainsSymbol = false
+        }
+            
         if let attributedString = item.attributedValue {
+            rowContainsAttributedString = true
             textView.attributedText = attributedString
         } else {
+            rowContainsAttributedString = false
             textView.text = item.value
         }
         
@@ -178,6 +189,11 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
                 ? "\(summaryLabel), \(listLabel)"
                 : listLabel
                 
+                if rowContainsSymbol {
+                    row.accessibilityHint = GDSLocalisedString(stringKey: "externalLinkAccessibilityHint",
+                                                               bundle: .designSystem).value
+                }
+                
                 row.accessibilityIdentifier = viewModel.style == .numbered
                 ? "numbered-list-row-stack-view-\(rowNumber)"
                 : "bulleted-list-row-stack-view-\(rowNumber)"
@@ -226,6 +242,11 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
                     marker.centerYAnchor.constraint(equalTo: label.topAnchor, constant: singleLineHeight / 2)
                 ]
             )
+        }
+        
+        // Only add link attribute if row has atrributes and property attributedItemIsLink is true
+        if rowContainsAttributedString && viewModel.attributedItemIsLink {
+            row.accessibilityTraits = .link
         }
         
         row.isLayoutMarginsRelativeArrangement = true

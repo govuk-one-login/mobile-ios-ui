@@ -14,6 +14,7 @@ public struct GDSListViewModel: ContentViewModel {
     public var title: GDSLocalisedString?
     public var titleConfig: TitleConfig?
     public var items: [GDSLocalisedString]
+    public var attributedItemIsLink: Bool
     public var style: ListStyle
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
@@ -22,6 +23,7 @@ public struct GDSListViewModel: ContentViewModel {
         title: GDSLocalisedString? = nil,
         titleConfig: TitleConfig? = nil,
         items: [GDSLocalisedString],
+        attributedItemIsLink: Bool = false,
         style: ListStyle,
         verticalPadding: VerticalPadding? = nil,
         horizontal: HorizontalPadding? = nil,
@@ -29,6 +31,7 @@ public struct GDSListViewModel: ContentViewModel {
         self.title = title
         self.titleConfig = titleConfig
         self.items = items
+        self.attributedItemIsLink = attributedItemIsLink
         self.style = style
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontal
