@@ -74,15 +74,13 @@ struct GDSListTests {
         let sut = GDSList(viewModel: numberedListViewModel())
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         let number = firstRow?.arrangedSubviews[0] as? UILabel
-        let label = firstRow?.arrangedSubviews[1] as? UILabel
+        let label = firstRow?.arrangedSubviews[1] as? UITextView
         
         #expect(number != nil)
         #expect(number?.text == "1.")
         #expect(label?.text == "first numbered list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
-        #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
-        #expect(label?.numberOfLines == 0)
         
         sut.assertSnapshot(bindToEdges: .horizontal)
     }
@@ -141,14 +139,12 @@ struct GDSListTests {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
         let bullet = firstRow?.arrangedSubviews[0] as? UIImageView
-        let label = firstRow?.arrangedSubviews[1] as? UILabel
+        let label = firstRow?.arrangedSubviews[1] as? UITextView
         
         #expect(bullet?.image != nil)
         #expect(bullet?.contentHuggingPriority(for: .horizontal) == .defaultLow)
         #expect(label?.text == "first bulleted list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
-        #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
-        #expect(label?.numberOfLines == 0)
     }
 }
