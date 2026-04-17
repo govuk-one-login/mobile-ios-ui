@@ -7,6 +7,34 @@ public enum ListStyle: String {
     case bulleted
 }
 
+/// Example on creating linked text with icon
+///
+///  
+///```swift
+///GDSLocalisedString(
+///    stringLiteral: "This is a linked phrase",
+///    stringAttributes: .init(
+///        symbol: UIImage(
+///            systemName: "arrow.up.right",
+///            withConfiguration: UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.body)
+///        )?.withTintColor(DesignSystem.Color.Links.default, renderingMode: .alwaysOriginal),
+///        position: .trailing,
+///        attributes: [
+///            ("This is a ",
+///             [.foregroundColor: DesignSystem.Color.Text.primary,
+///              .font: DesignSystem.Font.Base.body]
+///            ),
+///            ("linked phrase",
+///             [.foregroundColor: DesignSystem.Color.Links.default,
+///              .font: DesignSystem.Font.Base.body,
+///              .link: URL(string: "https://www.gov.uk")!]
+///            )
+///        ]
+///    )
+///)
+///```
+
+
 @MainActor
 public struct GDSListViewModel: ContentViewModel {
     public typealias ViewType = GDSList
@@ -14,7 +42,6 @@ public struct GDSListViewModel: ContentViewModel {
     public var title: GDSLocalisedString?
     public var titleConfig: TitleConfig?
     public var items: [GDSLocalisedString]
-    public var attributedItemIsLink: Bool
     public var style: ListStyle
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
@@ -23,7 +50,6 @@ public struct GDSListViewModel: ContentViewModel {
         title: GDSLocalisedString? = nil,
         titleConfig: TitleConfig? = nil,
         items: [GDSLocalisedString],
-        attributedItemIsLink: Bool = false,
         style: ListStyle,
         verticalPadding: VerticalPadding? = nil,
         horizontal: HorizontalPadding? = nil,
@@ -31,7 +57,6 @@ public struct GDSListViewModel: ContentViewModel {
         self.title = title
         self.titleConfig = titleConfig
         self.items = items
-        self.attributedItemIsLink = attributedItemIsLink
         self.style = style
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontal

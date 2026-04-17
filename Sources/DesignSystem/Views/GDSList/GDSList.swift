@@ -2,7 +2,7 @@ import UIKit
 
 public final class GDSList: UIView, ContentView, UITextViewDelegate {
     public let viewModel: GDSListViewModel
-    var rowContainsAttributedString: Bool = false
+    var rowContainsLink: Bool = false
     var rowContainsSymbol: Bool = false
     
     private lazy var titleLabel: UILabel = {
@@ -122,18 +122,26 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
         textView.isSelectable = true
         textView.delegate = self
         
-        // Setting variables to ensure voiceover is read out correctly for stringAttributes
+        // Checking if theres a symbol
         if item.stringAttributes?.symbol != nil {
             rowContainsSymbol = true
         } else {
             rowContainsSymbol = false
         }
-            
+        
         if let attributedString = item.attributedValue {
-            rowContainsAttributedString = true
+            // Check if attributedString has a link
+            let fullRange = NSRange(location: 0, length: attributedString.length)
+            attributedString.enumerateAttributes(in: fullRange, options: []) { (attributes, _, stop) in
+                if attributes[.link] != nil {
+                    rowContainsLink = true
+                    stop.pointee = true
+                }
+            }
+            
             textView.attributedText = attributedString
         } else {
-            rowContainsAttributedString = false
+            rowContainsLink = false
             textView.text = item.value
         }
         
@@ -244,8 +252,8 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
             )
         }
         
-        // Only add link attribute if row has atrributes and property attributedItemIsLink is true
-        if rowContainsAttributedString && viewModel.attributedItemIsLink {
+        // Only add link attribute if row has link
+        if rowContainsLink {
             row.accessibilityTraits = .link
         }
         
