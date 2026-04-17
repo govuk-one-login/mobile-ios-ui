@@ -132,7 +132,10 @@ public final class GDSList: UIView, ContentView, UITextViewDelegate {
         if let attributedString = item.attributedValue {
             // Check if attributedString has a link
             let fullRange = NSRange(location: 0, length: attributedString.length)
-            attributedString.enumerateAttributes(in: fullRange, options: []) { (attributes, _, stop) in
+            attributedString.enumerateAttributes(
+                in: fullRange,
+                options: []
+            ) { (attributes, _, stop) in
                 if attributes[.link] != nil {
                     rowContainsLink = true
                     stop.pointee = true

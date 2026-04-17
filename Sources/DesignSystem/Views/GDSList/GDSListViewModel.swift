@@ -7,7 +7,7 @@ public enum ListStyle: String {
     case bulleted
 }
 
-/// Example on creating linked text with symbol, ensure the following properties are also configured:
+/// Example creating linked text with symbol, ensure the following properties are also configured:
 ///  For symbol: That a font is provided so the symbol responds to dynamic size, as well as, symbol colour (renderingMode needs to be `.alwaysOriginal`)
 ///  For text: If some of the sentence is attributed, ensure that the 'normal' part is also attributed with `foregroundColor` and `font`
 ///
