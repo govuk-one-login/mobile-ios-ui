@@ -4,7 +4,6 @@ import UIKit
 
 @MainActor
 struct GDSListTests {
-    
     private func numberedListViewModel() -> GDSListViewModel {
         GDSListViewModel(
         title: GDSLocalisedString(stringKey: "Test numbered list view"),
@@ -12,7 +11,29 @@ struct GDSListTests {
             font: DesignSystem.Font.Base.headline, isHeader: true),
         items: [
             GDSLocalisedString(stringKey: "first numbered list item"),
-            GDSLocalisedString(stringKey: "second numbered list item")],
+            GDSLocalisedString(stringKey: "second numbered list item"),
+            GDSLocalisedString(
+                stringLiteral: "This is a linked phrase",
+                stringAttributes: .init(
+                    symbol: UIImage(
+                        systemName: "arrow.up.right",
+                        withConfiguration: UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.body)
+                    )?.withTintColor(DesignSystem.Color.Links.default, renderingMode: .alwaysOriginal),
+                    position: .trailing,
+                    attributes: [
+                        ("This is a ",
+                         [.foregroundColor: DesignSystem.Color.Text.primary,
+                          .font: DesignSystem.Font.Base.body]
+                        ),
+                        ("linked phrase",
+                         [.foregroundColor: DesignSystem.Color.Links.default,
+                          .font: DesignSystem.Font.Base.body,
+                          .link: URL(string: "https://www.gov.uk")!]
+                        )
+                    ]
+                )
+            )
+        ],
         style: .numbered
         )
     }
@@ -29,8 +50,23 @@ struct GDSListTests {
         )
     }
     
-    // Numbered List Tests
+    @Test("UITextView setup")
+    func test_textView_Setup() {
+        let sut = GDSList(viewModel: numberedListViewModel())
+        let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
+        let label = firstRow?.arrangedSubviews[1] as? UITextView
+        
+        #expect(label?.textColor == DesignSystem.Color.GDSList.label)
+        #expect(label?.font == DesignSystem.Font.Base.body)
+        #expect(label?.linkTextAttributes.count == 0)
+        #expect(label?.isScrollEnabled == false)
+        #expect(label?.textContainerInset == .zero)
+        #expect(label?.adjustsFontForContentSizeCategory == true)
+        #expect(label?.isEditable == false)
+        #expect(label?.isSelectable == true)
+    }
     
+    // Numbered List Tests
     @Test("Numbered list title is set correctly")
     func test_numbered_title() throws {
         let sut = GDSList(viewModel: numberedListViewModel())
@@ -56,7 +92,7 @@ struct GDSListTests {
         let sut = GDSList(viewModel: numberedListViewModel())
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         
-        #expect(firstRow?.accessibilityLabel == "numbered list 2 items, 1, first numbered list item")
+        #expect(firstRow?.accessibilityLabel == "numbered list 3 items, 1, first numbered list item")
         #expect(firstRow?.accessibilityRespondsToUserInteraction == false)
     }
     
@@ -69,20 +105,29 @@ struct GDSListTests {
         #expect(secondRow?.accessibilityRespondsToUserInteraction == false)
     }
     
+    @Test("Accessibility label for third row in numbered List")
+    func test_numberedList_thirdRow_accessibilityLabel() throws {
+        let sut = GDSList(viewModel: numberedListViewModel())
+        let thirdRow: UIStackView? = sut[child: "numbered-list-row-stack-view-3"]
+        
+        #expect(thirdRow?.accessibilityLabel == "3, This is a linked phrase")
+        #expect(thirdRow?.accessibilityTraits == .link)
+        #expect(thirdRow?.accessibilityHint == "opens in web browser")
+        #expect(thirdRow?.accessibilityRespondsToUserInteraction == false)
+    }
+    
     @Test("Number label and content label are set correctly")
     func test_numberedList_firstRow_number_and_text() throws {
         let sut = GDSList(viewModel: numberedListViewModel())
         let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
         let number = firstRow?.arrangedSubviews[0] as? UILabel
-        let label = firstRow?.arrangedSubviews[1] as? UILabel
+        let label = firstRow?.arrangedSubviews[1] as? UITextView
         
         #expect(number != nil)
         #expect(number?.text == "1.")
         #expect(label?.text == "first numbered list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
-        #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
-        #expect(label?.numberOfLines == 0)
         
         sut.assertSnapshot(bindToEdges: .horizontal)
     }
@@ -141,14 +186,12 @@ struct GDSListTests {
         let sut = GDSList(viewModel: bulletedListViewModel())
         let firstRow: UIStackView? = sut[child: "bulleted-list-row-stack-view-1"]
         let bullet = firstRow?.arrangedSubviews[0] as? UIImageView
-        let label = firstRow?.arrangedSubviews[1] as? UILabel
+        let label = firstRow?.arrangedSubviews[1] as? UITextView
         
         #expect(bullet?.image != nil)
         #expect(bullet?.contentHuggingPriority(for: .horizontal) == .defaultLow)
         #expect(label?.text == "first bulleted list item")
         #expect(label?.font == DesignSystem.Font.Base.body)
-        #expect(label?.textAlignment == .left)
         #expect(label?.adjustsFontForContentSizeCategory == true)
-        #expect(label?.numberOfLines == 0)
     }
 }

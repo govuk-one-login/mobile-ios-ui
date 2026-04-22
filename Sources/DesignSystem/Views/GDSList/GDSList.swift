@@ -1,7 +1,9 @@
 import UIKit
 
-public final class GDSList: UIView, ContentView {
+public final class GDSList: UIView, ContentView, UITextViewDelegate {
     public let viewModel: GDSListViewModel
+    var rowContainsLink: Bool = false
+    var rowContainsSymbol: Bool = false
     
     private lazy var titleLabel: UILabel = {
         let result = UILabel(colour: DesignSystem.Color.GDSList.title)
@@ -101,17 +103,59 @@ public final class GDSList: UIView, ContentView {
     
     private func contentLabels(
         for item: GDSLocalisedString
-    ) -> UILabel {
-        let label = UILabel(colour: DesignSystem.Color.GDSList.label)
-        label.font = DesignSystem.Font.Base.body
+    ) -> UITextView {
+        // Ensures UITextView has the correct color and font
+        let textView = UITextView()
+        textView.textColor = DesignSystem.Color.GDSList.label
+        textView.font = DesignSystem.Font.Base.body
         
-        if let attributedString = item.attributedValue {
-            label.attributedText = attributedString
+        // Prevents UITextView from applying its default styling
+        textView.linkTextAttributes = [:]
+        
+        // Configure UITextView
+        textView.isScrollEnabled = false
+        textView.textContainerInset = .zero
+        textView.adjustsFontForContentSizeCategory = true
+        textView.isEditable = false
+        
+        // Allows the UITextView to detect taps
+        textView.isSelectable = true
+        textView.delegate = self
+        
+        // Checking if theres a symbol
+        if item.stringAttributes?.symbol != nil {
+            rowContainsSymbol = true
         } else {
-            label.text = item.value
+            rowContainsSymbol = false
         }
         
-        return label
+        if let attributedString = item.attributedValue {
+            // Check if attributedString has a link
+            let fullRange = NSRange(location: 0, length: attributedString.length)
+            attributedString.enumerateAttributes(
+                in: fullRange,
+                options: []
+            ) { (attributes, _, stop) in
+                if attributes[.link] != nil {
+                    rowContainsLink = true
+                    stop.pointee = true
+                }
+            }
+            
+            textView.attributedText = attributedString
+        } else {
+            rowContainsLink = false
+            textView.text = item.value
+        }
+        
+        return textView
+    }
+    
+    public func textViewDidChangeSelection(_ textView: UITextView) {
+        // Prevents users from highlighting text
+        if textView.selectedTextRange != nil {
+            textView.selectedTextRange = nil
+        }
     }
     
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -130,8 +174,8 @@ public final class GDSList: UIView, ContentView {
                 let marker = viewModel.style == .numbered
                 ? numberMarker(for: rowNumber)
                 : bulletMarker()
-                let label = contentLabels(for: item)
-                let row = createRow(marker: marker, label: label)
+                let textView = contentLabels(for: item)
+                let row = createRow(marker: marker, label: textView)
                 
                 let itemCount = String(viewModel.items.count)
                 
@@ -155,6 +199,11 @@ public final class GDSList: UIView, ContentView {
                 row.accessibilityLabel = index == 0
                 ? "\(summaryLabel), \(listLabel)"
                 : listLabel
+                
+                if rowContainsSymbol {
+                    row.accessibilityHint = GDSLocalisedString(stringKey: "externalLinkAccessibilityHint",
+                                                               bundle: .designSystem).value
+                }
                 
                 row.accessibilityIdentifier = viewModel.style == .numbered
                 ? "numbered-list-row-stack-view-\(rowNumber)"
@@ -204,6 +253,11 @@ public final class GDSList: UIView, ContentView {
                     marker.centerYAnchor.constraint(equalTo: label.topAnchor, constant: singleLineHeight / 2)
                 ]
             )
+        }
+        
+        // Only add link attribute if row has link
+        if rowContainsLink {
+            row.accessibilityTraits = .link
         }
         
         row.isLayoutMarginsRelativeArrangement = true
