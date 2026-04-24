@@ -14,7 +14,10 @@ let package = Package(
             targets: ["DesignSystem"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMajor(from: "0.58.2")),
+        .package(
+            url: "https://github.com/SimplyDanny/SwiftLintPlugins",
+            .upToNextMajor(from: "0.58.2")
+        ),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
             from: "1.18.7"
@@ -24,7 +27,7 @@ let package = Package(
         .target(
             name: "DesignSystem",
             resources: [
-                .process("Resources")
+                .process("Utilities/Resources")
             ],
             plugins: [
                 .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
@@ -37,7 +40,7 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
             resources: [
-                .process("Resources")
+                .process("Utilities/Resources")
             ]
         )
     ]
