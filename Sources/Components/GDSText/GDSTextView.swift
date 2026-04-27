@@ -1,8 +1,5 @@
 import UIKit
 
-@available(*, deprecated, renamed: "GDSTextView", message: "to be removed October 2025")
-public typealias GDSCardTextView = GDSTextView
-
 public final class GDSTextView: UILabel, ContentView {
     public init(viewModel: GDSTextViewModel) {
         super.init(frame: .zero)

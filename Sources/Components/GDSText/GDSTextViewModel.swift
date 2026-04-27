@@ -1,8 +1,5 @@
 import UIKit
 
-@available(*, deprecated, renamed: "GDSTextViewModel", message: "to be removed October 2025")
-public typealias GDSCardTextViewModel = GDSTextViewModel
-
 public struct GDSTextViewModel: ContentViewModel {
     public typealias ViewType = GDSTextView
     
