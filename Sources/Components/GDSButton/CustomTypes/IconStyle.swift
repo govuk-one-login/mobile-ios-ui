@@ -49,8 +49,16 @@ extension IconStyle {
         ).value
     )
     
-    public static let qrCode: Self = IconStyle(icon: "qrcode", position: .leading)
-    public static let xMark: Self = IconStyle(icon: "xmark", position: .leading, accessibilityHint: "close")
+    public static let qrCode: Self = IconStyle(
+        icon: "qrcode",
+        position: .leading
+    )
+    
+    public static let xMark: Self = IconStyle(
+        icon: "xmark",
+        position: .leading,
+        accessibilityHint: "close"
+    )
     
     public static let warning: Self = IconStyle(
         icon: "exclamationmark.circle.fill",
