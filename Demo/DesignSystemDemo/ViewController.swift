@@ -2,17 +2,19 @@
 import Foundation
 import UIKit
 
-public struct TestViewControllerViewModel: ScreenViewModel {
+public struct TestViewControllerViewModel: GDSScreenViewModel {
+    public var screenStyle: GDSScreenStyle
     public let body: [any ContentViewModel]
-    public var moveableFooter: [any ContentViewModel]
+    public var movableFooter: [any ContentViewModel]
     public var footer: [any ContentViewModel]
 }
 
 class ViewController: UIViewController {
     var viewModel: TestViewControllerViewModel {
         TestViewControllerViewModel(
+            screenStyle: .centred,
             body: bodyContent,
-            moveableFooter: [],
+            movableFooter: [],
             footer: []
         )
     }
