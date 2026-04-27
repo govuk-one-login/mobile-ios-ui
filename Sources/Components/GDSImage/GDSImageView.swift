@@ -1,8 +1,5 @@
 import UIKit
 
-@available(*, deprecated, renamed: "GDSImageView", message: "to be removed October 2025")
-public typealias GDSCardImageView = GDSImageView
-
 public final class GDSImageView: UIImageView, ContentView {
     public init(viewModel: GDSImageViewModel) {
         super.init(frame: .zero)
