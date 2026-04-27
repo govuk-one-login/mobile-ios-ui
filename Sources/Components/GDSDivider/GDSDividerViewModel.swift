@@ -1,8 +1,5 @@
 import UIKit
 
-@available(*, deprecated, renamed: "GDSDividerViewModel", message: "to be removed October 2025")
-public typealias GDSCardDividerViewModel = GDSDividerViewModel
-
 public struct GDSDividerViewModel: ContentViewModel {
     public typealias ViewType = GDSDividerView
     
