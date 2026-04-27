@@ -1,8 +1,5 @@
 import UIKit
 
-@available(*, deprecated, renamed: "GDSDividerView", message: "to be removed October 2025")
-public typealias GDSCardDividerView = GDSDividerView
-
 public final class GDSDividerView: UIView, ContentView {
     public init(viewModel: GDSDividerViewModel) {
         super.init(frame: .zero)

@@ -4,9 +4,7 @@ import UIKit
 
 @MainActor
 struct GDSDividerTests {
-    @Test("""
-          Test default values
-    """)
+    @Test("Test default values")
     func defaultValues() throws {
         let viewModel = GDSDividerViewModel()
         let sut = GDSDividerView(viewModel: viewModel)
@@ -17,9 +15,7 @@ struct GDSDividerTests {
         #expect(sut.accessibilityIdentifier == "gds-divider-view")
     }
     
-    @Test("""
-          Test set values
-    """)
+    @Test("Test set values")
     func setValues() throws {
         let viewModel = GDSDividerViewModel(
             height: 3,

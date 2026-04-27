@@ -212,9 +212,6 @@ extension DesignSystem {
             public static let ministryOfDefense = UIColor.fromHex("#532A45")
             public static let homeOffice = UIColor.fromHex("#732282")
             public static let hmRevenueAndCustoms = UIColor.fromHex("#008476")
-            
-            @available(*, deprecated, renamed: "departmentForTransport", message: "to be removed October 2025")
-            public static let departmentOfTransport = departmentForTransport
             public static let departmentForTransport = UIColor.fromHex("#006853")
         }
     }
