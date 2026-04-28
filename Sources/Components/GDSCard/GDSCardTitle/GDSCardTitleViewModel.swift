@@ -1,11 +1,10 @@
 import UIKit
 
-public struct GDSTextViewModel: ContentViewModel {
-    public typealias ViewType = GDSTextView
+public struct GDSCardTitleViewModel: ContentViewModel {
+    public typealias ViewType = GDSCardTitleView
     
     let title: GDSLocalisedString
     let titleFont: UIFont
-    let textColor: UIColor
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
     
@@ -14,8 +13,7 @@ public struct GDSTextViewModel: ContentViewModel {
     
     public init(
         title: GDSLocalisedString,
-        titleFont: UIFont = DesignSystem.Font.Base.body,
-        textColor: UIColor = DesignSystem.Color.Text.primary,
+        titleFont: UIFont = DesignSystem.Font.Base.title2Bold,
         alignment: NSTextAlignment = .left,
         accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(8),
@@ -23,7 +21,6 @@ public struct GDSTextViewModel: ContentViewModel {
     ) {
         self.title = title
         self.titleFont = titleFont
-        self.textColor = textColor
         self.alignment = alignment
         self.accessibilityTraits = accessibilityTraits
         self.verticalPadding = verticalPadding
