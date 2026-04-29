@@ -4,8 +4,8 @@ public protocol GDSOrientationLockingNavigationController: UINavigationControlle
     // Empty implementation
 }
 
-// OrientationLockingTabBarController prevents interface rotation preferences being overridden by UITabBarController.
-// It ensures the correct view controller handles rotation.
+/// GDSOrientationLockingTabBarController prevents interface rotation preferences being overridden by UITabBarController.
+/// It ensures the correct view controller handles rotation.
 public class GDSOrientationLockingTabBarController: UITabBarController {
     override open var shouldAutorotate: Bool {
         if let vc = self.selectedViewController?.presentedViewController, vc is GDSOrientationLockingNavigationController {
