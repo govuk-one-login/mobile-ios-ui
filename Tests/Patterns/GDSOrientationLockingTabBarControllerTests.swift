@@ -133,15 +133,6 @@ struct GDSOrientationLockingTabBarControllerTests {
 class MockOrientationLockingViewController: UINavigationController, GDSOrientationLockingNavigationController {
     let shouldAutorotateValue: Bool
     
-    init(shouldAutorotate: Bool = false) {
-        shouldAutorotateValue = shouldAutorotate
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override var shouldAutorotate: Bool {
         shouldAutorotateValue
     }
@@ -156,5 +147,14 @@ class MockOrientationLockingViewController: UINavigationController, GDSOrientati
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .darkContent
+    }
+    
+    init(shouldAutorotate: Bool = false) {
+        shouldAutorotateValue = shouldAutorotate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
