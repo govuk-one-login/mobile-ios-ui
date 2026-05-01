@@ -18,6 +18,4 @@ struct UIColorExtensionTests {
     @Test func test_Color_lightColor() {
         #expect(UIColor.fromHex("#FF0000").lightColor == .red)
     }
-
-    
 }
