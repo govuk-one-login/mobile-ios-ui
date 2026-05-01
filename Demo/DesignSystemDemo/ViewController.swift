@@ -151,35 +151,54 @@ extension ViewController {
                 )
             ]),
             GDSListViewModel(
-                title: GDSLocalisedString(stringKey: "Test numbered list view"),
-                titleConfig: TitleConfig(
-                    font: DesignSystem.Font.Base.headline, isHeader: true),
+                title: "Numbered List",
+                titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
                 items: [
-                    GDSLocalisedString(stringKey: "first numbered list item"),
-                    GDSLocalisedString(stringKey: "second numbered list item"),
+                    "take a photo",
                     GDSLocalisedString(
-                        stringLiteral: "This is a linked phrase",
-                        stringAttributes: .init(
-                            symbol: UIImage(
-                                systemName: "arrow.up.right",
-                                withConfiguration: UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.body)
-                            )?.withTintColor(DesignSystem.Color.Links.default, renderingMode: .alwaysOriginal),
-                            position: .trailing,
-                            attributes: [
-                                ("This is a ",
-                                 [.foregroundColor: DesignSystem.Color.Text.primary,
-                                  .font: DesignSystem.Font.Base.body]
-                                ),
-                                ("linked phrase",
-                                 [.foregroundColor: DesignSystem.Color.Links.default,
-                                  .font: DesignSystem.Font.Base.body,
-                                  .link: URL(string: "https://www.gov.uk")!]
-                                )
-                            ]
-                        )
-                    )
+                        stringKey: "This is bold, this is not",
+                        stringAttributes: [("This is bold",
+                                            [.font: UIFont(.body, weight: .bold)])]
+                    ),
+                    "Item 2",
+                    "Item 3"
                 ],
                 style: .numbered
+            ),
+            GDSListViewModel(
+                title: "Bulleted List",
+                titleConfig: (font: DesignSystem.Font.Base.body, isHeader: false),
+                items: [
+                    "take a photo",
+                    GDSLocalisedString(
+                        stringLiteral: "second numbered list item",
+                        stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                    ),
+                    "Item 3"
+                ],
+                style: .bulleted
+            ),
+            GDSListViewModel(
+                items: [
+                    GDSLocalisedString(
+                        stringLiteral: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
+                        stringAttributes: [("wrap!", [.font: DesignSystem.Font.Base.bodyBold])]
+                    ),
+                    "Item 2",
+                    "Item 3"
+                ],
+                style: .numbered
+            ),
+            GDSListViewModel(
+                items: [
+                    "Item 1",
+                    GDSLocalisedString(
+                        stringKey: "second bulleted list item",
+                        stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
+                    ),
+                    "Item 3"
+                ],
+                style: .bulleted
             ),
             GDSCardViewModel(
                 showShadow: true,

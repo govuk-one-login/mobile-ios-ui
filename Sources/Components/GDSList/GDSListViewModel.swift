@@ -7,33 +7,6 @@ public enum ListStyle: String {
     case bulleted
 }
 
-/// Example creating linked text with symbol, ensure the following properties are also configured:
-///  For symbol: That a font is provided so the symbol responds to dynamic size, as well as, symbol colour (renderingMode needs to be `.alwaysOriginal`)
-///  For text: If some of the sentence is attributed, ensure that the 'normal' part is also attributed with `foregroundColor` and `font`
-///
-/// ```swift
-/// GDSLocalisedString(
-///    stringLiteral: "This is a linked phrase",
-///    stringAttributes: .init(
-///        symbol: UIImage(
-///            systemName: "arrow.up.right",
-///            withConfiguration: UIImage.SymbolConfiguration(font: DesignSystem.Font.Base.body)
-///        )?.withTintColor(DesignSystem.Color.Links.default, renderingMode: .alwaysOriginal),
-///        position: .trailing,
-///        attributes: [
-///            ("This is a ",
-///             [.foregroundColor: DesignSystem.Color.Text.primary,
-///              .font: DesignSystem.Font.Base.body]
-///            ),
-///            ("linked phrase",
-///             [.foregroundColor: DesignSystem.Color.Links.default,
-///              .font: DesignSystem.Font.Base.body,
-///              .link: URL(string: "https://www.gov.uk")!]
-///            )
-///        ]
-///    )
-/// )
-/// ```
 @MainActor
 public struct GDSListViewModel: ContentViewModel {
     public typealias ViewType = GDSList
