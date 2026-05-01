@@ -26,6 +26,7 @@ let package = Package(
     targets: [
         .target(
             name: "DesignSystem",
+            path: "Sources",
             resources: [
                 .process("Utilities/Resources")
             ],
@@ -39,6 +40,7 @@ let package = Package(
                 "DesignSystem",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
+            path: "Tests",
             resources: [
                 .process("Utilities/Resources")
             ]
