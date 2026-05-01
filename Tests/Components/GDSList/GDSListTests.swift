@@ -151,4 +151,54 @@ struct GDSListTests {
         #expect(label?.adjustsFontForContentSizeCategory == true)
         #expect(label?.numberOfLines == 0)
     }
+    
+    // Attributed Text Tests
+    
+    private func numberedListWithAttributedTextViewModel() -> GDSListViewModel {
+        GDSListViewModel(
+            title: GDSLocalisedString(stringKey: "Attributed text list"),
+            titleConfig: TitleConfig(
+                font: DesignSystem.Font.Base.headline, isHeader: true),
+            items: [
+                GDSLocalisedString(
+                    stringKey: "This is bold, this is not",
+                    stringAttributes: [("This is bold",
+                                        [.font: UIFont(.body, weight: .bold)])]
+                ),
+                GDSLocalisedString(stringKey: "plain list item")
+            ],
+            style: .numbered
+        )
+    }
+    
+    @Test("Numbered list item with attributed text renders correctly")
+    func test_numberedList_attributedText() throws {
+        let sut = GDSList(viewModel: numberedListWithAttributedTextViewModel())
+        let firstRow: UIStackView? = sut[child: "numbered-list-row-stack-view-1"]
+        let label = firstRow?.arrangedSubviews[1] as? UILabel
+        
+        #expect(label?.attributedText != nil)
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
+    }
+    
+    @Test("Bulleted list item with attributed text renders correctly")
+    func test_bulletedList_attributedText() throws {
+        let sut = GDSList(viewModel: GDSListViewModel(
+            title: GDSLocalisedString(stringKey: "Attributed text list"),
+            titleConfig: TitleConfig(
+                font: DesignSystem.Font.Base.body, isHeader: false),
+            items: [
+                GDSLocalisedString(
+                    stringKey: "This is bold, this is not",
+                    stringAttributes: [("This is bold",
+                                        [.font: UIFont(.body, weight: .bold)])]
+                ),
+                GDSLocalisedString(stringKey: "plain list item")
+            ],
+            style: .bulleted
+        ))
+        
+        sut.assertSnapshot(bindToEdges: .horizontal)
+    }
 }
