@@ -13,7 +13,7 @@ let package = Package(
             name: "DesignSystem",
             targets: ["DesignSystem"]),
         .library(
-            name: "SnapShotHelpers",
+            name: "SnapshotHelpers",
             targets: ["SnapshotHelpers"])
     ],
     dependencies: [
