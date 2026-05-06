@@ -1,7 +1,7 @@
 import UIKit
 
 extension UITraitCollection {
-    public static var testingDynamicTypeTraits: [UITraitCollection] {
+    static var testingDynamicTypeTraits: [UITraitCollection] {
         [
             UITraitCollection(preferredContentSizeCategory: .large),
             UITraitCollection(preferredContentSizeCategory: .accessibilityLarge),
@@ -9,7 +9,7 @@ extension UITraitCollection {
         ]
     }
 
-    public static var testingUserInterfaceStyle: [UITraitCollection] {
+    static var testingUserInterfaceStyle: [UITraitCollection] {
         [
             UITraitCollection(userInterfaceStyle: .light),
             UITraitCollection(userInterfaceStyle: .dark)

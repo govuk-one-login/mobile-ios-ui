@@ -4,7 +4,7 @@ import SwiftUI
 
 /// UIKit UIView extension
 extension UIView {
-    public func assertSnapshot(
+    func assertSnapshot(
         in size: CGSize = CGSize(width: 500, height: 500),
         bindToEdges: NSDirectionalRectEdge = .none,
         precision: Float = 0.995,
@@ -74,7 +74,7 @@ extension UIView {
 
 /// UIKit UIViewController extension
 extension UIViewController {
-    public func assertSnapshot(
+    func assertSnapshot(
         devices: [ViewImageConfig] = .standard,
         precision: Float = 0.995,
         perceptualPrecision: Float = 0.98,
@@ -119,7 +119,7 @@ extension UIViewController {
 
 /// SwiftUI View extension
 extension View {
-    public func assertSnapshot(
+    func assertSnapshot(
         devices: [ViewImageConfig] = .standard,
         precision: Float = 0.995,
         perceptualPrecision: Float = 0.98,
@@ -163,7 +163,7 @@ extension View {
 }
 
 extension [ViewImageConfig] {
-    public static let standard: [ViewImageConfig] = [
+    static let standard: [ViewImageConfig] = [
         .iPhone13(.portrait),
         .iPhone13(.landscape)
     ]
