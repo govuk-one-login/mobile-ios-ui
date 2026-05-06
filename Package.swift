@@ -11,7 +11,10 @@ let package = Package(
     products: [
         .library(
             name: "DesignSystem",
-            targets: ["DesignSystem"])
+            targets: ["DesignSystem"]),
+        .library(
+            name: "SnapShotHelpers",
+            targets: ["SnapshotHelpers"])
     ],
     dependencies: [
         .package(
@@ -34,11 +37,19 @@ let package = Package(
                 .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
+        .target(
+            name: "SnapshotHelpers",
+            dependencies: [
+                "DesignSystem",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ],
+            path: "SnapshotHelpers/Sources",
+        ),
         .testTarget(
             name: "DesignSystemTests",
             dependencies: [
                 "DesignSystem",
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+                "SnapshotHelpers"
             ],
             path: "Tests",
             resources: [
