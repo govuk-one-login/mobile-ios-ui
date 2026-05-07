@@ -1,4 +1,5 @@
 @testable import DesignSystem
+@testable import SnapshotHelpers
 import Testing
 import UIKit
 

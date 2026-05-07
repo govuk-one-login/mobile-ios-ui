@@ -1,4 +1,4 @@
-public func allCombinationsOf<T>(arrays: [[T]], partial: [T] = []) -> [[T]] {
+func allCombinationsOf<T>(arrays: [[T]], partial: [T] = []) -> [[T]] {
     if arrays.isEmpty {
         return [partial]
     } else {
