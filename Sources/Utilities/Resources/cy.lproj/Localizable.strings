@@ -10,3 +10,8 @@
 "bulletedList" = "rhestr bwledi %@ eitem";
 "bullet" = "bwledt";
 "numberedList" = "rhestr wedi'i rhifo %@ o eitemau";
+
+// MARK: Progress Indicator
+"defaultLoadingText" = "Llwytho";
+"fiveSecondLoadingText" = "Dal i lwytho";
+"tenSecondLoadingText" = "Dal i lwytho, daliwch ati i aros";

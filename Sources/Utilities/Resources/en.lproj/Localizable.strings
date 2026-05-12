@@ -10,3 +10,8 @@
 "bulletedList" = "bulleted list %@ items";
 "bullet" = "bullet";
 "numberedList" = "numbered list %@ items";
+
+// MARK: Progress Indicator
+"defaultLoadingText" = "Loading";
+"fiveSecondLoadingText" = "Still loading";
+"tenSecondLoadingText" = "Still loading, keep waiting";
