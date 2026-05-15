@@ -80,7 +80,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
         stackView.removeArrangedSubview(titleView)
         titleView.removeFromSuperview()
 
-        // replace title reference and back to stack
+        // add new title to stack
         titleView = GDSTextView(viewModel: newTitleView)
         stackView.addArrangedSubview(titleView)
 
@@ -88,7 +88,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
         stackView.setNeedsLayout()
         stackView.layoutIfNeeded()
         
-        // voiceover annouces new title
+        // Update accessiblityLabel and have voiceover annouce new title
         stackView.accessibilityLabel = newTitleView.title.value
         UIAccessibility.post(notification: .announcement, argument: newTitleView.title.value)
     }
