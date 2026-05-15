@@ -3,8 +3,7 @@ import Testing
 import UIKit
 
 struct LocalisationTests {
-    @Test
-    func rowLocalisation() async throws {
+    @Test func rowLocalisation() async throws {
         let key = "externalLinkAccessibilityHint"
         let welsh = "Agor mewn porwr gwe"
         let english = "opens in web browser"
@@ -91,5 +90,50 @@ struct LocalisationTests {
         )
         
         #expect(key.getWelshString() == welsh)
+    }
+    
+    @Test
+    func progressIndicatorLocalisation() async throws {
+        let defaultKey = "defaultLoadingText"
+        let englishDefaultKey = "Loading"
+        let welshDefaultKey = "Llwytho"
+        
+        #expect(
+            GDSLocalisedString(
+                stringKey: defaultKey,
+                variableKeys: ["1"],
+                bundle: .designSystem
+            ).value == englishDefaultKey
+        )
+        
+        #expect(defaultKey.getWelshString() == welshDefaultKey)
+        
+        let fiveSecondKey = "fiveSecondLoadingText"
+        let englishfiveSecondKey = "Still loading"
+        let welshfiveSecondKey = "Dal i lwytho"
+        
+        #expect(
+            GDSLocalisedString(
+                stringKey: fiveSecondKey,
+                variableKeys: ["1"],
+                bundle: .designSystem
+            ).value == englishfiveSecondKey
+        )
+        
+        #expect(fiveSecondKey.getWelshString() == welshfiveSecondKey)
+        
+        let tenSecondKey = "tenSecondLoadingText"
+        let englishTenSecondKey = "Still loading, keep waiting"
+        let welshTenSecondKey = "Dal i lwytho, daliwch ati i aros"
+        
+        #expect(
+            GDSLocalisedString(
+                stringKey: tenSecondKey,
+                variableKeys: ["1"],
+                bundle: .designSystem
+            ).value == englishTenSecondKey
+        )
+        
+        #expect(tenSecondKey.getWelshString() == welshTenSecondKey)
     }
 }

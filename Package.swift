@@ -51,10 +51,7 @@ let package = Package(
                 "DesignSystem",
                 "SnapshotHelpers"
             ],
-            path: "Tests",
-            resources: [
-                .process("Utilities/Resources")
-            ]
+            path: "Tests"
         )
     ]
 )

@@ -81,4 +81,3 @@ struct GDSProgressIndicatorTests {
         #expect(stackView?.accessibilityLabel == "Still loading, keep waiting")
     }
 }
-
