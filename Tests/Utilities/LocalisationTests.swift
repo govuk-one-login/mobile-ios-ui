@@ -3,7 +3,8 @@ import Testing
 import UIKit
 
 struct LocalisationTests {
-    @Test func rowLocalisation() async throws {
+    @Test
+    func rowLocalisation() async throws {
         let key = "externalLinkAccessibilityHint"
         let welsh = "Agor mewn porwr gwe"
         let english = "opens in web browser"
