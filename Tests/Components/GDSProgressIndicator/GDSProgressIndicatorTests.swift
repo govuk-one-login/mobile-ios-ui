@@ -68,7 +68,6 @@ struct GDSProgressIndicatorTests {
         
         #expect(titleView?.text == "Still loading")
         #expect(stackView?.accessibilityLabel == "Still loading")
-        
     }
     
     @Test("Test configuration used to change the title after 10 seconds")

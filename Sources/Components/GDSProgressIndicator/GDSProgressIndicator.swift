@@ -2,7 +2,6 @@ import UIKit
 
 public final class GDSProgressIndicator: UIView, ContentView {
     let viewModel: GDSProgressIndicatorViewModel
-    // private var title: GDSTextViewModel
     private var didScheduleTitleChanges = false
     
     public lazy var iconView: UIActivityIndicatorView = {
