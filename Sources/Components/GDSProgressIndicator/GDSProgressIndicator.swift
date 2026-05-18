@@ -2,7 +2,6 @@ import UIKit
 
 public final class GDSProgressIndicator: UIView, ContentView {
     let viewModel: GDSProgressIndicatorViewModel
-    private var didScheduleTitleChanges = false
     
     public lazy var iconView: UIActivityIndicatorView = {
         let iconView = UIActivityIndicatorView(style: .large)
@@ -59,12 +58,11 @@ public final class GDSProgressIndicator: UIView, ContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Title changes are only called once component has been added to window
     public override func didMoveToWindow() {
         super.didMoveToWindow()
-        if !didScheduleTitleChanges {
-            didScheduleTitleChanges = true
-            scheduleTitleChanges()
-        }
+        
+        scheduleTitleChanges()
     }
 
     private func scheduleTitleChanges() {
