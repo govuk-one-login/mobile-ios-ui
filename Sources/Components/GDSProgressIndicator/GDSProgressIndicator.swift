@@ -28,6 +28,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
   
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
+        UIAccessibility.post(notification: .screenChanged, argument: viewModel.title.title.value)
         stack.accessibilityLabel = viewModel.title.title.value
         stack.accessibilityIdentifier = "progress-indicator-stack-view"
         
@@ -89,6 +90,6 @@ public final class GDSProgressIndicator: UIView, ContentView {
         
         // Update accessiblityLabel and have voiceover annouce new title
         stackView.accessibilityLabel = newTitleView.title.value
-        UIAccessibility.post(notification: .announcement, argument: newTitleView.title.value)
+        UIAccessibility.post(notification: .layoutChanged, argument: stackView)
     }
 }
