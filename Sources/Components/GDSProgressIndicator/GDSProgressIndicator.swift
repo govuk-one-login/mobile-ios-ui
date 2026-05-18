@@ -7,7 +7,10 @@ public final class GDSProgressIndicator: UIView, ContentView {
     public lazy var iconView: UIActivityIndicatorView = {
         let iconView = UIActivityIndicatorView(style: .large)
         
-        iconView.color = viewModel.progressIndicatorColor
+        // Default color to be used unless defined
+        if let color = viewModel.progressIndicatorColor {
+            iconView.color = color
+        }
         
         return iconView
     }()
@@ -83,10 +86,6 @@ public final class GDSProgressIndicator: UIView, ContentView {
         // add new title to stack
         titleView = GDSTextView(viewModel: newTitleView)
         stackView.addArrangedSubview(titleView)
-
-        // force layout update
-        stackView.setNeedsLayout()
-        stackView.layoutIfNeeded()
         
         // Update accessiblityLabel and have voiceover annouce new title
         stackView.accessibilityLabel = newTitleView.title.value

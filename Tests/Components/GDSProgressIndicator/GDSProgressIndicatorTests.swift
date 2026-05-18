@@ -12,8 +12,16 @@ struct GDSProgressIndicatorTests {
         let stackView = view.subviews.first as? UIStackView
         let iconView = stackView?.arrangedSubviews.first as? UIActivityIndicatorView
         
-        #expect(iconView?.color == viewModel.progressIndicatorColor)
+        #expect(iconView?.color == .secondaryLabel)
         #expect(iconView?.style == .large)
+        #expect(iconView?.isAnimating == true)
+        
+        let colorViewModel = GDSProgressIndicatorViewModel(progressIndicatorColor: DesignSystem.Color.Base.white)
+        let colorView = GDSProgressIndicator(viewModel: colorViewModel)
+        let colorStackView = colorView.subviews.first as? UIStackView
+        let colorIconView = colorStackView?.arrangedSubviews.first as? UIActivityIndicatorView
+        
+        #expect(colorIconView?.color == DesignSystem.Color.Base.white)
     }
     
     @Test("Test configuration used for title view")
