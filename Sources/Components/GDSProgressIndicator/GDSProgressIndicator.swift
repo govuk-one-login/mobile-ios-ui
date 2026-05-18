@@ -2,6 +2,7 @@ import UIKit
 
 public final class GDSProgressIndicator: UIView, ContentView {
     let viewModel: GDSProgressIndicatorViewModel
+    // private var title: GDSTextViewModel
     private var didScheduleTitleChanges = false
     
     public lazy var iconView: UIActivityIndicatorView = {
@@ -28,8 +29,10 @@ public final class GDSProgressIndicator: UIView, ContentView {
   
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
-        UIAccessibility.post(notification: .screenChanged, argument: viewModel.title.title.value)
-        stack.accessibilityLabel = viewModel.title.title.value
+        
+        let defaultTitle = viewModel.title.title.value
+        UIAccessibility.post(notification: .screenChanged, argument: defaultTitle)
+        stack.accessibilityLabel = defaultTitle
         stack.accessibilityIdentifier = "progress-indicator-stack-view"
         
         return stack
@@ -69,27 +72,25 @@ public final class GDSProgressIndicator: UIView, ContentView {
         // Schedule title change after 5 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
             guard let self = self else { return }
-            self.replaceTitleView(with: self.viewModel.titleAfter5Seconds)
+            
+            let titleAfter5Seconds = viewModel.titleAfter5Seconds.title.value
+            titleView.text = titleAfter5Seconds
+            
+            // Update accessiblityLabel and have voiceover annouce new title
+            stackView.accessibilityLabel = titleAfter5Seconds
+            UIAccessibility.post(notification: .layoutChanged, argument: stackView)
         }
 
         // Schedule title change after 10 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
             guard let self = self else { return }
-            self.replaceTitleView(with: self.viewModel.titleAfter10Seconds)
+            
+            let titleAfter10Seconds = viewModel.titleAfter10Seconds.title.value
+            titleView.text = titleAfter10Seconds
+            
+            // Update accessiblityLabel and have voiceover annouce new title
+            stackView.accessibilityLabel = titleAfter10Seconds
+            UIAccessibility.post(notification: .layoutChanged, argument: stackView)
         }
-    }
-    
-    private func replaceTitleView(with newTitleView: GDSTextViewModel) {
-        // remove current title from stack
-        stackView.removeArrangedSubview(titleView)
-        titleView.removeFromSuperview()
-
-        // add new title to stack
-        titleView = GDSTextView(viewModel: newTitleView)
-        stackView.addArrangedSubview(titleView)
-        
-        // Update accessiblityLabel and have voiceover annouce new title
-        stackView.accessibilityLabel = newTitleView.title.value
-        UIAccessibility.post(notification: .layoutChanged, argument: stackView)
     }
 }
