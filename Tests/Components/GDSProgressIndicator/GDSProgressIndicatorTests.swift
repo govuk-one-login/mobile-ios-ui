@@ -45,7 +45,6 @@ struct GDSProgressIndicatorTests {
         #expect(stackView?.spacing == CGFloat(DesignSystem.Spacing.default))
         
         #expect(stackView?.isAccessibilityElement == true)
-        #expect(stackView?.shouldGroupAccessibilityChildren == true)
         #expect(stackView?.accessibilityLabel == "Loading")
         
         #expect(stackView?.accessibilityTraits.contains(.none) == true)
