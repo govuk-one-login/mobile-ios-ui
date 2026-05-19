@@ -15,6 +15,7 @@ struct GDSProgressIndicatorTests {
         #expect(iconView?.color == .secondaryLabel)
         #expect(iconView?.style == .large)
         #expect(iconView?.isAnimating == true)
+        #expect(iconView?.isAccessibilityElement == false)
         
         let colorViewModel = GDSProgressIndicatorViewModel(progressIndicatorColor: DesignSystem.Color.Base.white)
         let colorView = GDSProgressIndicator(viewModel: colorViewModel)
@@ -31,6 +32,7 @@ struct GDSProgressIndicatorTests {
         let titleView = stackView?.arrangedSubviews.last as? GDSTextView
         
         #expect(titleView?.text == "Loading")
+        #expect(titleView?.isAccessibilityElement == false)
     }
     
     @Test("Test configuration used for stack view")
