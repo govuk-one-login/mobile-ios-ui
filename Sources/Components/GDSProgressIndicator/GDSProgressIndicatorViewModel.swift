@@ -1,5 +1,12 @@
 import UIKit
 
+/// Creates a Progress Indicator component
+///
+/// - Parameters:
+///   - title: The title presented for the first five seconds the component is on screen, defaulted to "Loading" in `primary` text colour
+///   - titleAfter5Seconds: The title presented for seconds five to ten, defaulted to "Still loading" in `primary` text colour
+///   - titleAfter10Seconds: The title presented from ten seconds onwards, defaulted to "Still loading, keep waiting" in `primary` text colour
+///   - progressIndicatorColor: The colour of the progress indicator, use the property to overwrite components default colour
 public struct GDSProgressIndicatorViewModel: ContentViewModel {
     public typealias ViewType = GDSProgressIndicator
     

@@ -29,10 +29,8 @@ public final class GDSProgressIndicator: UIView, ContentView {
         stack.spacing = DesignSystem.Spacing.default
   
         stack.isAccessibilityElement = true
+        stack.accessibilityLabel = viewModel.title.title.value
         stack.accessibilityIdentifier = "progress-indicator-stack-view"
-        
-        let defaultTitle = viewModel.title.title.value
-        stack.accessibilityLabel = defaultTitle
         
         return stack
     }()
