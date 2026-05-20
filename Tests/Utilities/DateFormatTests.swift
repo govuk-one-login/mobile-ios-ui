@@ -9,4 +9,11 @@ struct DateFormatTests {
         let sut = DesignSystem.DateFormat.default
         #expect(sut == expectedValue)
     }
+    
+    @Test func test_DateFormat_NumberDateFormat() async throws {
+        let expectedValue: String = "dd-MM-yyyy"
+        
+        let sut = DesignSystem.DateFormat.numberDateFormat
+        #expect(sut == expectedValue)
+    }
 }
