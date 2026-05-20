@@ -13,5 +13,7 @@ extension DesignSystem {
         
         /// This is used to create a Date from UTC date string
         public static let utcStringToDate: String = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        
+        public static let numberDateFormat: String = "dd-MM-yyyy"
     }
 }
