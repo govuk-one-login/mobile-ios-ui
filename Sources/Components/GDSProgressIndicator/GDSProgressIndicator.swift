@@ -32,7 +32,6 @@ public final class GDSProgressIndicator: UIView, ContentView {
         stack.accessibilityIdentifier = "progress-indicator-stack-view"
         
         let defaultTitle = viewModel.title.title.value
-        UIAccessibility.post(notification: .screenChanged, argument: defaultTitle)
         stack.accessibilityLabel = defaultTitle
         
         return stack
