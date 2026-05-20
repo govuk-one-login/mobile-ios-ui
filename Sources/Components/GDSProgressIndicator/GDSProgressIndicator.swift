@@ -11,11 +11,14 @@ public final class GDSProgressIndicator: UIView, ContentView {
             iconView.color = color
         }
         
+        iconView.isAccessibilityElement = false
         return iconView
     }()
     
     public lazy var titleView: GDSTextView = {
-        GDSTextView(viewModel: viewModel.title)
+        let titleView = GDSTextView(viewModel: viewModel.title)
+        titleView.isAccessibilityElement = false
+        return titleView
     }()
     
     private lazy var stackView: UIStackView = {
