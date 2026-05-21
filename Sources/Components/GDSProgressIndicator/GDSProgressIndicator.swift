@@ -71,7 +71,10 @@ public final class GDSProgressIndicator: UIView, ContentView {
     }
     
     private func scheduleTitleChanges() {
-        titleView.text = viewModel.title.title.value
+        // Ensures that when component is on screen again the default title is displayed and not the last
+        let defaultTitle = viewModel.title.title.value
+        titleView.text = defaultTitle
+        stackView.accessibilityLabel = defaultTitle
         
         let titleAfter5Seconds =  DispatchWorkItem { [weak self] in
             guard let self = self else { return }
