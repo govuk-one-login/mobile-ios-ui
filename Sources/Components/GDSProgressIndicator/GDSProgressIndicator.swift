@@ -2,6 +2,7 @@ import UIKit
 
 public final class GDSProgressIndicator: UIView, ContentView {
     let viewModel: GDSProgressIndicatorViewModel
+    private var workItems: [DispatchWorkItem] = []
     
     public lazy var iconView: UIActivityIndicatorView = {
         let iconView = UIActivityIndicatorView(style: .large)
@@ -27,7 +28,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
         stack.alignment = .center
         stack.distribution = .equalSpacing
         stack.spacing = DesignSystem.Spacing.default
-  
+        
         stack.isAccessibilityElement = true
         stack.accessibilityLabel = viewModel.title.title.value
         stack.accessibilityIdentifier = "progress-indicator-stack-view"
@@ -52,7 +53,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
         // Animate progress indicator
         iconView.startAnimating()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -61,14 +62,19 @@ public final class GDSProgressIndicator: UIView, ContentView {
     public override func didMoveToWindow() {
         super.didMoveToWindow()
         
-        scheduleTitleChanges()
+        if window != nil {
+            scheduleTitleChanges()
+        } else {
+            cancelTitleChanges()
+        }
+        
     }
-
+    
     private func scheduleTitleChanges() {
-        // Schedule title change after 5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+        titleView.text = viewModel.title.title.value
+        
+        let titleAfter5Seconds =  DispatchWorkItem { [weak self] in
             guard let self = self else { return }
-            
             let titleAfter5Seconds = viewModel.titleAfter5Seconds.title.value
             titleView.text = titleAfter5Seconds
             
@@ -76,11 +82,9 @@ public final class GDSProgressIndicator: UIView, ContentView {
             stackView.accessibilityLabel = titleAfter5Seconds
             UIAccessibility.post(notification: .layoutChanged, argument: stackView)
         }
-
-        // Schedule title change after 10 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+        
+        let titleAfter10Seconds =  DispatchWorkItem { [weak self] in
             guard let self = self else { return }
-            
             let titleAfter10Seconds = viewModel.titleAfter10Seconds.title.value
             titleView.text = titleAfter10Seconds
             
@@ -88,5 +92,17 @@ public final class GDSProgressIndicator: UIView, ContentView {
             stackView.accessibilityLabel = titleAfter10Seconds
             UIAccessibility.post(notification: .layoutChanged, argument: stackView)
         }
+        
+        workItems = [titleAfter5Seconds, titleAfter10Seconds]
+        
+        // Schedule title change after 5 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: titleAfter5Seconds)
+        // Schedule title change after 10 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: titleAfter10Seconds)
+    }
+    
+    private func cancelTitleChanges() {
+        workItems.forEach { $0.cancel() }
+        workItems.removeAll()
     }
 }
