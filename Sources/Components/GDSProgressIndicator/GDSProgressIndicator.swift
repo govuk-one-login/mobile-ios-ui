@@ -67,7 +67,6 @@ public final class GDSProgressIndicator: UIView, ContentView {
         } else {
             cancelTitleChanges()
         }
-        
     }
     
     private func scheduleTitleChanges() {
