@@ -76,7 +76,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
         titleView.text = defaultTitle
         stackView.accessibilityLabel = defaultTitle
         
-        let titleAfter5Seconds =  DispatchWorkItem { [weak self] in
+        let titleAfter5Seconds = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             let titleAfter5Seconds = viewModel.titleAfter5Seconds.title.value
             titleView.text = titleAfter5Seconds
@@ -86,7 +86,7 @@ public final class GDSProgressIndicator: UIView, ContentView {
             UIAccessibility.post(notification: .layoutChanged, argument: stackView)
         }
         
-        let titleAfter10Seconds =  DispatchWorkItem { [weak self] in
+        let titleAfter10Seconds = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             let titleAfter10Seconds = viewModel.titleAfter10Seconds.title.value
             titleView.text = titleAfter10Seconds
