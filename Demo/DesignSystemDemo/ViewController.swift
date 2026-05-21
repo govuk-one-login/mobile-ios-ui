@@ -86,6 +86,7 @@ class ViewController: UIViewController {
 extension ViewController {
     var bodyContent: [any ContentViewModel] {
         [
+            GDSProgressIndicatorViewModel(),
             GDSButtonViewModel(
                 title: "Push GDSScreen",
                 style: .secondary,
