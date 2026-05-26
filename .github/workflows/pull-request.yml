@@ -51,7 +51,7 @@ jobs:
            -workspace "DesignSystemDemo.xcworkspace" \
            -scheme DesignSystemDemo test \
            -skipPackagePluginValidation \
-           -destination "platform=iOS Simulator,name=iPhone 17,OS=26.5" \
+           -destination "platform=iOS Simulator,name=iPhone 17,arch=arm64,OS=26.5" \
            -enableCodeCoverage YES \
            -resultBundlePath result.xcresult | xcbeautify
 
