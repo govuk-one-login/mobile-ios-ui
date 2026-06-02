@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 @testable import DesignSystem
 import Testing
 import UIKit
@@ -176,6 +177,13 @@ struct ColorTests {
         let expectedColor = UIColor.fromHex("#00542D")
         
         let sut = DesignSystem.Color.Base.green8
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_Color_Green9() async throws {
+        let expectedColor = UIColor.fromHex("#CFE4DC")
+        
+        let sut = DesignSystem.Color.Base.green9
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
@@ -397,3 +405,4 @@ struct ColorTests {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length
