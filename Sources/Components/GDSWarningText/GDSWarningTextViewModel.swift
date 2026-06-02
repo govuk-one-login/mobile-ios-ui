@@ -12,8 +12,8 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     let iconStyle: IconStyle?
     let warningText: GDSTextViewModel
     
-    public var verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default)
-    public var horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
+    public var verticalPadding: VerticalPadding?
+    public var horizontalPadding: HorizontalPadding?
     
     public var accessibilityLabel: String {
         "\(NSLocalizedString(key: "voiceOverWarningPrefix", bundle: .designSystem)): \(warningText.title)"
@@ -21,9 +21,13 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     
     public init(
         iconStyle: IconStyle? = .warning,
-        warningText: GDSTextViewModel
+        warningText: GDSTextViewModel,
+        verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
+        horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     ) {
         self.iconStyle = iconStyle
         self.warningText = warningText
+        self.verticalPadding = verticalPadding
+        self.horizontalPadding = horizontalPadding
     }
 }
