@@ -47,4 +47,41 @@ struct GDSWarningTextTests {
         #expect(stackView?.accessibilityTraits.contains(.none) == true)
         #expect(stackView?.accessibilityIdentifier == "warning-text-stack-view")
     }
+    
+    @Test("Test icon colour uses IconStyle colour when provided")
+    func setsCustomIconColour() {
+        let customColour = UIColor.systemRed
+        let viewModel = GDSWarningTextViewModel(
+            iconStyle: IconStyle(icon: "exclamationmark.circle.fill", colour: customColour, position: .leading),
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        let iconView = stackView?.arrangedSubviews.first as? UIImageView
+        
+        #expect(iconView?.tintColor == customColour)
+    }
+    
+    @Test("Test custom iconSpacing is applied to stack view")
+    func setsCustomIconSpacing() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold),
+            iconSpacing: 24
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        
+        #expect(stackView?.spacing == 24)
+    }
+    
+    @Test("Test default iconSpacing uses DesignSystem.Spacing.default")
+    func setsDefaultIconSpacing() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        
+        #expect(viewModel.iconSpacing == CGFloat(DesignSystem.Spacing.GDSWarningText.default))
+    }
 }
