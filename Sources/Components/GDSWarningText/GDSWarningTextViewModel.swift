@@ -11,6 +11,7 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     
     let iconStyle: IconStyle?
     let warningText: GDSTextViewModel
+    let iconSpacing: CGFloat
     
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
@@ -22,6 +23,7 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     public init(
         iconStyle: IconStyle? = .warning,
         warningText: GDSTextViewModel,
+        iconSpacing: CGFloat = DesignSystem.Spacing.GDSWarningText.default,
         verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
         horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     ) {
@@ -29,5 +31,6 @@ public struct GDSWarningTextViewModel: ContentViewModel {
         self.warningText = warningText
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
+        self.iconSpacing = iconSpacing
     }
 }

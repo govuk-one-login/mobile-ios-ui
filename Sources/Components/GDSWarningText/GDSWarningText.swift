@@ -11,7 +11,7 @@ public final class GDSWarningText: UIView, ContentView {
             systemName: viewModel.iconStyle?.icon ?? "exclamationmark.circle.fill",
             withConfiguration: config
         ))
-        iconView.tintColor = DesignSystem.Color.Icons.default
+        iconView.tintColor = viewModel.iconStyle?.colour ?? DesignSystem.Color.Icons.default
         iconView.contentMode = .topLeft
         
         iconView.adjustsImageSizeForAccessibilityContentSizeCategory = true
@@ -29,7 +29,7 @@ public final class GDSWarningText: UIView, ContentView {
         let stack = UIStackView(arrangedSubviews: [iconView, titleView])
         stack.axis = .horizontal
         stack.alignment = .fill
-        stack.spacing = DesignSystem.Spacing.GDSWarningText.default
+        stack.spacing = viewModel.iconSpacing
         stack.distribution = .fill
   
         stack.isAccessibilityElement = true
