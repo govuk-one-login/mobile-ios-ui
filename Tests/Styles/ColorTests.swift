@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 @testable import DesignSystem
 import Testing
 import UIKit
@@ -404,3 +405,4 @@ struct ColorTests {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length
