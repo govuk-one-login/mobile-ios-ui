@@ -84,4 +84,33 @@ struct GDSWarningTextTests {
         
         #expect(viewModel.iconSpacing == CGFloat(DesignSystem.Spacing.GDSWarningText.default))
     }
+    
+    @Test("Test accessibilityLabel uses default warning prefix when iconStyle has no accessibilityHint")
+    func accessibilityLabelDefaultPrefix() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Something went wrong", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        
+        #expect(viewModel.accessibilityLabel == "Warning: Something went wrong")
+    }
+    
+    @Test("Test accessibilityLabel uses custom accessibilityHint from iconStyle")
+    func accessibilityLabelCustomHint() {
+        let viewModel = GDSWarningTextViewModel(
+            iconStyle: IconStyle(icon: "info.circle", position: .leading, accessibilityHint: "Important"),
+            warningText: GDSTextViewModel(title: "Check your details", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        
+        #expect(viewModel.accessibilityLabel == "Important: Check your details")
+    }
+    
+    @Test("Test accessibilityLabel uses default warning prefix when iconStyle is nil")
+    func accessibilityLabelNilIconStyle() {
+        let viewModel = GDSWarningTextViewModel(
+            iconStyle: nil,
+            warningText: GDSTextViewModel(title: "Please try again", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        
+        #expect(viewModel.accessibilityLabel == "Warning: Please try again")
+    }
 }
