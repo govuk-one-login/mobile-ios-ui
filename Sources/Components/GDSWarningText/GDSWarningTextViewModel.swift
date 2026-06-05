@@ -17,7 +17,12 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     public var horizontalPadding: HorizontalPadding?
     
     public var accessibilityLabel: String {
-        "\(NSLocalizedString(key: "voiceOverWarningPrefix", bundle: .designSystem)): \(warningText.title)"
+        let iconAccessibilityHint = iconStyle?.accessibilityHint ?? NSLocalizedString(
+            key: "voiceOverWarningPrefix",
+            bundle: .designSystem
+        )
+        
+        return "\(iconAccessibilityHint): \(warningText.title)"
     }
     
     public init(
