@@ -48,8 +48,6 @@ open class BaseScreen: UIViewController {
                                                            action: #selector(dismissScreen))
             self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "right-bar-button"
         }
-        
-        isModalInPresentation = viewModel?.preventModalDismiss ?? false
     }
     
     open override func viewIsAppearing(_ animated: Bool) {
