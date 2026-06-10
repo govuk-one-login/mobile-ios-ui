@@ -81,6 +81,10 @@ extension UIButton {
                 button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
                 button.accessibilityLabel = nil
                 
+                if let accessibilityHint = viewModel.accessibilityHint {
+                    button.accessibilityHint = accessibilityHint
+                }
+                
                 if let icon = viewModel.icon?.forState(button.state),
                    let accessibilityHint = icon.accessibilityHint {
                     button.accessibilityHint = accessibilityHint

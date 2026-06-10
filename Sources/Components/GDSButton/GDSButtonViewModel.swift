@@ -8,6 +8,7 @@ public struct GDSButtonViewModel: ContentViewModel {
     public let style: GDSButtonStyle
     public let buttonAction: DesignSystem.Action
     public let haptic: Haptic?
+    public let accessibilityHint: String?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -17,6 +18,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         style: GDSButtonStyle,
         buttonAction: DesignSystem.Action,
         haptic: Haptic? = nil,
+        accessibilityHint: String? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -29,6 +31,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         self.style = style
         self.buttonAction = buttonAction
         self.haptic = haptic
+        self.accessibilityHint = accessibilityHint
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
@@ -39,6 +42,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         style: GDSButtonStyle,
         buttonAction: DesignSystem.Action,
         haptic: Haptic? = nil,
+        accessibilityHint: String? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -47,6 +51,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         self.style = style
         self.buttonAction = buttonAction
         self.haptic = haptic
+        self.accessibilityHint = accessibilityHint
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
