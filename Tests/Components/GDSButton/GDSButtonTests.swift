@@ -221,4 +221,20 @@ struct GDSButtonTests {
         sut.buttonShapesEnabled(false, viewModel: viewModel)
         #expect(sut.configuration?.baseBackgroundColor == viewModel.style.backgroundColor.forState(.normal))
     }
+    
+    @Test("Button has custom accessibility Hint")
+    func buttonCustomAccessibilityHint() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityHint: "custom hint"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        #expect(sut.accessibilityHint == "custom hint")
+    }
 }
