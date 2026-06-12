@@ -42,9 +42,22 @@ struct GDSImageTests {
         #expect(sut.layer.maskedCorners == [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         #expect(sut.translatesAutoresizingMaskIntoConstraints == false)
         #expect(sut.constraints.contains(where: {
-            $0.firstAttribute == .height && $0.constant == 118 && $0.isActive
+            $0.firstAttribute == .height && $0.constant == 118 && $0.isActive && $0.relation == .lessThanOrEqual
         }))
         #expect(sut.isAccessibilityElement)
         #expect(sut.accessibilityLabel == "accessibility string")
+    }
+    
+    @Test("Test set height")
+    func imageHeight() throws {
+        let viewModel = GDSImageViewModel(
+            image: UIImage(),
+            contentMode: .scaleAspectFit,
+            imageFixedHeight: 50
+        )
+        let sut = GDSImageView(viewModel: viewModel)
+        #expect(sut.constraints.contains(where: {
+            $0.firstAttribute == .height && $0.constant == 50 && $0.isActive && $0.relation == .equal
+        }))
     }
 }

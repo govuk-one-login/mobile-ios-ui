@@ -15,7 +15,9 @@ public final class GDSImageView: UIImageView, ContentView {
         }
         
         if viewModel.contentMode == .scaleAspectFit {
-            if let imageHeightConstraint = viewModel.imageHeightConstraint {
+            if let imageFixedHeight = viewModel.imageFixedHeight {
+                heightAnchor.constraint(equalToConstant: imageFixedHeight).isActive = true
+            } else if let imageHeightConstraint = viewModel.imageHeightConstraint {
                 heightAnchor.constraint(lessThanOrEqualToConstant: imageHeightConstraint).isActive = true
             } else {
                 heightAnchor.constraint(equalTo: widthAnchor, multiplier: viewModel.aspectRatio).isActive = true
