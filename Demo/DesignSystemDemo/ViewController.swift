@@ -84,8 +84,23 @@ class ViewController: UIViewController {
 // MARK: - View Models
 
 extension ViewController {
+    private static let controlledButton = GDSButtonViewModel(
+        title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
+        style: .primary,
+        buttonAction: .action({ }),
+        enableState: false
+    )
+    
     var bodyContent: [any ContentViewModel] {
         [
+            GDSButtonViewModel(
+                title: "Toggle button below",
+                style: .primary,
+                buttonAction: .action({
+                    Self.controlledButton.isEnabledToggle()
+                })
+            ),
+            Self.controlledButton,
             GDSProgressIndicatorViewModel(),
             GDSButtonViewModel(
                 title: "Push GDSScreen",

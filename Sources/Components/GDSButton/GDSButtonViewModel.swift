@@ -1,6 +1,6 @@
 import UIKit
 
-public struct GDSButtonViewModel: ContentViewModel {
+public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public typealias ViewType = GDSButton
     
     public let title: TitleForState
@@ -10,6 +10,7 @@ public struct GDSButtonViewModel: ContentViewModel {
     public let haptic: Haptic?
     public let accessibilityIdentifier: String?
     public let accessibilityHint: String?
+    public let enableState: EnableState?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -21,6 +22,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
+        enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -35,6 +37,13 @@ public struct GDSButtonViewModel: ContentViewModel {
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
+        
+        if let enableState {
+            self.enableState = EnableState(enableState)
+        } else {
+            self.enableState = nil
+        }
+        
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
@@ -47,6 +56,7 @@ public struct GDSButtonViewModel: ContentViewModel {
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
+        enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -57,6 +67,13 @@ public struct GDSButtonViewModel: ContentViewModel {
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
+        
+        if let enableState {
+            self.enableState = EnableState(enableState)
+        } else {
+            self.enableState = nil
+        }
+        
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }
