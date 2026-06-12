@@ -12,10 +12,16 @@ extension ContentViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
         Self.enableAccessibilityInteraction(in: view)
+        if let controlVM = self as? ControlViewModel,
+           let control = view as? UIControl,
+           let enableState = controlVM.enableState {
+            control.isEnabled = enableState.isEnabled
+            enableState.onChange = { [weak control] in control?.isEnabled = $0 }
+        }
         return view
     }
     
-    private static func enableAccessibilityInteraction(in view: UIView) {
+    static func enableAccessibilityInteraction(in view: UIView) {
         if view.isAccessibilityElement {
             view.accessibilityRespondsToUserInteraction = true
             return
