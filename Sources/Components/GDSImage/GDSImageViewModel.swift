@@ -7,6 +7,7 @@ public struct GDSImageViewModel: ContentViewModel {
     let imageColour: UIColor?
     let contentMode: UIView.ContentMode
     let imageHeightConstraint: CGFloat?
+    let imageFixedHeight: CGFloat?
     let cornerMask: CACornerMask?
     let accessibilityLabel: String?
     
@@ -22,6 +23,7 @@ public struct GDSImageViewModel: ContentViewModel {
         imageColour: UIColor? = nil,
         contentMode: UIView.ContentMode = .scaleAspectFit,
         imageHeightConstraint: CGFloat? = nil,
+        imageFixedHeight: CGFloat? = nil,
         cornerMask: CACornerMask? = nil,
         accessibilityLabel: String? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
@@ -31,6 +33,7 @@ public struct GDSImageViewModel: ContentViewModel {
         self.imageColour = imageColour
         self.contentMode = contentMode
         self.imageHeightConstraint = imageHeightConstraint
+        self.imageFixedHeight = imageFixedHeight
         self.cornerMask = cornerMask
         self.accessibilityLabel = accessibilityLabel
         self.verticalPadding = verticalPadding
