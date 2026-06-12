@@ -84,20 +84,23 @@ class ViewController: UIViewController {
 // MARK: - View Models
 
 extension ViewController {
-    private let controlledButton = GDSButtonViewModel(
-        title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
-        style: .primary,
-        buttonAction: .action({ }),
-        enableState: false
-    )
-    
     var bodyContent: [any ContentViewModel] {
-        [
+        let controlledButton = GDSButtonViewModel(
+            title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
+            style: .primary,
+            buttonAction: .action({ [weak self] in
+                let alert = UIAlertController(title: "Enabled!", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
+            }),
+            enableState: false
+        )
+        return [
             GDSButtonViewModel(
                 title: "Toggle button below",
                 style: .primary,
-                buttonAction: .action({ [weak self] in
-                    self?.controlledButton.isEnabledToggle()
+                buttonAction: .action({
+                    controlledButton.isEnabledToggle()
                 })
             ),
             controlledButton,
