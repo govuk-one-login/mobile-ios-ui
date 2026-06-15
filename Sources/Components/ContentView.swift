@@ -6,18 +6,14 @@ public protocol ContentViewModel {
     
     var verticalPadding: VerticalPadding? { get }
     var horizontalPadding: HorizontalPadding? { get }
+    
+    func createUIView() -> UIView
 }
 
 extension ContentViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
         Self.enableAccessibilityInteraction(in: view)
-        if let controlVM = self as? ControlViewModel,
-           let control = view as? UIControl,
-           let enableState = controlVM.enableState {
-            control.isEnabled = enableState.isEnabled
-            enableState.onChange = { [weak control] in control?.isEnabled = $0 }
-        }
         return view
     }
     
@@ -29,6 +25,19 @@ extension ContentViewModel {
         for subview in view.subviews {
             enableAccessibilityInteraction(in: subview)
         }
+    }
+}
+
+extension ContentViewModel where Self: ControlViewModel {
+    public func createUIView() -> UIView {
+        let view = ViewType(viewModel: self)
+        Self.enableAccessibilityInteraction(in: view)
+        if let control = view as? UIControl,
+           let enableState = self.enableState {
+            control.isEnabled = enableState.isEnabled
+            enableState.onChange = { [weak control] in control?.isEnabled = $0 }
+        }
+        return view
     }
 }
 
