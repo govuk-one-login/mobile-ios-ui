@@ -8,7 +8,8 @@ public struct GDSTextViewModel: ContentViewModel {
     let textColor: UIColor
     let alignment: NSTextAlignment
     let accessibilityTraits: UIAccessibilityTraits?
-    
+    let accessibilityIdentifier: String?
+
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -18,6 +19,7 @@ public struct GDSTextViewModel: ContentViewModel {
         textColor: UIColor = DesignSystem.Color.Text.primary,
         alignment: NSTextAlignment = .left,
         accessibilityTraits: UIAccessibilityTraits? = nil,
+        accessibilityIdentifier: String? = nil,
         verticalPadding: VerticalPadding? = .vertical(8),
         horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
@@ -26,6 +28,7 @@ public struct GDSTextViewModel: ContentViewModel {
         self.textColor = textColor
         self.alignment = alignment
         self.accessibilityTraits = accessibilityTraits
+        self.accessibilityIdentifier = accessibilityIdentifier
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }

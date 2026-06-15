@@ -47,6 +47,8 @@ public final class GDSButton: UIButton, ContentView {
                 ]
             )
         }
+        
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier
     }
     
     required init?(coder: NSCoder) {

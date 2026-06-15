@@ -18,7 +18,7 @@ public final class GDSTextView: UILabel, ContentView {
         if let accessibilityTraits = viewModel.accessibilityTraits {
             self.accessibilityTraits = accessibilityTraits
         }
-        self.accessibilityIdentifier = "gds-text-view"
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "gds-text-view"
     }
     
     required init?(coder: NSCoder) {
