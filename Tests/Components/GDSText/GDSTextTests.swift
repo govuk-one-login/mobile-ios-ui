@@ -37,4 +37,14 @@ struct GDSTextTests {
         #expect(sut.textAlignment == .center)
         #expect(sut.accessibilityTraits == .header)
     }
+    
+    @Test("TextView has custom accessibility identifier")
+    func textViewCustomAccessibilityIdentifier() {
+        let viewModel = GDSTextViewModel(
+            title: "test title",
+            accessibilityIdentifier: "any identifier"
+        )
+        let sut = GDSTextView(viewModel: viewModel)
+        #expect(sut.accessibilityIdentifier == "any identifier")
+    }
 }

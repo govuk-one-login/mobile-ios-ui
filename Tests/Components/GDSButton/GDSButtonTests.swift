@@ -237,4 +237,20 @@ struct GDSButtonTests {
         
         #expect(sut.accessibilityHint == "custom hint")
     }
+    
+    @Test("Button has custom accessibility identifier")
+    func buttonCustomAccessibilityIdentifier() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityIdentifier: "any identifier"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        #expect(sut.accessibilityIdentifier == "any identifier")
+   }
 }
