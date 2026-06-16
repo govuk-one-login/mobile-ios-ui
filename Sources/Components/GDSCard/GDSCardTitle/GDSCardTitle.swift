@@ -21,7 +21,7 @@ public final class GDSCardTitleView: UIStackView, ContentView {
         if let accessibilityTraits = viewModel.accessibilityTraits {
             label.accessibilityTraits = accessibilityTraits
         }
-        label.accessibilityIdentifier = "content-card-title"
+        label.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "content-card-title"
         self.addArrangedSubview(paddingView)
         self.addArrangedSubview(label)
         self.axis = .vertical

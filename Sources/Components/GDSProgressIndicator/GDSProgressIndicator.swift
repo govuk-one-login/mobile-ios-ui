@@ -31,7 +31,10 @@ public final class GDSProgressIndicator: UIView, ContentView {
         
         stack.isAccessibilityElement = true
         stack.accessibilityLabel = viewModel.title.title.value
-        stack.accessibilityIdentifier = "progress-indicator-stack-view"
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            stack.accessibilityTraits = accessibilityTraits
+        }
+        stack.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "progress-indicator-stack-view"
         
         return stack
     }()

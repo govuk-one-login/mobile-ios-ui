@@ -26,6 +26,10 @@ public final class GDSMultiRow: UIView, ContentView {
     func setupView() {
         backgroundColor = viewModel.backgroundColor
         layer.cornerRadius = viewModel.cornerRadius
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            self.accessibilityTraits = accessibilityTraits
+        }
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier
         addSubview(verticalStack)
         verticalStack.bindToSuperviewEdges()
     }

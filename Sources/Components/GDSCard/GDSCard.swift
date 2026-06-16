@@ -55,6 +55,10 @@ public final class GDSCard: UIView, ContentView {
     public init(viewModel: GDSCardViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            self.accessibilityTraits = accessibilityTraits
+        }
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier
         addStackToView()
     }
     

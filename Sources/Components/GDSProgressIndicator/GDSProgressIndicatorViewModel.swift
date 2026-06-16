@@ -15,6 +15,8 @@ public struct GDSProgressIndicatorViewModel: ContentViewModel {
     let titleAfter10Seconds: GDSTextViewModel
     let progressIndicatorColor: UIColor?
     
+    public let accessibilityIdentifier: String?
+    public let accessibilityTraits: UIAccessibilityTraits?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -23,6 +25,8 @@ public struct GDSProgressIndicatorViewModel: ContentViewModel {
         titleAfter5Seconds: GDSTextViewModel = .init(title: GDSLocalisedString(stringKey: "fiveSecondLoadingText", bundle: .designSystem)),
         titleAfter10Seconds: GDSTextViewModel = .init(title: GDSLocalisedString(stringKey: "tenSecondLoadingText", bundle: .designSystem)),
         progressIndicatorColor: UIColor? = nil,
+        accessibilityIdentifier: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
         horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     ) {
@@ -30,6 +34,8 @@ public struct GDSProgressIndicatorViewModel: ContentViewModel {
         self.titleAfter5Seconds = titleAfter5Seconds
         self.titleAfter10Seconds = titleAfter10Seconds
         self.progressIndicatorColor = progressIndicatorColor
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityTraits = accessibilityTraits
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }

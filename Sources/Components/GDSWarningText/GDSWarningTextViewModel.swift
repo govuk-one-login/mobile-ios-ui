@@ -13,6 +13,8 @@ public struct GDSWarningTextViewModel: ContentViewModel {
     let warningText: GDSTextViewModel
     let iconSpacing: CGFloat
     
+    public var accessibilityIdentifier: String?
+    public var accessibilityTraits: UIAccessibilityTraits?
     public var verticalPadding: VerticalPadding?
     public var horizontalPadding: HorizontalPadding?
     
@@ -29,11 +31,15 @@ public struct GDSWarningTextViewModel: ContentViewModel {
         iconStyle: IconStyle? = .warning,
         warningText: GDSTextViewModel,
         iconSpacing: CGFloat = DesignSystem.Spacing.GDSWarningText.default,
+        accessibilityIdentifier: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
         horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     ) {
         self.iconStyle = iconStyle
         self.warningText = warningText
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityTraits = accessibilityTraits
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
         self.iconSpacing = iconSpacing

@@ -6,7 +6,8 @@ public struct GDSCardTitleViewModel: ContentViewModel {
     let title: GDSLocalisedString
     let titleFont: UIFont
     let alignment: NSTextAlignment
-    let accessibilityTraits: UIAccessibilityTraits?
+    public let accessibilityTraits: UIAccessibilityTraits?
+    public let accessibilityIdentifier: String?
     
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
@@ -16,6 +17,7 @@ public struct GDSCardTitleViewModel: ContentViewModel {
         titleFont: UIFont = DesignSystem.Font.Base.title2Bold,
         alignment: NSTextAlignment = .left,
         accessibilityTraits: UIAccessibilityTraits? = nil,
+        accessibilityIdentifier: String? = nil,
         verticalPadding: VerticalPadding? = .vertical(8),
         horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
@@ -23,6 +25,7 @@ public struct GDSCardTitleViewModel: ContentViewModel {
         self.titleFont = titleFont
         self.alignment = alignment
         self.accessibilityTraits = accessibilityTraits
+        self.accessibilityIdentifier = accessibilityIdentifier
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }

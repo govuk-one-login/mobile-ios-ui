@@ -7,6 +7,8 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
     let iconHeight: CGFloat
     let errorTitle: GDSTextViewModel
     
+    public var accessibilityIdentifier: String?
+    public var accessibilityTraits: UIAccessibilityTraits?
     public var verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default)
     public var horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     public var renderedIconHeight: CGFloat {
@@ -20,11 +22,15 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
     public init(
         icon: ErrorScreenIcon,
         iconHeight: CGFloat = DesignSystem.Size.GDSErrorIcon.iconTargetHeight,
-        errorTitle: GDSTextViewModel
+        errorTitle: GDSTextViewModel,
+        accessibilityIdentifier: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil
     ) {
         self.icon = icon
         self.iconHeight = iconHeight
         self.errorTitle = errorTitle
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityTraits = accessibilityTraits
     }
   
     public init(
@@ -34,6 +40,7 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
         titleFont: UIFont = DesignSystem.Font.Base.body,
         textColor: UIColor = DesignSystem.Color.Text.primary,
         alignment: NSTextAlignment = .left,
+        accessibilityIdentifier: String? = nil,
         accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
         horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
@@ -50,7 +57,9 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
         self.init(
             icon: icon,
             iconHeight: iconHeight,
-            errorTitle: titleViewModel
+            errorTitle: titleViewModel,
+            accessibilityIdentifier: accessibilityIdentifier,
+            accessibilityTraits: accessibilityTraits
         )
     }
 }
