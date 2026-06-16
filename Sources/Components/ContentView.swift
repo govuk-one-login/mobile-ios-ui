@@ -13,6 +13,11 @@ public protocol ContentViewModel {
 }
 
 extension ContentViewModel {
+    var accessibilityIdentifier: String? { nil }
+    var accessibilityTraits: UIAccessibilityTraits? { nil }
+}
+
+extension ContentViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
         Self.enableAccessibilityInteraction(in: view)
