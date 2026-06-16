@@ -140,4 +140,28 @@ struct GDSErrorIconTitleTests {
         #expect(stackView?.accessibilityTraits.contains(.header) == false)
     }
     
+    @Test("ErrorIconTitle has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .error,
+            errorTitle: GDSTextViewModel(title: "Error"),
+            accessibilityIdentifier: "custom-error-icon"
+        )
+        let view = GDSErrorIconTitle(viewModel: viewModel)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityIdentifier == "custom-error-icon")
+    }
+    
+    @Test("ErrorIconTitle viewModel accessibilityTraits overrides errorTitle traits")
+    func viewModelTraitsOverrideErrorTitleTraits() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .error,
+            errorTitle: GDSTextViewModel(title: "Error", accessibilityTraits: .header),
+            accessibilityTraits: .staticText
+        )
+        let view = GDSErrorIconTitle(viewModel: viewModel)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityTraits == .staticText)
+    }
+    
 }

@@ -53,6 +53,22 @@ struct GDSProgressIndicatorTests {
         #expect(stackView?.accessibilityIdentifier == "progress-indicator-stack-view")
     }
     
+    @Test("ProgressIndicator has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let vm = GDSProgressIndicatorViewModel(accessibilityIdentifier: "custom-progress")
+        let view = GDSProgressIndicator(viewModel: vm)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityIdentifier == "custom-progress")
+    }
+    
+    @Test("ProgressIndicator has custom accessibility traits")
+    func customAccessibilityTraits() {
+        let vm = GDSProgressIndicatorViewModel(accessibilityTraits: .updatesFrequently)
+        let view = GDSProgressIndicator(viewModel: vm)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityTraits == .updatesFrequently)
+    }
+    
     @Test("Test configuration used to change the title after 5 seconds")
     func titleViewAfterFiveSeconds() async throws {
         let progressIndicator = GDSProgressIndicator(viewModel: viewModel)

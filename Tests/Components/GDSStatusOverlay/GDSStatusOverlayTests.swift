@@ -69,4 +69,26 @@ struct GDSStatusOverlayTests {
             #expect(presentation?.accessibilityElementsHidden == false)
         }
     }
+    
+    @Test("StatusOverlay has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let vm = GDSStatusOverlayViewModel(
+            statusText: GDSTextViewModel(title: "Done"),
+            accessibilityIdentifier: "custom-overlay"
+        )
+        let view = GDSStatusOverlay(viewModel: vm)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityIdentifier == "custom-overlay")
+    }
+    
+    @Test("StatusOverlay has custom accessibility traits")
+    func customAccessibilityTraits() {
+        let vm = GDSStatusOverlayViewModel(
+            statusText: GDSTextViewModel(title: "Done"),
+            accessibilityTraits: .updatesFrequently
+        )
+        let view = GDSStatusOverlay(viewModel: vm)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityTraits == .updatesFrequently)
+    }
 }

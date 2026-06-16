@@ -47,4 +47,15 @@ struct GDSCardTitleTests {
         #expect(label.textAlignment == .center)
         #expect(label.accessibilityTraits == .header)
     }
+    
+    @Test("CardTitle has custom accessibility identifier")
+    func customAccessibilityIdentifier() throws {
+        let viewModel = GDSCardTitleViewModel(
+            title: "test title",
+            accessibilityIdentifier: "custom-card-title"
+        )
+        let sut = GDSCardTitleView(viewModel: viewModel)
+        let label = try #require(sut.arrangedSubviews[1] as? UILabel)
+        #expect(label.accessibilityIdentifier == "custom-card-title")
+    }
 }

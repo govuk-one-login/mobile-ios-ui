@@ -66,4 +66,26 @@ struct GDSImageTests {
         #expect(heightConstraint?.relation == .equal)
         #expect(heightConstraint?.isActive ?? false)
     }
+    
+    @Test("Image has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let viewModel = GDSImageViewModel(
+            image: UIImage(),
+            contentMode: .scaleAspectFit,
+            accessibilityIdentifier: "custom-image"
+        )
+        let sut = GDSImageView(viewModel: viewModel)
+        #expect(sut.accessibilityIdentifier == "custom-image")
+    }
+    
+    @Test("Image has custom accessibility traits")
+    func customAccessibilityTraits() {
+        let viewModel = GDSImageViewModel(
+            image: UIImage(),
+            contentMode: .scaleAspectFit,
+            accessibilityTraits: .image
+        )
+        let sut = GDSImageView(viewModel: viewModel)
+        #expect(sut.accessibilityTraits == .image)
+    }
 }

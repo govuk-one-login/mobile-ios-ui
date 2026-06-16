@@ -116,4 +116,16 @@ struct GDSCardViewTests {
         let titleStackView = try #require(cardStackView.arrangedSubviews[1] as? UIStackView)
         #expect(titleStackView.arrangedSubviews.count == 1)
     }
+    
+    @Test("Card has custom accessibility identifier and traits")
+    func customAccessibility() throws {
+        let viewModel = GDSCardViewModel(
+            accessibilityIdentifier: "custom-card",
+            accessibilityTraits: .header,
+            contentItems: { }
+        )
+        let sut = viewModel.createUIView()
+        #expect(sut.accessibilityIdentifier == "custom-card")
+        #expect(sut.accessibilityTraits == .header)
+    }
 }

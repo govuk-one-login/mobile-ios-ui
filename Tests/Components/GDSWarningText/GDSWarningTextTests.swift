@@ -113,4 +113,26 @@ struct GDSWarningTextTests {
         
         #expect(viewModel.accessibilityLabel == "Warning: Please try again")
     }
+    
+    @Test("WarningText has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold),
+            accessibilityIdentifier: "custom-warning"
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityIdentifier == "custom-warning")
+    }
+    
+    @Test("WarningText has custom accessibility traits")
+    func customAccessibilityTraits() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold),
+            accessibilityTraits: .header
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        let stackView = view.subviews.first as? UIStackView
+        #expect(stackView?.accessibilityTraits == .header)
+    }
 }
