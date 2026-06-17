@@ -13,8 +13,8 @@ public protocol ContentViewModel {
 }
 
 extension ContentViewModel {
-    var accessibilityIdentifier: String? { nil }
-    var accessibilityTraits: UIAccessibilityTraits? { nil }
+    public var accessibilityIdentifier: String? { nil }
+    public var accessibilityTraits: UIAccessibilityTraits? { nil }
 }
 
 extension ContentViewModel {
