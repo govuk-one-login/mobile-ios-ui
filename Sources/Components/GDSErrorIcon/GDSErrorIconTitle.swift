@@ -33,8 +33,8 @@ public final class GDSErrorIconTitle: UIView, ContentView {
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
         stack.accessibilityLabel = viewModel.accessibilityLabel
-        stack.accessibilityTraits = viewModel.errorTitle.accessibilityTraits ?? [.header]
-        stack.accessibilityIdentifier = "error-screen-icon-title-stack-view"
+        stack.accessibilityTraits = viewModel.accessibilityTraits ?? viewModel.errorTitle.accessibilityTraits ?? [.header]
+        stack.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "error-screen-icon-title-stack-view"
         
         return stack
     }()

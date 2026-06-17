@@ -1,6 +1,7 @@
 import UIKit
 
 public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
+    
     public typealias ViewType = GDSButton
     
     public let title: TitleForState
@@ -10,6 +11,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public let haptic: Haptic?
     public let accessibilityIdentifier: String?
     public let accessibilityHint: String?
+    public let accessibilityTraits: UIAccessibilityTraits?
     public let enableState: EnableState?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
@@ -22,6 +24,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil,
         enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -37,6 +40,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
+        self.accessibilityTraits = accessibilityTraits
         
         if let enableState {
             self.enableState = EnableState(enableState)
@@ -67,6 +71,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
+        self.accessibilityTraits = nil
         
         if let enableState {
             self.enableState = EnableState(enableState)

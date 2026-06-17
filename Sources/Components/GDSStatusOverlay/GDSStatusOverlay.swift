@@ -42,8 +42,8 @@ public final class GDSStatusOverlay: UIView, ContentView {
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
         stack.accessibilityLabel = viewModel.accessibilityLabel
-        stack.accessibilityTraits = [.none]
-        stack.accessibilityIdentifier = "status-overlay-stack-view"
+        stack.accessibilityTraits = viewModel.accessibilityTraits ?? [.none]
+        stack.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "status-overlay-stack-view"
         
         return stack
     }()

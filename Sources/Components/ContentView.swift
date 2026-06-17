@@ -6,8 +6,15 @@ public protocol ContentViewModel {
     
     var verticalPadding: VerticalPadding? { get }
     var horizontalPadding: HorizontalPadding? { get }
+    var accessibilityIdentifier: String? { get }
+    var accessibilityTraits: UIAccessibilityTraits? { get }
     
     func createUIView() -> UIView
+}
+
+extension ContentViewModel {
+    var accessibilityIdentifier: String? { nil }
+    var accessibilityTraits: UIAccessibilityTraits? { nil }
 }
 
 extension ContentViewModel {

@@ -35,8 +35,8 @@ public final class GDSWarningText: UIView, ContentView {
         stack.isAccessibilityElement = true
         stack.shouldGroupAccessibilityChildren = true
         stack.accessibilityLabel = viewModel.accessibilityLabel
-        stack.accessibilityTraits = viewModel.warningText.accessibilityTraits ?? [.none]
-        stack.accessibilityIdentifier = "warning-text-stack-view"
+        stack.accessibilityTraits = viewModel.accessibilityTraits ?? viewModel.warningText.accessibilityTraits ?? [.none]
+        stack.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "warning-text-stack-view"
         
         return stack
     }()

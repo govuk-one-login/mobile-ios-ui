@@ -164,4 +164,24 @@ struct GDSRowTests {
         try await Task.sleep(seconds: 0.1)
         #expect(didTapRow)
     }
+    
+    @Test("Row has custom accessibility identifier")
+    func customAccessibilityIdentifier() throws {
+        let viewModel = GDSRowViewModel(
+            titleConfig: StyledText(text: "Test"),
+            accessibilityIdentifier: "custom-row"
+        )
+        let sut = viewModel.createUIView()
+        #expect(sut.accessibilityIdentifier == "custom-row")
+    }
+    
+    @Test("Row has custom accessibility traits")
+    func customAccessibilityTraits() throws {
+        let viewModel = GDSRowViewModel(
+            titleConfig: StyledText(text: "Test"),
+            accessibilityTraits: .header
+        )
+        let sut = viewModel.createUIView()
+        #expect(sut.accessibilityTraits == .header)
+    }
 }

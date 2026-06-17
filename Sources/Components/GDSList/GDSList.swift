@@ -96,6 +96,10 @@ public final class GDSList: UIView, ContentView {
         backgroundColor = .systemBackground
         addSubview(listStackView)
         listStackView.bindToSuperviewEdges()
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            self.accessibilityTraits = accessibilityTraits
+        }
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier
         reloadListView()
     }
     

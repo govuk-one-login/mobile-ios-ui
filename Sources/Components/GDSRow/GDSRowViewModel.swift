@@ -15,7 +15,8 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
     var image: UIImage?
     var imageAltText: String?
     var iconStyle: IconStyle?
-    var accessibilityTraits: UIAccessibilityTraits
+    public var accessibilityTraits: UIAccessibilityTraits?
+    public var accessibilityIdentifier: String?
     var type: RowType
     var action: DesignSystem.Action?
     
@@ -34,7 +35,8 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         image: UIImage? = nil,
         imageAltText: String? = nil,
         iconStyle: IconStyle? = nil,
-        accessibilityTraits: UIAccessibilityTraits = [],
+        accessibilityTraits: UIAccessibilityTraits? = nil,
+        accessibilityIdentifier: String? = nil,
         type: RowType = .tall,
         action: DesignSystem.Action? = nil
     ) {
@@ -54,6 +56,7 @@ public struct GDSRowViewModel: ContentViewModel, Identifiable {
         self.imageAltText = imageAltText
         self.iconStyle = iconStyle
         self.accessibilityTraits = accessibilityTraits
+        self.accessibilityIdentifier = accessibilityIdentifier
         self.type = type
         self.action = action
     }

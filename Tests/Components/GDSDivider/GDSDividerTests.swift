@@ -27,4 +27,18 @@ struct GDSDividerTests {
             $0.firstAttribute == .height && $0.constant == (3 / UIScreen.main.scale) && $0.isActive
         }))
     }
+    
+    @Test("Divider has custom accessibility identifier")
+    func customAccessibilityIdentifier() {
+        let viewModel = GDSDividerViewModel(accessibilityIdentifier: "custom-divider")
+        let sut = GDSDividerView(viewModel: viewModel)
+        #expect(sut.accessibilityIdentifier == "custom-divider")
+    }
+    
+    @Test("Divider has custom accessibility traits")
+    func customAccessibilityTraits() {
+        let viewModel = GDSDividerViewModel(accessibilityTraits: .staticText)
+        let sut = GDSDividerView(viewModel: viewModel)
+        #expect(sut.accessibilityTraits == .staticText)
+    }
 }

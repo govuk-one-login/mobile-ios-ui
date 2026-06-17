@@ -64,4 +64,16 @@ struct GDSMultiRowTests {
         let drivingLicenseRow = try #require(stack.subviews[2] as? GDSRow)
         #expect(drivingLicenseRow.subviews.count == 3)
     }
+    
+    @Test("MultiRow has custom accessibility identifier and traits")
+    func customAccessibility() throws {
+        let viewModel = GDSMultiRowViewModel(
+            rows: [GDSRowViewModel(titleConfig: StyledText(text: "Test"))],
+            accessibilityIdentifier: "custom-multi-row",
+            accessibilityTraits: .header
+        )
+        let sut = GDSMultiRow(viewModel: viewModel)
+        #expect(sut.accessibilityIdentifier == "custom-multi-row")
+        #expect(sut.accessibilityTraits == .header)
+    }
 }

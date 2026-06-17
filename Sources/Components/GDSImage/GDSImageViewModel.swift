@@ -11,6 +11,8 @@ public struct GDSImageViewModel: ContentViewModel {
     let cornerMask: CACornerMask?
     let accessibilityLabel: String?
     
+    public let accessibilityIdentifier: String?
+    public let accessibilityTraits: UIAccessibilityTraits?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
@@ -26,6 +28,8 @@ public struct GDSImageViewModel: ContentViewModel {
         imageFixedHeight: CGFloat? = nil,
         cornerMask: CACornerMask? = nil,
         accessibilityLabel: String? = nil,
+        accessibilityIdentifier: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
     ) {
@@ -36,6 +40,8 @@ public struct GDSImageViewModel: ContentViewModel {
         self.imageFixedHeight = imageFixedHeight
         self.cornerMask = cornerMask
         self.accessibilityLabel = accessibilityLabel
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityTraits = accessibilityTraits
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
     }

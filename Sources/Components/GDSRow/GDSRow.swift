@@ -252,7 +252,10 @@ public final class GDSRow: UIControl, ContentView {
     
     private func setupAccessibility() {
         isAccessibilityElement = true
-        accessibilityTraits = viewModel.accessibilityTraits
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            self.accessibilityTraits = accessibilityTraits
+        }
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier
         accessibilityHint = viewModel.iconStyle?.accessibilityHint
         
         let labels = [

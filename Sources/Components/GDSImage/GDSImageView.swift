@@ -28,8 +28,10 @@ public final class GDSImageView: UIImageView, ContentView {
             self.isAccessibilityElement = true
             self.accessibilityLabel = accessibilityLabel
         }
-        
-        self.accessibilityIdentifier = "gds-image-view"
+        if let accessibilityTraits = viewModel.accessibilityTraits {
+            self.accessibilityTraits = accessibilityTraits
+        }
+        self.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "gds-image-view"
     }
     
     required init?(coder: NSCoder) {

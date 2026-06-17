@@ -12,6 +12,8 @@ public struct GDSStatusOverlayViewModel: ContentViewModel {
     let statusOverlayText: GDSTextViewModel
     let iconStyle: IconStyle?
     
+    public var accessibilityIdentifier: String?
+    public var accessibilityTraits: UIAccessibilityTraits?
     public var verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default)
     public var horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     
@@ -21,9 +23,13 @@ public struct GDSStatusOverlayViewModel: ContentViewModel {
     
     public init(
         iconStyle: IconStyle? = .statusOverlay,
-        statusText: GDSTextViewModel
+        statusText: GDSTextViewModel,
+        accessibilityIdentifier: String? = nil,
+        accessibilityTraits: UIAccessibilityTraits? = nil
     ) {
         self.iconStyle = iconStyle
         self.statusOverlayText = statusText
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityTraits = accessibilityTraits
     }
 }

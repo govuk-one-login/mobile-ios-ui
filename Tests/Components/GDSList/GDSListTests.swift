@@ -202,4 +202,17 @@ struct GDSListTests {
         
         sut.assertSnapshot(bindToEdges: .horizontal)
     }
+    
+    @Test("List has custom accessibility identifier and traits")
+    func customAccessibility() throws {
+        let viewModel = GDSListViewModel(
+            items: [GDSLocalisedString(stringKey: "item")],
+            style: .bulleted,
+            accessibilityIdentifier: "custom-list",
+            accessibilityTraits: .header
+        )
+        let sut = GDSList(viewModel: viewModel)
+        #expect(sut.accessibilityIdentifier == "custom-list")
+        #expect(sut.accessibilityTraits == .header)
+    }
 }

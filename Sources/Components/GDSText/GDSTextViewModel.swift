@@ -7,9 +7,9 @@ public struct GDSTextViewModel: ContentViewModel {
     let titleFont: UIFont
     let textColor: UIColor
     let alignment: NSTextAlignment
-    let accessibilityTraits: UIAccessibilityTraits?
-    let accessibilityIdentifier: String?
 
+    public let accessibilityTraits: UIAccessibilityTraits?
+    public let accessibilityIdentifier: String?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
     
