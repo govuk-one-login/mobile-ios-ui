@@ -37,6 +37,7 @@ extension UIButton {
 
         self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(self.state)
         self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
+        self.configuration?.background.backgroundColor = viewModel.style.backgroundColor.forState(self.state)
         
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
         self.configuration?.cornerStyle = .fixed
@@ -75,6 +76,7 @@ extension UIButton {
             } else {
                 var string = title
                 string.font = viewModel.style.font
+                string.foregroundColor = viewModel.style.foregroundColor.forState(button.state)
                 button.configuration?.attributedTitle = string
                 button.configuration?.titleAlignment = viewModel.style.alignment
                 button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)

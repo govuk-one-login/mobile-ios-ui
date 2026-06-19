@@ -34,9 +34,9 @@ public struct ColorForState: Equatable {
     public func forState(_ state: UIControl.State) -> UIColor {
         switch state {
         case [.selected, .highlighted]:
-            return selectedHighlighted ?? normal
+            return selectedHighlighted ?? highlighted ?? normal
         case [.focused, .highlighted]:
-            return focusedHighlighted ?? normal
+            return focusedHighlighted ?? highlighted ?? normal
         case [.focused, .selected]:
             return focused ?? normal
         case .selected:
