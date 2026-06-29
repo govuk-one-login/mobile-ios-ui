@@ -3,7 +3,7 @@
   "services": [
     {
       "serviceTag": "mobile-ios-ui",
-      "promotionType": "securePipelines",
+      "promotionType": "library",
       "checks": [
         {
           "checkTypes": [
@@ -26,7 +26,7 @@
             "code quality",
             "secret scanning"
           ],
-          "phase": "pre-upload",
+          "phase": "pre-release",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/quality-report.yml",
