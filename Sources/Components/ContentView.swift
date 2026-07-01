@@ -20,27 +20,13 @@ extension ContentViewModel {
 extension ContentViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
-        //Self.enableAccessibilityInteraction(in: view)
         return view
     }
-    
-    /*
-    static func enableAccessibilityInteraction(in view: UIView) {
-        if view.isAccessibilityElement {
-            view.accessibilityRespondsToUserInteraction = true
-            return
-        }
-        for subview in view.subviews {
-            enableAccessibilityInteraction(in: subview)
-        }
-    }
-    */
 }
 
 extension ContentViewModel where Self: ControlViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
-        Self.enableAccessibilityInteraction(in: view)
         if let control = view as? UIControl,
            let enableState = self.enableState {
             control.isEnabled = enableState.isEnabled
