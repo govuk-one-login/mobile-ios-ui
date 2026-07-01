@@ -20,10 +20,11 @@ extension ContentViewModel {
 extension ContentViewModel {
     public func createUIView() -> UIView {
         let view = ViewType(viewModel: self)
-        Self.enableAccessibilityInteraction(in: view)
+        //Self.enableAccessibilityInteraction(in: view)
         return view
     }
     
+    /*
     static func enableAccessibilityInteraction(in view: UIView) {
         if view.isAccessibilityElement {
             view.accessibilityRespondsToUserInteraction = true
@@ -33,6 +34,7 @@ extension ContentViewModel {
             enableAccessibilityInteraction(in: subview)
         }
     }
+    */
 }
 
 extension ContentViewModel where Self: ControlViewModel {
