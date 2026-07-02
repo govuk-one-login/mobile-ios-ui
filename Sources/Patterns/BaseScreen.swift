@@ -21,9 +21,9 @@ open class BaseScreen: UIViewController {
         }
     }
     
-    public init(viewModel: BaseViewModel?, bundle: Bundle?) {
+    public init(viewModel: BaseViewModel?, nibName: String? = nil, bundle: Bundle?) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: bundle)
+        super.init(nibName: nibName, bundle: bundle)
     }
     
     @available(*, unavailable, renamed: "init(viewModel:)")
