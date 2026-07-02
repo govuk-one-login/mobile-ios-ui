@@ -62,7 +62,13 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     }()
     
     override public var preferredFocusEnvironments: [any UIFocusEnvironment] {
-        [scrollViewInnerStackView]
+        let elements = scrollViewInnerStackView.arrangedSubviews.filter { $0.canBecomeFocused || $0.accessibilityRespondsToUserInteraction }
+        
+        if elements.isEmpty {
+            return [scrollView]
+        } else {
+            return elements
+        }
     }
     
     private(set) lazy var bottomStackView: UIStackView = {
