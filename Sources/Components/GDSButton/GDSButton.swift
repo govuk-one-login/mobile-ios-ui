@@ -5,7 +5,7 @@ public final class GDSButton: UIButton, ContentView {
     
     public private(set) var asyncTask: Task<Void, Never>?
     
-    var isLoading: Bool = false {
+    public var isLoading: Bool = false {
         didSet {
             var config = self.configuration
             config?.showsActivityIndicator = isLoading
