@@ -68,13 +68,13 @@ extension GDSButtonStyle {
                 trailing: DesignSystem.Spacing.default
             ),
             foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Buttons.primaryForeground,
+                normal: UIColor.white,
                 focused: DesignSystem.Color.Buttons.primaryForegroundFocused,
                 disabled: DesignSystem.Color.Buttons.primaryForegroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.primaryForegroundFocused
             ),
             backgroundColor: ColorForState(
-                normal: DesignSystem.Color.Buttons.primaryBackground,
+                normal: UIColor.black,
                 highlighted: DesignSystem.Color.Buttons.primaryBackgroundHighlighted,
                 focused: DesignSystem.Color.Buttons.primaryBackgroundFocused,
                 disabled: DesignSystem.Color.Buttons.primaryBackgroundDisabled,
