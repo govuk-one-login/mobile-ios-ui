@@ -103,13 +103,19 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         super.viewDidLoad()
         setup()
     }
+
+    open override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        checkBottomStackHeight()
+    }
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // Defer to ensure layout is finished
-        Task {
-            checkBottomStackHeight()
-        }
+    }
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        checkBottomStackHeight()
     }
     
     private func setup() {

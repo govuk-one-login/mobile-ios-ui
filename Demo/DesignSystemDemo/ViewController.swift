@@ -257,7 +257,11 @@ extension ViewController {
                 GDSButtonViewModel(
                     title: "Primary Button",
                     style: .primary,
-                    buttonAction: .action({ }),
+                    buttonAction: .asyncAction({
+                        print("button action started")
+                        try? await Task.sleep(seconds: 2)
+                        print("button action ended")
+                    }),
                     verticalPadding: .bottom(16),
                     horizontalPadding: .horizontal(16)
                 )
@@ -341,7 +345,24 @@ extension ViewController {
                     )
                 }
             ],
-            movableFooter: [],
+            movableFooter: [
+                GDSTextViewModel(
+                    title: "This content should move to the scroll view at large dynamic type sizes",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .center
+                ),
+                GDSButtonViewModel(
+                    title: "Movable Button 1",
+                    style: .primary,
+                    buttonAction: .asyncAction({
+                        if #available(iOS 16.0, *) {
+                            try? await Task.sleep(for: .seconds(2))
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                    })
+                ),
+            ],
             footer: [
                 GDSButtonViewModel(
                     title: "Footer Button",
