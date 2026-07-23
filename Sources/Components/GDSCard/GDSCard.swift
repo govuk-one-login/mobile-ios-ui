@@ -10,7 +10,7 @@ public final class GDSCard: UIView, ContentView {
             distribution: .fill
         )
         stackView.backgroundColor = viewModel.backgroundColour
-        stackView.layer.cornerRadius = DesignSystem.CornerRadius.card
+        stackView.layer.cornerRadius = viewModel.cornerRadius
         stackView.layer.masksToBounds = true
         if let borderStyle = viewModel.borderStyle {
             stackView.layer.borderColor = borderStyle.color.cgColor
