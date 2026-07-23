@@ -18,7 +18,25 @@ struct GDSCardViewTests {
         #expect(cardStackView.translatesAutoresizingMaskIntoConstraints == false)
         #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
     }
-    
+
+    @Test("Check corner radius is configurable for the outer stack view")
+    func encasingStackCornerRadius() throws {
+        let viewModel = GDSCardViewModel(
+            cornerRadius: 0.0,
+            contentItems: { }
+        )
+        let sut = viewModel.createUIView()
+        let cardStackView = try #require(sut.subviews.first as? UIStackView)
+
+        #expect(cardStackView.spacing == .zero)
+        #expect(cardStackView.alignment == .fill)
+        #expect(cardStackView.distribution == .fill)
+        #expect(cardStackView.layer.cornerRadius == 0)
+        #expect(cardStackView.layer.masksToBounds == true)
+        #expect(cardStackView.translatesAutoresizingMaskIntoConstraints == false)
+        #expect(cardStackView.backgroundColor == DesignSystem.Color.Backgrounds.card)
+    }
+
     @Test("Check shadow is show for the outer stack view")
     func encasingStackShadowAndBorder() throws {
         let viewModel = GDSCardViewModel(

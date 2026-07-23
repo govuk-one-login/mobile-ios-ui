@@ -5,6 +5,7 @@ public struct GDSCardViewModel: ContentViewModel {
     
     let backgroundColour: UIColor
     let borderStyle: BorderStyle?
+    let cornerRadius: CGFloat
     let showShadow: Bool
     let dismissAction: DesignSystem.Action?
     
@@ -18,6 +19,7 @@ public struct GDSCardViewModel: ContentViewModel {
     public init(
         backgroundColour: UIColor = DesignSystem.Color.Backgrounds.card,
         borderStyle: BorderStyle? = nil,
+        cornerRadius: CGFloat = DesignSystem.CornerRadius.card,
         showShadow: Bool = false,
         dismissAction: DesignSystem.Action? = nil,
         accessibilityIdentifier: String? = nil,
@@ -28,6 +30,7 @@ public struct GDSCardViewModel: ContentViewModel {
     ) {
         self.backgroundColour = backgroundColour
         self.borderStyle = borderStyle
+        self.cornerRadius = cornerRadius
         self.showShadow = showShadow
         self.dismissAction = dismissAction
         self.accessibilityIdentifier = accessibilityIdentifier
