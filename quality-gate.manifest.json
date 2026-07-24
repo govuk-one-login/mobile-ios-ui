@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.14.0/schemas/schema.json",
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.15.0/schemas/schema.json",
   "services": [
     {
       "product": "iOS Common",
@@ -7,32 +7,48 @@
       "promotionType": "library",
       "automated": [
         {
-          "checkTypes": [
-            "code style and linting",
-            "unit test coverage",
-            "code quality",
-            "secret scanning",
-            "vulnerability detection"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/pull-request.yml",
             "path": "$.jobs.build"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "code quality"
+            },
+            {
+              "name": "secret scanning"
+            },
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "unit test coverage",
-            "code quality",
-            "secret scanning"
-          ],
           "phase": "pre-release",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/quality-report.yml",
             "path": "$.jobs.build"
-          }
+          },
+          "checks": [
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "code quality"
+            },
+            {
+              "name": "secret scanning"
+            }
+          ]
         }
       ]
     }
