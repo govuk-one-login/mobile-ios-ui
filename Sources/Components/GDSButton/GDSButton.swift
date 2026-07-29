@@ -31,7 +31,7 @@ public final class GDSButton: UIButton, ContentView {
             self.configuration?.image = symbol
             self.configuration?.imagePlacement = .trailing
             self.configuration?.imagePadding = 8
-            self.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold, scale: .medium)
+            self.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(textStyle: .body, scale: .medium)
         }
         
         switch viewModel.buttonAction {
