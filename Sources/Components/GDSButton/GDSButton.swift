@@ -27,6 +27,13 @@ public final class GDSButton: UIButton, ContentView {
         
         self.configuration?.title = viewModel.title.forState(.normal)
         
+        if let symbol = viewModel.titleSymbol {
+            self.configuration?.image = symbol
+            self.configuration?.imagePlacement = .trailing
+            self.configuration?.imagePadding = 8
+            self.configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold, scale: .medium)
+        }
+        
         switch viewModel.buttonAction {
         case .action(let action):
             self.addAction(

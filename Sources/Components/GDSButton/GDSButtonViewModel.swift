@@ -8,6 +8,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public let icon: IconForState?
     public let style: GDSButtonStyle
     public let buttonAction: DesignSystem.Action
+    public let titleSymbol: UIImage?
     public let haptic: Haptic?
     public let accessibilityIdentifier: String?
     public let accessibilityHint: String?
@@ -21,6 +22,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         icon: IconStyle? = nil,
         style: GDSButtonStyle,
         buttonAction: DesignSystem.Action,
+        titleSymbol: UIImage? = nil,
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
@@ -37,6 +39,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         }
         self.style = style
         self.buttonAction = buttonAction
+        self.titleSymbol = titleSymbol
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
@@ -57,6 +60,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         icon: IconForState? = nil,
         style: GDSButtonStyle,
         buttonAction: DesignSystem.Action,
+        titleSymbol: UIImage? = nil,
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
@@ -68,6 +72,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.icon = icon
         self.style = style
         self.buttonAction = buttonAction
+        self.titleSymbol = titleSymbol
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
