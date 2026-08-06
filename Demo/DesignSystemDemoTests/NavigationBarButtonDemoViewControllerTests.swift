@@ -1,5 +1,5 @@
-@testable import DesignSystemDemo
 import DesignSystem
+@testable import DesignSystemDemo
 import Testing
 import UIKit
 
