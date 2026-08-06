@@ -56,6 +56,11 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(screen, animated: true)
     }
 
+    func pushNavigationBarButtonDemo() {
+        let demo = NavigationBarButtonDemoViewController(style: .insetGrouped)
+        navigationController?.pushViewController(demo, animated: true)
+    }
+
     func addViewsToStack() {
         viewModel.body.forEach {
             stackview.addArrangedSubview($0.createUIView())
@@ -110,6 +115,13 @@ extension ViewController {
                 style: .secondary,
                 buttonAction: .action({ [weak self] in
                     self?.pushGDSScreen()
+                })
+            ),
+            GDSButtonViewModel(
+                title: "NavigationBarButton Examples",
+                style: .secondary,
+                buttonAction: .action({ [weak self] in
+                    self?.pushNavigationBarButtonDemo()
                 })
             ),
             GDSTextViewModel(

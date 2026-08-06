@@ -41,13 +41,8 @@ open class BaseScreen: UIViewController {
             isHidden: viewModel?.backButtonIsHidden ?? false
         )
         
-        if viewModel?.rightBarButtonTitle != nil {
-            self.navigationItem.rightBarButtonItem = .init(title: viewModel?.rightBarButtonTitle?.value,
-                                                           style: .done,
-                                                           target: self,
-                                                           action: #selector(dismissScreen))
-            self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "right-bar-button"
-        }
+        configureLeftBarButtons()
+        configureRightBarButtons()
     }
     
     open override func viewIsAppearing(_ animated: Bool) {
@@ -90,6 +85,61 @@ open class BaseScreen: UIViewController {
         case .none:
             return
         }
+    }
+}
+
+// MARK: - Bar Button Configuration
+
+extension BaseScreen {
+    private func configureLeftBarButtons() {
+        guard let configs = viewModel?.leftBarButtons else { return }
+        navigationItem.leftBarButtonItems = configs.map { makeBarButtonItem(from: $0) }
+    }
+
+    private func configureRightBarButtons() {
+        // New declarative API takes precedence
+        if let configs = viewModel?.rightBarButtons {
+            navigationItem.rightBarButtonItems = configs.map { makeBarButtonItem(from: $0) }
+            return
+        }
+
+        // Legacy fallback: rightBarButtonTitle creates a dismiss button
+        if viewModel?.rightBarButtonTitle != nil {
+            navigationItem.rightBarButtonItem = .init(
+                title: viewModel?.rightBarButtonTitle?.value,
+                style: .done,
+                target: self,
+                action: #selector(dismissScreen)
+            )
+            navigationItem.rightBarButtonItem?.accessibilityIdentifier = "right-bar-button"
+        }
+    }
+
+    private func makeBarButtonItem(
+        from config: DesignSystem.NavigationBarButton
+    ) -> UIBarButtonItem {
+        let item: UIBarButtonItem
+
+        switch config.content {
+        case .button(let title, let image, let style):
+            let uiAction = UIAction(title: title ?? "") { _ in config.action?() }
+            if let image {
+                item = UIBarButtonItem(image: image, primaryAction: uiAction)
+            } else {
+                item = UIBarButtonItem(primaryAction: uiAction)
+                item.style = style
+            }
+
+        case .menu(let image, let menuProvider):
+            let deferredElement = UIDeferredMenuElement.uncached { completion in
+                menuProvider(completion)
+            }
+            let menu = UIMenu(children: [deferredElement])
+            item = UIBarButtonItem(image: image, menu: menu)
+        }
+
+        item.accessibilityIdentifier = config.accessibilityIdentifier
+        return item
     }
 }
 
