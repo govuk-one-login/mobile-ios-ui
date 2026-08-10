@@ -46,7 +46,7 @@ extension GDSScreenStyle {
     
     public static var error: Self { .centred }
     
-    public static var fullHeight: Self {
+    public static var noScrollView: Self {
         GDSScreenStyle(
             verticalAlignment: .top,
             horizontalAlignment: .fill,

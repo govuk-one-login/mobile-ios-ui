@@ -2,7 +2,7 @@ import DesignSystem
 import UIKit
 
 /// A demo ContentViewModel that embeds a UICollectionView as body content
-/// to demonstrate the .fullHeight GDSScreenStyle with self-scrolling content.
+/// to demonstrate the .noScrollView GDSScreenStyle with self-scrolling content.
 struct DemoCollectionViewContentViewModel: ContentViewModel {
     typealias ViewType = DemoCollectionContentView
     

@@ -28,8 +28,8 @@ struct GDSScreenStyleTests {
     }
     
     @Test
-    func fullHeight() {
-        let sut = GDSScreenStyle.fullHeight
+    func noScrollView() {
+        let sut = GDSScreenStyle.noScrollView
         #expect(sut.verticalAlignment == .top)
         #expect(sut.horizontalAlignment == .fill)
         #expect(sut.usesScrollView == false)

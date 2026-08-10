@@ -56,8 +56,8 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(screen, animated: true)
     }
 
-    func pushFullHeightGDSScreen() {
-        let screen = GDSScreen(viewModel: gdsFullHeightScreenViewModel)
+    func pushNoScrollViewGDSScreen() {
+        let screen = GDSScreen(viewModel: gdsNoScrollViewScreenViewModel)
         navigationController?.pushViewController(screen, animated: true)
     }
 
@@ -128,10 +128,10 @@ extension ViewController {
                 })
             ),
             GDSButtonViewModel(
-                title: "Push Full Height GDSScreen",
+                title: "Push No Scroll View GDSScreen",
                 style: .secondary,
                 buttonAction: .action({ [weak self] in
-                    self?.pushFullHeightGDSScreen()
+                    self?.pushNoScrollViewGDSScreen()
                 })
             ),
             GDSButtonViewModel(

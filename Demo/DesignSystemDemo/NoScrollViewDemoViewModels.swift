@@ -2,17 +2,17 @@ import DesignSystem
 import UIKit
 
 extension ViewController {
-    var gdsFullHeightScreenViewModel: GDSDemoScreenViewModel {
+    var gdsNoScrollViewScreenViewModel: GDSDemoScreenViewModel {
         GDSDemoScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [
                 GDSTextViewModel(
-                    title: "Full Height Screen",
+                    title: "No Scroll View Screen",
                     titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .left
                 ),
                 GDSTextViewModel(
-                    title: "This screen uses the .fullHeight style. Body content fills the available space without a scroll view wrapper — ideal for embedding a UICollectionView.",
+                    title: "This screen uses the .noScrollView style. Body content fills the available space without a scroll view wrapper — ideal for embedding a UICollectionView.", // swiftlint:disable:this line_length
                     titleFont: DesignSystem.Font.Base.body,
                     alignment: .left
                 )
@@ -32,7 +32,7 @@ extension ViewController {
     var gdsCollectionViewScreenViewModel: GDSDemoScreenViewModel {
         let items = (1...30).map { "Item \($0)" }
         return GDSDemoScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [
                 GDSTextViewModel(
                     title: "Select an item",

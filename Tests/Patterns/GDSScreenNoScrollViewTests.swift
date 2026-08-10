@@ -3,12 +3,12 @@ import Testing
 import UIKit
 
 @MainActor
-struct GDSScreenFullHeightTests {
+struct GDSScreenNoScrollViewTests {
     // MARK: - GDSScreenStyle Tests
     
-    @Test("fullHeight style has correct verticalAlignment and horizontalAlignment")
-    func fullHeightStyleProperties() {
-        let sut = GDSScreenStyle.fullHeight
+    @Test("noScrollView style has correct verticalAlignment and horizontalAlignment")
+    func noScrollViewStyleProperties() {
+        let sut = GDSScreenStyle.noScrollView
         #expect(sut.verticalAlignment == .top)
         #expect(sut.horizontalAlignment == .fill)
         #expect(sut.usesScrollView == false)
@@ -20,10 +20,10 @@ struct GDSScreenFullHeightTests {
     
     // MARK: - Layout Tests
     
-    @Test("fullHeight screen does NOT contain a scroll view in the container")
-    func fullHeightNoScrollView() {
+    @Test("noScrollView screen does NOT contain a scroll view in the container")
+    func noScrollViewNoScrollView() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "body text")],
             movableFooter: [],
             footer: []
@@ -35,10 +35,10 @@ struct GDSScreenFullHeightTests {
         #expect(!hasScrollView)
     }
     
-    @Test("fullHeight screen uses bodyContainerStackView as the first arranged subview")
-    func fullHeightUsesBodyContainer() {
+    @Test("noScrollView screen uses bodyContainerStackView as the first arranged subview")
+    func noScrollViewUsesBodyContainer() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "body text")],
             movableFooter: [],
             footer: []
@@ -50,10 +50,10 @@ struct GDSScreenFullHeightTests {
         #expect(sut.containerStackView.arrangedSubviews.last === sut.bottomStackView)
     }
     
-    @Test("fullHeight screen body content is placed directly in bodyContainerStackView")
-    func fullHeightBodyContentDirect() throws {
+    @Test("noScrollView screen body content is placed directly in bodyContainerStackView")
+    func noScrollViewBodyContentDirect() throws {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [
                 GDSTextViewModel(title: "first item"),
                 GDSTextViewModel(title: "second item")
@@ -74,10 +74,10 @@ struct GDSScreenFullHeightTests {
         #expect(secondText.text == "second item")
     }
     
-    @Test("fullHeight screen has bodyContainerStackView with fill distribution")
-    func fullHeightBodyContainerDistribution() {
+    @Test("noScrollView screen has bodyContainerStackView with fill distribution")
+    func noScrollViewBodyContainerDistribution() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "body text")],
             movableFooter: [],
             footer: []
@@ -88,10 +88,10 @@ struct GDSScreenFullHeightTests {
         #expect(sut.bodyContainerStackView.alignment == .fill)
     }
     
-    @Test("fullHeight screen has correct accessibility identifier on bodyContainerStackView")
-    func fullHeightBodyContainerAccessibilityIdentifier() {
+    @Test("noScrollView screen has correct accessibility identifier on bodyContainerStackView")
+    func noScrollViewBodyContainerAccessibilityIdentifier() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [],
             movableFooter: [],
             footer: []
@@ -103,10 +103,10 @@ struct GDSScreenFullHeightTests {
     
     // MARK: - Footer Tests
     
-    @Test("fullHeight screen renders footer items in bottomStackView")
-    func fullHeightFooterRendersInBottomStack() throws {
+    @Test("noScrollView screen renders footer items in bottomStackView")
+    func noScrollViewFooterRendersInBottomStack() throws {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "body text")],
             movableFooter: [],
             footer: [GDSButtonViewModel(
@@ -125,10 +125,10 @@ struct GDSScreenFullHeightTests {
         #expect(button.titleLabel?.text == "Continue")
     }
     
-    @Test("fullHeight screen hides bottomStackView when footer is empty")
-    func fullHeightEmptyFooterHidden() {
+    @Test("noScrollView screen hides bottomStackView when footer is empty")
+    func noScrollViewEmptyFooterHidden() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "body text")],
             movableFooter: [],
             footer: []
@@ -138,10 +138,10 @@ struct GDSScreenFullHeightTests {
         #expect(sut.bottomStackView.isHidden)
     }
     
-    @Test("fullHeight screen with empty body has spacer only in bodyContainerStackView")
-    func fullHeightEmptyBody() {
+    @Test("noScrollView screen with empty body has spacer only in bodyContainerStackView")
+    func noScrollViewEmptyBody() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [],
             movableFooter: [],
             footer: []
@@ -153,10 +153,10 @@ struct GDSScreenFullHeightTests {
     
     // MARK: - VoiceOver Tests
     
-    @Test("fullHeight screen VoiceOver focus returns first body view from bodyContainerStackView")
-    func fullHeightVoiceOverFocus() throws {
+    @Test("noScrollView screen VoiceOver focus returns first body view from bodyContainerStackView")
+    func noScrollViewVoiceOverFocus() throws {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(title: "VoiceOver target")],
             movableFooter: [],
             footer: []
@@ -168,10 +168,10 @@ struct GDSScreenFullHeightTests {
         #expect(focusView === firstBodyView)
     }
     
-    @Test("fullHeight screen VoiceOver throws when body is empty")
-    func fullHeightVoiceOverThrowsWhenEmpty() {
+    @Test("noScrollView screen VoiceOver throws when body is empty")
+    func noScrollViewVoiceOverThrowsWhenEmpty() {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [],
             movableFooter: [],
             footer: []
@@ -185,10 +185,10 @@ struct GDSScreenFullHeightTests {
     
     // MARK: - Default Padding Tests
     
-    @Test("fullHeight screen applies default padding to body items")
-    func fullHeightDefaultPadding() throws {
+    @Test("noScrollView screen applies default padding to body items")
+    func noScrollViewDefaultPadding() throws {
         let viewModel = TestGDSScreenViewModel(
-            screenStyle: .fullHeight,
+            screenStyle: .noScrollView,
             body: [GDSTextViewModel(
                 title: "padded text",
                 verticalPadding: nil,
@@ -262,13 +262,13 @@ struct GDSScreenFullHeightTests {
     
     // MARK: - Deallocation Test
     
-    @Test("GDSScreen with fullHeight style deallocates correctly")
-    func fullHeightDeallocation() async {
+    @Test("GDSScreen with noScrollView style deallocates correctly")
+    func noScrollViewDeallocation() async {
         weak var weakScreen: GDSScreen?
         
         autoreleasepool {
             let viewModel = TestGDSScreenViewModel(
-                screenStyle: .fullHeight,
+                screenStyle: .noScrollView,
                 body: [GDSTextViewModel(title: "body text")],
                 movableFooter: [],
                 footer: [GDSButtonViewModel(
