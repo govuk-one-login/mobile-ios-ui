@@ -26,4 +26,12 @@ struct GDSScreenStyleTests {
         #expect(sut.verticalAlignment == .center)
         #expect(sut.horizontalAlignment == .leading)
     }
+    
+    @Test
+    func fullHeight() {
+        let sut = GDSScreenStyle.fullHeight
+        #expect(sut.verticalAlignment == .top)
+        #expect(sut.horizontalAlignment == .fill)
+        #expect(sut.usesScrollView == false)
+    }
 }

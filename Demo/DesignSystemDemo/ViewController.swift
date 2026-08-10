@@ -56,6 +56,16 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(screen, animated: true)
     }
 
+    func pushFullHeightGDSScreen() {
+        let screen = GDSScreen(viewModel: gdsFullHeightScreenViewModel)
+        navigationController?.pushViewController(screen, animated: true)
+    }
+
+    func pushCollectionViewGDSScreen() {
+        let screen = GDSScreen(viewModel: gdsCollectionViewScreenViewModel)
+        navigationController?.pushViewController(screen, animated: true)
+    }
+
     func pushNavigationBarButtonDemo() {
         let demo = NavigationBarButtonDemoViewController(style: .insetGrouped)
         navigationController?.pushViewController(demo, animated: true)
@@ -115,6 +125,20 @@ extension ViewController {
                 style: .secondary,
                 buttonAction: .action({ [weak self] in
                     self?.pushGDSScreen()
+                })
+            ),
+            GDSButtonViewModel(
+                title: "Push Full Height GDSScreen",
+                style: .secondary,
+                buttonAction: .action({ [weak self] in
+                    self?.pushFullHeightGDSScreen()
+                })
+            ),
+            GDSButtonViewModel(
+                title: "Push Collection View GDSScreen",
+                style: .secondary,
+                buttonAction: .action({ [weak self] in
+                    self?.pushCollectionViewGDSScreen()
                 })
             ),
             GDSButtonViewModel(
@@ -359,6 +383,62 @@ extension ViewController {
                     title: "Footer Button",
                     style: .primary,
                     buttonAction: .action({ })
+                )
+            ]
+        )
+    }
+
+    var gdsFullHeightScreenViewModel: GDSDemoScreenViewModel {
+        GDSDemoScreenViewModel(
+            screenStyle: .fullHeight,
+            body: [
+                GDSTextViewModel(
+                    title: "Full Height Screen",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .left
+                ),
+                GDSTextViewModel(
+                    title: "This screen uses the .fullHeight style. Body content fills the available space without a scroll view wrapper — ideal for embedding a UICollectionView or other self-scrolling content.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                )
+            ],
+            movableFooter: [],
+            footer: [
+                GDSButtonViewModel(
+                    title: "Continue",
+                    style: .primary,
+                    buttonAction: .action({ }),
+                    horizontalPadding: .horizontal(16)
+                )
+            ]
+        )
+    }
+
+    var gdsCollectionViewScreenViewModel: GDSDemoScreenViewModel {
+        let items = (1...30).map { "Item \($0)" }
+        return GDSDemoScreenViewModel(
+            screenStyle: .fullHeight,
+            body: [
+                GDSTextViewModel(
+                    title: "Select an item",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .left
+                ),
+                GDSTextViewModel(
+                    title: "Browse the list below and select the item that applies to you.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                ),
+                CollectionViewContentViewModel(items: items)
+            ],
+            movableFooter: [],
+            footer: [
+                GDSButtonViewModel(
+                    title: "Continue",
+                    style: .primary,
+                    buttonAction: .action({ }),
+                    horizontalPadding: .horizontal(16)
                 )
             ]
         )

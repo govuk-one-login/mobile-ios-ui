@@ -3,23 +3,50 @@ import UIKit
 open class GDSScreen: BaseScreen, VoiceOverFocus {
     public var initialVoiceOverView: UIView {
         get throws {
-            guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
-                throw VoiceOverFocusError.notAvailable
+            if viewModel.screenStyle.usesScrollView {
+                guard let firstView = scrollViewInnerStackView.arrangedSubviews.first else {
+                    throw VoiceOverFocusError.notAvailable
+                }
+                return firstView
+            } else {
+                guard let firstView = bodyContainerStackView.arrangedSubviews.first(where: { $0 is UIStackView }) else {
+                    throw VoiceOverFocusError.notAvailable
+                }
+                return firstView
             }
-            return firstView
         }
     }
     
     private(set) lazy var containerStackView: UIStackView = {
+        let primaryContent: UIView = viewModel.screenStyle.usesScrollView
+            ? scrollView
+            : bodyContainerStackView
         let result = UIStackView(
             views: [
-                scrollView,
+                primaryContent,
                 bottomStackView
             ],
             spacing: .zero,
             distribution: .fill
         )
         result.accessibilityIdentifier = "gds-screen-container-stack-view"
+        return result
+    }()
+    
+    private(set) lazy var bodyContainerStackView: UIStackView = {
+        let bodyViews = viewModel.body.map { configureAsStackView($0) }
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
+        spacer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        let result = UIStackView(
+            views: bodyViews + [spacer],
+            spacing: .zero,
+            alignment: viewModel.screenStyle.horizontalAlignment,
+            distribution: .fill
+        )
+        result.isLayoutMarginsRelativeArrangement = true
+        result.directionalLayoutMargins.bottom = DesignSystem.Spacing.small
+        result.accessibilityIdentifier = "gds-screen-body-container-stack-view"
         return result
     }()
     
@@ -106,6 +133,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        guard viewModel.screenStyle.usesScrollView else { return }
         // Defer to ensure layout is finished
         Task {
             checkBottomStackHeight()
@@ -116,7 +144,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         view.addSubview(containerStackView)
         containerStackView.bindToSuperviewSafeArea()
         view.backgroundColor = .systemBackground
-        addRelativeViewConstraints()
+        if viewModel.screenStyle.usesScrollView {
+            addRelativeViewConstraints()
+        }
     }
     
     private func addRelativeViewConstraints() {
