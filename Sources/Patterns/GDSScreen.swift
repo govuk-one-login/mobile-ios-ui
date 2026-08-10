@@ -37,6 +37,10 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     private(set) lazy var bodyContainerStackView: UIStackView = {
         let bodyViews = viewModel.body.map { configureAsStackView($0) }
+        // A spacer view absorbs remaining vertical space so that body content
+        // stays at its intrinsic size at the top. Without this, the stack view's
+        // .fill distribution would stretch body items to fill the available area,
+        // causing buttons and labels to grow beyond their intended height.
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
         spacer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
