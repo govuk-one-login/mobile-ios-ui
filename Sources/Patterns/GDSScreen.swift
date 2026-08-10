@@ -9,6 +9,8 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
                 }
                 return firstView
             } else {
+                // Body items are wrapped in UIStackView via configureAsStackView.
+                // Filter by UIStackView to skip the trailing spacer view.
                 guard let firstView = bodyContainerStackView.arrangedSubviews.first(where: { $0 is UIStackView }) else {
                     throw VoiceOverFocusError.notAvailable
                 }
@@ -38,6 +40,8 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         let spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .vertical)
         spacer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        spacer.isAccessibilityElement = false
+        spacer.accessibilityElementsHidden = true
         let result = UIStackView(
             views: bodyViews + [spacer],
             spacing: .zero,
@@ -133,6 +137,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // Movable footer logic only applies when using a scroll view.
+        // When usesScrollView is false, body content manages its own scrolling
+        // so there is no need to move footer items into the scroll view.
         guard viewModel.screenStyle.usesScrollView else { return }
         // Defer to ensure layout is finished
         Task {
