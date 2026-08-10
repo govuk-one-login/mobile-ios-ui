@@ -58,7 +58,9 @@ extension DemoCollectionContentView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DemoCell", for: indexPath) as! DemoCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DemoCell", for: indexPath) as? DemoCell else {
+            return UICollectionViewCell()
+        }
         cell.configure(with: items[indexPath.item])
         return cell
     }
