@@ -3,8 +3,8 @@ import UIKit
 
 /// A demo ContentViewModel that embeds a UICollectionView as body content
 /// to demonstrate the .fullHeight GDSScreenStyle with self-scrolling content.
-struct CollectionViewContentViewModel: ContentViewModel {
-    typealias ViewType = CollectionContentView
+struct DemoCollectionViewContentViewModel: ContentViewModel {
+    typealias ViewType = DemoCollectionContentView
     
     let verticalPadding: VerticalPadding? = .vertical(0)
     let horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -13,18 +13,18 @@ struct CollectionViewContentViewModel: ContentViewModel {
     let items: [String]
 }
 
-/// A ContentView that wraps a UICollectionView
-final class CollectionContentView: UIView, ContentView {
-    typealias Content = CollectionViewContentViewModel
+/// A demo-only ContentView that wraps a UICollectionView
+final class DemoCollectionContentView: UIView, ContentView {
+    typealias Content = DemoCollectionViewContentViewModel
     
     private let collectionView: UICollectionView
     private let items: [String]
     
-    required init(viewModel: CollectionViewContentViewModel) {
+    required init(viewModel: DemoCollectionViewContentViewModel) {
         self.items = viewModel.items
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: 60)
+        layout.estimatedItemSize = CGSize(width: 200, height: 60)
         layout.minimumLineSpacing = 8
         layout.sectionInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         
@@ -33,6 +33,7 @@ final class CollectionContentView: UIView, ContentView {
         
         collectionView.register(DemoCell.self, forCellWithReuseIdentifier: "DemoCell")
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
         
         addSubview(collectionView)
@@ -51,7 +52,7 @@ final class CollectionContentView: UIView, ContentView {
     }
 }
 
-extension CollectionContentView: UICollectionViewDataSource {
+extension DemoCollectionContentView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         items.count
     }
@@ -60,6 +61,14 @@ extension CollectionContentView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DemoCell", for: indexPath) as! DemoCell
         cell.configure(with: items[indexPath.item])
         return cell
+    }
+}
+
+extension DemoCollectionContentView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let insets = (collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        let width = collectionView.bounds.width - insets.left - insets.right
+        return CGSize(width: width, height: 60)
     }
 }
 

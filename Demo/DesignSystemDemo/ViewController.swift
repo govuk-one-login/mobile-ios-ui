@@ -430,7 +430,7 @@ extension ViewController {
                     titleFont: DesignSystem.Font.Base.body,
                     alignment: .left
                 ),
-                CollectionViewContentViewModel(items: items)
+                DemoCollectionViewContentViewModel(items: items)
             ],
             movableFooter: [],
             footer: [
