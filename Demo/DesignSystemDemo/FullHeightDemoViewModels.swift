@@ -12,9 +12,7 @@ extension ViewController {
                     alignment: .left
                 ),
                 GDSTextViewModel(
-                    title: "This screen uses the .fullHeight style. Body content "
-                        + "fills the available space without a scroll view wrapper "
-                        + "— ideal for embedding a UICollectionView.",
+                    title: "This screen uses the .fullHeight style. Body content fills the available space without a scroll view wrapper — ideal for embedding a UICollectionView.",
                     titleFont: DesignSystem.Font.Base.body,
                     alignment: .left
                 )
