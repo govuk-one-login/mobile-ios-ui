@@ -9,6 +9,7 @@ public struct GDSButtonStyle: Equatable {
     public let foregroundColor: ColorForState
     public let backgroundColor: ColorForState
 
+    @available(*, deprecated, message: "`cornerStyle` is now set to `.capsule` which ignores `cornerRadius` set. Removal: September 2026")
     public let cornerRadius: CGFloat
     public let border: BorderStyle?
     

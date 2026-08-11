@@ -40,7 +40,7 @@ extension UIButton {
         self.configuration?.background.backgroundColor = viewModel.style.backgroundColor.forState(self.state)
         
         self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
-        self.configuration?.cornerStyle = .fixed
+        self.configuration?.cornerStyle = .capsule
     
         self.addBorder(viewModel: viewModel)
     }
