@@ -9,8 +9,9 @@ public struct GDSButtonStyle: Equatable {
     public let foregroundColor: ColorForState
     public let backgroundColor: ColorForState
 
+    /// Defaulted to `.capsule`. If `.fixed` `cornerStyle` is being used, ensure `cornerRadius` is also set
     public let cornerStyle: UIButton.Configuration.CornerStyle
-    /// Only `.fixed` or `.dynamic` cornerStyle will respect `cornerRadius` set
+    /// Only `.fixed` `cornerStyle` will respect `cornerRadius` set
     public let cornerRadius: CGFloat?
     public let border: BorderStyle?
     
