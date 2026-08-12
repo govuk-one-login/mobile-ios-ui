@@ -28,8 +28,7 @@ struct GDSButtonStyleTests {
                 disabled: DesignSystem.Color.Buttons.primaryBackgroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.primaryBackgroundFocusedHighlighted
             ),
-            cornerRadius: DesignSystem.CornerRadius.primaryButton,
-            border: nil
+            cornerStyle: .capsule
         )
         
         #expect(expectation == .primary)
@@ -78,6 +77,7 @@ struct GDSButtonStyleTests {
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
+            cornerStyle: .fixed,
             cornerRadius: DesignSystem.Spacing.xSmall
         )
         
@@ -105,6 +105,7 @@ struct GDSButtonStyleTests {
                 normal: .clear,
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused
             ),
+            cornerStyle: .fixed,
             cornerRadius: DesignSystem.Spacing.xSmall
         )
         
