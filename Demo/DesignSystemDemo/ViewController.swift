@@ -56,6 +56,16 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(screen, animated: true)
     }
 
+    func pushNoScrollViewGDSScreen() {
+        let screen = GDSScreen(viewModel: gdsNoScrollViewScreenViewModel)
+        navigationController?.pushViewController(screen, animated: true)
+    }
+
+    func pushCollectionViewGDSScreen() {
+        let screen = GDSScreen(viewModel: gdsCollectionViewScreenViewModel)
+        navigationController?.pushViewController(screen, animated: true)
+    }
+
     func pushNavigationBarButtonDemo() {
         let demo = NavigationBarButtonDemoViewController(style: .insetGrouped)
         navigationController?.pushViewController(demo, animated: true)
@@ -115,6 +125,20 @@ extension ViewController {
                 style: .secondary,
                 buttonAction: .action({ [weak self] in
                     self?.pushGDSScreen()
+                })
+            ),
+            GDSButtonViewModel(
+                title: "Push No Scroll View GDSScreen",
+                style: .secondary,
+                buttonAction: .action({ [weak self] in
+                    self?.pushNoScrollViewGDSScreen()
+                })
+            ),
+            GDSButtonViewModel(
+                title: "Push Collection View GDSScreen",
+                style: .secondary,
+                buttonAction: .action({ [weak self] in
+                    self?.pushCollectionViewGDSScreen()
                 })
             ),
             GDSButtonViewModel(

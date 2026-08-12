@@ -223,7 +223,7 @@
 			mainGroup = 960AC9632DA0725000519D5F;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference "." */,
+				965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference ".." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 960AC96D2DA0725000519D5F /* Products */;
@@ -598,7 +598,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference "." */ = {
+		965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference ".." */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ..;
 		};
@@ -607,7 +607,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		965975AA2E2AC0D4007370CC /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference "." */;
+			package = 965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference ".." */;
 			productName = DesignSystem;
 		};
 /* End XCSwiftPackageProductDependency section */
