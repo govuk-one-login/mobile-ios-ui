@@ -151,7 +151,7 @@ extension GDSButtonStyle {
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
             cornerStyle: .fixed,
-            cornerRadius: DesignSystem.Spacing.xSmall)
+            cornerRadius: DesignSystem.Spacing.xSmall
         )
     }
 }
