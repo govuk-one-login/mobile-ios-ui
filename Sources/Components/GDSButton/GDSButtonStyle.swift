@@ -9,8 +9,9 @@ public struct GDSButtonStyle: Equatable {
     public let foregroundColor: ColorForState
     public let backgroundColor: ColorForState
 
-    @available(*, deprecated, message: "`cornerStyle` is now set to `.capsule` which ignores `cornerRadius` set. Removal: September 2026")
-    public let cornerRadius: CGFloat
+    public let cornerStyle: UIButton.Configuration.CornerStyle
+    /// Only `.fixed` or `.dynamic` cornerStyle will respect `cornerRadius` set
+    public let cornerRadius: CGFloat?
     public let border: BorderStyle?
     
     public init(
@@ -20,7 +21,8 @@ public struct GDSButtonStyle: Equatable {
         minimumHeight: CGFloat? = 44,
         foregroundColor: ColorForState,
         backgroundColor: ColorForState,
-        cornerRadius: CGFloat,
+        cornerStyle: UIButton.Configuration.CornerStyle = .capsule,
+        cornerRadius: CGFloat? = nil,
         border: BorderStyle? = nil
     ) {
         self.font = font
@@ -29,6 +31,7 @@ public struct GDSButtonStyle: Equatable {
         self.minimumHeight = minimumHeight
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
+        self.cornerStyle = cornerStyle
         self.cornerRadius = cornerRadius
         self.border = border
     }
@@ -40,6 +43,7 @@ public struct GDSButtonStyle: Equatable {
         minimumHeight: CGFloat? = nil,
         foregroundColor: ColorForState? = nil,
         backgroundColor: ColorForState? = nil,
+        cornerStyle: UIButton.Configuration.CornerStyle? = nil,
         cornerRadius: CGFloat? = nil,
         border: BorderStyle? = nil
     ) -> GDSButtonStyle {
@@ -50,6 +54,7 @@ public struct GDSButtonStyle: Equatable {
             minimumHeight: minimumHeight ?? self.minimumHeight,
             foregroundColor: foregroundColor ?? self.foregroundColor,
             backgroundColor: backgroundColor ?? self.backgroundColor,
+            cornerStyle: cornerStyle ?? self.cornerStyle,
             cornerRadius: cornerRadius ?? self.cornerRadius,
             border: border ?? self.border
         )
@@ -81,7 +86,7 @@ extension GDSButtonStyle {
                 disabled: DesignSystem.Color.Buttons.primaryBackgroundDisabled,
                 focusedHighlighted: DesignSystem.Color.Buttons.primaryBackgroundFocusedHighlighted
             ),
-            cornerRadius: DesignSystem.CornerRadius.primaryButton
+            cornerStyle: .capsule
         )
     }
 }
@@ -145,7 +150,8 @@ extension GDSButtonStyle {
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
-            cornerRadius: DesignSystem.Spacing.xSmall
+            cornerStyle: .fixed,
+            cornerRadius: DesignSystem.Spacing.xSmall)
         )
     }
 }
