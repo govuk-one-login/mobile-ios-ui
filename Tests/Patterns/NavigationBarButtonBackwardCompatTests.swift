@@ -33,7 +33,7 @@ struct NavigationBarButtonBackwardCompatTests {
         sut.endAppearanceTransition()
 
         let rightButton = try #require(sut.navigationItem.rightBarButtonItem)
-        #expect(rightButton.style == .done)
+        #expect(rightButton.style == .plain)
     }
 
     @Test

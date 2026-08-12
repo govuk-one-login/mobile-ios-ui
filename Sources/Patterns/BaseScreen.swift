@@ -107,7 +107,7 @@ extension BaseScreen {
         if viewModel?.rightBarButtonTitle != nil {
             navigationItem.rightBarButtonItem = .init(
                 title: viewModel?.rightBarButtonTitle?.value,
-                style: .done,
+                style: .plain,
                 target: self,
                 action: #selector(dismissScreen)
             )
