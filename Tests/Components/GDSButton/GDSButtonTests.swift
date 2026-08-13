@@ -253,4 +253,45 @@ struct GDSButtonTests {
         
         #expect(sut.accessibilityIdentifier == "any identifier")
    }
+    
+    @Test("Button with border set, corner radius is correct")
+    func buttonCustomBorderStyleCornerRadius() {
+        let secondaryWithBorderStyle = GDSButtonStyle(
+            font: DesignSystem.Font.Base.body,
+            alignment: .center,
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.small,
+                leading: DesignSystem.Spacing.default,
+                bottom: DesignSystem.Spacing.small,
+                trailing: DesignSystem.Spacing.default
+            ),
+            foregroundColor: ColorForState(
+                normal: DesignSystem.Color.Buttons.secondaryForeground,
+                highlighted: DesignSystem.Color.Buttons.secondaryForegroundHighlighted,
+                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused,
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryForegroundFocused
+            ),
+            backgroundColor: ColorForState(
+                normal: .clear,
+                focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
+            ),
+            cornerStyle: .fixed,
+            cornerRadius: DesignSystem.Spacing.xSmall,
+            border: BorderStyle(width: 4, color: DesignSystem.Color.Buttons.primaryBackground)
+        )
+        
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: secondaryWithBorderStyle,
+            buttonAction: .action({}),
+            accessibilityIdentifier: "any identifier"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.xSmall)
+   }
 }
