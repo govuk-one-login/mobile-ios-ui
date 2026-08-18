@@ -339,7 +339,7 @@ struct ColorTokenTests {
     
     @Test func test_ColorToken_Navigation_Selected() async throws {
         let expectedLightColor = DesignSystem.Color.Base.green1
-        let expectedDarkColor = DesignSystem.Color.Base.green3
+        let expectedDarkColor = DesignSystem.Color.Base.green10
         let sut = DesignSystem.Color.NavigationElements.selectedTabIconAndLabel
         
         #expect(sut.lightColor.cgColor == expectedLightColor.lightColor.cgColor)

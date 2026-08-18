@@ -66,7 +66,7 @@ struct NavigationBarButtonDemoViewControllerTests {
 
         let rightButton = try #require(presentedScreen.navigationItem.rightBarButtonItem)
         #expect(rightButton.title == "Done")
-        #expect(rightButton.style == .done)
+        #expect(rightButton.style == .plain)
         #expect(rightButton.accessibilityIdentifier == "right-bar-button")
 
         window.resignKey()

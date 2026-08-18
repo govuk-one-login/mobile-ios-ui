@@ -131,7 +131,7 @@ extension DesignSystem {
             
             public static let selectedTabIconAndLabel = UIColor(
                 light: Color.Base.green1,
-                dark: Color.Base.green3
+                dark: Color.Base.green10
             )
         }
         
@@ -170,6 +170,7 @@ extension DesignSystem {
             public static let green7 = UIColor.fromHex("#007840")
             public static let green8 = UIColor.fromHex("#00542D")
             public static let green9 = UIColor.fromHex("#CFE4DC")
+            public static let green10 = UIColor.fromHex("#66F39E")
             
             public static let white = UIColor.fromHex("#FFFFFF")
             

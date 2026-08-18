@@ -89,7 +89,7 @@ private struct LegacyBarButtonViewModel: GDSScreenViewModel, BaseViewModel {
         GDSTextViewModel(
             title: """
             This screen uses the original `rightBarButtonTitle` property. \
-            It creates a bar button with .done style that dismisses the screen.
+            It creates a bar button with .plain style that dismisses the screen.
             """,
             titleFont: DesignSystem.Font.Base.body,
             alignment: .left

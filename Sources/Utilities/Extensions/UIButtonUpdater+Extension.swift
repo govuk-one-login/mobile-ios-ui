@@ -19,7 +19,9 @@ extension UIButton {
             self.clipsToBounds = true
             self.layer.borderColor = borderStyle.color.cgColor
             self.layer.borderWidth = borderStyle.width
-            self.layer.cornerRadius = viewModel.style.cornerRadius
+            if let cornerRadius = viewModel.style.cornerRadius {
+                self.configuration?.background.cornerRadius = cornerRadius
+            }
             self.layer.cornerCurve = .continuous
         }
     }
@@ -39,8 +41,10 @@ extension UIButton {
         self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
         self.configuration?.background.backgroundColor = viewModel.style.backgroundColor.forState(self.state)
         
-        self.configuration?.background.cornerRadius = viewModel.style.cornerRadius
-        self.configuration?.cornerStyle = .fixed
+        self.configuration?.cornerStyle = viewModel.style.cornerStyle
+        if let cornerRadius = viewModel.style.cornerRadius {
+            self.configuration?.background.cornerRadius = cornerRadius
+        }
     
         self.addBorder(viewModel: viewModel)
     }
