@@ -29,7 +29,7 @@ extension ContentViewModel {
             view.accessibilityRespondsToUserInteraction = true
             return
         }
-        for subview in view.subviews {
+        for subview in view.subviews where !(view is UIControl) {
             enableAccessibilityInteraction(in: subview)
         }
     }
