@@ -25,13 +25,13 @@ extension ContentViewModel {
     }
     
     static func enableAccessibilityInteraction(in view: UIView) {
-//        if view.isAccessibilityElement {
-//            view.accessibilityRespondsToUserInteraction = true
-//            return
-//        }
-//        for subview in view.subviews {
-//            enableAccessibilityInteraction(in: subview)
-//        }
+        if view.isAccessibilityElement {
+            view.accessibilityRespondsToUserInteraction = true
+            return
+        }
+        for subview in view.subviews where !(view is UIButton) {
+            enableAccessibilityInteraction(in: subview)
+        }
     }
 }
 
