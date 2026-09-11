@@ -154,7 +154,14 @@ class ViewController: UITableViewController {
     // MARK: - Navigation helpers
 
     private func pushComponentScreen(title: String, content: [any ContentViewModel]) {
-        let screen = ComponentScreenViewController(title: title, content: content)
+        let viewModel = GDSDemoScreenViewModel(
+            screenStyle: .top,
+            body: content,
+            movableFooter: [],
+            footer: []
+        )
+        let screen = GDSScreen(viewModel: viewModel)
+        screen.title = title
         navigationController?.pushViewController(screen, animated: true)
     }
 

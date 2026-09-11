@@ -48,6 +48,14 @@ public final class GDSButton: UIButton, ContentView {
             )
         }
 
+        if viewModel.style.width == .hugContents {
+            // Hold the button at its intrinsic content width so it does not stretch
+            // to fill its container. The enclosing layout must also avoid pinning
+            // both horizontal edges (see GDSScreen.configureAsStackView).
+            self.setContentHuggingPriority(.required, for: .horizontal)
+            self.setContentCompressionResistancePriority(.required, for: .horizontal)
+        }
+
         if let accessibilityTraits = viewModel.accessibilityTraits {
             self.accessibilityTraits = accessibilityTraits
         }

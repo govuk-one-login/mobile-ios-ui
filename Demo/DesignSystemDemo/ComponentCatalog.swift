@@ -18,7 +18,9 @@ enum ComponentCatalog {
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 present(alert)
             }),
-            enableState: false
+            enableState: false,
+            verticalPadding: .vertical(8),
+            horizontalPadding: .horizontal(16)
         )
         return [
             GDSButtonViewModel(
@@ -26,24 +28,47 @@ enum ComponentCatalog {
                 style: .primary,
                 buttonAction: .action({
                     controlledButton.isEnabledToggle()
-                })
+                }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
             ),
             controlledButton,
             GDSButtonViewModel(
                 title: "Primary Button",
                 style: .primary,
-                buttonAction: .action({ })
+                buttonAction: .action({ }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
             ),
             GDSButtonViewModel(
                 title: "Secondary Button",
                 style: .secondary,
-                buttonAction: .action({ })
+                buttonAction: .action({ }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
             ),
             GDSButtonViewModel(
                 title: "Secondary Button with icon",
                 icon: .arrowUpRight,
                 style: .secondaryLeading,
-                buttonAction: .action({ })
+                buttonAction: .action({ }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
+            ),
+            GDSButtonViewModel(
+                title: "Outline Button",
+                style: .secondaryOutline,
+                buttonAction: .action({ }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
+            ),
+            GDSButtonViewModel(
+                title: "Outline Button (with icon)",
+                icon: .qrCode,
+                style: .secondaryOutline,
+                buttonAction: .action({ }),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
             )
         ]
     }

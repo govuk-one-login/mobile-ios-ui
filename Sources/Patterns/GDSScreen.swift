@@ -216,10 +216,22 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     }
     
     private func configureAsStackView(_ view: some ContentViewModel) -> UIStackView {
+        // Content that opts into hugging its intrinsic width (e.g. an outline
+        // button) must not have both horizontal edges pinned by the wrapper stack,
+        // otherwise it would be stretched to fill. Use its preferred alignment
+        // instead of `.fill` in that case. All other content keeps `.fill`, so
+        // existing layouts are unchanged.
+        let alignment: UIStackView.Alignment
+        if let widthProviding = view as? ContentWidthProviding,
+           widthProviding.hugsContentWidth {
+            alignment = widthProviding.contentWidthAlignment
+        } else {
+            alignment = .fill
+        }
         let stackView = UIStackView(
             views: view.createUIView(),
             spacing: .zero,
-            alignment: .fill,
+            alignment: alignment,
             distribution: .fill
         )
         stackView.isLayoutMarginsRelativeArrangement = true
