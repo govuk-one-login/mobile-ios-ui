@@ -26,8 +26,19 @@ extension ComponentCatalog {
             button(title: "Primary Button", style: .primary),
             button(title: "Secondary Button", style: .secondary),
             button(title: "Secondary Button with icon", icon: .arrowUpRight, style: .secondaryLeading),
-            button(title: "Outline Button", style: .secondaryOutline),
-            button(title: "Outline Button (with icon)", icon: .qrCode, style: .secondaryOutline)
+            button(
+                title: "Outline Button",
+                style: .secondaryOutline.adjusting(
+                    cornerRadius: 10
+                )
+            ),
+            button(
+                title: "Outline Button (with icon)",
+                icon: .qrCode,
+                style: .secondaryOutline.adjusting(
+                    cornerRadius: 10
+                )
+            )
         ]
     }
 
