@@ -9,46 +9,153 @@ public struct TestViewControllerViewModel: GDSScreenViewModel {
     public var footer: [any ContentViewModel]
 }
 
-class ViewController: UIViewController {
-    var viewModel: TestViewControllerViewModel {
-        TestViewControllerViewModel(
-            screenStyle: .centred,
-            body: bodyContent,
-            movableFooter: [],
-            footer: []
-        )
+/// The demo's root screen. Presents a menu of design system categories and
+/// screen patterns; selecting a row pushes a dedicated screen for that item.
+class ViewController: UITableViewController {
+
+    // MARK: - Menu definition
+
+    private enum MenuItem: CaseIterable {
+        // Component categories
+        case buttons
+        case progressIndicator
+        case text
+        case errorIcons
+        case rows
+        case lists
+        case cards
+        // Screen patterns
+        case gdsScreen
+        case noScrollViewScreen
+        case collectionViewScreen
+        case navigationBarButton
+
+        var title: String {
+            switch self {
+            case .buttons: return "Buttons"
+            case .progressIndicator: return "Progress Indicator"
+            case .text: return "Text"
+            case .errorIcons: return "Error Icons"
+            case .rows: return "Rows"
+            case .lists: return "Lists"
+            case .cards: return "Cards"
+            case .gdsScreen: return "GDSScreen"
+            case .noScrollViewScreen: return "No Scroll View GDSScreen"
+            case .collectionViewScreen: return "Collection View GDSScreen"
+            case .navigationBarButton: return "NavigationBarButton Examples"
+            }
+        }
+
+        var sectionTitle: String {
+            switch self {
+            case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards:
+                return "Components"
+            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton:
+                return "Screens & Patterns"
+            }
+        }
     }
 
-    lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        return scrollView
+    private let sections: [(title: String, items: [MenuItem])] = {
+        let grouped = Dictionary(grouping: MenuItem.allCases, by: { $0.sectionTitle })
+        // Preserve a stable, intentional section order.
+        return ["Components", "Screens & Patterns"].compactMap { key in
+            guard let items = grouped[key] else { return nil }
+            return (title: key, items: items)
+        }
     }()
 
-    lazy var stackview: UIStackView = {
-        let stackview = UIStackView()
-        stackview.axis = .vertical
-        stackview.distribution = .equalSpacing
-        stackview.alignment = .fill
-        stackview.spacing = 16
-        stackview.isLayoutMarginsRelativeArrangement = true
-        stackview.layoutMargins = .init(
-            top: 16,
-            left: 16,
-            bottom: 16,
-            right: 16
-        )
-        return stackview
-    }()
+    init() {
+        super.init(style: .insetGrouped)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         title = "Design System Demo"
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
 
-        scrollView.addSubview(stackview)
-        view.addSubview(scrollView)
-        configureConstraints()
-        addViewsToStack()
+    // MARK: - Table data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sections[section].title
+    }
+
+    override func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        sections[section].items.count
+    }
+
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+
+    // MARK: - Table delegate
+
+    override func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let item = sections[indexPath.section].items[indexPath.row]
+        navigate(to: item)
+    }
+
+    private func navigate(to item: MenuItem) {
+        switch item {
+        case .buttons:
+            pushComponentScreen(
+                title: item.title,
+                content: ComponentCatalog.buttons(present: { [weak self] alert in
+                    self?.present(alert, animated: true)
+                })
+            )
+        case .progressIndicator:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.progressIndicators)
+        case .text:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.text)
+        case .errorIcons:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.errorIcons)
+        case .rows:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.rows)
+        case .lists:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.lists)
+        case .cards:
+            pushComponentScreen(title: item.title, content: ComponentCatalog.cards)
+        case .gdsScreen:
+            pushGDSScreen()
+        case .noScrollViewScreen:
+            pushNoScrollViewGDSScreen()
+        case .collectionViewScreen:
+            pushCollectionViewGDSScreen()
+        case .navigationBarButton:
+            pushNavigationBarButtonDemo()
+        }
+    }
+
+    // MARK: - Navigation helpers
+
+    private func pushComponentScreen(title: String, content: [any ContentViewModel]) {
+        let screen = ComponentScreenViewController(title: title, content: content)
+        navigationController?.pushViewController(screen, animated: true)
     }
 
     func pushGDSScreen() {
@@ -70,270 +177,11 @@ class ViewController: UIViewController {
         let demo = NavigationBarButtonDemoViewController(style: .insetGrouped)
         navigationController?.pushViewController(demo, animated: true)
     }
-
-    func addViewsToStack() {
-        viewModel.body.forEach {
-            stackview.addArrangedSubview($0.createUIView())
-        }
-    }
-
-    func configureConstraints() {
-        stackview.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate(
-            [
-                scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
-                stackview.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
-                stackview.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
-                stackview.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-                stackview.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
-            ]
-        )
-    }
 }
 
-// MARK: - View Models
+// MARK: - GDSScreen View Model
 
 extension ViewController {
-    var bodyContent: [any ContentViewModel] {
-        let controlledButton = GDSButtonViewModel(
-            title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
-            style: .primary,
-            buttonAction: .action({ [weak self] in
-                let alert = UIAlertController(title: "Enabled!", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self?.present(alert, animated: true)
-            }),
-            enableState: false
-        )
-        return [
-            GDSButtonViewModel(
-                title: "Toggle button below",
-                style: .primary,
-                buttonAction: .action({
-                    controlledButton.isEnabledToggle()
-                })
-            ),
-            controlledButton,
-            GDSProgressIndicatorViewModel(),
-            GDSButtonViewModel(
-                title: "Push GDSScreen",
-                style: .secondary,
-                buttonAction: .action({ [weak self] in
-                    self?.pushGDSScreen()
-                })
-            ),
-            GDSButtonViewModel(
-                title: "Push No Scroll View GDSScreen",
-                style: .secondary,
-                buttonAction: .action({ [weak self] in
-                    self?.pushNoScrollViewGDSScreen()
-                })
-            ),
-            GDSButtonViewModel(
-                title: "Push Collection View GDSScreen",
-                style: .secondary,
-                buttonAction: .action({ [weak self] in
-                    self?.pushCollectionViewGDSScreen()
-                })
-            ),
-            GDSButtonViewModel(
-                title: "NavigationBarButton Examples",
-                style: .secondary,
-                buttonAction: .action({ [weak self] in
-                    self?.pushNavigationBarButtonDemo()
-                })
-            ),
-            GDSTextViewModel(
-                title: "Simple test label",
-                titleFont: DesignSystem.Font.Base.body,
-                alignment: .left
-            ),
-            GDSErrorIconTitleViewModel(
-                icon: .error,
-                errorTitle: GDSTextViewModel(
-                    title: "There is a problem",
-                    titleFont: DesignSystem.Font.Base.title1Bold,
-                    alignment: .center,
-                    accessibilityTraits: .header,
-                    verticalPadding: .bottom(8)
-                )
-            ),
-            GDSErrorIconTitleViewModel(
-                icon: .warning,
-                errorTitle: GDSTextViewModel(
-                    title: "There is a problem",
-                    titleFont: DesignSystem.Font.Base.title1Bold,
-                    alignment: .center,
-                    accessibilityTraits: UIAccessibilityTraits.none,
-                    verticalPadding: .bottom(8)
-                )
-            ),
-            GDSMultiRowViewModel(rows: [
-                GDSRowViewModel(
-                    titleConfig: StyledText(text: "Test Title Label 1"),
-                    detailConfig: StyledText(text: "20"),
-                    iconStyle: IconStyle(icon: "chevron.right"),
-                    type: .regular
-                ),
-                GDSRowViewModel(
-                    titleConfig: StyledText(text: "Test Title Label 2", colour: .red),
-                    subtitleConfig: StyledText(text: "Test Subtitle"),
-                    detailConfig: StyledText(text: "14"),
-                    image: UIImage(named: "exampleImage"),
-                    iconStyle: IconStyle(
-                        icon: "arrow.up.right",
-                        colour: .blue,
-                        accessibilityHint: "this is icon alt text"
-                    )
-                ),
-                GDSRowViewModel(
-                    titleConfig: StyledText(text: "Test Title Label 3"),
-                    image: UIImage(named: "vetCard"),
-                    iconStyle: .arrowUpRight,
-                    action: .action(
-                        {
-                            UIApplication.shared.open(URL(string: "https://www.google.com")!)
-                        }
-                    )
-                ),
-                GDSRowViewModel(
-                    titleConfig: StyledText(text: "Test Title Label 4")
-                )
-            ]),
-            GDSListViewModel(
-                title: "Numbered List",
-                titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
-                items: [
-                    "take a photo",
-                    GDSLocalisedString(
-                        stringKey: "This is bold, this is not",
-                        stringAttributes: [("This is bold",
-                                            [.font: UIFont(.body, weight: .bold)])]
-                    ),
-                    "Item 2",
-                    "Item 3"
-                ],
-                style: .numbered
-            ),
-            GDSListViewModel(
-                title: "Bulleted List",
-                titleConfig: (font: DesignSystem.Font.Base.body, isHeader: false),
-                items: [
-                    "take a photo",
-                    GDSLocalisedString(
-                        stringLiteral: "second numbered list item",
-                        stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
-                    ),
-                    "Item 3"
-                ],
-                style: .bulleted
-            ),
-            GDSListViewModel(
-                items: [
-                    GDSLocalisedString(
-                        stringLiteral: "Item 1 - this is an example of a numbered list without a title, long texts should wrap!",
-                        stringAttributes: [("wrap!", [.font: DesignSystem.Font.Base.bodyBold])]
-                    ),
-                    "Item 2",
-                    "Item 3"
-                ],
-                style: .numbered
-            ),
-            GDSListViewModel(
-                items: [
-                    "Item 1",
-                    GDSLocalisedString(
-                        stringKey: "second bulleted list item",
-                        stringAttributes: [("numbered list", [.font: DesignSystem.Font.Base.bodyBold])]
-                    ),
-                    "Item 3"
-                ],
-                style: .bulleted
-            ),
-            GDSCardViewModel(
-                showShadow: true,
-                dismissAction: .action({ })
-            ) {
-                GDSImageViewModel(
-                    image: UIImage(named: "placeholder") ?? UIImage(),
-                    contentMode: .scaleAspectFit
-                )
-                GDSTextViewModel(
-                    title: GDSLocalisedString(
-                        stringLiteral: "Here is the caption for the picture",
-                        stringAttributes: [("Here is the caption for the picture",
-                                            [.foregroundColor: DesignSystem.Color.Icons.success])]
-                    ),
-                    verticalPadding: .vertical(8)
-                )
-                GDSTextViewModel(
-                    title: "A title for the component for a quick introduction",
-                    titleFont: DesignSystem.Font.Base.title1Bold,
-                    verticalPadding: .bottom(8)
-                )
-                GDSTextViewModel(
-                    title: "A subtitle for the componenet which can be used to describe it's purpose",
-                    verticalPadding: .bottom(8)
-                )
-                GDSDividerViewModel(
-                    verticalPadding: .bottom(8)
-                )
-                GDSButtonViewModel(
-                    title: "Secondary Button",
-                    style: .secondary,
-                    buttonAction: .action({ }),
-                    verticalPadding: .bottom(8),
-                    horizontalPadding: .horizontal(16)
-                )
-                GDSButtonViewModel(
-                    title: "Primary Button",
-                    style: .primary,
-                    buttonAction: .action({ }),
-                    verticalPadding: .bottom(16),
-                    horizontalPadding: .horizontal(16)
-                )
-            },
-            GDSCardViewModel(
-                showShadow: true,
-                dismissAction: .action({ })
-            ) {
-                GDSCardTitleViewModel(
-                    title: "A title for the component",
-                    verticalPadding: .bottom(8),
-                    horizontalPadding: .leading(16)
-                )
-                GDSTextViewModel(
-                    title: "A subtitle for the componenet which can be used to describe it's purpose",
-                    verticalPadding: .bottom(8)
-                )
-                GDSDividerViewModel(
-                    verticalPadding: .bottom(8)
-                )
-                GDSButtonViewModel(
-                    title: "Secondary Button",
-                    icon: .arrowUpRight,
-                    style: .secondary.adjusting(
-                        alignment: .leading,
-                        contentInsets: NSDirectionalEdgeInsets(
-                            top: DesignSystem.Spacing.small,
-                            leading: .zero,
-                            bottom: DesignSystem.Spacing.small,
-                            trailing: DesignSystem.Spacing.default
-                        )
-                    ),
-                    buttonAction: .action({ }),
-                    verticalPadding: .bottom(8),
-                    horizontalPadding: .horizontal(16)
-                )
-            }
-        ]
-    }
-
     var gdsScreenViewModel: GDSDemoScreenViewModel {
         GDSDemoScreenViewModel(
             body: [
