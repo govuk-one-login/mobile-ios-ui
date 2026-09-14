@@ -123,14 +123,26 @@ public final class GDSButton: UIButton, ContentView {
     
     public override func accessibilityElementDidLoseFocus() {
         super.accessibilityElementDidLoseFocus()
+        self.isVoiceOverFocussed = false
         self.setNeedsUpdateConfiguration()
     }
     
     public override func accessibilityElementDidBecomeFocused() {
         super.accessibilityElementDidBecomeFocused()
+        self.isVoiceOverFocussed = true
         var config = self.configuration
-        config?.baseBackgroundColor = viewModel.style.backgroundColor.forState(.focused)
-        config?.baseForegroundColor = viewModel.style.foregroundColor.forState(.focused)
+        let focusedBackground = viewModel.style.backgroundColor.forState(.focused)
+        let focusedForeground = viewModel.style.foregroundColor.forState(.focused)
+        config?.baseBackgroundColor = focusedBackground
+        // For styles with a border (e.g. `secondaryOutline`), `background.backgroundColor`
+        // is set in `general()` and takes precedence over `baseBackgroundColor`, so it must
+        // also be updated here for the focused colour to render under VoiceOver.
+        config?.background.backgroundColor = focusedBackground
+        config?.baseForegroundColor = focusedForeground
+        // The visible title/icon colour comes from `attributedTitle.foregroundColor`, which is
+        // set from the (non-focused) control state in the updater and takes precedence over
+        // `baseForegroundColor`, so it must also be updated for the focused colour to render.
+        config?.attributedTitle?.foregroundColor = focusedForeground
         self.configuration = config
     }
 }

@@ -294,4 +294,51 @@ struct GDSButtonTests {
         
         #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.xSmall)
    }
+
+    @Test("secondaryOutline button shows focused background when VoiceOver focuses it")
+    func secondaryOutlineVoiceOverFocusBackground() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutline,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+
+        sut.accessibilityElementDidBecomeFocused()
+
+        let focused = DesignSystem.Color.Buttons.secondaryBackgroundFocused
+        let focusedForeground = DesignSystem.Color.Buttons.secondaryForegroundFocused
+        // Both must reflect the focused colour, since `background.backgroundColor`
+        // takes precedence over `baseBackgroundColor` when set (outline style).
+        #expect(sut.configuration?.baseBackgroundColor == focused)
+        #expect(sut.configuration?.background.backgroundColor == focused)
+        // The title colour comes from `attributedTitle`, which overrides `baseForegroundColor`.
+        #expect(sut.configuration?.baseForegroundColor == focusedForeground)
+        #expect(sut.configuration?.attributedTitle?.foregroundColor == focusedForeground)
+        #expect(sut.isVoiceOverFocussed == true)
+    }
+
+    @Test("secondaryOutline button resets background when VoiceOver focus is lost")
+    func secondaryOutlineVoiceOverLoseFocusBackground() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutline,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+
+        sut.accessibilityElementDidBecomeFocused()
+        sut.accessibilityElementDidLoseFocus()
+        sut.configurationUpdateHandler?(sut)
+
+        let normal = DesignSystem.Color.Buttons.secondaryOutlinedBackground
+        let normalForeground = DesignSystem.Color.Buttons.secondaryForeground
+        #expect(sut.configuration?.background.backgroundColor == normal)
+        #expect(sut.configuration?.attributedTitle?.foregroundColor == normalForeground)
+        #expect(sut.isVoiceOverFocussed == false)
+    }
 }
