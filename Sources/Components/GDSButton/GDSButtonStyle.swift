@@ -35,7 +35,7 @@ public struct GDSButtonStyle: Equatable {
         cornerStyle: UIButton.Configuration.CornerStyle = .capsule,
         cornerRadius: CGFloat? = nil,
         border: BorderStyle? = nil,
-        width: ContentFill = .fill
+        contentFill: ContentFill = .fill
     ) {
         self.font = font
         self.alignment = alignment
@@ -46,7 +46,7 @@ public struct GDSButtonStyle: Equatable {
         self.cornerStyle = cornerStyle
         self.cornerRadius = cornerRadius
         self.border = border
-        self.contentFill = width
+        self.contentFill = contentFill
     }
     
     public func adjusting(
@@ -71,7 +71,7 @@ public struct GDSButtonStyle: Equatable {
             cornerStyle: cornerStyle ?? self.cornerStyle,
             cornerRadius: cornerRadius ?? self.cornerRadius,
             border: border ?? self.border,
-            width: contentFill ?? self.contentFill
+            contentFill: contentFill ?? self.contentFill
         )
     }
 }

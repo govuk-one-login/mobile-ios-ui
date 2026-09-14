@@ -316,7 +316,7 @@ struct GDSButtonTests {
         #expect(sut.configuration?.background.backgroundColor == focused)
         // The title colour comes from `attributedTitle`, which overrides `baseForegroundColor`.
         #expect(sut.configuration?.baseForegroundColor == focusedForeground)
-        #expect(sut.configuration?.attributedTitle?.foregroundColor == focusedForeground)
+        #expect(titleForegroundColor(sut) == focusedForeground)
         #expect(sut.isVoiceOverFocussed == true)
     }
 
@@ -338,7 +338,21 @@ struct GDSButtonTests {
         let normal = DesignSystem.Color.Buttons.secondaryOutlinedBackground
         let normalForeground = DesignSystem.Color.Buttons.secondaryForeground
         #expect(sut.configuration?.background.backgroundColor == normal)
-        #expect(sut.configuration?.attributedTitle?.foregroundColor == normalForeground)
+        #expect(titleForegroundColor(sut) == normalForeground)
         #expect(sut.isVoiceOverFocussed == false)
+    }
+
+    /// Reads the title's foreground colour via the `NSAttributedString` bridge.
+    /// Reading `AttributedString.foregroundColor` directly and comparing it goes through an
+    /// `AnyHashable` equality path that can crash for dynamic `UIColor`s on some SDKs.
+    private func titleForegroundColor(_ button: GDSButton) -> UIColor? {
+        guard let attributedTitle = button.configuration?.attributedTitle else { return nil }
+        let nsString = NSAttributedString(attributedTitle)
+        guard nsString.length > 0 else { return nil }
+        return nsString.attribute(
+            .foregroundColor,
+            at: 0,
+            effectiveRange: nil
+        ) as? UIColor
     }
 }
