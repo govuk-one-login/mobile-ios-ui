@@ -98,7 +98,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
 
 extension GDSButtonViewModel: ContentWidthProviding {
     var hugsContentWidth: Bool {
-        style.width == .hugContents
+        style.contentFill == .hugContents
     }
 
     var contentWidthAlignment: UIStackView.Alignment {

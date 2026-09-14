@@ -2,7 +2,7 @@ import UIKit
 
 public struct GDSButtonStyle: Equatable {
     /// Determines how wide a button is laid out within its container.
-    public enum Width: Equatable {
+    public enum ContentFill: Equatable {
         /// The button stretches to fill the available width of its container. This is the default behaviour.
         case fill
         /// The button is only as wide as its content (title, icon and content insets).
@@ -23,7 +23,7 @@ public struct GDSButtonStyle: Equatable {
     public let cornerRadius: CGFloat?
     public let border: BorderStyle?
     /// Controls whether the button fills its container width (default) or hugs its content.
-    public let width: Width
+    public let contentFill: ContentFill
     
     public init(
         font: UIFont,
@@ -35,7 +35,7 @@ public struct GDSButtonStyle: Equatable {
         cornerStyle: UIButton.Configuration.CornerStyle = .capsule,
         cornerRadius: CGFloat? = nil,
         border: BorderStyle? = nil,
-        width: Width = .fill
+        width: ContentFill = .fill
     ) {
         self.font = font
         self.alignment = alignment
@@ -46,7 +46,7 @@ public struct GDSButtonStyle: Equatable {
         self.cornerStyle = cornerStyle
         self.cornerRadius = cornerRadius
         self.border = border
-        self.width = width
+        self.contentFill = width
     }
     
     public func adjusting(
@@ -59,7 +59,7 @@ public struct GDSButtonStyle: Equatable {
         cornerStyle: UIButton.Configuration.CornerStyle? = nil,
         cornerRadius: CGFloat? = nil,
         border: BorderStyle? = nil,
-        width: Width? = nil
+        contentFill: ContentFill? = nil
     ) -> GDSButtonStyle {
         GDSButtonStyle(
             font: font ?? self.font,
@@ -71,7 +71,7 @@ public struct GDSButtonStyle: Equatable {
             cornerStyle: cornerStyle ?? self.cornerStyle,
             cornerRadius: cornerRadius ?? self.cornerRadius,
             border: border ?? self.border,
-            width: width ?? self.width
+            width: contentFill ?? self.contentFill
         )
     }
 }
@@ -171,30 +171,15 @@ extension GDSButtonStyle {
     }
     
     public static var secondaryOutline: Self {
-        GDSButtonStyle(
-            font: DesignSystem.Font.Base.body,
+        secondary.adjusting(
             alignment: .leading,
-            contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.small,
-                leading: DesignSystem.Spacing.default,
-                bottom: DesignSystem.Spacing.small,
-                trailing: DesignSystem.Spacing.default
-            ),
-            foregroundColor: ColorForState(
-                normal: DesignSystem.Color.Buttons.secondaryForeground,
-                highlighted: DesignSystem.Color.Buttons.secondaryForegroundHighlighted,
-                focused: DesignSystem.Color.Buttons.secondaryForegroundFocused,
-                focusedHighlighted: DesignSystem.Color.Buttons.secondaryForegroundFocused
-            ),
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryOutlinedBackground,
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
-            cornerStyle: .fixed,
-            cornerRadius: DesignSystem.CornerRadius.default,
             border: BorderStyle(width: 1, color: DesignSystem.Color.Buttons.secondaryForeground),
-            width: .hugContents
+            contentFill: .hugContents
         )
     }
 }

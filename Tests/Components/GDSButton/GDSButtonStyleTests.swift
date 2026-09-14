@@ -160,11 +160,11 @@ struct GDSButtonStyleTests {
     @Test
     func widthDefaultsToFillForExistingStyles() {
         // Non-breaking: every pre-existing style must keep the fill behaviour.
-        #expect(GDSButtonStyle.primary.width == GDSButtonStyle.Width.fill)
-        #expect(GDSButtonStyle.secondary.width == GDSButtonStyle.Width.fill)
-        #expect(GDSButtonStyle.destructive.width == GDSButtonStyle.Width.fill)
-        #expect(GDSButtonStyle.secondaryDestructive.width == GDSButtonStyle.Width.fill)
-        #expect(GDSButtonStyle.dismiss.width == GDSButtonStyle.Width.fill)
+        #expect(GDSButtonStyle.primary.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.secondary.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.destructive.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.secondaryDestructive.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.dismiss.contentFill == GDSButtonStyle.ContentFill.fill)
     }
 
     @Test
@@ -176,23 +176,23 @@ struct GDSButtonStyleTests {
             backgroundColor: ColorForState(normal: .clear, focused: .clear)
         )
 
-        #expect(style.width == GDSButtonStyle.Width.fill)
+        #expect(style.contentFill == GDSButtonStyle.ContentFill.fill)
     }
 
     @Test
     func secondaryOutlineHugsContentAndAlignsLeading() {
-        #expect(GDSButtonStyle.secondaryOutline.width == GDSButtonStyle.Width.hugContents)
+        #expect(GDSButtonStyle.secondaryOutline.contentFill == GDSButtonStyle.ContentFill.hugContents)
         #expect(GDSButtonStyle.secondaryOutline.alignment == .leading)
     }
 
     @Test
     func adjustingCanOverrideWidth() {
-        let hugging = GDSButtonStyle.primary.adjusting(width: .hugContents)
-        #expect(hugging.width == GDSButtonStyle.Width.hugContents)
+        let hugging = GDSButtonStyle.primary.adjusting(contentFill: .hugContents)
+        #expect(hugging.contentFill == GDSButtonStyle.ContentFill.hugContents)
 
         // Adjusting without specifying width preserves the receiver's width.
         let unchanged = GDSButtonStyle.secondaryOutline.adjusting(font: DesignSystem.Font.Base.footnote)
-        #expect(unchanged.width == GDSButtonStyle.Width.hugContents)
+        #expect(unchanged.contentFill == GDSButtonStyle.ContentFill.hugContents)
     }
 }
 
