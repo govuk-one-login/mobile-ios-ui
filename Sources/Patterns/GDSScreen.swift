@@ -222,9 +222,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         // instead of `.fill` in that case. All other content keeps `.fill`, so
         // existing layouts are unchanged.
         let alignment: UIStackView.Alignment
-        if let widthProviding = view as? ContentWidthProviding,
-           widthProviding.hugsContentWidth {
-            alignment = widthProviding.contentWidthAlignment
+        if let fillProviding = view as? ContentFillProviding,
+           fillProviding.hugsContentWidth {
+            alignment = fillProviding.contentFillAlignment
         } else {
             alignment = .fill
         }

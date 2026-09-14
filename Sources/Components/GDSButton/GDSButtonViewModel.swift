@@ -4,12 +4,12 @@ import UIKit
 /// within its container. Used by `GDSScreen` to avoid stretching content-hugging
 /// buttons to the full width of the screen.
 @MainActor
-protocol ContentWidthProviding {
+protocol ContentFillProviding {
     /// `true` when the view should be laid out at its intrinsic content width
     /// rather than stretched to fill its container.
     var hugsContentWidth: Bool { get }
     /// The horizontal alignment to apply when hugging content width.
-    var contentWidthAlignment: UIStackView.Alignment { get }
+    var contentFillAlignment: UIStackView.Alignment { get }
 }
 
 public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
@@ -96,12 +96,12 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     }
 }
 
-extension GDSButtonViewModel: ContentWidthProviding {
+extension GDSButtonViewModel: ContentFillProviding {
     var hugsContentWidth: Bool {
         style.contentFill == .hugContents
     }
 
-    var contentWidthAlignment: UIStackView.Alignment {
+    var contentFillAlignment: UIStackView.Alignment {
         switch style.alignment {
         case .leading:
             return .leading
