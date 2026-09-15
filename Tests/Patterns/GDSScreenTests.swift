@@ -144,4 +144,73 @@ struct GDSScreenTests {
         // Should not crash even if isAccessibilityElement is false in test environment
         _ = viewModel.createUIView()
     }
+
+    @Test("hugContents button gets a leading-aligned wrapper stack")
+    func hugContentsButtonWrapperIsLeadingAligned() throws {
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSButtonViewModel(
+                title: "Share",
+                style: .secondaryOutlined,
+                buttonAction: .action({})
+            )],
+            movableFooter: [],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        let wrapper = try #require(sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView)
+        let button = try #require(wrapper.arrangedSubviews.first as? GDSButton)
+        #expect(button.titleLabel?.text == "Share")
+        // The wrapper must not pin both horizontal edges (which would stretch the
+        // button); it uses the button's leading alignment instead.
+        #expect(wrapper.alignment == .leading)
+    }
+
+    @Test("fill button keeps a fill-aligned wrapper stack")
+    func fillButtonWrapperIsFillAligned() throws {
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSButtonViewModel(
+                title: "Primary",
+                style: .primary,
+                buttonAction: .action({})
+            )],
+            movableFooter: [],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        let wrapper = try #require(sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView)
+        #expect(wrapper.alignment == .fill)
+    }
+
+    @Test("button with explicit padding applies horizontal insets and vertical row spacing")
+    func buttonPaddingAppliesToWrapperMargins() throws {
+        // Mirrors the demo Buttons screen: each button carries 16pt horizontal
+        // padding and 8pt top/bottom padding (8 + 8 between rows = 16pt spacing).
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSButtonViewModel(
+                title: "Primary",
+                style: .primary,
+                buttonAction: .action({}),
+                verticalPadding: .vertical(8),
+                horizontalPadding: .horizontal(16)
+            )],
+            movableFooter: [],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        let wrapper = try #require(sut.scrollViewInnerStackView.arrangedSubviews.first as? UIStackView)
+        #expect(
+            wrapper.directionalLayoutMargins == NSDirectionalEdgeInsets(
+                top: 8,
+                leading: 16,
+                bottom: 8,
+                trailing: 16
+            )
+        )
+    }
 }

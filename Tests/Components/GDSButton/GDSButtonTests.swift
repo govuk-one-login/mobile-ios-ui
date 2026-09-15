@@ -153,6 +153,10 @@ struct GDSButtonTests {
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
     }
     
+}
+
+@MainActor
+extension GDSButtonTests {
     @Test("Button Shapes enabled then background colour should be systemGray6")
     func buttonShapesEnabledClear_setsSystemGray6() {
         let viewModel = GDSButtonViewModel(
@@ -294,4 +298,65 @@ struct GDSButtonTests {
         
         #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.xSmall)
    }
+
+    @Test("secondaryOutline button shows focused background when VoiceOver focuses it")
+    func secondaryOutlineVoiceOverFocusBackground() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutlined,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+
+        sut.accessibilityElementDidBecomeFocused()
+
+        let focused = DesignSystem.Color.Buttons.secondaryBackgroundFocused
+        let focusedForeground = DesignSystem.Color.Buttons.secondaryForegroundFocused
+        // Both must reflect the focused colour, since `background.backgroundColor`
+        // takes precedence over `baseBackgroundColor` when set (outline style).
+        #expect(sut.configuration?.baseBackgroundColor == focused)
+        #expect(sut.configuration?.background.backgroundColor == focused)
+        // The title colour comes from `attributedTitle`, which overrides `baseForegroundColor`.
+        #expect(sut.configuration?.baseForegroundColor == focusedForeground)
+        #expect(titleForegroundColor(sut) == focusedForeground)
+        #expect(sut.isVoiceOverFocussed == true)
+    }
+
+    @Test("secondaryOutline button resets background when VoiceOver focus is lost")
+    func secondaryOutlineVoiceOverLoseFocusBackground() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutlined,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+
+        sut.accessibilityElementDidBecomeFocused()
+        sut.accessibilityElementDidLoseFocus()
+        sut.configurationUpdateHandler?(sut)
+
+        let normal = DesignSystem.Color.Buttons.secondaryOutlinedBackground
+        let normalForeground = DesignSystem.Color.Buttons.secondaryForeground
+        #expect(sut.configuration?.background.backgroundColor == normal)
+        #expect(titleForegroundColor(sut) == normalForeground)
+        #expect(sut.isVoiceOverFocussed == false)
+    }
+
+    /// Reads the title's foreground colour via the `NSAttributedString` bridge.
+    /// Reading `AttributedString.foregroundColor` directly and comparing it goes through an
+    /// `AnyHashable` equality path that can crash for dynamic `UIColor`s on some SDKs.
+    private func titleForegroundColor(_ button: GDSButton) -> UIColor? {
+        guard let attributedTitle = button.configuration?.attributedTitle else { return nil }
+        let nsString = NSAttributedString(attributedTitle)
+        guard nsString.length > 0 else { return nil }
+        return nsString.attribute(
+            .foregroundColor,
+            at: 0,
+            effectiveRange: nil
+        ) as? UIColor
+    }
 }

@@ -156,6 +156,44 @@ struct GDSButtonStyleTests {
         #expect(expectation.font == UIFont(.title1))
         #expect(expectation.border == BorderStyle(width: 1, color: .red))
     }
+
+    @Test
+    func widthDefaultsToFillForExistingStyles() {
+        // Non-breaking: every pre-existing style must keep the fill behaviour.
+        #expect(GDSButtonStyle.primary.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.secondary.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.destructive.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.secondaryDestructive.contentFill == GDSButtonStyle.ContentFill.fill)
+        #expect(GDSButtonStyle.dismiss.contentFill == GDSButtonStyle.ContentFill.fill)
+    }
+
+    @Test
+    func initDefaultsWidthToFill() {
+        let style = GDSButtonStyle(
+            font: DesignSystem.Font.Base.body,
+            alignment: .center,
+            foregroundColor: ColorForState(normal: .label, focused: .label),
+            backgroundColor: ColorForState(normal: .clear, focused: .clear)
+        )
+
+        #expect(style.contentFill == GDSButtonStyle.ContentFill.fill)
+    }
+
+    @Test
+    func secondaryOutlineHugsContentAndAlignsLeading() {
+        #expect(GDSButtonStyle.secondaryOutlined.contentFill == GDSButtonStyle.ContentFill.hugContents)
+        #expect(GDSButtonStyle.secondaryOutlined.alignment == .leading)
+    }
+
+    @Test
+    func adjustingCanOverrideWidth() {
+        let hugging = GDSButtonStyle.primary.adjusting(contentFill: .hugContents)
+        #expect(hugging.contentFill == GDSButtonStyle.ContentFill.hugContents)
+
+        // Adjusting without specifying width preserves the receiver's width.
+        let unchanged = GDSButtonStyle.secondaryOutlined.adjusting(font: DesignSystem.Font.Base.footnote)
+        #expect(unchanged.contentFill == GDSButtonStyle.ContentFill.hugContents)
+    }
 }
 
 extension GDSButtonStyle {

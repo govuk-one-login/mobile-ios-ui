@@ -80,6 +80,11 @@ extension DesignSystem {
             public static let secondaryBackgroundFocused = Color.Base.yellow1
             public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
 
+            public static let secondaryOutlinedBackground = UIColor(
+                light: Color.Base.white,
+                dark: Color.Base.black1
+            )
+
             public static let destructiveForeground = Color.Base.white
             public static let destructiveForegroundFocused = Color.Base.black1
             public static let destructiveForegroundDisabled = Color.Base.charcoal1
