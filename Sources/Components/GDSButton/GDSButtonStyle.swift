@@ -170,7 +170,7 @@ extension GDSButtonStyle {
         )
     }
     
-    public static var secondaryOutline: Self {
+    public static var secondaryOutlined: Self {
         secondary.adjusting(
             alignment: .leading,
             backgroundColor: ColorForState(

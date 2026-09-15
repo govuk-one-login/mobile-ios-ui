@@ -27,15 +27,15 @@ extension ComponentCatalog {
             button(title: "Secondary Button", style: .secondary),
             button(title: "Secondary Button with icon", icon: .arrowUpRight, style: .secondaryLeading),
             button(
-                title: "Outline Button",
-                style: .secondaryOutline.adjusting(
+                title: "Outlined Button",
+                style: .secondaryOutlined.adjusting(
                     cornerRadius: 10
                 )
             ),
             button(
-                title: "Outline Button (with icon)",
+                title: "Outlined Button (with icon)",
                 icon: .qrCode,
-                style: .secondaryOutline.adjusting(
+                style: .secondaryOutlined.adjusting(
                     cornerRadius: 10
                 )
             )

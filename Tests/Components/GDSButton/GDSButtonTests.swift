@@ -304,7 +304,7 @@ extension GDSButtonTests {
         let viewModel = GDSButtonViewModel(
             title: TitleForState(normal: "test title"),
             icon: nil,
-            style: .secondaryOutline,
+            style: .secondaryOutlined,
             buttonAction: .action({})
         )
         let sut = GDSButton(viewModel: viewModel)
@@ -329,7 +329,7 @@ extension GDSButtonTests {
         let viewModel = GDSButtonViewModel(
             title: TitleForState(normal: "test title"),
             icon: nil,
-            style: .secondaryOutline,
+            style: .secondaryOutlined,
             buttonAction: .action({})
         )
         let sut = GDSButton(viewModel: viewModel)

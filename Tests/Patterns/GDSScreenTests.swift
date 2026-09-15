@@ -151,7 +151,7 @@ struct GDSScreenTests {
             screenStyle: .top,
             body: [GDSButtonViewModel(
                 title: "Share",
-                style: .secondaryOutline,
+                style: .secondaryOutlined,
                 buttonAction: .action({})
             )],
             movableFooter: [],

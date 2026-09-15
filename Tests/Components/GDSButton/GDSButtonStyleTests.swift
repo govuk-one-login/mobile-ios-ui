@@ -181,8 +181,8 @@ struct GDSButtonStyleTests {
 
     @Test
     func secondaryOutlineHugsContentAndAlignsLeading() {
-        #expect(GDSButtonStyle.secondaryOutline.contentFill == GDSButtonStyle.ContentFill.hugContents)
-        #expect(GDSButtonStyle.secondaryOutline.alignment == .leading)
+        #expect(GDSButtonStyle.secondaryOutlined.contentFill == GDSButtonStyle.ContentFill.hugContents)
+        #expect(GDSButtonStyle.secondaryOutlined.alignment == .leading)
     }
 
     @Test
@@ -191,7 +191,7 @@ struct GDSButtonStyleTests {
         #expect(hugging.contentFill == GDSButtonStyle.ContentFill.hugContents)
 
         // Adjusting without specifying width preserves the receiver's width.
-        let unchanged = GDSButtonStyle.secondaryOutline.adjusting(font: DesignSystem.Font.Base.footnote)
+        let unchanged = GDSButtonStyle.secondaryOutlined.adjusting(font: DesignSystem.Font.Base.footnote)
         #expect(unchanged.contentFill == GDSButtonStyle.ContentFill.hugContents)
     }
 }
