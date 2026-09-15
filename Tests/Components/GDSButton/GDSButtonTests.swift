@@ -153,6 +153,10 @@ struct GDSButtonTests {
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
     }
     
+}
+
+@MainActor
+extension GDSButtonTests {
     @Test("Button Shapes enabled then background colour should be systemGray6")
     func buttonShapesEnabledClear_setsSystemGray6() {
         let viewModel = GDSButtonViewModel(
