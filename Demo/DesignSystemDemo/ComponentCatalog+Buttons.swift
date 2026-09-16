@@ -28,16 +28,12 @@ extension ComponentCatalog {
             button(title: "Secondary Button with icon", icon: .arrowUpRight, style: .secondaryLeading),
             button(
                 title: "Outlined Button",
-                style: .secondaryOutlined.adjusting(
-                    cornerRadius: 10
-                )
+                style: .secondaryOutlined
             ),
             button(
                 title: "Outlined Button (with icon)",
                 icon: .qrCode,
-                style: .secondaryOutlined.adjusting(
-                    cornerRadius: 10
-                )
+                style: .secondaryOutlined
             )
         ]
     }
