@@ -31,6 +31,19 @@ struct GDSErrorIconViewModelTests {
         #expect(viewModel.icon.iconName == "exclamationmark.circle")
     }
 
+    @Test("sets correct update icon")
+    func usesCorrectUpdateIconName() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .update,
+            errorTitle: GDSTextViewModel(
+            title: "There is a problem",
+            accessibilityTraits: .header
+            )
+        )
+
+        #expect(viewModel.icon.iconName == "exclamationmark.arrow.circlepath")
+    }
+    
     @Test("sets correct error icon voiceover prefix")
     func errorIconVoiceOverPrefix() {
         #expect(viewModel.icon.voiceoverPrefix.contains("Error"))
@@ -47,6 +60,19 @@ struct GDSErrorIconViewModelTests {
         )
         
         #expect(viewModel.icon.voiceoverPrefix.contains("Warning"))
+    }
+    
+    @Test("sets correct update icon voiceover prefix")
+    func updateIconVoiceOverPrefix() {
+        let viewModel = GDSErrorIconTitleViewModel(
+            icon: .update,
+            errorTitle: GDSTextViewModel(
+            title: "There is a problem",
+            accessibilityTraits: .header
+            )
+        )
+        
+        #expect(viewModel.icon.voiceoverPrefix.contains("Error"))
     }
     
     @Test("rendered icon height includes SF Symbol padding")
