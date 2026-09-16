@@ -178,6 +178,7 @@ extension GDSButtonStyle {
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
+            cornerRadius: DesignSystem.CornerRadius.secondaryOutlinedButton,
             border: BorderStyle(width: 1, color: DesignSystem.Color.Buttons.secondaryForeground),
             contentFill: .hugContents
         )

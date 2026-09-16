@@ -8,6 +8,7 @@ extension DesignSystem {
         public static let row: CGFloat = 10
         public static let card: CGFloat = 14
         public static let primaryButton: CGFloat = 15
+        public static let secondaryOutlinedButton: CGFloat = 10
         public static let `default`: CGFloat = 16, medium: CGFloat = 16
     }
 }

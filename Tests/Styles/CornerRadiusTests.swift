@@ -46,4 +46,11 @@ struct CornerRadiusTests {
         #expect(sut == expectedValue)
     }
     
+    @Test func test_CornerRadius_SecondaryOutlinedButton() async throws {
+        let expectedValue: CGFloat = 10
+        
+        let sut = DesignSystem.CornerRadius.secondaryOutlinedButton
+        #expect(sut == expectedValue)
+    }
+    
 }

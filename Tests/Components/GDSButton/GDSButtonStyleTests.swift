@@ -180,9 +180,10 @@ struct GDSButtonStyleTests {
     }
 
     @Test
-    func secondaryOutlineHugsContentAndAlignsLeading() {
+    func secondaryOutlinedHugsContentAndAlignsLeading() {
         #expect(GDSButtonStyle.secondaryOutlined.contentFill == GDSButtonStyle.ContentFill.hugContents)
         #expect(GDSButtonStyle.secondaryOutlined.alignment == .leading)
+        #expect(GDSButtonStyle.secondaryOutlined.cornerRadius == 10)
     }
 
     @Test
