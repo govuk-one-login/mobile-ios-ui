@@ -134,7 +134,7 @@ public final class GDSButton: UIButton, ContentView {
         let focusedBackground = viewModel.style.backgroundColor.forState(.focused)
         let focusedForeground = viewModel.style.foregroundColor.forState(.focused)
         config?.baseBackgroundColor = focusedBackground
-        // For styles with a border (e.g. `secondaryOutline`), `background.backgroundColor`
+        // For styles with a border (e.g. `secondaryOutlined`), `background.backgroundColor`
         // is set in `general()` and takes precedence over `baseBackgroundColor`, so it must
         // also be updated here for the focused colour to render under VoiceOver.
         config?.background.backgroundColor = focusedBackground
