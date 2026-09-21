@@ -153,6 +153,41 @@ struct GDSListTests {
         #expect(label?.numberOfLines == 0)
     }
     
+    // Title font fallback / dynamic type
+
+    private func listViewModelWithoutTitleConfig() -> GDSListViewModel {
+        GDSListViewModel(
+            title: GDSLocalisedString(stringKey: "Title without config"),
+            items: [
+                GDSLocalisedString(stringKey: "first item"),
+                GDSLocalisedString(stringKey: "second item")
+            ],
+            style: .bulleted
+        )
+    }
+
+    @Test("Title falls back to body font when no titleConfig is provided")
+    func test_title_defaultFont_whenNoTitleConfig() throws {
+        let sut = GDSList(viewModel: listViewModelWithoutTitleConfig())
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
+        #expect(titleLabel?.text == "Title without config")
+        #expect(titleLabel?.font == DesignSystem.Font.Base.body)
+    }
+
+    @Test("Title adjusts font for content size category when no titleConfig is provided")
+    func test_title_adjustsFontForContentSize_whenNoTitleConfig() throws {
+        let sut = GDSList(viewModel: listViewModelWithoutTitleConfig())
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
+        #expect(titleLabel?.adjustsFontForContentSizeCategory == true)
+    }
+
+    @Test("Title with no header trait when no titleConfig is provided")
+    func test_title_noHeaderTrait_whenNoTitleConfig() throws {
+        let sut = GDSList(viewModel: listViewModelWithoutTitleConfig())
+        let titleLabel: UILabel? = sut[child: "list-title-label"]
+        #expect(titleLabel?.accessibilityTraits.contains(.header) == false)
+    }
+
     // Attributed Text Tests
     
     private func numberedListWithAttributedTextViewModel() -> GDSListViewModel {

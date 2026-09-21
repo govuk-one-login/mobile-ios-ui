@@ -7,7 +7,7 @@ public final class GDSList: UIView, ContentView {
         let result = UILabel(colour: DesignSystem.Color.GDSList.title)
         if let title = viewModel.title {
             result.text = title.value
-            result.font = viewModel.titleConfig?.font
+            result.font = viewModel.titleConfig?.font ?? DesignSystem.Font.Base.body
             if let isHeader = viewModel.titleConfig?.isHeader,
                isHeader {
                 result.accessibilityTraits = [.header]
@@ -16,6 +16,7 @@ public final class GDSList: UIView, ContentView {
             result.isHidden = true
         }
         result.accessibilityIdentifier = "list-title-label"
+        result.adjustsFontForContentSizeCategory = true
         return result
     }()
     
