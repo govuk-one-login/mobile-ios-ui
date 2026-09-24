@@ -30,12 +30,6 @@ extension UIButton {
         if let insets = viewModel.style.contentInsets {
             self.configuration?.contentInsets = insets
         }
-        
-        if (self.configuration?.contentInsets.leading ?? 0) < DesignSystem.Spacing.xSmall,
-           UIAccessibility.buttonShapesEnabled || self.state.contains(.focused) {
-            self.configuration?.contentInsets.leading = DesignSystem.Spacing.xSmall
-            self.configuration?.contentInsets.trailing = DesignSystem.Spacing.xSmall
-        }
 
         self.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(self.state)
         self.configuration?.baseBackgroundColor = viewModel.style.backgroundColor.forState(self.state)
