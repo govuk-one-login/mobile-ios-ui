@@ -29,6 +29,7 @@ class ViewController: UITableViewController {
         case noScrollViewScreen
         case collectionViewScreen
         case navigationBarButton
+        case backgroundColors
 
         var title: String {
             switch self {
@@ -43,6 +44,7 @@ class ViewController: UITableViewController {
             case .noScrollViewScreen: return "No Scroll View GDSScreen"
             case .collectionViewScreen: return "Collection View GDSScreen"
             case .navigationBarButton: return "NavigationBarButton Examples"
+            case .backgroundColors: return "Background Colors GDSScreen"
             }
         }
 
@@ -50,7 +52,7 @@ class ViewController: UITableViewController {
             switch self {
             case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards:
                 return "Components"
-            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton:
+            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
                 return "Screens & Patterns"
             }
         }
@@ -148,6 +150,8 @@ class ViewController: UITableViewController {
             pushCollectionViewGDSScreen()
         case .navigationBarButton:
             pushNavigationBarButtonDemo()
+        case .backgroundColors:
+            pushBackgroundColorsDemo()
         }
     }
 
@@ -182,6 +186,11 @@ class ViewController: UITableViewController {
 
     func pushNavigationBarButtonDemo() {
         let demo = NavigationBarButtonDemoViewController(style: .insetGrouped)
+        navigationController?.pushViewController(demo, animated: true)
+    }
+    
+    func pushBackgroundColorsDemo() {
+        let demo = GDSScreen(viewModel: gdsBackgroundColorsScreenViewModel)
         navigationController?.pushViewController(demo, animated: true)
     }
 }

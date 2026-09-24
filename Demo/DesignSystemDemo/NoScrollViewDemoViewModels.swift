@@ -57,4 +57,39 @@ extension ViewController {
             ]
         )
     }
+    
+    var gdsBackgroundColorsScreenViewModel: GDSDemoScreenViewModel {
+        GDSDemoScreenViewModel(
+            screenStyle: .noScrollView,
+            body: [
+                GDSTextViewModel(
+                    title: "Background Colors Screen",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .left
+                ),
+                GDSTextViewModel(
+                    title: "This screen demonstrates adding background colors to the main view, and the footer view.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                )
+            ],
+            movableFooter: [],
+            footer: [
+                GDSButtonViewModel(
+                    title: "Secondary",
+                    style: .secondary,
+                    buttonAction: .action({ }),
+                    horizontalPadding: .horizontal(16)
+                ),
+                GDSButtonViewModel(
+                    title: "Primary",
+                    style: .primary,
+                    buttonAction: .action({ }),
+                    horizontalPadding: .horizontal(16)
+                )
+            ],
+            backgroundColor: .systemTeal,
+            footerBackgroundColor: .systemGray
+        )
+    }
 }
