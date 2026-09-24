@@ -170,6 +170,18 @@ extension GDSButtonStyle {
         )
     }
     
+    public static var secondaryLeading: Self {
+        secondary.adjusting(
+            alignment: .leading,
+            contentInsets: NSDirectionalEdgeInsets(
+                top: DesignSystem.Spacing.small,
+                leading: 0,
+                bottom: DesignSystem.Spacing.small,
+                trailing: 0
+            )
+        )
+    }
+    
     public static var secondaryOutlined: Self {
         secondary.adjusting(
             alignment: .leading,

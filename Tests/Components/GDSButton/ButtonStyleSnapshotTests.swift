@@ -136,6 +136,16 @@ struct ButtonStyleSnapshotTests {
     }
     
     @Test
+    func secondaryLeadingButton() {
+        if let vc = createButton(
+            GDSButtonStyle.secondaryLeading,
+            "Secondary Leading"
+        ) {
+            vc.assertSnapshot(in: CGSize(width: 600, height: 100))
+        }
+    }
+    
+    @Test
     func secondaryDestructiveButton() {
         if let vc = createButton(
             GDSButtonStyle.secondaryDestructive,

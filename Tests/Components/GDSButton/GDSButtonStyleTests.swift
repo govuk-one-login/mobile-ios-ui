@@ -198,20 +198,6 @@ struct GDSButtonStyleTests {
 }
 
 extension GDSButtonStyle {
-    static var secondaryLeading: Self {
-        secondary.adjusting(
-            alignment: .leading,
-            contentInsets: NSDirectionalEdgeInsets(
-                top: DesignSystem.Spacing.small,
-                leading: 0,
-                bottom: DesignSystem.Spacing.small,
-                trailing: 0
-            )
-        )
-    }
-}
-
-extension GDSButtonStyle {
     static var secondaryLeadingSmall: Self {
         secondaryLeading.adjusting(
             font: DesignSystem.Font.Base.footnote
