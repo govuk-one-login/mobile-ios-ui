@@ -107,6 +107,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         result.directionalLayoutMargins.bottom = DesignSystem.Spacing.default
         result.isHidden = footerContent.isEmpty
         result.accessibilityIdentifier = "gds-screen-bottom-stack-view"
+        result.backgroundColor = viewModel.footerBackgroundColor
         return result
     }()
     
@@ -153,8 +154,8 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     private func setup() {
         view.addSubview(containerStackView)
-        containerStackView.bindToSuperviewSafeArea()
-        view.backgroundColor = .systemBackground
+        containerStackView.bindToSuperviewSafeArea(ignoringEdges: viewModel.safeAreaEdgesToIgnore)
+        view.backgroundColor = viewModel.backgroundColor
         if viewModel.screenStyle.usesScrollView {
             addRelativeViewConstraints()
         }

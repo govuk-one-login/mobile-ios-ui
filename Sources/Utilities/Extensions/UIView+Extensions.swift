@@ -50,7 +50,8 @@ extension UIView {
     }
     
     public func bindToSuperviewSafeArea(
-        insetBy insets: UIEdgeInsets = .zero
+        insetBy insets: NSDirectionalEdgeInsets = .zero,
+        ignoringEdges: NSDirectionalRectEdge = .none
     ) {
         guard let superview = self.superview else {
             print("Error! `superview` was nil, call `addSubview(view: UIView)` before calling `bindToSuperviewSafeArea()` to fix this.")
@@ -58,22 +59,26 @@ extension UIView {
         }
         
         self.translatesAutoresizingMaskIntoConstraints = false
+        let leadingAnchor = ignoringEdges.contains(.leading) ? superview.leadingAnchor : superview.safeAreaLayoutGuide.leadingAnchor
+        let trailingAnchor = ignoringEdges.contains(.trailing) ? superview.trailingAnchor : superview.safeAreaLayoutGuide.trailingAnchor
+        let topAnchor = ignoringEdges.contains(.top) ? superview.topAnchor : superview.safeAreaLayoutGuide.topAnchor
+        let bottomAnchor = ignoringEdges.contains(.bottom) ? superview.bottomAnchor : superview.safeAreaLayoutGuide.bottomAnchor
         
         NSLayoutConstraint.activate([
             self.leadingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.leadingAnchor,
-                constant: insets.left
+                equalTo: leadingAnchor,
+                constant: insets.leading
             ),
             self.trailingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.trailingAnchor,
-                constant: -insets.right
+                equalTo: trailingAnchor,
+                constant: -insets.trailing
             ),
             self.topAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.topAnchor,
+                equalTo: topAnchor,
                 constant: insets.top
             ),
             self.bottomAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                equalTo: bottomAnchor,
                 constant: -insets.bottom
             )
         ])
