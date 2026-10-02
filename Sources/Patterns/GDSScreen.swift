@@ -19,6 +19,18 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         }
     }
     
+    /// Directs keyboard / Full Keyboard Access focus as it enters this screen when
+    /// the view model conforms to ``KeyboardFocus`` and names a view that exists in
+    /// the hierarchy. Falls back to the system's default focus order otherwise.
+    open override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        guard let focusProviding = viewModel as? KeyboardFocus,
+              let identifier = focusProviding.preferredFocusAccessibilityIdentifier,
+              let focusTarget = view.firstSubview(withAccessibilityIdentifier: identifier) else {
+            return super.preferredFocusEnvironments
+        }
+        return [focusTarget]
+    }
+    
     private(set) lazy var containerStackView: UIStackView = {
         let primaryContent: UIView = viewModel.screenStyle.usesScrollView
             ? scrollView
