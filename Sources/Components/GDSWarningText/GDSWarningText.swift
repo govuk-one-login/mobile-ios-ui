@@ -5,7 +5,8 @@ public final class GDSWarningText: UIView, ContentView {
     
     private lazy var iconView: UIImageView = {
         let font = viewModel.iconStyle?.font ?? DesignSystem.Font.Base.title1Bold
-        let config = UIImage.SymbolConfiguration(font: font)
+        let scaledFont = UIFontMetrics.default.scaledFont(for: font)
+        let config = UIImage.SymbolConfiguration(font: scaledFont)
         
         let iconView = UIImageView(image: UIImage(
             systemName: viewModel.iconStyle?.icon ?? "exclamationmark.circle.fill",
