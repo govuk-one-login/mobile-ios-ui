@@ -49,6 +49,26 @@ extension UIView {
         }
     }
     
+    /// Depth first search of the receiver's subviews for the first view with the
+    /// given accessibility identifier. The receiver itself is included in the search.
+    ///
+    /// Deliberately `internal`: consuming apps may declare their own public
+    /// `UIView` lookup helpers, and a public twin here would be ambiguous at call
+    /// sites importing both modules.
+    func firstSubview(withAccessibilityIdentifier identifier: String) -> UIView? {
+        if accessibilityIdentifier == identifier {
+            return self
+        }
+        
+        for subview in subviews {
+            if let match = subview.firstSubview(withAccessibilityIdentifier: identifier) {
+                return match
+            }
+        }
+        
+        return nil
+    }
+    
     public func bindToSuperviewSafeArea(
         insetBy insets: NSDirectionalEdgeInsets = .zero,
         ignoringEdges: NSDirectionalRectEdge = .none
