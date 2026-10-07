@@ -12,6 +12,7 @@ public struct GDSTextViewModel: ContentViewModel {
     public let accessibilityIdentifier: String?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
+    public let maxContentSizeCategory: UIContentSizeCategory?
     
     public init(
         title: GDSLocalisedString,
@@ -20,6 +21,7 @@ public struct GDSTextViewModel: ContentViewModel {
         alignment: NSTextAlignment = .left,
         accessibilityTraits: UIAccessibilityTraits? = nil,
         accessibilityIdentifier: String? = nil,
+        maxContentSizeCategory: UIContentSizeCategory? = nil,
         verticalPadding: VerticalPadding? = .vertical(8),
         horizontalPadding: HorizontalPadding? = .horizontal(16)
     ) {
@@ -31,5 +33,6 @@ public struct GDSTextViewModel: ContentViewModel {
         self.accessibilityIdentifier = accessibilityIdentifier
         self.verticalPadding = verticalPadding
         self.horizontalPadding = horizontalPadding
+        self.maxContentSizeCategory = maxContentSizeCategory
     }
 }
