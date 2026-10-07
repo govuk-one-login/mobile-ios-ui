@@ -23,6 +23,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public let haptic: Haptic?
     public let accessibilityIdentifier: String?
     public let accessibilityHint: String?
+    public let accessibilityLabel: String? // Overrides Hint if present
     public let accessibilityTraits: UIAccessibilityTraits?
     public let enableState: EnableState?
     public let verticalPadding: VerticalPadding?
@@ -36,6 +37,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
+        accessibilityLabel: String? = nil,
         accessibilityTraits: UIAccessibilityTraits? = nil,
         enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
@@ -53,6 +55,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
         self.accessibilityTraits = accessibilityTraits
+        self.accessibilityLabel = accessibilityLabel
         
         if let enableState {
             self.enableState = EnableState(enableState)
@@ -72,6 +75,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         haptic: Haptic? = nil,
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
+        accessibilityLabel: String? = nil,
         enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -83,6 +87,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.haptic = haptic
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityHint = accessibilityHint
+        self.accessibilityLabel = accessibilityLabel
         self.accessibilityTraits = nil
         
         if let enableState {
