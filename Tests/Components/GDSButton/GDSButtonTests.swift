@@ -242,6 +242,142 @@ extension GDSButtonTests {
         #expect(sut.accessibilityHint == "custom hint")
     }
     
+    @Test("Button has custom accessibility label")
+    func buttonCustomAccessibilityLabel() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityLabel: "custom label"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == "custom label")
+    }
+
+    @Test("Custom accessibility label overrides the accessibility hint")
+    func buttonAccessibilityLabelOverridesHint() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityHint: "custom hint",
+            accessibilityLabel: "custom label"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == "custom label")
+        #expect(sut.accessibilityHint == nil)
+    }
+
+    @Test("Accessibility hint is applied when no label is provided")
+    func buttonAccessibilityHintWithoutLabel() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityHint: "custom hint"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == nil)
+        #expect(sut.accessibilityHint == "custom hint")
+    }
+
+    @Test("No accessibility label leaves the computed label unset")
+    func buttonNoAccessibilityLabel() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondary,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == nil)
+    }
+
+    @Test("Custom accessibility label is applied via the TitleForState initialiser")
+    func buttonCustomAccessibilityLabelTitleForStateInit() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityHint: "custom hint",
+            accessibilityLabel: "custom label"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == "custom label")
+        #expect(sut.accessibilityHint == nil)
+    }
+
+    @Test("Icon accessibility hint still applies after a custom label is set")
+    func buttonAccessibilityLabelWithIconHint() {
+        // The icon's accessibility hint is applied after the label block in
+        // `buttonUpdater`, so an icon that carries a hint re-populates the hint
+        // even when a custom label is present. This test documents that order.
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: IconForState(normal: .xMark),
+            style: .secondary,
+            buttonAction: .action({}),
+            accessibilityLabel: "custom label"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+
+        #expect(sut.accessibilityLabel == "custom label")
+        #expect(sut.accessibilityHint == "close")
+    }
+
+    @Test("Custom accessibility label is ignored while the button is loading")
+    func buttonAccessibilityLabelIgnoredWhileLoading() async throws {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            style: .primary,
+            buttonAction: .asyncAction(
+                {
+                    try? await Task.sleep(seconds: 0.3)
+                }
+            ),
+            accessibilityHint: "custom hint",
+            accessibilityLabel: "custom label"
+        )
+        let sut = GDSButton(viewModel: viewModel)
+
+        sut.sendActions(for: .touchUpInside)
+        try await Task.sleep(seconds: 0.1)
+
+        #expect(sut.isLoading)
+        // While loading the button reports a "Loading" label and clears the hint,
+        // regardless of the custom label/hint supplied by the view model. The
+        // handler is normally invoked by UIKit so we call it manually here.
+        sut.configurationUpdateHandler?(sut)
+        #expect(sut.accessibilityLabel == "Loading")
+        #expect(sut.accessibilityHint == nil)
+
+        await sut.asyncTask?.value
+        // Once loading finishes the custom label takes effect and overrides the hint.
+        sut.configurationUpdateHandler?(sut)
+        #expect(sut.accessibilityLabel == "custom label")
+        #expect(sut.accessibilityHint == nil)
+    }
+
     @Test("Button has custom accessibility identifier")
     func buttonCustomAccessibilityIdentifier() {
         let viewModel = GDSButtonViewModel(
