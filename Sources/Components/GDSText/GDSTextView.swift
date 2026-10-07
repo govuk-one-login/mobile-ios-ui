@@ -21,7 +21,7 @@ public final class GDSTextView: UILabel, ContentView {
         self.accessibilityIdentifier = viewModel.accessibilityIdentifier ?? "gds-text-view"
         
         if let maxContentSizeCategory = viewModel.maxContentSizeCategory {
-            self.maximumContentSizeCategory = maximumContentSizeCategory
+            self.maximumContentSizeCategory = maxContentSizeCategory
         }
     }
     

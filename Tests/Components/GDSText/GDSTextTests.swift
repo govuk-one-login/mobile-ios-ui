@@ -47,4 +47,25 @@ struct GDSTextTests {
         let sut = GDSTextView(viewModel: viewModel)
         #expect(sut.accessibilityIdentifier == "any identifier")
     }
+    
+    @Test("TextView applies maxContentSizeCategory when provided")
+    func textViewAppliesMaxContentSizeCategory() {
+        let viewModel = GDSTextViewModel(
+            title: "test title",
+            maxContentSizeCategory: .accessibilityExtraLarge
+        )
+        let sut = GDSTextView(viewModel: viewModel)
+        #expect(sut.maximumContentSizeCategory == .accessibilityExtraLarge)
+    }
+    
+    @Test("TextView leaves maximumContentSizeCategory unset when not provided")
+    func textViewDefaultMaxContentSizeCategory() {
+        let viewModel = GDSTextViewModel(
+            title: "test title"
+        )
+        let sut = GDSTextView(viewModel: viewModel)
+        // When no maxContentSizeCategory is provided the label keeps the
+        // framework default of `.unspecified` (no cap applied).
+        #expect(sut.maximumContentSizeCategory == .unspecified)
+    }
 }
