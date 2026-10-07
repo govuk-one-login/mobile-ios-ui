@@ -64,8 +64,8 @@ struct GDSTextTests {
             title: "test title"
         )
         let sut = GDSTextView(viewModel: viewModel)
-        // When no maxContentSizeCategory is provided the label keeps the
-        // framework default of `.unspecified` (no cap applied).
-        #expect(sut.maximumContentSizeCategory == .unspecified)
+        // When no maxContentSizeCategory is provided the `if let` is skipped
+        // and the label keeps its unset default (nil / no cap applied).
+        #expect(sut.maximumContentSizeCategory == nil)
     }
 }

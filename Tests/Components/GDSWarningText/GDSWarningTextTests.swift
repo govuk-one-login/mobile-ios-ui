@@ -163,6 +163,6 @@ struct GDSWarningTextTests {
         let stackView = view.subviews.first as? UIStackView
         let iconView = stackView?.arrangedSubviews.first as? UIImageView
         
-        #expect(iconView?.maximumContentSizeCategory == .unspecified)
+        #expect(iconView?.maximumContentSizeCategory == nil)
     }
 }
