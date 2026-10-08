@@ -19,6 +19,8 @@ public final class GDSWarningText: UIView, ContentView {
         iconView.isAccessibilityElement = true
         iconView.accessibilityIdentifier = "warning-text-icon"
         
+        iconView.maximumContentSizeCategory = viewModel.warningText.maxContentSizeCategory
+        
         return iconView
     }()
     

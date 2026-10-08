@@ -135,4 +135,34 @@ struct GDSWarningTextTests {
         let stackView = view.subviews.first as? UIStackView
         #expect(stackView?.accessibilityTraits == .header)
     }
+    
+    @Test("Icon view applies warningText maxContentSizeCategory when provided")
+    func iconViewAppliesMaxContentSizeCategory() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(
+                title: "Warning",
+                titleFont: DesignSystem.Font.Base.calloutSemiBold,
+                maxContentSizeCategory: .accessibilityExtraLarge
+            )
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        let iconView = stackView?.arrangedSubviews.first as? UIImageView
+        
+        #expect(iconView?.maximumContentSizeCategory == .accessibilityExtraLarge)
+    }
+    
+    @Test("Icon view leaves maximumContentSizeCategory unset when not provided")
+    func iconViewDefaultMaxContentSizeCategory() {
+        let viewModel = GDSWarningTextViewModel(
+            warningText: GDSTextViewModel(title: "Warning", titleFont: DesignSystem.Font.Base.calloutSemiBold)
+        )
+        let view = GDSWarningText(viewModel: viewModel)
+        
+        let stackView = view.subviews.first as? UIStackView
+        let iconView = stackView?.arrangedSubviews.first as? UIImageView
+        
+        #expect(iconView?.maximumContentSizeCategory == nil)
+    }
 }

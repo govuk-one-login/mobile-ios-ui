@@ -85,6 +85,10 @@ extension UIButton {
                     button.accessibilityHint = accessibilityHint
                 }
                 
+                if let accessibilityLabel = viewModel.accessibilityLabel {
+                    button.accessibilityLabel = accessibilityLabel
+                }
+                
                 if let icon = viewModel.icon?.forState(button.state),
                    let accessibilityHint = icon.accessibilityHint {
                     button.accessibilityHint = accessibilityHint
@@ -93,6 +97,9 @@ extension UIButton {
                 button.buttonShapesEnabled(UIAccessibility.buttonShapesEnabled, viewModel: viewModel)
                 
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
+                
+                button.maximumContentSizeCategory = viewModel.maxContentSizeCategory
+                button.titleLabel?.maximumContentSizeCategory = viewModel.maxContentSizeCategory
             }
         }
     }
