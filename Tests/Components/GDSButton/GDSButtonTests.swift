@@ -153,4 +153,87 @@ struct GDSButtonTests {
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
     }
     
+    @Test("Button applies maxContentSizeCategory to button and title label when provided")
+    func appliesMaxContentSizeCategory() {
+        let viewModel = GDSButtonViewModel(
+            title: "test title",
+            style: .primary,
+            buttonAction: .action({}),
+            maxContentSizeCategory: .accessibilityExtraLarge
+        )
+        
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        #expect(sut.maximumContentSizeCategory == .accessibilityExtraLarge)
+        #expect(sut.titleLabel?.maximumContentSizeCategory == .accessibilityExtraLarge)
+    }
+    
+    @Test("Button leaves maximumContentSizeCategory unset when not provided")
+    func defaultMaxContentSizeCategory() {
+        let viewModel = GDSButtonViewModel(
+            title: "test title",
+            style: .primary,
+            buttonAction: .action({})
+        )
+        
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        // No maxContentSizeCategory provided, so the updater assigns nil
+        // and no cap is applied.
+        #expect(sut.maximumContentSizeCategory == nil)
+        #expect(sut.titleLabel?.maximumContentSizeCategory == nil)
+    }
+    
+    @Test("Button applies maxContentSizeCategory with the TitleForState initialiser")
+    func appliesMaxContentSizeCategoryTitleForState() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            style: .primary,
+            buttonAction: .action({}),
+            maxContentSizeCategory: .accessibilityLarge
+        )
+        
+        let sut = GDSButton(viewModel: viewModel)
+        // normally gets invoked by UIKit so we need to call manually here
+        sut.configurationUpdateHandler?(sut)
+        
+        #expect(sut.maximumContentSizeCategory == .accessibilityLarge)
+        #expect(sut.titleLabel?.maximumContentSizeCategory == .accessibilityLarge)
+    }
+    
+    @Test("Button updates maxContentSizeCategory when the handler re-runs for the loading state")
+    func maxContentSizeCategoryNotAppliedWhileLoading() async throws {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            style: .primary,
+            buttonAction: .asyncAction(
+                {
+                    try? await Task.sleep(seconds: 0.3)
+                }
+            ),
+            maxContentSizeCategory: .accessibilityExtraLarge
+        )
+        
+        let sut = GDSButton(viewModel: viewModel)
+        
+        sut.sendActions(for: .touchUpInside)
+        try await Task.sleep(seconds: 0.1)
+        
+        #expect(sut.isLoading)
+        // While loading the updater takes the loading branch, which does not set
+        // maximumContentSizeCategory, so it remains unset.
+        sut.configurationUpdateHandler?(sut)
+        #expect(sut.maximumContentSizeCategory == nil)
+        
+        await sut.asyncTask?.value
+        // Once loading finishes the updater applies the configured cap.
+        sut.configurationUpdateHandler?(sut)
+        #expect(sut.maximumContentSizeCategory == .accessibilityExtraLarge)
+        #expect(sut.titleLabel?.maximumContentSizeCategory == .accessibilityExtraLarge)
+    }
+    
 }

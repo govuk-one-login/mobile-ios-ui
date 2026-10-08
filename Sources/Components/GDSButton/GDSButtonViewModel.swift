@@ -28,6 +28,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public let enableState: EnableState?
     public let verticalPadding: VerticalPadding?
     public let horizontalPadding: HorizontalPadding?
+    public let maxContentSizeCategory: UIContentSizeCategory?
     
     public init(
         title: String,
@@ -39,6 +40,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         accessibilityHint: String? = nil,
         accessibilityLabel: String? = nil,
         accessibilityTraits: UIAccessibilityTraits? = nil,
+        maxContentSizeCategory: UIContentSizeCategory? = nil,
         enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -56,6 +58,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.accessibilityHint = accessibilityHint
         self.accessibilityTraits = accessibilityTraits
         self.accessibilityLabel = accessibilityLabel
+        self.maxContentSizeCategory = maxContentSizeCategory
         
         if let enableState {
             self.enableState = EnableState(enableState)
@@ -76,6 +79,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         accessibilityIdentifier: String? = nil,
         accessibilityHint: String? = nil,
         accessibilityLabel: String? = nil,
+        maxContentSizeCategory: UIContentSizeCategory? = nil,
         enableState: Bool? = nil,
         verticalPadding: VerticalPadding? = .vertical(0),
         horizontalPadding: HorizontalPadding? = .horizontal(0)
@@ -89,6 +93,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
         self.accessibilityHint = accessibilityHint
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityTraits = nil
+        self.maxContentSizeCategory = maxContentSizeCategory
         
         if let enableState {
             self.enableState = EnableState(enableState)

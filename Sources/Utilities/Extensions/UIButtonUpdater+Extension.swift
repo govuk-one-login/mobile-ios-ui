@@ -97,6 +97,9 @@ extension UIButton {
                 button.buttonShapesEnabled(UIAccessibility.buttonShapesEnabled, viewModel: viewModel)
                 
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
+                
+                button.maximumContentSizeCategory = viewModel.maxContentSizeCategory
+                button.titleLabel?.maximumContentSizeCategory = viewModel.maxContentSizeCategory
             }
         }
     }
