@@ -87,7 +87,6 @@ extension UIButton {
                 
                 if let accessibilityLabel = viewModel.accessibilityLabel {
                     button.accessibilityLabel = accessibilityLabel
-                    button.accessibilityHint = nil // Label overrides Hint
                 }
                 
                 if let icon = viewModel.icon?.forState(button.state),

@@ -105,24 +105,6 @@ extension GDSButtonTests {
         #expect(sut.accessibilityLabel == "custom label")
     }
 
-    @Test("Custom accessibility label overrides the accessibility hint")
-    func buttonAccessibilityLabelOverridesHint() {
-        let viewModel = GDSButtonViewModel(
-            title: TitleForState(normal: "test title"),
-            icon: nil,
-            style: .secondary,
-            buttonAction: .action({}),
-            accessibilityHint: "custom hint",
-            accessibilityLabel: "custom label"
-        )
-        let sut = GDSButton(viewModel: viewModel)
-        // normally gets invoked by UIKit so we need to call manually here
-        sut.configurationUpdateHandler?(sut)
-
-        #expect(sut.accessibilityLabel == "custom label")
-        #expect(sut.accessibilityHint == nil)
-    }
-
     @Test("Accessibility hint is applied when no label is provided")
     func buttonAccessibilityHintWithoutLabel() {
         let viewModel = GDSButtonViewModel(
@@ -169,7 +151,6 @@ extension GDSButtonTests {
         sut.configurationUpdateHandler?(sut)
 
         #expect(sut.accessibilityLabel == "custom label")
-        #expect(sut.accessibilityHint == nil)
     }
 
     @Test("Icon accessibility hint still applies after a custom label is set")
@@ -211,18 +192,14 @@ extension GDSButtonTests {
         try await Task.sleep(seconds: 0.1)
 
         #expect(sut.isLoading)
-        // While loading the button reports a "Loading" label and clears the hint,
-        // regardless of the custom label/hint supplied by the view model. The
-        // handler is normally invoked by UIKit so we call it manually here.
+        // While loading the button reports a "Loading" label
+        // The handler is normally invoked by UIKit so we call it manually here.
         sut.configurationUpdateHandler?(sut)
         #expect(sut.accessibilityLabel == "Loading")
-        #expect(sut.accessibilityHint == nil)
 
         await sut.asyncTask?.value
-        // Once loading finishes the custom label takes effect and overrides the hint.
         sut.configurationUpdateHandler?(sut)
         #expect(sut.accessibilityLabel == "custom label")
-        #expect(sut.accessibilityHint == nil)
     }
 
     @Test("Button has custom accessibility identifier")

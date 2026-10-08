@@ -23,7 +23,7 @@ public struct GDSButtonViewModel: ContentViewModel, ControlViewModel {
     public let haptic: Haptic?
     public let accessibilityIdentifier: String?
     public let accessibilityHint: String?
-    public let accessibilityLabel: String? // Overrides Hint if present
+    public let accessibilityLabel: String?
     public let accessibilityTraits: UIAccessibilityTraits?
     public let enableState: EnableState?
     public let verticalPadding: VerticalPadding?
