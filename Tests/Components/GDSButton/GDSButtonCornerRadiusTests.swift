@@ -11,11 +11,13 @@ import UIKit
 /// prior to iOS 26 it does not, so the bordered button rendered with square
 /// corners.
 ///
-/// These assertions are OS-version independent: the fix guarantees that *both*
-/// the configuration background radius and the layer radius are set to the
-/// style's `cornerRadius` whenever a border is present. The `layer.cornerRadius`
-/// assertion is the one that fails before the fix and is what the pre-iOS-26
-/// rendering actually depends on.
+/// The fix sets `layer.cornerRadius` as well, but only on iOS < 26 (guarded by
+/// `if #unavailable(iOS 26)` in `addBorder`). On iOS 26+ the configuration
+/// background is left to drive the corners, so the layer radius stays at its
+/// default `0`. These tests therefore assert version-dependent behaviour:
+///   - iOS < 26: `layer.cornerRadius` == style `cornerRadius`
+///   - iOS 26+:  `layer.cornerRadius` == 0 (configuration drives the corners)
+/// In both cases `configuration.background.cornerRadius` carries the radius.
 @MainActor
 struct GDSButtonCornerRadiusTests {
 
@@ -34,15 +36,21 @@ struct GDSButtonCornerRadiusTests {
         return button
     }
 
-    @Test("secondaryOutlined sets the layer corner radius so the border renders rounded pre-iOS 26")
-    func secondaryOutlinedSetsLayerCornerRadius() {
+    @Test("secondaryOutlined sets the layer corner radius on iOS < 26 so the border renders rounded")
+    func secondaryOutlinedSetsLayerCornerRadiusPreIOS26() {
         let sut = realisedButton(style: .secondaryOutlined)
 
-        // This is the assertion that fails before the fix.
-        #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+        if #unavailable(iOS 26) {
+            // This is the assertion that fails before the fix on iOS < 26.
+            #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+        } else {
+            // On iOS 26+ the configuration background drives the corners, so the
+            // layer radius is deliberately left untouched.
+            #expect(sut.layer.cornerRadius == 0)
+        }
     }
 
-    @Test("secondaryOutlined also keeps the configuration background corner radius (iOS 26+ path)")
+    @Test("secondaryOutlined always keeps the configuration background corner radius")
     func secondaryOutlinedSetsConfigurationCornerRadius() {
         let sut = realisedButton(style: .secondaryOutlined)
 
@@ -58,22 +66,91 @@ struct GDSButtonCornerRadiusTests {
         #expect(sut.layer.cornerCurve == .continuous)
     }
 
-    @Test("a bordered style keeps its layer and configuration radii in sync")
-    func borderedStyleKeepsLayerAndConfigurationRadiiInSync() {
+    @Test("a bordered style keeps its layer and configuration radii in sync on iOS < 26")
+    func borderedStyleKeepsLayerAndConfigurationRadiiInSyncPreIOS26() {
         let sut = realisedButton(style: .secondaryOutlined)
 
-        #expect(sut.layer.cornerRadius == sut.configuration?.background.cornerRadius)
+        if #unavailable(iOS 26) {
+            #expect(sut.layer.cornerRadius == sut.configuration?.background.cornerRadius)
+        } else {
+            // iOS 26+: the layer radius is not synced to the configuration; the
+            // configuration background drives the rendered corners instead.
+            #expect(sut.layer.cornerRadius == 0)
+            #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+        }
     }
 
     @Test("a style without a border does not force a layer corner radius")
     func styleWithoutBorderLeavesLayerCornerRadiusUntouched() {
         // `secondary` has a fixed cornerStyle + cornerRadius but no border, so the
-        // layer path in `addBorder` must not run; its radius stays at the default 0.
+        // layer path in `addBorder` must not run on any OS; its radius stays at 0.
         let sut = realisedButton(style: .secondary)
 
         #expect(sut.viewModel.style.border == nil)
         #expect(sut.layer.cornerRadius == 0)
         // The configuration still carries the radius for the capsule/fixed rendering.
         #expect(sut.configuration?.background.cornerRadius == CGFloat(DesignSystem.Spacing.xSmall))
+    }
+
+    // MARK: - Direct `addBorder` tests
+    //
+    // These exercise both `setLayerCornerRadius` states directly, so both
+    // branches are covered on *any* OS without depending on the `#unavailable`
+    // gate in `general()` that chooses the flag at runtime.
+
+    @Test("addBorder with setLayerCornerRadius=true sets both the layer and configuration radii")
+    func addBorderSetsLayerCornerRadiusWhenRequested() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutlined,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        // Ensure a configuration exists so `background.cornerRadius` persists,
+        // then start from a known-clear layer radius.
+        sut.configurationUpdateHandler?(sut)
+        sut.layer.cornerRadius = 0
+
+        sut.addBorder(viewModel: viewModel, setLayerCornerRadius: true)
+
+        #expect(sut.layer.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+        #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+    }
+
+    @Test("addBorder with setLayerCornerRadius=false leaves the layer radius at 0 but still sets the configuration radius")
+    func addBorderLeavesLayerCornerRadiusWhenNotRequested() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutlined,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+        sut.layer.cornerRadius = 0
+
+        sut.addBorder(viewModel: viewModel, setLayerCornerRadius: false)
+
+        #expect(sut.layer.cornerRadius == 0)
+        #expect(sut.configuration?.background.cornerRadius == DesignSystem.CornerRadius.secondaryOutlinedButton)
+    }
+
+    @Test("addBorder always applies the border width/colour and continuous corner curve")
+    func addBorderAppliesBorderRegardlessOfLayerCornerRadiusFlag() {
+        let viewModel = GDSButtonViewModel(
+            title: TitleForState(normal: "test title"),
+            icon: nil,
+            style: .secondaryOutlined,
+            buttonAction: .action({})
+        )
+        let sut = GDSButton(viewModel: viewModel)
+        sut.configurationUpdateHandler?(sut)
+
+        sut.addBorder(viewModel: viewModel, setLayerCornerRadius: false)
+
+        #expect(sut.layer.borderWidth == 1)
+        #expect(sut.clipsToBounds == true)
+        #expect(sut.layer.cornerCurve == .continuous)
     }
 }

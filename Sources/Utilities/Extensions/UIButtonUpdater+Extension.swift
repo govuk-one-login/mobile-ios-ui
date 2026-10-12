@@ -14,17 +14,23 @@ extension UIButton {
         ) ?? attrString
     }
     
-    private func addBorder(viewModel: GDSButtonViewModel) {
+    func addBorder(
+        viewModel: GDSButtonViewModel,
+        setLayerCornerRadius: Bool = false
+    ) {
         if let borderStyle = viewModel.style.border {
             self.clipsToBounds = true
             self.layer.borderColor = borderStyle.color.cgColor
             self.layer.borderWidth = borderStyle.width
             if let cornerRadius = viewModel.style.cornerRadius {
                 self.configuration?.background.cornerRadius = cornerRadius
-                // The border is drawn on `self.layer`, so the layer's own corner radius must
-                // be set too. Prior to iOS 26 the configuration background does not drive the
-                // layer corners, so without this the rounded border would render as square.
-                self.layer.cornerRadius = cornerRadius
+                
+                if setLayerCornerRadius {
+                    // The border is drawn on `self.layer`, so the layer's own corner radius must
+                    // be set too. Prior to iOS 26 the configuration background does not drive the
+                    // layer corners, so without this the rounded border would render as square.
+                    self.layer.cornerRadius = cornerRadius
+                }
             }
             self.layer.cornerCurve = .continuous
         }
@@ -44,7 +50,15 @@ extension UIButton {
             self.configuration?.background.cornerRadius = cornerRadius
         }
     
-        self.addBorder(viewModel: viewModel)
+        var setLayerCornerRadius: Bool = false
+        if #unavailable(iOS 26) {
+            setLayerCornerRadius = true
+        }
+        
+        self.addBorder(
+            viewModel: viewModel,
+            setLayerCornerRadius: setLayerCornerRadius
+        )
     }
     
     func buttonShapesEnabled(_ enabled: Bool, viewModel: GDSButtonViewModel) {
