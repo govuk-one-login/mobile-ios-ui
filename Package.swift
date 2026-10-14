@@ -13,16 +13,17 @@ if !isDependencyCheckout {
     dependencies.append(
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.58.2")
     )
-    dependencies.append(
-        .package(
-            url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            from: "1.18.7"
-        )
-    )
     plugins.append(
         .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
     )
 }
+
+dependencies.append(
+    .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            from: "1.18.7"
+        )
+)
 
 let package = Package(
     name: "DesignSystem",
