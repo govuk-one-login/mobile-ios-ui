@@ -70,13 +70,17 @@ extension UIButton {
             
             if let button = button as? GDSButton,
                button.state.contains(.disabled) && button.isLoading {
-                button.configuration?.titleAlignment = .center
-                button.contentHorizontalAlignment = .center
+                button.configuration?.titleAlignment = button.viewModel.style.alignment
+                button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment(alignment: button.viewModel.style.alignment)
                 button.configuration?.attributedTitle = nil
-                button.configuration?.title = nil
-                button.configuration?.imagePlacement = .top
-                button.accessibilityLabel = "Loading"
+                button.configuration?.title = button.viewModel.title.loading
+                button.configuration?.showsActivityIndicator = true
+                button.configuration?.imagePlacement = .horizontal
+                button.configuration?.imagePlacement = .leading
+                button.configuration?.imagePadding = DesignSystem.Spacing.small
+                button.accessibilityLabel = button.viewModel.title.loading ?? "Loading"
                 button.accessibilityHint = nil
+                button.setTitleColor(viewModel.style.foregroundColor.loading, for: .disabled)
             } else {
                 var string = title
                 string.font = viewModel.style.font
@@ -100,6 +104,23 @@ extension UIButton {
                 
                 button.configuration?.baseForegroundColor = viewModel.style.foregroundColor.forState(button.state)
             }
+        }
+    }
+}
+
+extension UIControl.ContentHorizontalAlignment {
+    init(alignment: UIButton.Configuration.TitleAlignment) {
+        switch alignment {
+        case .automatic:
+            self.init(titleAlignment: .automatic)
+        case .leading:
+            self.init(titleAlignment: .leading)
+        case .center:
+            self.init(titleAlignment: .center)
+        case .trailing:
+            self.init(titleAlignment: .trailing)
+        @unknown default:
+            self.init(titleAlignment: .center)
         }
     }
 }
