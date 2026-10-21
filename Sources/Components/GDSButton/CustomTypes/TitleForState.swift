@@ -8,6 +8,7 @@ public struct TitleForState {
     private let selectedHighlighted: String?
     private let focusedHighlighted: String?
     private let disabled: String?
+    public let loading: String?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)
@@ -20,7 +21,8 @@ public struct TitleForState {
         focused: String? = nil,
         selectedHighlighted: String? = nil,
         focusedHighlighted: String? = nil,
-        disabled: String? = nil
+        disabled: String? = nil,
+        loading: String? = nil
     ) {
         self.normal = normal
         self.disabled = disabled
@@ -29,6 +31,7 @@ public struct TitleForState {
         self.focused = focused
         self.selectedHighlighted = selectedHighlighted
         self.focusedHighlighted = focusedHighlighted
+        self.loading = loading
     }
     
     public func forState(_ state: UIControl.State) -> String {
@@ -46,7 +49,7 @@ public struct TitleForState {
         case .focused:
             return focused ?? normal
         case .disabled, [.focused, .disabled]:
-            return disabled ?? normal
+            return disabled ?? ""
         default:
             return normal
         }
