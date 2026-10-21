@@ -188,6 +188,7 @@ extension GDSButtonStyle {
             backgroundColor: ColorForState(
                 normal: DesignSystem.Color.Buttons.secondaryOutlinedBackground,
                 focused: DesignSystem.Color.Buttons.secondaryBackgroundFocused,
+                selectedHighlighted: .lightGray,
                 focusedHighlighted: DesignSystem.Color.Buttons.secondaryBackgroundFocusedHighlighted
             ),
             cornerRadius: DesignSystem.CornerRadius.secondaryOutlinedButton,
