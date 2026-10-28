@@ -20,6 +20,7 @@ public final class GDSWarningText: UIView, ContentView {
         iconView.accessibilityIdentifier = "warning-text-icon"
         
         iconView.maximumContentSizeCategory = viewModel.warningText.maxContentSizeCategory
+        iconView.accessibilityTraits = .none// Prevent automatic image descriptions
         
         return iconView
     }()
