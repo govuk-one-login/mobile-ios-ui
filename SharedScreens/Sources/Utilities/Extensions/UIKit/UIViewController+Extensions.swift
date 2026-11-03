@@ -1,3 +1,4 @@
+import DesignSystem
 import UIKit
 
 extension UIViewController {
