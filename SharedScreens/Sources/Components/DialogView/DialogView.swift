@@ -22,6 +22,7 @@
  
  */
 
+import DesignSystem
 import UIKit
 
 public protocol DialogAccessoryView: UIView {
@@ -61,7 +62,7 @@ public final class DialogView<T: DialogAccessoryView>: NibView {
         titleLabel.text = title
         titleLabel.textAlignment = .center
         titleLabel.textColor = .dialogText
-        titleLabel.font = .init(style: .body, weight: .bold)
+        titleLabel.font = DesignSystem.Font.Base.bodyBold
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.accessibilityIdentifier = "titleLabel"
         

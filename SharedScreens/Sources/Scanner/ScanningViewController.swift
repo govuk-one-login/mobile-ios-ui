@@ -1,4 +1,5 @@
 import AVFoundation
+import DesignSystem
 import UIKit
 import Vision
 
@@ -47,7 +48,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         result.text = viewModel.instructionText
         result.numberOfLines = 0
         result.textAlignment = .center
-        result.font = .init(style: .body, weight: .bold)
+        result.font = DesignSystem.Font.Base.bodyBold
         result.textColor = .white
         return result
     }()
