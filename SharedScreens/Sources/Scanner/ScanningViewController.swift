@@ -132,7 +132,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         self.previewLayer = captureSession.layer
         self.requestType = requestType
         self.errorHandler = errorHandler
-        super.init(viewModel: viewModel as? BaseViewModel, nibName: nil, bundle: .module)
+        super.init(viewModel: viewModel as? SharedScreensBaseViewModel, nibName: nil, bundle: .module)
         self.barcodeRequest = requestType.init { [weak self] request, error in
             self?.detectedBarcode(request, error)
         }

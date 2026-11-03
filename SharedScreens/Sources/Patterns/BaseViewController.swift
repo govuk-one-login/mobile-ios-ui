@@ -2,16 +2,16 @@ import DesignSystem
 import UIKit
 
 /// `BaseViewController` provides standard lifecycle functionality for other view controllers to inherit from
-/// The view controller is configured with a  `BaseViewModel`
+/// The view controller is configured with a  `SharedScreensBaseViewModel`
 /// For the functionality of `BaseViewController` to work, the concrete implementation of
-/// view model must conform to `BaseViewModel`.
+/// view model must conform to `SharedScreensBaseViewModel`.
 /// Screen view controllers should generally inherit from ``BaseViewController`` instead of `UIViewController`
 /// unless the functionality of the screen needs to be intentionally different from standard screens.
 open class BaseViewController: UIViewController {
-    private let viewModel: BaseViewModel?
+    private let viewModel: SharedScreensBaseViewModel?
     
     public init(
-        viewModel: BaseViewModel?,
+        viewModel: SharedScreensBaseViewModel?,
         nibName: String? = nil,
         bundle: Bundle? = nil
     ) {
