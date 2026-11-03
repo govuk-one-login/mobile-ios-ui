@@ -30,11 +30,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
 
     let captureDevice: any CaptureDevice.Type
     let captureSession: CaptureSession
-    private let requestType: VNImageBasedRequest.Type
-    // Accessed from the non-isolated `captureOutput` delegate callback on `processingQueue`.
-    // Set once in `init` and cleared in `cleanup()` after the sample-buffer delegate has
-    // been detached, so it is not mutated concurrently with an in-flight callback.
-    private nonisolated(unsafe) var barcodeRequest: VNImageBasedRequest?
+    private nonisolated let requestType: VNImageBasedRequest.Type
     nonisolated let errorHandler: @Sendable (Error?) -> Void
     private var imageView: UIImageView = .init(image: .init(named: "qrscan", in: .module, compatibleWith: nil))
     
@@ -111,10 +107,6 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         }
         videoDataOutput = nil
 
-        // Cancel and nil out Vision request
-        barcodeRequest?.cancel()
-        barcodeRequest = nil
-
         // Remove preview layer from superlayer (idempotent)
         if previewLayer.superlayer != nil {
             previewLayer.removeFromSuperlayer()
@@ -141,9 +133,6 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         self.requestType = requestType
         self.errorHandler = errorHandler
         super.init(viewModel: viewModel as? SharedScreensBaseViewModel, nibName: nil, bundle: .module)
-        self.barcodeRequest = requestType.init { [weak self] request, error in
-            self?.detectedBarcode(request, error)
-        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -315,13 +304,20 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
                               didOutput sampleBuffer: CMSampleBuffer,
                               from connection: AVCaptureConnection) {
         guard isScanning,
-              let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
-              let barcodeRequest = barcodeRequest else { return }
+              let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+
+        // Build a fresh request per frame rather than reusing a single shared,
+        // main-actor-constructed `VNImageBasedRequest`. The completion closure here is
+        // created in this nonisolated context, so it carries no main-actor isolation and
+        // is safe to run on the background `processingQueue` (avoids EXC_BREAKPOINT).
+        let request = requestType.init { [weak self] request, error in
+            self?.detectedBarcode(request, error)
+        }
 
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
                                             options: [:])
         do {
-            try handler.perform([barcodeRequest])
+            try handler.perform([request])
         } catch {
             errorHandler(error)
         }
