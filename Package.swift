@@ -37,7 +37,10 @@ let package = Package(
             targets: ["DesignSystem"]),
         .library(
             name: "SnapshotHelpers",
-            targets: ["SnapshotHelpers"])
+            targets: ["SnapshotHelpers"]),
+        .library(
+            name: "SharedScreens",
+            targets: ["SharedScreens"])
     ],
     dependencies: dependencies,
     targets: [
@@ -56,6 +59,18 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
             path: "SnapshotHelpers/Sources",
+        ),
+        .target(
+            name: "SharedScreens",
+            dependencies: [
+                "DesignSystem"
+            ],
+            path: "SharedScreens/Sources",
+            resources: [
+                .process("Styles/Media.xcassets"),
+                .process("Styles/Strings")
+            ],
+            plugins: plugins
         ),
         .testTarget(
             name: "DesignSystemTests",
