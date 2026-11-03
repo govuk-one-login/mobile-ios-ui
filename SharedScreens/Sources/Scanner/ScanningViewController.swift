@@ -31,8 +31,11 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     let captureDevice: any CaptureDevice.Type
     let captureSession: CaptureSession
     private let requestType: VNImageBasedRequest.Type
-    private(set) var barcodeRequest: VNImageBasedRequest?
-    let errorHandler: (Error?) -> Void
+    // Accessed from the non-isolated `captureOutput` delegate callback on `processingQueue`.
+    // Set once in `init` and cleared in `cleanup()` after the sample-buffer delegate has
+    // been detached, so it is not mutated concurrently with an in-flight callback.
+    private nonisolated(unsafe) var barcodeRequest: VNImageBasedRequest?
+    nonisolated let errorHandler: @Sendable (Error?) -> Void
     private var imageView: UIImageView = .init(image: .init(named: "qrscan", in: .module, compatibleWith: nil))
     
     public var initialVoiceOverView: UIView {
@@ -53,9 +56,9 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         return result
     }()
     
-    private let isScanningQueue = DispatchQueue(label: "isScanningQueue")
-    private var internalIsScanning: Bool = true
-    private var isScanning: Bool {
+    private nonisolated let isScanningQueue = DispatchQueue(label: "isScanningQueue")
+    private nonisolated(unsafe) var internalIsScanning: Bool = true
+    private nonisolated var isScanning: Bool {
         get {
             isScanningQueue.sync { internalIsScanning }
         }
@@ -87,7 +90,12 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     }
 
     deinit {
-        cleanup()
+        // `ScanningViewController` is `@MainActor`-isolated and UIKit always
+        // deallocates view controllers on the main thread, so `assumeIsolated`
+        // lets the nonisolated `deinit` run main-actor `cleanup()` safely.
+        MainActor.assumeIsolated {
+            cleanup()
+        }
     }
 
     func cleanup() {
@@ -124,7 +132,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         captureDevice: any CaptureDevice.Type = AVCaptureDevice.self,
         captureSession: CaptureSession = AVCaptureSession(),
         requestType: VNImageBasedRequest.Type = VNDetectBarcodesRequest.self,
-        errorHandler: @escaping (Error?) -> Void = { _ in /* empty default implementation to avoid breaking change */}
+        errorHandler: @escaping @Sendable (Error?) -> Void = { _ in /* empty default implementation to avoid breaking change */}
     ) {
         self.viewModel = viewModel
         self.captureDevice = captureDevice

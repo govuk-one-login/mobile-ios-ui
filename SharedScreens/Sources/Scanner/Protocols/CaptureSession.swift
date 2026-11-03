@@ -1,6 +1,6 @@
 import AVFoundation
 
-public protocol CaptureSession {
+public protocol CaptureSession: Sendable {
     associatedtype Input
     
     var layer: AVCaptureVideoPreviewLayer { get }
