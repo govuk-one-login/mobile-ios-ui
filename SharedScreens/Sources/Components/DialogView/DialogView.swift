@@ -69,8 +69,8 @@ public final class DialogView<T: DialogAccessoryView>: NibView {
         contentView.layer.cornerRadius = 12
         contentView.accessibilityIdentifier = "contentView"
         
-        accessoryViewContainer.addSubview(accessoryView,
-                                          insetBy: .zero)
+        accessoryViewContainer.addSubview(accessoryView)
+        accessoryView.bindToSuperviewSafeArea()
         accessoryViewContainer.accessibilityIdentifier = "accessoryViewContainer"
 
     }

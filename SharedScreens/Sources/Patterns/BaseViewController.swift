@@ -1,3 +1,4 @@
+import DesignSystem
 import UIKit
 
 /// `BaseViewController` provides standard lifecycle functionality for other view controllers to inherit from
@@ -28,7 +29,10 @@ open class BaseViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         
-        setBackButtonTitle(isHidden: viewModel?.backButtonIsHidden ?? false)
+        setBackButtonTitle(
+            title: GDSLocalisedString(stringKey: "GDSCommonBackButton", bundle: .module),
+            isHidden: viewModel?.backButtonIsHidden ?? false
+        )
         
         if viewModel?.rightBarButtonTitle != nil {
             self.navigationItem.rightBarButtonItem = .init(title: viewModel?.rightBarButtonTitle?.value,
