@@ -282,7 +282,13 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     /// Function to process the detected scanned barcode.
     /// Called as soon as a QR Code is detected
     /// Pulls out the first scanned ID
-    private func detectedBarcode(_ request: VNRequest, _ error: Error?) {
+    ///
+    /// Vision invokes this completion handler synchronously on the thread that
+    /// calls `handler.perform(_:)` — i.e. the background `processingQueue` inside
+    /// the nonisolated `captureOutput`. It must therefore be `nonisolated`; it only
+    /// touches the (thread-agnostic) Vision `request` and hops to the main actor
+    /// via the `Task` to run `didScan`.
+    private nonisolated func detectedBarcode(_ request: VNRequest, _ error: Error?) {
         guard let results = request.results else {
             return
         }
