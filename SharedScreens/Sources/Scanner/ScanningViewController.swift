@@ -96,7 +96,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         self.viewModel = viewModel
         self.captureDevice = captureDevice
         self.captureSession = captureSession
-        self.previewLayer = captureSession.layer
+        self.previewLayer = captureSession.makePreviewLayer()
         self.requestType = requestType
         self.errorHandler = errorHandler
         super.init(viewModel: viewModel as? SharedScreensBaseViewModel, nibName: nil, bundle: .module)
