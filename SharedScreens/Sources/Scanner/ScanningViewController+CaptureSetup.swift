@@ -57,7 +57,13 @@ extension ScanningViewController {
     // End the scanning process
     func stopScanning() {
         if captureSession.isRunning {
-            captureSession.stopRunning()
+            // `stopRunning()` is a blocking AVFoundation call, so dispatch it off
+            // the main thread to mirror `startScanning()` and avoid blocking the
+            // main thread during `viewWillDisappear` / `cleanup()`.
+            let session = captureSession
+            DispatchQueue.global(qos: .userInitiated).async {
+                session.stopRunning()
+            }
         }
     }
 }
