@@ -169,7 +169,27 @@ struct ScanningViewControllerTests {
         appear(sut)
 
         #expect(recorder.callCount > 0)
-        #expect(recorder.lastError == nil)
+        if case .deviceUnavailable = recorder.lastError as? ScanningSetupError {} else {
+            Issue.record("Expected .deviceUnavailable, got \(String(describing: recorder.lastError))")
+        }
+    }
+
+    @Test
+    func errorHandlerPropagatesThrownInputError() {
+        let recorder = ErrorHandlerRecorder()
+        let sut = makeSUT(
+            captureDevice: ThrowingCaptureDevice.self,
+            errorHandler: recorder.handler
+        )
+
+        appear(sut)
+
+        #expect(recorder.callCount > 0)
+        guard case .inputUnavailable(let underlying) = recorder.lastError as? ScanningSetupError else {
+            Issue.record("Expected .inputUnavailable, got \(String(describing: recorder.lastError))")
+            return
+        }
+        #expect(underlying as? MockCaptureDeviceInputError == .denied)
     }
 
     @Test

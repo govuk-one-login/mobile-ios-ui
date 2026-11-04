@@ -3,14 +3,30 @@ import UIKit
 
 extension ScanningViewController {
     func setupVideoDisplay() {
-        guard let videoCaptureDevice = captureDevice.for(mediaType: .video),
-              let videoInput = try? videoCaptureDevice.input as? CaptureSession.Input else {
-            errorHandler(nil)
+        guard let videoCaptureDevice = captureDevice.for(mediaType: .video) else {
+            errorHandler(ScanningSetupError.deviceUnavailable)
             return
         }
+
+        let videoInput: CaptureSession.Input
+        do {
+            guard let input = try videoCaptureDevice.input as? CaptureSession.Input else {
+                // The device produced an input of an unexpected type; treat it as
+                // unavailable rather than silently continuing.
+                errorHandler(ScanningSetupError.deviceUnavailable)
+                return
+            }
+            videoInput = input
+        } catch {
+            // `AVCaptureDeviceInput(device:)` throws here — notably on camera
+            // permission denial. Propagate the underlying error.
+            errorHandler(ScanningSetupError.inputUnavailable(error))
+            return
+        }
+
         guard captureSession.canAddInput(videoInput) else {
             assertionFailure("Can't add video input for detecting barcodes")
-            errorHandler(nil)
+            errorHandler(ScanningSetupError.cannotAddInput)
             return
         }
         captureSession.addInput(videoInput)
@@ -20,7 +36,7 @@ extension ScanningViewController {
         let output = AVCaptureVideoDataOutput()
         guard captureSession.canAddOutput(output) else {
             assertionFailure("Can't add video output for detecting barcodes")
-            errorHandler(nil)
+            errorHandler(ScanningSetupError.cannotAddOutput)
             return
         }
         output.alwaysDiscardsLateVideoFrames = true

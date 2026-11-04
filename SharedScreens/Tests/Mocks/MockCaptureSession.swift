@@ -49,3 +49,18 @@ final class UnavailableCaptureDevice: CaptureDevice {
     var input: MockCaptureDeviceInput { get throws { MockCaptureDeviceInput() } }
     static func `for`(mediaType: AVMediaType) -> Self? { nil }
 }
+
+/// Error thrown by `ThrowingCaptureDevice.input`, standing in for the
+/// `AVError` that `AVCaptureDeviceInput(device:)` throws on permission denial.
+enum MockCaptureDeviceInputError: Error, Equatable {
+    case denied
+}
+
+/// A capture device that is available but whose `input` throws, used to
+/// exercise the permission-denied / input-construction failure path.
+final class ThrowingCaptureDevice: CaptureDevice {
+    var input: MockCaptureDeviceInput {
+        get throws { throw MockCaptureDeviceInputError.denied }
+    }
+    static func `for`(mediaType: AVMediaType) -> Self? { Self() }
+}
