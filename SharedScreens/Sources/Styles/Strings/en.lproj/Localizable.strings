@@ -1,21 +1,3 @@
 // MARK: Generic Strings
 
 "GDSCommonBackButton" = "Back";
-
-"GDSCommonVoiceOverErrorPrefix" = "Error";
-
-"GDSCommonVoiceOverWarningPrefix" = "Warning";
-
-
-// MARK: Numbered List
-
-"NumberedList" = "Numbered list, %@ items.";
-
-
-// MARK: Card component
-
-"CardComponent" = "%@ Card";
-
-// MARK: tableView cell accessibility
-
-"GDSCommonCellAccessibilityHint" = ", option %1$@ of %2$@";
