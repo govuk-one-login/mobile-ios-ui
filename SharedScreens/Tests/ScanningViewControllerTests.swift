@@ -39,14 +39,17 @@ struct ScanningViewControllerTests {
 
     /// Polls a condition on the main actor until true or the timeout elapses.
     /// Needed because `detectedBarcode` dispatches to `didScan` via a `Task`.
+    ///
+    /// Uses iOS 15-safe time APIs (`TimeInterval` / `Task.sleep(nanoseconds:)`)
+    /// rather than `Duration` / `ContinuousClock`, which require iOS 16.
     private func waitUntil(
-        timeout: Duration = .seconds(2),
+        timeout: TimeInterval = 2,
         _ condition: @MainActor () -> Bool
     ) async {
-        let deadline = ContinuousClock.now.advanced(by: timeout)
-        while ContinuousClock.now < deadline {
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
             if condition() { return }
-            try? await Task.sleep(for: .milliseconds(20))
+            try? await Task.sleep(nanoseconds: 20_000_000) // 20ms
         }
     }
 
@@ -214,7 +217,7 @@ struct ScanningViewControllerTests {
         sut.detectedBarcode(MockBarcodeRequest(results: nil), nil)
 
         // Give any erroneously-scheduled Task a chance to run, then assert nothing fired.
-        try? await Task.sleep(for: .milliseconds(100))
+        try? await Task.sleep(nanoseconds: 100_000_000) // 100ms
         #expect(viewModel.didCallDidScan == false)
     }
 
