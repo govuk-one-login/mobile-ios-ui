@@ -33,6 +33,13 @@
         "identifier" : "960AC9812DA0725200519D5F",
         "name" : "DesignSystemDemoTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..",
+        "identifier" : "SharedScreensTests",
+        "name" : "SharedScreensTests"
+      }
     }
   ],
   "version" : 1
