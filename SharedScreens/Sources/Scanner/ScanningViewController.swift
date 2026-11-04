@@ -277,7 +277,10 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     /// the nonisolated `captureOutput`. It must therefore be `nonisolated`; it only
     /// touches the (thread-agnostic) Vision `request` and hops to the main actor
     /// via the `Task` to run `didScan`.
-    private nonisolated func detectedBarcode(_ request: VNRequest, _ error: Error?) {
+    ///
+    /// `internal` (not `private`) so unit tests can drive the result-parsing and
+    /// `didScan` dispatch directly, without needing a live Vision `perform`.
+    nonisolated func detectedBarcode(_ request: VNRequest, _ error: Error?) {
         guard let results = request.results else {
             return
         }

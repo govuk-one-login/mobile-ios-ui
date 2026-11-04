@@ -79,6 +79,14 @@ let package = Package(
                 "SnapshotHelpers"
             ],
             path: "Tests"
+        ),
+        .testTarget(
+            name: "SharedScreensTests",
+            dependencies: [
+                "SharedScreens",
+                "DesignSystem"
+            ],
+            path: "SharedScreens/Tests"
         )
     ]
 )
