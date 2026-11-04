@@ -96,7 +96,6 @@ struct ScanningViewControllerTests {
         #expect(session.isRunning)
 
         sut.stopScanning()
-        await waitUntil { session.isRunning == false }
         #expect(session.isRunning == false)
 
         sut.startScanning()
