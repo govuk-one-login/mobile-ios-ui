@@ -16,15 +16,15 @@ final class ErrorHandlerRecorder: @unchecked Sendable {
         lock.withLock { _lastError }
     }
 
+    /// Convenience to pass directly as the scanner's `errorHandler`.
+    var handler: @Sendable (Error?) -> Void {
+        { [weak self] error in self?.record(error) }
+    }
+
     func record(_ error: Error?) {
         lock.withLock {
             _callCount += 1
             _lastError = error
         }
-    }
-
-    /// Convenience to pass directly as the scanner's `errorHandler`.
-    var handler: @Sendable (Error?) -> Void {
-        { [weak self] error in self?.record(error) }
     }
 }

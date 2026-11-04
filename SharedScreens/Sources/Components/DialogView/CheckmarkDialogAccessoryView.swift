@@ -7,18 +7,7 @@ public final class CheckmarkDialogAccessoryView: UIView {
     private(set) var loadingView: UIActivityIndicatorView?
     
     private var isLoading: Bool
-    
-    public init(isLoading: Bool = false) {
-        self.isLoading = isLoading
-        
-        super.init(frame: .zero)
-    }
-    
-    @available(*, unavailable, renamed: "init(isLoading:)")
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     private var checkmarkDiameter: CGFloat {
         bounds.height
     }
@@ -33,6 +22,17 @@ public final class CheckmarkDialogAccessoryView: UIView {
         let x = (0 + (bounds.width / 2) - (checkmarkDiameter / 2))
         let y = (0 + (bounds.height / 2) - (checkmarkDiameter / 2))
         return CGPoint(x: x, y: y)
+    }
+
+    public init(isLoading: Bool = false) {
+        self.isLoading = isLoading
+        
+        super.init(frame: .zero)
+    }
+    
+    @available(*, unavailable, renamed: "init(isLoading:)")
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     public override func layoutSubviews() {

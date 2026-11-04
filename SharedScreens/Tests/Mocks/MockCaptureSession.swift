@@ -49,12 +49,12 @@ final class MockCaptureSession: CaptureSession, @unchecked Sendable {
 }
 
 final class MockCaptureDevice: CaptureDevice {
-    static func `for`(mediaType: AVMediaType) -> Self? { Self() }
     var input: MockCaptureDeviceInput { get throws { MockCaptureDeviceInput() } }
+    static func `for`(mediaType: AVMediaType) -> Self? { Self() }
 }
 
 /// A capture device that is never available, used to exercise the error path.
 final class UnavailableCaptureDevice: CaptureDevice {
-    static func `for`(mediaType: AVMediaType) -> Self? { nil }
     var input: MockCaptureDeviceInput { get throws { MockCaptureDeviceInput() } }
+    static func `for`(mediaType: AVMediaType) -> Self? { nil }
 }

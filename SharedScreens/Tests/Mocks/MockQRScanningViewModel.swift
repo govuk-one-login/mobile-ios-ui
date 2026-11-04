@@ -1,5 +1,5 @@
-import UIKit
 @testable import SharedScreens
+import UIKit
 
 /// Records whether a scan was delivered and forwards it to an optional handler.
 final class MockQRScanningViewModel: QRScanningViewModel {

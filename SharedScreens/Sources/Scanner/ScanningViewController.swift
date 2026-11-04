@@ -78,42 +78,9 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     
     private var didSetupCapture = false
     private var didCleanup = false
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        stopScanning()
-        stopAnimation()
-    }
 
-    deinit {
-        // `ScanningViewController` is `@MainActor`-isolated and UIKit always
-        // deallocates view controllers on the main thread, so `assumeIsolated`
-        // lets the nonisolated `deinit` run main-actor `cleanup()` safely.
-        MainActor.assumeIsolated {
-            cleanup()
-        }
-    }
-
-    func cleanup() {
-        guard !didCleanup else { return }
-        didCleanup = true
-
-        stopScanning()
-        stopAnimation()
-
-        // Nil delegate on the processing queue to prevent race with in-flight captureOutput calls
-        processingQueue.sync {
-            self.videoDataOutput?.setSampleBufferDelegate(nil, queue: nil)
-        }
-        videoDataOutput = nil
-
-        // Remove preview layer from superlayer (idempotent)
-        if previewLayer.superlayer != nil {
-            previewLayer.removeFromSuperlayer()
-        }
-
-        // Break the preview layer's reference to the session
-        previewLayer.session = nil
+    var windowOrientation: UIInterfaceOrientation {
+        return view.window?.windowScene?.interfaceOrientation ?? .unknown
     }
 
     /// Initialiser for the `Scanning` view controller.
@@ -138,7 +105,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
@@ -154,22 +121,6 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
                 initialVideoOrientation = videoOrientation
             }
             self.previewLayer.connection?.videoOrientation = initialVideoOrientation
-        }
-    }
-
-    /// Keeps the scanner title legible over the darkened camera preview without
-    /// mutating the shared navigation bar or applying a blur effect such as systemChromeMaterial.
-    private func configureNavigationAppearance() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-
-        navigationItem.standardAppearance = appearance
-        navigationItem.compactAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        if #available(iOS 15.0, *) {
-            navigationItem.compactScrollEdgeAppearance = appearance
         }
     }
 
@@ -191,10 +142,54 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         super.viewDidAppear(animated)
         startAnimation()
     }
+
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopScanning()
+        stopAnimation()
+    }
     
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         setPreviewSize()
+    }
+
+    func cleanup() {
+        guard !didCleanup else { return }
+        didCleanup = true
+
+        stopScanning()
+        stopAnimation()
+
+        // Nil delegate on the processing queue to prevent race with in-flight captureOutput calls
+        processingQueue.sync {
+            self.videoDataOutput?.setSampleBufferDelegate(nil, queue: nil)
+        }
+        videoDataOutput = nil
+
+        // Remove preview layer from superlayer (idempotent)
+        if previewLayer.superlayer != nil {
+            previewLayer.removeFromSuperlayer()
+        }
+
+        // Break the preview layer's reference to the session
+        previewLayer.session = nil
+    }
+
+    /// Keeps the scanner title legible over the darkened camera preview without
+    /// mutating the shared navigation bar or applying a blur effect such as systemChromeMaterial.
+    private func configureNavigationAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        if #available(iOS 15.0, *) {
+            navigationItem.compactScrollEdgeAppearance = appearance
+        }
     }
     
     func setPreviewSize() {
@@ -232,10 +227,6 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         updateImageOverlay()
         
         previewLayer.frame = newFrame
-    }
-    
-    var windowOrientation: UIInterfaceOrientation {
-        return view.window?.windowScene?.interfaceOrientation ?? .unknown
     }
     
     private func updateRegionOfInterest() {
@@ -304,8 +295,8 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
     // - MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     
     public nonisolated func captureOutput(_ output: AVCaptureOutput,
-                              didOutput sampleBuffer: CMSampleBuffer,
-                              from connection: AVCaptureConnection) {
+                                          didOutput sampleBuffer: CMSampleBuffer,
+                                          from connection: AVCaptureConnection) {
         guard isScanning,
               let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
@@ -325,23 +316,13 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
             errorHandler(error)
         }
     }
-}
 
-extension ScanningViewController {
-    // Initiate the scanning process
-    func startScanning() {
-        if !captureSession.isRunning {
-            let session = captureSession
-            DispatchQueue.global(qos: .userInitiated).async {
-                session.startRunning()
-            }
-        }
-    }
-    
-    // End the scanning process
-    func stopScanning() {
-        if captureSession.isRunning {
-            captureSession.stopRunning()
+    deinit {
+        // `ScanningViewController` is `@MainActor`-isolated and UIKit always
+        // deallocates view controllers on the main thread, so `assumeIsolated`
+        // lets the nonisolated `deinit` run main-actor `cleanup()` safely.
+        MainActor.assumeIsolated {
+            cleanup()
         }
     }
 }

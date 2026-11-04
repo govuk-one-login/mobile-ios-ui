@@ -45,12 +45,12 @@ public final class DialogView<T: DialogAccessoryView>: NibView {
         }
     }
     
+    public let accessoryView: CheckmarkDialogAccessoryView
+    private(set) var completionHandler: (() -> Void)?
+
     @IBOutlet private var contentView: UIView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var accessoryViewContainer: UIView!
-    
-    public let accessoryView: CheckmarkDialogAccessoryView
-    private(set) var completionHandler: (() -> Void)?
     
     public init(title: String, isLoading: Bool) {
         accessoryView = .init(isLoading: isLoading)
@@ -73,6 +73,10 @@ public final class DialogView<T: DialogAccessoryView>: NibView {
         accessoryView.bindToSuperviewSafeArea()
         accessoryViewContainer.accessibilityIdentifier = "accessoryViewContainer"
 
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("Please initialize from 'init(title: String, subtitle: String)'")
     }
     
     public func present(onView view: UIView,
@@ -165,10 +169,6 @@ public final class DialogView<T: DialogAccessoryView>: NibView {
             self.completionHandler?()
             self.completionHandler = nil
         }
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("Please initialize from 'init(title: String, subtitle: String)'")
     }
 }
 

@@ -43,4 +43,21 @@ extension ScanningViewController {
             instructionsLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
+
+    // Initiate the scanning process
+    func startScanning() {
+        if !captureSession.isRunning {
+            let session = captureSession
+            DispatchQueue.global(qos: .userInitiated).async {
+                session.startRunning()
+            }
+        }
+    }
+
+    // End the scanning process
+    func stopScanning() {
+        if captureSession.isRunning {
+            captureSession.stopRunning()
+        }
+    }
 }
