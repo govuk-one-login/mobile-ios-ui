@@ -6,7 +6,6 @@ struct MockCaptureDeviceInput {}
 /// Driven only from the main actor in tests, so `@unchecked Sendable` is safe here.
 final class MockCaptureSession: CaptureSession, @unchecked Sendable {
     private(set) var output: AVCaptureOutput?
-    private(set) var removedOutput: AVCaptureOutput?
 
     var layer: AVCaptureVideoPreviewLayer {
         AVCaptureVideoPreviewLayer()
@@ -38,13 +37,6 @@ final class MockCaptureSession: CaptureSession, @unchecked Sendable {
 
     func addOutput(_ output: AVCaptureOutput) {
         self.output = output
-    }
-
-    func removeOutput(_ output: AVCaptureOutput) {
-        if self.output === output {
-            removedOutput = output
-            self.output = nil
-        }
     }
 }
 
