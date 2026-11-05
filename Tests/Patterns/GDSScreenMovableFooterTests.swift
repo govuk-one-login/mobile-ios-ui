@@ -24,16 +24,28 @@ struct GDSScreenMovableFooterTests {
     /// content size category, driving the real `viewDidLayoutSubviews` ->
     /// `checkBottomStackHeight()` path so the movable-footer placement is decided
     /// against the actual frame heights produced at that text size.
+    ///
+    /// Uses a parent controller + `setOverrideTraitCollection` rather than
+    /// `traitOverrides` (iOS 17+) so it builds against the package's iOS 15 target.
     private func layout(
         _ sut: GDSScreen,
         at size: CGSize,
         contentSize: UIContentSizeCategory
     ) {
+        let parent = UIViewController()
         let window = UIWindow(frame: CGRect(origin: .zero, size: size))
-        window.rootViewController = sut
+        window.rootViewController = parent
         window.makeKeyAndVisible()
-        sut.traitOverrides.preferredContentSizeCategory = contentSize
-        sut.view.frame = window.bounds
+
+        parent.addChild(sut)
+        sut.view.frame = parent.view.bounds
+        parent.view.addSubview(sut.view)
+        parent.setOverrideTraitCollection(
+            UITraitCollection(preferredContentSizeCategory: contentSize),
+            forChild: sut
+        )
+        sut.didMove(toParent: parent)
+
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
     }
