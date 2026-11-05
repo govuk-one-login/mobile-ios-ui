@@ -348,6 +348,13 @@ struct ColorTests {
         #expect(sut.cgColor == expectedColor.cgColor)
     }
     
+    @Test func test_Color_Pink4() async throws {
+        let expectedColor = UIColor.fromHex("#FBE9F7")
+        
+        let sut = DesignSystem.Color.Base.pink4
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
     @Test func test_Color_Yellow1() async throws {
         let expectedColor = UIColor.fromHex("#FFDD00")
         
@@ -371,6 +378,13 @@ struct ColorTests {
     
     @Test func test_Color_Yellow4() async throws {
         let expectedColor = UIColor.fromHex("#BFA600")
+        
+        let sut = DesignSystem.Color.Base.yellow4
+        #expect(sut.cgColor == expectedColor.cgColor)
+    }
+    
+    @Test func test_Color_Yellow5() async throws {
+        let expectedColor = UIColor.fromHex("#F7F4E5")
         
         let sut = DesignSystem.Color.Base.yellow4
         #expect(sut.cgColor == expectedColor.cgColor)
