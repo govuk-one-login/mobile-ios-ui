@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		965975AB2E2AC0D4007370CC /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 965975AA2E2AC0D4007370CC /* DesignSystem */; };
+		965975B02E2AC0D4007370CC /* SharedScreens in Frameworks */ = {isa = PBXBuildFile; productRef = 965975AF2E2AC0D4007370CC /* SharedScreens */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				965975AB2E2AC0D4007370CC /* DesignSystem in Frameworks */,
+				965975B02E2AC0D4007370CC /* SharedScreens in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 			name = DesignSystemDemo;
 			packageProductDependencies = (
 				965975AA2E2AC0D4007370CC /* DesignSystem */,
+				965975AF2E2AC0D4007370CC /* SharedScreens */,
 			);
 			productName = DesignSystemDemo;
 			productReference = 960AC96C2DA0725000519D5F /* DesignSystemDemo.app */;
@@ -609,6 +612,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference ".." */;
 			productName = DesignSystem;
+		};
+		965975AF2E2AC0D4007370CC /* SharedScreens */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 965975AC2E2AC0D4007370CC /* XCLocalSwiftPackageReference ".." */;
+			productName = SharedScreens;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

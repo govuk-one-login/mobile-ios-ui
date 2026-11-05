@@ -30,6 +30,7 @@ class ViewController: UITableViewController {
         case collectionViewScreen
         case navigationBarButton
         case backgroundColors
+        case qrScanner
 
         var title: String {
             switch self {
@@ -45,6 +46,7 @@ class ViewController: UITableViewController {
             case .collectionViewScreen: return "Collection View GDSScreen"
             case .navigationBarButton: return "NavigationBarButton Examples"
             case .backgroundColors: return "Background Colors GDSScreen"
+            case .qrScanner: return "QR Scanner"
             }
         }
 
@@ -54,6 +56,8 @@ class ViewController: UITableViewController {
                 return "Components"
             case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
                 return "Screens & Patterns"
+            case .qrScanner:
+                return "Shared Screens"
             }
         }
     }
@@ -61,7 +65,7 @@ class ViewController: UITableViewController {
     private let sections: [(title: String, items: [MenuItem])] = {
         let grouped = Dictionary(grouping: MenuItem.allCases, by: { $0.sectionTitle })
         // Preserve a stable, intentional section order.
-        return ["Components", "Screens & Patterns"].compactMap { key in
+        return ["Components", "Screens & Patterns", "Shared Screens"].compactMap { key in
             guard let items = grouped[key] else { return nil }
             return (title: key, items: items)
         }
@@ -152,6 +156,8 @@ class ViewController: UITableViewController {
             pushNavigationBarButtonDemo()
         case .backgroundColors:
             pushBackgroundColorsDemo()
+        case .qrScanner:
+            pushQRScannerDemo()
         }
     }
 
@@ -192,6 +198,13 @@ class ViewController: UITableViewController {
     func pushBackgroundColorsDemo() {
         let demo = GDSScreen(viewModel: gdsBackgroundColorsScreenViewModel)
         navigationController?.pushViewController(demo, animated: true)
+    }
+
+    func pushQRScannerDemo() {
+        let screen = QRScannerDemo.makeScreen(present: { [weak self] alert in
+            self?.present(alert, animated: true)
+        })
+        navigationController?.pushViewController(screen, animated: true)
     }
 }
 
