@@ -158,10 +158,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         // When usesScrollView is false, body content manages its own scrolling
         // so there is no need to move footer items into the scroll view.
         guard viewModel.screenStyle.usesScrollView else { return }
-        // Defer to ensure layout is finished
-        Task {
-            checkBottomStackHeight()
-        }
+        // Running this synchronously / not from detached Task { } makes sure
+        // that the frames read in checkBottomStackHeight() are current.
+        checkBottomStackHeight()
     }
     
     private func setup() {
@@ -209,6 +208,12 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
             scrollViewInnerStackView.addArrangedSubview(view)
         }
         
+        // Collapse the empty bottom stack so it stops occupying height under the
+        // container. Leaving it visible-but-empty makes the "should the footer
+        // return?" check over-report the pinned height, and can strand the footer
+        // in scroll view.
+        bottomStackView.isHidden = bottomStackView.arrangedSubviews.isEmpty
+        
         isMovableFooterInScrollView = true
     }
     
@@ -223,6 +228,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         for view in movableFooterViews.reversed() {
             bottomStackView.insertArrangedSubview(view, at: .zero)
         }
+        
+        // The stack now has content again, so make sure it is visible.
+        bottomStackView.isHidden = bottomStackView.arrangedSubviews.isEmpty
         
         view.layoutIfNeeded()
         isMovableFooterInScrollView = false

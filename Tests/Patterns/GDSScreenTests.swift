@@ -122,6 +122,65 @@ struct GDSScreenTests {
         #expect(sut.bottomStackView.arrangedSubviews.count == 2)
     }
     
+    /// Lays the screen out inside a window at `size`, driving the real
+    /// `viewDidLayoutSubviews` -> `checkBottomStackHeight()` path (rather than
+    /// calling the move functions directly), so the movable-footer placement is
+    /// decided against actual frame heights the way it is on device.
+    private func layout(_ sut: GDSScreen, at size: CGSize) {
+        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
+        window.rootViewController = sut
+        window.makeKeyAndVisible()
+        sut.view.frame = window.bounds
+        sut.view.setNeedsLayout()
+        sut.view.layoutIfNeeded()
+    }
+
+    @Test("""
+    Movable footer returns to the bottom stack after a short -> tall layout change \
+    (regression: portrait -> landscape -> portrait left it stranded in the scroll view)
+    """)
+    func movableFooterReturnsToBottomAfterRotation() throws {
+        // Several footer items so the footer comfortably exceeds 1/3 of a short
+        // (landscape-height) viewport but stays well under 1/3 of a tall
+        // (portrait-height) viewport, making the threshold crossing deterministic
+        // without depending on exact per-button metrics.
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSTextViewModel(title: "body")],
+            movableFooter: [
+                GDSButtonViewModel(title: "One", style: .primary, buttonAction: .action({})),
+                GDSButtonViewModel(title: "Two", style: .secondary, buttonAction: .action({})),
+                GDSButtonViewModel(title: "Three", style: .secondary, buttonAction: .action({}))
+            ],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        let portrait = CGSize(width: 390, height: 800)
+        let landscape = CGSize(width: 800, height: 220)
+
+        // Portrait: footer is short relative to the screen, so it stays pinned.
+        layout(sut, at: portrait)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 3)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
+
+        // Landscape: footer now exceeds 1/3 of the short viewport, so it is moved
+        // into the scroll view to remain reachable.
+        layout(sut, at: landscape)
+        #expect(sut.isMovableFooterInScrollView == true)
+        #expect(sut.bottomStackView.arrangedSubviews.isEmpty)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 footer
+
+        // Back to portrait: the footer must return to the pinned bottom stack.
+        // Before the fix this reverse transition did not run against the settled
+        // portrait geometry, leaving the footer stranded in the scroll view.
+        layout(sut, at: portrait)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 3)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
+    }
+
     @Test("ContentView with isAccessibilityElement true gets accessibilityRespondsToUserInteraction set")
     func contentView_accessibilityElementRespondsToUserInteraction() {
         // GDSList rows explicitly set isAccessibilityElement = true in createRow(),
