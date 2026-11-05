@@ -127,9 +127,31 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
+    /// The intrinsic height the movable footer will occupy at the current width
+    /// and Dynamic Type size.
+    ///
+    /// Measured with `systemLayoutSizeFitting` rather than read from `frame` so the
+    /// value is independent of which container the footer currently lives in and
+    /// does not depend on a layout pass having settled. Falls back to summed frame
+    /// heights before the first layout, when no width is available yet.
     var movableFooterViewsHeight: CGFloat {
-        movableFooterViews
-            .map(\.frame.height)
+        let targetWidth = containerStackView.frame.width
+        guard targetWidth > 0 else {
+            return movableFooterViews
+                .map(\.frame.height)
+                .reduce(.zero, +)
+        }
+        return movableFooterViews
+            .map { view in
+                view.systemLayoutSizeFitting(
+                    CGSize(
+                        width: targetWidth,
+                        height: UIView.layoutFittingCompressedSize.height
+                    ),
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                ).height
+            }
             .reduce(.zero, +)
     }
     
@@ -185,19 +207,26 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     private func checkBottomStackHeight() {
         let screenHeight = containerStackView.frame.height
-        let bottomStackHeight = bottomStackView.frame.height
-        
-        // if bottom stack covers more than 1/3 of screen
-        if !isMovableFooterInScrollView, bottomStackHeight > screenHeight / 3 {
+        guard screenHeight > 0 else { return }
+        let threshold = screenHeight / 3
+        // Measure the footer the same way in both branches so the move-out and
+        // move-back decisions are symmetric. Previously each branch measured a
+        // different thing (the bottom stack's frame height on the way out, that
+        // plus the footer's height on the way back), in different layout contexts.
+        // That meant a change which grew the footer past the threshold (e.g.
+        // larger Dynamic Type) could not always be reversed when it shrank back,
+        // stranding the footer in the scroll view.
+        let footerHeight = movableFooterViewsHeight
+
+        if !isMovableFooterInScrollView, footerHeight > threshold {
             movableFooterToScrollView()
-        } else if isMovableFooterInScrollView,
-                  screenHeight / 3 > bottomStackHeight + movableFooterViewsHeight {
+        } else if isMovableFooterInScrollView, threshold > footerHeight {
             movableFooterToBottomStackView()
         }
     }
     
     func movableFooterToScrollView() {
-        // remove footnote from bottom stack
+        // remove footer from bottom stack
         for view in movableFooterViews {
             bottomStackView.removeArrangedSubview(view)
             view.removeFromSuperview()

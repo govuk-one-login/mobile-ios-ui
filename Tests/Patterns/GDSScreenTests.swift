@@ -135,6 +135,24 @@ struct GDSScreenTests {
         sut.view.layoutIfNeeded()
     }
 
+    /// Lays the screen out inside a fixed-size window while forcing a Dynamic Type
+    /// content size category, driving the real `viewDidLayoutSubviews` ->
+    /// `checkBottomStackHeight()` path so the movable-footer placement is decided
+    /// against the actual frame heights produced at that text size.
+    private func layout(
+        _ sut: GDSScreen,
+        at size: CGSize,
+        contentSize: UIContentSizeCategory
+    ) {
+        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
+        window.rootViewController = sut
+        window.makeKeyAndVisible()
+        sut.traitOverrides.preferredContentSizeCategory = contentSize
+        sut.view.frame = window.bounds
+        sut.view.setNeedsLayout()
+        sut.view.layoutIfNeeded()
+    }
+
     @Test("""
     Movable footer returns to the bottom stack after a short -> tall layout change \
     (regression: portrait -> landscape -> portrait left it stranded in the scroll view)
@@ -176,6 +194,53 @@ struct GDSScreenTests {
         // Before the fix this reverse transition did not run against the settled
         // portrait geometry, leaving the footer stranded in the scroll view.
         layout(sut, at: portrait)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 3)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
+    }
+
+    @Test("""
+    Movable footer returns to the bottom stack after Dynamic Type grows past the \
+    threshold then shrinks again (regression: large -> small text left it stranded \
+    in the scroll view)
+    """)
+    func movableFooterReturnsToBottomAfterTextShrink() throws {
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSTextViewModel(title: "body")],
+            movableFooter: [
+                GDSButtonViewModel(title: "One", style: .primary, buttonAction: .action({})),
+                GDSButtonViewModel(title: "Two", style: .secondary, buttonAction: .action({})),
+                GDSButtonViewModel(title: "Three", style: .secondary, buttonAction: .action({}))
+            ],
+            footer: []
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        // A viewport short enough that the largest accessibility text pushes the
+        // footer past 1/3 of the screen, but tall enough that at small text the
+        // footer sits comfortably below the threshold. This keeps the Dynamic Type
+        // threshold crossing (not the exact viewport height) the thing under test.
+        let viewport = CGSize(width: 390, height: 640)
+
+        // Small text: the footer stays comfortably under 1/3 of the screen, pinned.
+        layout(sut, at: viewport, contentSize: .small)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 3)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
+
+        // Largest accessibility text: the footer now exceeds 1/3 of the screen and
+        // is moved into the scroll view so it remains reachable.
+        layout(sut, at: viewport, contentSize: .accessibilityExtraExtraExtraLarge)
+        #expect(sut.isMovableFooterInScrollView == true)
+        #expect(sut.bottomStackView.arrangedSubviews.isEmpty)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 footer
+
+        // Back to small text: the footer must return to the pinned bottom stack.
+        // Before the fix the reverse check measured the footer in its scroll-view
+        // layout context (and against unsettled frames), so it never fell back
+        // below the threshold and the footer stayed stranded in the scroll view.
+        layout(sut, at: viewport, contentSize: .small)
         #expect(sut.isMovableFooterInScrollView == false)
         #expect(sut.bottomStackView.arrangedSubviews.count == 3)
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
