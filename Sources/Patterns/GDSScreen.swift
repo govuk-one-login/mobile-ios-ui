@@ -127,34 +127,6 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
-    /// The intrinsic height the movable footer will occupy at the given width
-    /// and the current Dynamic Type size.
-    ///
-    /// Measured with `systemLayoutSizeFitting` rather than read from `frame` so the
-    /// value is independent of which container the footer currently lives in and
-    /// does not depend on a layout pass having settled. Falls back to summed frame
-    /// heights when no usable width is available yet (pre-layout / degenerate
-    /// state), as a best-effort estimate until the next layout pass.
-    func movableFooterViewsHeight(forWidth width: CGFloat) -> CGFloat {
-        guard width > 0 else {
-            return movableFooterViews
-                .map(\.frame.height)
-                .reduce(.zero, +)
-        }
-        return movableFooterViews
-            .map { view in
-                view.systemLayoutSizeFitting(
-                    CGSize(
-                        width: width,
-                        height: UIView.layoutFittingCompressedSize.height
-                    ),
-                    withHorizontalFittingPriority: .required,
-                    verticalFittingPriority: .fittingSizeLevel
-                ).height
-            }
-            .reduce(.zero, +)
-    }
-    
     private(set) var isMovableFooterInScrollView = false
     
     public let viewModel: GDSScreenViewModel
@@ -203,6 +175,33 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
                 equalTo: scrollView.widthAnchor
             )
         ])
+    }
+    
+    /// The intrinsic height the movable footer will occupy at the given width
+    /// and the current Dynamic Type size.
+    ///
+    /// Measured with `systemLayoutSizeFitting` rather than read from `frame` so the
+    /// value is independent of which container the footer currently lives in. Falls
+    /// back to summed frame heights when `width` is non-positive (pre-layout /
+    /// degenerate state), as a best-effort estimate until the next layout pass.
+    func movableFooterViewsHeight(forWidth width: CGFloat) -> CGFloat {
+        guard width > 0 else {
+            return movableFooterViews
+                .map(\.frame.height)
+                .reduce(.zero, +)
+        }
+        return movableFooterViews
+            .map { view in
+                view.systemLayoutSizeFitting(
+                    CGSize(
+                        width: width,
+                        height: UIView.layoutFittingCompressedSize.height
+                    ),
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                ).height
+            }
+            .reduce(.zero, +)
     }
     
     private func checkBottomStackHeight() {
