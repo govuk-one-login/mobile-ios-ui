@@ -21,7 +21,7 @@ private enum PulseAnimation {
 ///  The `instructionsLabel` and `cameraView` are within `view`. The view controller adds the `childView`
 
 public final class ScanningViewController<CaptureSession: SharedScreens.CaptureSession>:
-    BaseViewController,
+    UIViewController,
     VoiceOverFocus,
     AVCaptureVideoDataOutputSampleBufferDelegate {
     
@@ -99,7 +99,7 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         self.previewLayer = captureSession.makePreviewLayer()
         self.requestType = requestType
         self.errorHandler = errorHandler
-        super.init(viewModel: viewModel as? SharedScreensBaseViewModel, nibName: nil, bundle: .module)
+        super.init(nibName: nil, bundle: .module)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -126,6 +126,13 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        setBackButtonTitle(
+            title: GDSLocalisedString(stringKey: "GDSCommonBackButton", bundle: .module),
+            isHidden: false
+        )
+
         if didSetupCapture {
             startScanning()
             return
@@ -136,6 +143,15 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
         updatePreviewLayerFrame()
         addImageOverlay()
         updateImageOverlay()
+    }
+
+    public override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        Task { @MainActor in
+            if let focusView = try? initialVoiceOverView {
+                UIAccessibility.post(notification: .screenChanged, argument: focusView)
+            }
+        }
     }
     
     public override func viewDidAppear(_ animated: Bool) {
