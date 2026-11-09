@@ -144,7 +144,7 @@ extension BaseScreen {
 }
 
 extension UIViewController {
-    func setBackButtonTitle(
+    public func setBackButtonTitle(
         title: GDSLocalisedString?,
         isHidden: Bool = false
     ) {
