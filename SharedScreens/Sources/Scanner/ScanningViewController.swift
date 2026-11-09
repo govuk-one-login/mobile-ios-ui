@@ -133,6 +133,16 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
             isHidden: false
         )
 
+        if let rightBarButtonTitle = viewModel.rightBarButtonTitle {
+            navigationItem.rightBarButtonItem = .init(
+                title: rightBarButtonTitle.value,
+                style: .plain,
+                target: self,
+                action: #selector(dismissScreen)
+            )
+            navigationItem.rightBarButtonItem?.accessibilityIdentifier = "right-bar-button"
+        }
+
         if didSetupCapture {
             startScanning()
             return
@@ -190,6 +200,11 @@ public final class ScanningViewController<CaptureSession: SharedScreens.CaptureS
 
         // Break the preview layer's reference to the session
         previewLayer.session = nil
+    }
+
+    @objc private func dismissScreen() {
+        dismiss(animated: true)
+        viewModel.didDismiss()
     }
 
     /// Keeps the scanner title legible over the darkened camera preview without
