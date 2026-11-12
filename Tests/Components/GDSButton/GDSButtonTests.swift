@@ -125,7 +125,8 @@ struct GDSButtonTests {
         #expect(sut.isSelected)
     }
     
-    @Test func isDisabled() async throws {
+    @Test("Async action enters the loading state without disabling the button")
+    func asyncActionLoadingState() async throws {
         let viewModel = GDSButtonViewModel(
             title: TitleForState(
                 normal: "title"
@@ -147,10 +148,15 @@ struct GDSButtonTests {
         
         #expect(sut.isLoading)
         #expect(sut.configuration?.showsActivityIndicator ?? false)
+        // Loading drives the custom `.loading` state and `.disabled` state.
+        #expect(sut.state.contains(.loading))
+        #expect(sut.state.contains(.disabled))
+        #expect(!sut.isEnabled)
 
         await sut.asyncTask?.value
         #expect(!sut.isLoading)
         #expect(!(sut.configuration?.showsActivityIndicator ?? true))
+        #expect(!sut.state.contains(.loading))
     }
     
     @Test("Button applies maxContentSizeCategory to button and title label when provided")
