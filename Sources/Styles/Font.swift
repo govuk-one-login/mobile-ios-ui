@@ -34,7 +34,7 @@ extension DesignSystem {
             
             public static let callout: UIFont = UIFont(.callout)
             public static let calloutSemiBold: UIFont = UIFont(.callout, weight: .semibold)
-            public static let calloutBold: UIFont = UIFont(.body, weight: .bold)
+            public static let calloutBold: UIFont = UIFont(.callout, weight: .bold)
             
             public static let footnote: UIFont = UIFont(.footnote)
             public static let footnoteSemiBold: UIFont = UIFont(.footnote, weight: .semibold)
