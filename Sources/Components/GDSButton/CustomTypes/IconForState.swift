@@ -8,6 +8,7 @@ public struct IconForState: Sendable, Equatable {
     private let disabled: IconStyle?
     private let selectedHighlighted: IconStyle?
     private let focusedHighlighted: IconStyle?
+    public let loading: IconStyle?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)
@@ -20,7 +21,8 @@ public struct IconForState: Sendable, Equatable {
         focused: IconStyle? = nil,
         disabled: IconStyle? = nil,
         selectedHighlighted: IconStyle? = nil,
-        focusedHighlighted: IconStyle? = nil
+        focusedHighlighted: IconStyle? = nil,
+        loading: IconStyle? = nil
     ) {
         self.normal = normal
         self.highlighted = highlighted
@@ -29,6 +31,7 @@ public struct IconForState: Sendable, Equatable {
         self.disabled = disabled
         self.selectedHighlighted = selectedHighlighted
         self.focusedHighlighted = focusedHighlighted
+        self.loading = loading
     }
     
     public func forState(_ state: UIControl.State) -> IconStyle {
@@ -47,6 +50,8 @@ public struct IconForState: Sendable, Equatable {
             return focused ?? normal
         case .disabled, [.focused, .disabled]:
             return disabled ?? normal
+        case .loading, [.loading, .disabled]:
+            return loading ?? normal
         default:
             return normal
         }

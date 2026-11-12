@@ -49,7 +49,9 @@ public struct TitleForState {
         case .focused:
             return focused ?? normal
         case .disabled, [.focused, .disabled]:
-            return disabled ?? ""
+            return disabled ?? normal
+        case .loading, [.loading, .disabled]:
+            return loading ?? ""
         default:
             return normal
         }

@@ -50,6 +50,8 @@ public struct ColorForState: Equatable {
             return focused ?? normal
         case .disabled, [.focused, .disabled]:
             return disabled ?? normal
+        case .loading, [.loading, .disabled]:
+            return loading ?? disabled ?? normal
         default:
             return normal
         }
