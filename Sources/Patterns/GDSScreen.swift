@@ -127,12 +127,6 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         viewModel.movableFooter.map { configureAsStackView($0) }
     }()
     
-    var movableFooterViewsHeight: CGFloat {
-        movableFooterViews
-            .map(\.frame.height)
-            .reduce(.zero, +)
-    }
-    
     private(set) var isMovableFooterInScrollView = false
     
     public let viewModel: GDSScreenViewModel
@@ -158,10 +152,9 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         // When usesScrollView is false, body content manages its own scrolling
         // so there is no need to move footer items into the scroll view.
         guard viewModel.screenStyle.usesScrollView else { return }
-        // Defer to ensure layout is finished
-        Task {
-            checkBottomStackHeight()
-        }
+        // Running this synchronously / not from detached Task { } makes sure
+        // that the frames read in checkBottomStackHeight() are current.
+        checkBottomStackHeight()
     }
     
     private func setup() {
@@ -184,21 +177,61 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         ])
     }
     
+    /// The intrinsic height the movable footer will occupy at the given width
+    /// and the current Dynamic Type size.
+    ///
+    /// Measured with `systemLayoutSizeFitting` rather than read from `frame` so the
+    /// value is independent of which container the footer currently lives in. Falls
+    /// back to summed frame heights when `width` is non-positive (pre-layout /
+    /// degenerate state), as a best-effort estimate until the next layout pass.
+    func movableFooterViewsHeight(forWidth width: CGFloat) -> CGFloat {
+        guard width > 0 else {
+            return movableFooterViews
+                .map(\.frame.height)
+                .reduce(.zero, +)
+        }
+        return movableFooterViews
+            .map { view in
+                view.systemLayoutSizeFitting(
+                    CGSize(
+                        width: width,
+                        height: UIView.layoutFittingCompressedSize.height
+                    ),
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                ).height
+            }
+            .reduce(.zero, +)
+    }
+    
     private func checkBottomStackHeight() {
-        let screenHeight = containerStackView.frame.height
-        let bottomStackHeight = bottomStackView.frame.height
-        
-        // if bottom stack covers more than 1/3 of screen
-        if !isMovableFooterInScrollView, bottomStackHeight > screenHeight / 3 {
+        // Read the container size once and fold the guards together. We still
+        // bail when there is no usable height (pre-layout) since the threshold is
+        // derived from it. The width is passed through to the measurement helper,
+        // which falls back to summed frame heights as a best-effort estimate if
+        // the width is not yet resolved; the next layout pass recalculates.
+        let size = containerStackView.bounds.size
+        guard size.height > 0 else { return }
+
+        let threshold = size.height / 3
+        // Measure the footer the same way in both branches so the move-out and
+        // move-back decisions are symmetric. Previously each branch measured a
+        // different thing (the bottom stack's frame height on the way out, that
+        // plus the footer's height on the way back), in different layout contexts.
+        // That meant a change which grew the footer past the threshold (e.g.
+        // larger Dynamic Type) could not always be reversed when it shrank back,
+        // stranding the footer in the scroll view.
+        let footerHeight = movableFooterViewsHeight(forWidth: size.width)
+
+        if !isMovableFooterInScrollView, footerHeight > threshold {
             movableFooterToScrollView()
-        } else if isMovableFooterInScrollView,
-                  screenHeight / 3 > bottomStackHeight + movableFooterViewsHeight {
+        } else if isMovableFooterInScrollView, threshold > footerHeight {
             movableFooterToBottomStackView()
         }
     }
     
     func movableFooterToScrollView() {
-        // remove footnote from bottom stack
+        // remove footer from bottom stack
         for view in movableFooterViews {
             bottomStackView.removeArrangedSubview(view)
             view.removeFromSuperview()
@@ -208,6 +241,12 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         for view in movableFooterViews {
             scrollViewInnerStackView.addArrangedSubview(view)
         }
+        
+        // Collapse the empty bottom stack so it stops occupying height under the
+        // container. Leaving it visible-but-empty makes the "should the footer
+        // return?" check over-report the pinned height, and can strand the footer
+        // in scroll view.
+        bottomStackView.isHidden = bottomStackView.arrangedSubviews.isEmpty
         
         isMovableFooterInScrollView = true
     }
@@ -224,7 +263,14 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
             bottomStackView.insertArrangedSubview(view, at: .zero)
         }
         
-        view.layoutIfNeeded()
+        // The stack now has content again, so make sure it is visible.
+        bottomStackView.isHidden = bottomStackView.arrangedSubviews.isEmpty
+        
+        // No explicit layoutIfNeeded(): we've already mutated the arranged
+        // subviews, so the layout is invalidated. Manually calling
+        // layoutIfNeeded() only causes re-entry in this cycle, since this runs
+        // synchronously from viewDidLayoutSubviews. UIKit will render on the
+        // next pass.
         isMovableFooterInScrollView = false
     }
     
