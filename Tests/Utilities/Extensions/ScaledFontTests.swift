@@ -84,6 +84,19 @@ struct ScaledFontTests {
         #expect(resolved.fontDescriptor.symbolicTraits.contains(.traitBold))
     }
 
+    @Test("Token weight is preserved exactly (bold stays bold, not semibold)", arguments: [
+        DesignSystem.Font.Base.footnoteBold,
+        DesignSystem.Font.Base.footnoteSemiBold,
+        DesignSystem.Font.Base.caption1Medium,
+        DesignSystem.Font.Base.body,
+        DesignSystem.Font.Base.bodyBoldMonospaced
+    ])
+    func resolve_preservesExactWeight(token: UIFont) {
+        let resolved = ScaledFont.resolve(uiFont: token, dynamicTypeSize: .large)
+
+        #expect(ScaledFont.weight(of: resolved) == ScaledFont.weight(of: token))
+    }
+
     // MARK: - Design preservation (the monospaced regression guard)
 
     @Test("Monospaced design is preserved when scaling")

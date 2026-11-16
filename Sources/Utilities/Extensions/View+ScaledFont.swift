@@ -8,7 +8,7 @@ enum ScaledFont {
     ///
     /// Tokens are already scaled to the process's size category, so passing them
     /// through `UIFontMetrics` would double-scale. Instead this re-resolves the
-    /// preferred font for the token's text style, then re-applies its traits and
+    /// preferred font for the token's text style, then re-applies its weight and
     /// design.
     static func resolve(
         uiFont: UIFont,
@@ -26,24 +26,15 @@ enum ScaledFont {
         }
 
         let textStyle = UIFont.TextStyle(rawValue: textStyleRaw)
-        var descriptor = UIFontDescriptor.preferredFontDescriptor(
+        // Apply the weight and design the same way the DesignSystem tokens do.
+        // Symbolic traits can't be used: `.traitBold` on a text-style descriptor
+        // resolves to the semibold "emphasized" style, making bold tokens lighter.
+        let descriptor = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: textStyle,
             compatibleWith: traits
         )
-
-        // Re-apply symbolic traits (e.g. bold / italic).
-        if let withTraits = descriptor.withSymbolicTraits(uiFont.fontDescriptor.symbolicTraits) {
-            descriptor = withTraits
-        }
-
-        // Re-apply the design (e.g. monospaced), which symbolic traits don't carry.
-        // Weight is set first because `withDesign` can otherwise reset it.
-        if let design = design(of: uiFont),
-           let withDesign = descriptor
-           .addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: weight(of: uiFont)]])
-           .withDesign(design) {
-            descriptor = withDesign
-        }
+        .addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: weight(of: uiFont)]])
+        .withDesign(design(of: uiFont) ?? .default) ?? uiFont.fontDescriptor
 
         // size: 0 keeps the (correctly scaled) size from the preferred descriptor.
         return UIFont(descriptor: descriptor, size: 0)
