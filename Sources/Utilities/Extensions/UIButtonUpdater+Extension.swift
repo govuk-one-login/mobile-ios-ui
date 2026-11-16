@@ -99,14 +99,6 @@ extension UIButton {
                     return outgoing
                 }
             
-            if #available(iOS 16.0, *) {
-                button.configuration?.activityIndicatorColorTransformer =
-                    UIConfigurationColorTransformer { [weak button] incoming in
-                        guard let button, button.state.contains(.loading) else { return incoming }
-                        return viewModel.style.foregroundColor.forState(button.state)
-                    }
-            }
-            
             if button.state.contains(.loading) {
                 button.configuration?.attributedTitle = nil
                 // `button.state` contains `.loading`, so these resolvers return the
