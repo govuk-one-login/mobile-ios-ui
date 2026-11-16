@@ -24,6 +24,7 @@ class ViewController: UITableViewController {
         case rows
         case lists
         case cards
+        case scaledFont
         // Screen patterns
         case gdsScreen
         case noScrollViewScreen
@@ -41,6 +42,7 @@ class ViewController: UITableViewController {
             case .rows: return "Rows"
             case .lists: return "Lists"
             case .cards: return "Cards"
+            case .scaledFont: return "Scaled Font (SwiftUI)"
             case .gdsScreen: return "GDSScreen"
             case .noScrollViewScreen: return "No Scroll View GDSScreen"
             case .collectionViewScreen: return "Collection View GDSScreen"
@@ -52,7 +54,7 @@ class ViewController: UITableViewController {
 
         var sectionTitle: String {
             switch self {
-            case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards:
+            case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards, .scaledFont:
                 return "Components"
             case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
                 return "Screens & Patterns"
@@ -146,6 +148,8 @@ class ViewController: UITableViewController {
             pushComponentScreen(title: item.title, content: ComponentCatalog.lists)
         case .cards:
             pushComponentScreen(title: item.title, content: ComponentCatalog.cards)
+        case .scaledFont:
+            navigationController?.pushViewController(ScaledFontDemo.makeScreen(), animated: true)
         case .gdsScreen:
             pushGDSScreen()
         case .noScrollViewScreen:
