@@ -231,7 +231,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     }
     
     func movableFooterToScrollView() {
-        // remove footer from bottom stack
+        // remove only the movable footer views from the bottom stack (any fixed footer content stays pinned)
         for view in movableFooterViews {
             bottomStackView.removeArrangedSubview(view)
             view.removeFromSuperview()
@@ -242,7 +242,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
             scrollViewInnerStackView.addArrangedSubview(view)
         }
         
-        // Collapse the empty bottom stack so it stops occupying height under the
+        // Collapse bottom stack if it's empty, so it stops occupying height under the
         // container. Leaving it visible-but-empty makes the "should the footer
         // return?" check over-report the pinned height, and can strand the footer
         // in scroll view.

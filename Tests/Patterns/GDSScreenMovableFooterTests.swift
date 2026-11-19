@@ -97,6 +97,55 @@ struct GDSScreenMovableFooterTests {
     }
 
     @Test("""
+    Only the movable footer moves into the scroll view; fixed footer content stays \
+    pinned in the bottom stack, and both return correctly
+    """)
+    func onlyMovableFooterMovesWhenFooterContentPresent() throws {
+        let movable = [
+            GDSButtonViewModel(title: "One", style: .primary, buttonAction: .action({})),
+            GDSButtonViewModel(title: "Two", style: .secondary, buttonAction: .action({})),
+            GDSButtonViewModel(title: "Three", style: .secondary, buttonAction: .action({}))
+        ]
+        let viewModel = TestGDSScreenViewModel(
+            screenStyle: .top,
+            body: [GDSTextViewModel(title: "body")],
+            movableFooter: movable,
+            footer: [GDSTextViewModel(title: "fixed footer")]
+        )
+        let sut = GDSScreen(viewModel: viewModel)
+
+        let portrait = CGSize(width: 390, height: 800)
+        let landscape = CGSize(width: 800, height: 220)
+
+        // Portrait: movable + fixed footer content all pinned in the bottom stack.
+        layout(sut, at: portrait)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 4) // 3 movable + 1 fixed
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
+
+        // Landscape: only the movable footer moves; the fixed footer stays pinned.
+        layout(sut, at: landscape)
+        #expect(sut.isMovableFooterInScrollView == true)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 1) // fixed footer only
+        #expect(sut.bottomStackView.isHidden == false)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 movable
+        for view in sut.movableFooterViews {
+            #expect(view.superview === sut.scrollViewInnerStackView)
+        }
+        if let fixed = sut.bottomStackView.arrangedSubviews.first {
+            #expect(sut.movableFooterViews.contains { $0 === fixed } == false)
+        }
+
+        // Back to portrait: movable footer returns above the fixed footer, in order.
+        layout(sut, at: portrait)
+        #expect(sut.isMovableFooterInScrollView == false)
+        #expect(sut.bottomStackView.arrangedSubviews.count == 4)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
+        let bottomViews = sut.bottomStackView.arrangedSubviews
+        #expect(Array(bottomViews.prefix(3)) == sut.movableFooterViews)
+    }
+
+    @Test("""
     Movable footer returns to the bottom stack after Dynamic Type grows past the \
     threshold then shrinks again (regression: large -> small text left it stranded \
     in the scroll view)
