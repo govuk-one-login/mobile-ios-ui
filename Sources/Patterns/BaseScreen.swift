@@ -21,6 +21,20 @@ open class BaseScreen: UIViewController {
         }
     }
     
+    /// Whether the system back button displays a text title.
+    ///
+    /// From iOS 26 the back button is a text-less glass chevron, so the title
+    /// only needs to be provided on earlier versions.
+    ///
+    /// Internal and overridable so tests can exercise both behaviours regardless
+    /// of the OS version they run on.
+    var usesTitledBackButton: Bool {
+        if #available(iOS 26.0, *) {
+            return false
+        }
+        return true
+    }
+    
     public init(viewModel: BaseViewModel?, nibName: String? = nil, bundle: Bundle?) {
         self.viewModel = viewModel
         super.init(nibName: nibName, bundle: bundle)
@@ -52,9 +66,7 @@ open class BaseScreen: UIViewController {
     open override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         
-        // From iOS 26 the back button is a text-less glass chevron, so the
-        // title only needs to be provided on earlier versions.
-        guard #unavailable(iOS 26.0),
+        guard usesTitledBackButton,
               let navigationController = parent as? UINavigationController else {
             return
         }
