@@ -45,6 +45,44 @@ open class BaseScreen: UIViewController {
         configureRightBarButtons()
     }
     
+    open override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        
+        // From iOS 26 the back button is a text-less glass chevron, so the
+        // title only needs to be provided on earlier versions.
+        guard #unavailable(iOS 26.0),
+              let navigationController = parent as? UINavigationController else {
+            return
+        }
+        applyBackButtonTitleToPreviousScreen(in: navigationController)
+    }
+    
+    /// UIKit sources a back button's title from the `navigationItem` of the screen
+    /// being returned to, not from the screen being pushed. Setting
+    /// `backButtonTitle` on this screen alone therefore has no effect on its own
+    /// back button, which falls back to a UIKit-provided title that has no
+    /// translation for some languages (e.g. Welsh).
+    ///
+    /// This applies the view model's title to the previous screen so the
+    /// back button uses the app's own localised string.
+    private func applyBackButtonTitleToPreviousScreen(
+        in navigationController: UINavigationController
+    ) {
+        guard let title = viewModel?.backButtonTitle else {
+            return
+        }
+        
+        let stack = navigationController.viewControllers
+        // `willMove(toParent:)` can run before or after this screen is in the stack.
+        let previous: UIViewController?
+        if let index = stack.firstIndex(of: self) {
+            previous = index > 0 ? stack[index - 1] : nil
+        } else {
+            previous = stack.last
+        }
+        previous?.navigationItem.backButtonTitle = title.value
+    }
+    
     open override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         Task { @MainActor in
