@@ -61,6 +61,33 @@ open class BaseScreen: UIViewController {
         applyBackButtonTitleToPreviousScreen(in: navigationController)
     }
     
+    open override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        Task { @MainActor in
+            if let screen = self as? VoiceOverFocus {
+                UIAccessibility.post(
+                    notification: .screenChanged,
+                    argument: try screen.initialVoiceOverView
+                )
+            }
+        }
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        switch viewModel?.didAppear {
+        case .action(let action):
+            action()
+        case .asyncAction(let asyncAction):
+            appearAsyncTask = Task {
+                await asyncAction()
+            }
+        case .none:
+            return
+        }
+    }
+    
     /// UIKit sources a back button's title from the `navigationItem` of the screen
     /// being returned to, not from the screen being pushed. Setting
     /// `backButtonTitle` on this screen alone therefore has no effect on its own
@@ -91,33 +118,6 @@ open class BaseScreen: UIViewController {
             previous = stack.last
         }
         previous?.navigationItem.backButtonTitle = title.value
-    }
-    
-    open override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-        Task { @MainActor in
-            if let screen = self as? VoiceOverFocus {
-                UIAccessibility.post(
-                    notification: .screenChanged,
-                    argument: try screen.initialVoiceOverView
-                )
-            }
-        }
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        switch viewModel?.didAppear {
-        case .action(let action):
-            action()
-        case .asyncAction(let asyncAction):
-            appearAsyncTask = Task {
-                await asyncAction()
-            }
-        case .none:
-            return
-        }
     }
     
     @objc private func dismissScreen() {
