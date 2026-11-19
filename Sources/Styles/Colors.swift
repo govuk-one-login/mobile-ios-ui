@@ -204,11 +204,13 @@ extension DesignSystem {
             public static let pink1 = UIColor.fromHex("#F7DEE5")
             public static let pink2 = UIColor.fromHex("#FFF4FD")
             public static let pink3 = UIColor.fromHex("#FFD8F3")
+            public static let pink4 = UIColor.fromHex("#FBE9F7")
             
             public static let yellow1 = UIColor.fromHex("#FFDD00")
             public static let yellow2 = UIColor.fromHex("#665800")
             public static let yellow3 = UIColor.fromHex("#FBF5B5")
             public static let yellow4 = UIColor.fromHex("#BFA600")
+            public static let yellow5 = UIColor.fromHex("#F7F4E5")
             
             public static let gold1 = UIColor.fromHex("#B89746")
             public static let gold1Alpha25 = UIColor.fromHex("#B89746").withAlphaComponent(0.25)

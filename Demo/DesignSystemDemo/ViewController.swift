@@ -24,12 +24,14 @@ class ViewController: UITableViewController {
         case rows
         case lists
         case cards
+        case scaledFont
         // Screen patterns
         case gdsScreen
         case noScrollViewScreen
         case collectionViewScreen
         case navigationBarButton
         case backgroundColors
+        case qrScanner
 
         var title: String {
             switch self {
@@ -40,20 +42,24 @@ class ViewController: UITableViewController {
             case .rows: return "Rows"
             case .lists: return "Lists"
             case .cards: return "Cards"
+            case .scaledFont: return "Scaled Font (SwiftUI)"
             case .gdsScreen: return "GDSScreen"
             case .noScrollViewScreen: return "No Scroll View GDSScreen"
             case .collectionViewScreen: return "Collection View GDSScreen"
             case .navigationBarButton: return "NavigationBarButton Examples"
             case .backgroundColors: return "Background Colors GDSScreen"
+            case .qrScanner: return "QR Scanner"
             }
         }
 
         var sectionTitle: String {
             switch self {
-            case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards:
+            case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards, .scaledFont:
                 return "Components"
             case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
                 return "Screens & Patterns"
+            case .qrScanner:
+                return "Shared Screens"
             }
         }
     }
@@ -61,7 +67,7 @@ class ViewController: UITableViewController {
     private let sections: [(title: String, items: [MenuItem])] = {
         let grouped = Dictionary(grouping: MenuItem.allCases, by: { $0.sectionTitle })
         // Preserve a stable, intentional section order.
-        return ["Components", "Screens & Patterns"].compactMap { key in
+        return ["Components", "Screens & Patterns", "Shared Screens"].compactMap { key in
             guard let items = grouped[key] else { return nil }
             return (title: key, items: items)
         }
@@ -142,6 +148,8 @@ class ViewController: UITableViewController {
             pushComponentScreen(title: item.title, content: ComponentCatalog.lists)
         case .cards:
             pushComponentScreen(title: item.title, content: ComponentCatalog.cards)
+        case .scaledFont:
+            navigationController?.pushViewController(ScaledFontDemo.makeScreen(), animated: true)
         case .gdsScreen:
             pushGDSScreen()
         case .noScrollViewScreen:
@@ -152,6 +160,8 @@ class ViewController: UITableViewController {
             pushNavigationBarButtonDemo()
         case .backgroundColors:
             pushBackgroundColorsDemo()
+        case .qrScanner:
+            pushQRScannerDemo()
         }
     }
 
@@ -192,6 +202,13 @@ class ViewController: UITableViewController {
     func pushBackgroundColorsDemo() {
         let demo = GDSScreen(viewModel: gdsBackgroundColorsScreenViewModel)
         navigationController?.pushViewController(demo, animated: true)
+    }
+
+    func pushQRScannerDemo() {
+        let screen = QRScannerDemo.makeScreen(present: { [weak self] alert in
+            self?.present(alert, animated: true)
+        })
+        navigationController?.pushViewController(screen, animated: true)
     }
 }
 

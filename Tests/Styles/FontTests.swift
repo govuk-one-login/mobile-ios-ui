@@ -125,6 +125,13 @@ struct FontTests {
         #expect(sut == expectedFont)
     }
     
+    @Test func test_Font_calloutBold() async throws {
+        let expectedFont = UIFont(.callout, weight: .bold)
+        
+        let sut = DesignSystem.Font.Base.calloutBold
+        #expect(sut == expectedFont)
+    }
+    
     @Test func test_Font_footnote() async throws {
         let expectedFont = UIFont(.footnote)
         
