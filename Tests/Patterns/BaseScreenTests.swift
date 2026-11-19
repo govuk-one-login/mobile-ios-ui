@@ -22,6 +22,38 @@ struct BaseScreenTests {
     }
     
     @Test
+    func backButtonTitleIsAppliedToPreviousScreen() {
+        let previous = UIViewController()
+        let sut = BaseScreen(
+            viewModel: TestBaseViewModel(didAppear: nil, didDismiss: nil),
+            bundle: .module
+        )
+        let navigationController = UINavigationController(rootViewController: previous)
+        
+        navigationController.pushViewController(sut, animated: false)
+        
+        if #available(iOS 26.0, *) {
+            #expect(previous.navigationItem.backButtonTitle == nil)
+        } else {
+            #expect(previous.navigationItem.backButtonTitle == "back button")
+        }
+    }
+    
+    @Test
+    func backButtonTitleIsNotAppliedToPreviousScreenWhenNil() {
+        let previous = UIViewController()
+        previous.navigationItem.backButtonTitle = "existing"
+        var viewModel = TestBaseViewModel(didAppear: nil, didDismiss: nil)
+        viewModel.backButtonTitle = nil
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let navigationController = UINavigationController(rootViewController: previous)
+        
+        navigationController.pushViewController(sut, animated: false)
+        
+        #expect(previous.navigationItem.backButtonTitle == "existing")
+    }
+    
+    @Test
     func backButtonContents() throws {
         let viewModel = TestBaseViewModel(
             didAppear: .action({ }),
