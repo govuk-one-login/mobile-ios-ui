@@ -36,6 +36,10 @@ open class BaseScreen: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         
+        // Sets this screen's own `backButtonTitle`, which UIKit uses for the back
+        // button of any screen pushed on top of this one (including non-BaseScreens,
+        // which don't go through `applyBackButtonTitleToPreviousScreen`). Also applies
+        // `hidesBackButton`. Don't remove as redundant with `willMove(toParent:)`.
         setBackButtonTitle(
             title: viewModel?.backButtonTitle,
             isHidden: viewModel?.backButtonIsHidden ?? false
@@ -65,10 +69,16 @@ open class BaseScreen: UIViewController {
     ///
     /// This applies the view model's title to the previous screen so the
     /// back button uses the app's own localised string.
+    ///
+    /// This intentionally overwrites any `backButtonTitle` already set on the
+    /// previous screen (including the one it set for itself in `viewWillAppear`):
+    /// the title of the screen being pushed always wins for its own back button.
+    /// Nothing is applied if the back button is hidden or the view model has no title.
     private func applyBackButtonTitleToPreviousScreen(
         in navigationController: UINavigationController
     ) {
-        guard let title = viewModel?.backButtonTitle else {
+        guard viewModel?.backButtonIsHidden != true,
+              let title = viewModel?.backButtonTitle else {
             return
         }
         

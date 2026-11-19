@@ -54,6 +54,73 @@ struct BaseScreenTests {
     }
     
     @Test
+    func backButtonTitleIsNotAppliedToPreviousScreenWhenBackButtonHidden() {
+        let previous = UIViewController()
+        previous.navigationItem.backButtonTitle = "existing"
+        var viewModel = TestBaseViewModel(didAppear: nil, didDismiss: nil)
+        viewModel.backButtonIsHidden = true
+        let sut = BaseScreen(viewModel: viewModel, bundle: .module)
+        let navigationController = UINavigationController(rootViewController: previous)
+        
+        navigationController.pushViewController(sut, animated: false)
+        
+        #expect(previous.navigationItem.backButtonTitle == "existing")
+    }
+    
+    @Test
+    func backButtonTitleIsAppliedToPreviousScreenWhenSetViaSetViewControllers() {
+        let first = UIViewController()
+        let previous = UIViewController()
+        let sut = BaseScreen(
+            viewModel: TestBaseViewModel(didAppear: nil, didDismiss: nil),
+            bundle: .module
+        )
+        let navigationController = UINavigationController()
+        
+        navigationController.setViewControllers([first, previous, sut], animated: false)
+        
+        if #available(iOS 26.0, *) {
+            #expect(previous.navigationItem.backButtonTitle == nil)
+        } else {
+            #expect(previous.navigationItem.backButtonTitle == "back button")
+        }
+        #expect(first.navigationItem.backButtonTitle == nil)
+    }
+    
+    @Test
+    func backButtonTitleDoesNotCrashWhenScreenIsRoot() {
+        let sut = BaseScreen(
+            viewModel: TestBaseViewModel(didAppear: nil, didDismiss: nil),
+            bundle: .module
+        )
+        
+        let navigationController = UINavigationController(rootViewController: sut)
+        
+        #expect(navigationController.viewControllers == [sut])
+    }
+    
+    @Test
+    func backButtonTitleIsReappliedAfterPopAndRepush() {
+        let previous = UIViewController()
+        let sut = BaseScreen(
+            viewModel: TestBaseViewModel(didAppear: nil, didDismiss: nil),
+            bundle: .module
+        )
+        let navigationController = UINavigationController(rootViewController: previous)
+        navigationController.pushViewController(sut, animated: false)
+        
+        navigationController.popViewController(animated: false)
+        previous.navigationItem.backButtonTitle = "changed"
+        navigationController.pushViewController(sut, animated: false)
+        
+        if #available(iOS 26.0, *) {
+            #expect(previous.navigationItem.backButtonTitle == "changed")
+        } else {
+            #expect(previous.navigationItem.backButtonTitle == "back button")
+        }
+    }
+    
+    @Test
     func backButtonContents() throws {
         let viewModel = TestBaseViewModel(
             didAppear: .action({ }),
