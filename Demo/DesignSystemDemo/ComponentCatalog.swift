@@ -52,9 +52,8 @@ enum ComponentCatalog {
                     title: "There is a problem",
                     titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .center,
-                    accessibilityTraits: .header,
-                    verticalPadding: .bottom(8)
-                )
+                    accessibilityTraits: .header
+                ),
             ),
             GDSErrorIconTitleViewModel(
                 icon: .warning,
@@ -62,9 +61,19 @@ enum ComponentCatalog {
                     title: "There is a problem",
                     titleFont: DesignSystem.Font.Base.title1Bold,
                     alignment: .center,
-                    accessibilityTraits: UIAccessibilityTraits.none,
-                    verticalPadding: .bottom(8)
-                )
+                    accessibilityTraits: UIAccessibilityTraits.none
+                ),
+            ),
+            GDSErrorIconTitleViewModel(
+                icon: .warning,
+                errorTitle: GDSTextViewModel(
+                    title: "Top and leading padding was applied",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .center,
+                    accessibilityTraits: UIAccessibilityTraits.none
+                ),
+                verticalPadding: .top(40),
+                horizontalPadding: .leading(32)
             )
         ]
     }
