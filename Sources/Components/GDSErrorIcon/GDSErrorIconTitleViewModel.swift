@@ -9,8 +9,8 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
     
     public var accessibilityIdentifier: String?
     public var accessibilityTraits: UIAccessibilityTraits?
-    public var verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default)
-    public var horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
+    public var verticalPadding: VerticalPadding?
+    public var horizontalPadding: HorizontalPadding?
     public var renderedIconHeight: CGFloat {
         iconHeight + DesignSystem.Size.GDSErrorIcon.sfSymbolPadding
     }
@@ -24,13 +24,17 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
         iconHeight: CGFloat = DesignSystem.Size.GDSErrorIcon.iconTargetHeight,
         errorTitle: GDSTextViewModel,
         accessibilityIdentifier: String? = nil,
-        accessibilityTraits: UIAccessibilityTraits? = nil
+        accessibilityTraits: UIAccessibilityTraits? = nil,
+        verticalPadding: VerticalPadding? = .vertical(DesignSystem.Spacing.default),
+        horizontalPadding: HorizontalPadding? = .horizontal(DesignSystem.Spacing.default)
     ) {
         self.icon = icon
         self.iconHeight = iconHeight
         self.errorTitle = errorTitle
         self.accessibilityIdentifier = accessibilityIdentifier
         self.accessibilityTraits = accessibilityTraits
+        self.verticalPadding = verticalPadding
+        self.horizontalPadding = horizontalPadding
     }
   
     public init(
@@ -50,16 +54,16 @@ public struct GDSErrorIconTitleViewModel: ContentViewModel {
             titleFont: titleFont,
             textColor: textColor,
             alignment: alignment,
-            accessibilityTraits: accessibilityTraits,
-            verticalPadding: verticalPadding,
-            horizontalPadding: horizontalPadding
+            accessibilityTraits: accessibilityTraits
         )
         self.init(
             icon: icon,
             iconHeight: iconHeight,
             errorTitle: titleViewModel,
             accessibilityIdentifier: accessibilityIdentifier,
-            accessibilityTraits: accessibilityTraits
+            accessibilityTraits: accessibilityTraits,
+            verticalPadding: verticalPadding,
+            horizontalPadding: horizontalPadding
         )
     }
 }
