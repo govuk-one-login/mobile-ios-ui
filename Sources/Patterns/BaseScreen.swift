@@ -29,10 +29,7 @@ open class BaseScreen: UIViewController {
     /// Internal and overridable so tests can exercise both behaviours regardless
     /// of the OS version they run on.
     var usesTitledBackButton: Bool {
-        if #available(iOS 26.0, *) {
-            return false
-        }
-        return true
+        Self.usesTitledBackButton(for: ProcessInfo.processInfo.operatingSystemVersion)
     }
     
     public init(viewModel: BaseViewModel?, nibName: String? = nil, bundle: Bundle?) {
@@ -145,6 +142,11 @@ open class BaseScreen: UIViewController {
         case .none:
             return
         }
+    }
+    
+    /// Takes the OS version as a parameter so both outcomes can be tested on any OS.
+    static func usesTitledBackButton(for version: OperatingSystemVersion) -> Bool {
+        version.majorVersion < 26
     }
 }
 

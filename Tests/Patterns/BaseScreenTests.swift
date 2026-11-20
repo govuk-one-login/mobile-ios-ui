@@ -27,18 +27,28 @@ struct BaseScreenTests {
     // pre-iOS 26 (titled) and iOS 26+ (text-less) behaviours are exercised whatever
     // OS version the tests run on.
     
+    @Test(arguments: [
+        (OperatingSystemVersion(majorVersion: 17, minorVersion: 0, patchVersion: 0), true),
+        (OperatingSystemVersion(majorVersion: 18, minorVersion: 6, patchVersion: 0), true),
+        (OperatingSystemVersion(majorVersion: 25, minorVersion: 9, patchVersion: 9), true),
+        (OperatingSystemVersion(majorVersion: 26, minorVersion: 0, patchVersion: 0), false),
+        (OperatingSystemVersion(majorVersion: 27, minorVersion: 2, patchVersion: 0), false)
+    ])
+    func usesTitledBackButtonDependsOnOSVersion(version: OperatingSystemVersion, expected: Bool) {
+        #expect(BaseScreen.usesTitledBackButton(for: version) == expected)
+    }
+    
     @Test
-    func usesTitledBackButtonMatchesOSVersion() {
+    func usesTitledBackButtonUsesCurrentOSVersion() {
         let sut = BaseScreen(
             viewModel: TestBaseViewModel(didAppear: nil, didDismiss: nil),
             bundle: .module
         )
         
-        if #available(iOS 26.0, *) {
-            #expect(sut.usesTitledBackButton == false)
-        } else {
-            #expect(sut.usesTitledBackButton == true)
-        }
+        let expected = BaseScreen.usesTitledBackButton(
+            for: ProcessInfo.processInfo.operatingSystemVersion
+        )
+        #expect(sut.usesTitledBackButton == expected)
     }
     
     @Test
