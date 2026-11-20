@@ -21,6 +21,17 @@ open class BaseScreen: UIViewController {
         }
     }
     
+    /// Whether the system back button displays a text title.
+    ///
+    /// From iOS 26 the back button is a text-less glass chevron, so the title
+    /// only needs to be provided on earlier versions.
+    ///
+    /// Internal and overridable so tests can exercise both behaviours regardless
+    /// of the OS version they run on.
+    var usesTitledBackButton: Bool {
+        Self.usesTitledBackButton(for: ProcessInfo.processInfo.operatingSystemVersion)
+    }
+    
     public init(viewModel: BaseViewModel?, nibName: String? = nil, bundle: Bundle?) {
         self.viewModel = viewModel
         super.init(nibName: nibName, bundle: bundle)
@@ -36,6 +47,10 @@ open class BaseScreen: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: false)
         
+        // Sets this screen's own `backButtonTitle`, which UIKit uses for the back
+        // button of any screen pushed on top of this one (including non-BaseScreens,
+        // which don't go through `applyBackButtonTitleToPreviousScreen`). Also applies
+        // `hidesBackButton`. Don't remove as redundant with `willMove(toParent:)`.
         setBackButtonTitle(
             title: viewModel?.backButtonTitle,
             isHidden: viewModel?.backButtonIsHidden ?? false
@@ -43,6 +58,16 @@ open class BaseScreen: UIViewController {
         
         configureLeftBarButtons()
         configureRightBarButtons()
+    }
+    
+    open override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        
+        guard usesTitledBackButton,
+              let navigationController = parent as? UINavigationController else {
+            return
+        }
+        applyBackButtonTitleToPreviousScreen(in: navigationController)
     }
     
     open override func viewIsAppearing(_ animated: Bool) {
@@ -72,6 +97,38 @@ open class BaseScreen: UIViewController {
         }
     }
     
+    /// UIKit sources a back button's title from the `navigationItem` of the screen
+    /// being returned to, not from the screen being pushed. Setting
+    /// `backButtonTitle` on this screen alone therefore has no effect on its own
+    /// back button, which falls back to a UIKit-provided title that has no
+    /// translation for some languages (e.g. Welsh).
+    ///
+    /// This applies the view model's title to the previous screen so the
+    /// back button uses the app's own localised string.
+    ///
+    /// This intentionally overwrites any `backButtonTitle` already set on the
+    /// previous screen (including the one it set for itself in `viewWillAppear`):
+    /// the title of the screen being pushed always wins for its own back button.
+    /// Nothing is applied if the back button is hidden or the view model has no title.
+    private func applyBackButtonTitleToPreviousScreen(
+        in navigationController: UINavigationController
+    ) {
+        guard viewModel?.backButtonIsHidden != true,
+              let title = viewModel?.backButtonTitle else {
+            return
+        }
+        
+        let stack = navigationController.viewControllers
+        // `willMove(toParent:)` can run before or after this screen is in the stack.
+        let previous: UIViewController?
+        if let index = stack.firstIndex(of: self) {
+            previous = index > 0 ? stack[index - 1] : nil
+        } else {
+            previous = stack.last
+        }
+        previous?.navigationItem.backButtonTitle = title.value
+    }
+    
     @objc private func dismissScreen() {
         self.dismiss(animated: true)
         
@@ -85,6 +142,11 @@ open class BaseScreen: UIViewController {
         case .none:
             return
         }
+    }
+    
+    /// Takes the OS version as a parameter so both outcomes can be tested on any OS.
+    static func usesTitledBackButton(for version: OperatingSystemVersion) -> Bool {
+        version.majorVersion < 26
     }
 }
 
