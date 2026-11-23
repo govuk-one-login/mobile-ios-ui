@@ -23,9 +23,34 @@ extension ComponentCatalog {
                 action: .action({ controlledButton.isEnabledToggle() })
             ),
             controlledButton,
-            button(title: "Primary Button", style: .primary),
-            button(title: "Secondary Button", style: .secondary),
-            button(title: "Secondary Button with icon", icon: .arrowUpRight, style: .secondaryLeading),
+            button(
+                title: "Primary Button",
+                style: .primary,
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
+            button(
+                title: "Secondary Button",
+                style: .secondary,
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
+            button(
+                title: TitleForState(normal: "Secondary Button with icon", loading: "Loading"),
+                icon: .arrowUpRight,
+                style: .secondaryLeading.adjusting(
+                    foregroundColor: ColorForState(
+                        normal: DesignSystem.Color.Buttons.secondaryForeground,
+                        focused: nil,
+                        loading: DesignSystem.Color.Text.primary
+                    ),
+                ),
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
             button(
                 title: "Outlined Button",
                 style: .secondaryOutlined
