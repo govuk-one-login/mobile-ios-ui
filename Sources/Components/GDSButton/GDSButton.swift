@@ -82,6 +82,19 @@ public final class GDSButton: UIButton, ContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.preferredContentSizeCategory
+                != traitCollection.preferredContentSizeCategory else { return }
+        // Dynamic Type re-renders the title in place but does not invalidate the
+        // button's cached intrinsic size, leaving its frame (and any container
+        // measuring it, e.g. GDSScreen's footer) a text size behind. Invalidate once
+        // this view has received the new trait collection, which also dirties the
+        // superview's layout.
+        setNeedsUpdateConfiguration()
+        invalidateIntrinsicContentSize()
+    }
+    
     private func createAction(viewModel: GDSButtonViewModel, action: @escaping () -> Void) -> UIAction {
         UIAction(
             handler: { [unowned self] _ in

@@ -1,6 +1,14 @@
 import UIKit
 
 extension UIView {
+    /// Invalidates the intrinsic content size of this view and all descendants, and
+    /// marks them as needing layout.
+    func invalidateIntrinsicContentSizeRecursively() {
+        invalidateIntrinsicContentSize()
+        setNeedsLayout()
+        subviews.forEach { $0.invalidateIntrinsicContentSizeRecursively() }
+    }
+    
     public func bindToSuperviewEdges(
         edges: NSDirectionalRectEdge = .all,
         padding: CGFloat = 0
