@@ -58,4 +58,27 @@ struct GDSButtonStateColorTests {
         let button = createButton(style: .destructive, highlighted: true)
         #expect(button.configuration?.background.backgroundColor == DesignSystem.Color.Buttons.destructiveBackgroundHighlighted)
     }
+    
+    // MARK: - Loading state
+    
+    @Test("ColorForState returns the configured loading colour for the .loading state")
+    func loadingColourResolved() {
+        let loadingColour = UIColor.magenta
+        let sut = ColorForState(
+            normal: .black,
+            focused: .blue,
+            loading: loadingColour
+        )
+        #expect(sut.forState(.loading) == loadingColour)
+    }
+    
+    @Test("ColorForState falls back to normal for .loading when no loading colour is set")
+    func loadingColourFallsBackToNormal() {
+        let normalColour = UIColor.black
+        let sut = ColorForState(
+            normal: normalColour,
+            focused: .blue
+        )
+        #expect(sut.forState(.loading) == normalColour)
+    }
 }
