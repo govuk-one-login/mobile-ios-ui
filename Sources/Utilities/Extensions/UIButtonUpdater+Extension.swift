@@ -78,24 +78,42 @@ extension UIButton {
         return { button in
             button.general(viewModel: viewModel)
             
-            let title = button.titleWithIcon(viewModel: viewModel)
+            // Alignment is state-independent: both the loading and non-loading
+            // paths apply the same value, so it is set once up front. If a future
+            // state ever needs a different alignment, reassign it within that branch.
+            button.configuration?.titleAlignment = viewModel.style.alignment
+            button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
             
-            if let button = button as? GDSButton,
-               button.state.contains(.disabled) && button.isLoading {
-                button.configuration?.titleAlignment = .center
-                button.contentHorizontalAlignment = .center
+            // State-aware foreground transformer. `borderedProminent()` installs a
+            // default transformer that re-dims content to the system disabled colour
+            // at render time. Because loading is tied to `.disabled`, that dimming
+            // overrides the explicit loading colour resolved from `ColorForState`.
+            // This transformer forces the explicit loading colour when `.loading` is
+            // present, and otherwise returns the incoming attributes untouched so the
+            // system's free disabled dimming is preserved for genuine disabled buttons.
+            button.configuration?.titleTextAttributesTransformer =
+                UIConfigurationTextAttributesTransformer { [weak button] incoming in
+                    guard let button, button.state.contains(.loading) else { return incoming }
+                    var outgoing = incoming
+                    outgoing.foregroundColor = viewModel.style.foregroundColor.forState(button.state)
+                    return outgoing
+                }
+            
+            if button.state.contains(.loading) {
                 button.configuration?.attributedTitle = nil
-                button.configuration?.title = nil
-                button.configuration?.imagePlacement = .top
-                button.accessibilityLabel = "Loading"
+                // `button.state` contains `.loading`, so these resolvers return the
+                // loading value (falling back to normal when none is configured).
+                button.configuration?.title = viewModel.title.forState(button.state)
+                button.configuration?.showsActivityIndicator = true
+                button.configuration?.imagePlacement = .leading
+                button.configuration?.imagePadding = DesignSystem.Spacing.small
+                button.accessibilityLabel = viewModel.title.loading ?? "Loading"
                 button.accessibilityHint = nil
             } else {
-                var string = title
-                string.font = viewModel.style.font
-                string.foregroundColor = viewModel.style.foregroundColor.forState(button.state)
-                button.configuration?.attributedTitle = string
-                button.configuration?.titleAlignment = viewModel.style.alignment
-                button.contentHorizontalAlignment = .init(titleAlignment: viewModel.style.alignment)
+                var attributedString = button.titleWithIcon(viewModel: viewModel)
+                attributedString.font = viewModel.style.font
+                attributedString.foregroundColor = viewModel.style.foregroundColor.forState(button.state)
+                button.configuration?.attributedTitle = attributedString
                 button.titleLabel?.textAlignment = .init(titleAlignment: viewModel.style.alignment)
                 button.accessibilityLabel = nil
                 
