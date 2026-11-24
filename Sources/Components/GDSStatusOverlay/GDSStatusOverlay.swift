@@ -2,6 +2,7 @@ import UIKit
 
 public final class GDSStatusOverlay: UIView, ContentView {
     private let viewModel: GDSStatusOverlayViewModel
+    private let scheduler: DelayedScheduler
     
     private lazy var iconView: UIImageView = {
         let font = viewModel.iconStyle?.font ?? UIFont.systemFont(ofSize: 65, weight: .thin)
@@ -48,8 +49,13 @@ public final class GDSStatusOverlay: UIView, ContentView {
         return stack
     }()
     
-    public init(viewModel: GDSStatusOverlayViewModel) {
+    public convenience init(viewModel: GDSStatusOverlayViewModel) {
+        self.init(viewModel: viewModel, scheduler: DelayedSchedulers.mainQueue)
+    }
+    
+    init(viewModel: GDSStatusOverlayViewModel, scheduler: @escaping DelayedScheduler) {
         self.viewModel = viewModel
+        self.scheduler = scheduler
         super.init(frame: .zero)
         
         addSubview(stackView)
@@ -81,21 +87,21 @@ public final class GDSStatusOverlay: UIView, ContentView {
         ])
         
         // Ensure VoiceOver announces the overlay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+        scheduler(0.1, DispatchWorkItem { [weak self] in
             UIAccessibility.post(notification: .announcement, argument: self?.viewModel.accessibilityLabel)
-        }
+        })
         
         // Make view the component is being displayed on top of not interactive
         view.isUserInteractionEnabled = false
         // Hide views elements from VoiceOver
         view.accessibilityElementsHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+        scheduler(duration, DispatchWorkItem { [weak self] in
             self?.removeFromSuperview()
             // Make view interactive again
             view.isUserInteractionEnabled = true
             // Restore accessibility
             view.accessibilityElementsHidden = false
-        }
+        })
     }
 }

@@ -55,19 +55,31 @@ struct GDSStatusOverlayTests {
     
     @Test("Test configuration used to present status overlay")
     func presentationOfComponent() {
-        let statusOverlay = GDSStatusOverlay(viewModel: viewModel)
+        let scheduler = ManualScheduler()
+        let statusOverlay = GDSStatusOverlay(viewModel: viewModel, scheduler: scheduler.schedule)
         let parentView = UIView()
         statusOverlay.present(onView: parentView)
         
-        let presentation = parentView.subviews.first
+        #expect(parentView.subviews.first === statusOverlay)
+        #expect(statusOverlay.translatesAutoresizingMaskIntoConstraints == false)
+        #expect(parentView.isUserInteractionEnabled == false)
+        #expect(parentView.accessibilityElementsHidden == true)
+        #expect(scheduler.delays == [0.1, 4])
+    }
+    
+    @Test("Status overlay is removed and the parent view restored after the duration")
+    func dismissalOfComponent() {
+        let scheduler = ManualScheduler()
+        let statusOverlay = GDSStatusOverlay(viewModel: viewModel, scheduler: scheduler.schedule)
+        let parentView = UIView()
+        statusOverlay.present(onView: parentView, duration: 2)
         
-        #expect(presentation?.translatesAutoresizingMaskIntoConstraints == false)
+        #expect(scheduler.delays == [0.1, 2])
+        scheduler.run(delay: 2)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            #expect(parentView.subviews.first == nil)
-            #expect(presentation?.isUserInteractionEnabled == true)
-            #expect(presentation?.accessibilityElementsHidden == false)
-        }
+        #expect(parentView.subviews.isEmpty)
+        #expect(parentView.isUserInteractionEnabled == true)
+        #expect(parentView.accessibilityElementsHidden == false)
     }
     
     @Test("StatusOverlay has custom accessibility identifier")
