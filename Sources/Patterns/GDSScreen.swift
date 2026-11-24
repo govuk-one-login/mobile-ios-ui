@@ -146,6 +146,17 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         setup()
     }
     
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Movable footer logic only applies when using a scroll view.
+        // When usesScrollView is false, body content manages its own scrolling
+        // so there is no need to move footer items into the scroll view.
+        guard viewModel.screenStyle.usesScrollView else { return }
+        // Running this synchronously / not from detached Task { } makes sure
+        // that the frames read in checkBottomStackHeight() are current.
+        checkBottomStackHeight()
+    }
+    
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard previousTraitCollection?.preferredContentSizeCategory
@@ -157,17 +168,6 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         // forces a fresh measurement, e.g. being re-parented). Force re-measurement.
         containerStackView.invalidateIntrinsicContentSizeRecursively()
         view.setNeedsLayout()
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // Movable footer logic only applies when using a scroll view.
-        // When usesScrollView is false, body content manages its own scrolling
-        // so there is no need to move footer items into the scroll view.
-        guard viewModel.screenStyle.usesScrollView else { return }
-        // Running this synchronously / not from detached Task { } makes sure
-        // that the frames read in checkBottomStackHeight() are current.
-        checkBottomStackHeight()
     }
     
     private func setup() {
