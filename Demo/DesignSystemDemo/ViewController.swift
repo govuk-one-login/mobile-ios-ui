@@ -30,6 +30,7 @@ class ViewController: UITableViewController {
         case noScrollViewScreen
         case collectionViewScreen
         case navigationBarButton
+        case backButtonTitle
         case backgroundColors
         case qrScanner
 
@@ -47,6 +48,7 @@ class ViewController: UITableViewController {
             case .noScrollViewScreen: return "No Scroll View GDSScreen"
             case .collectionViewScreen: return "Collection View GDSScreen"
             case .navigationBarButton: return "NavigationBarButton Examples"
+            case .backButtonTitle: return "Back Button Title (iOS < 26)"
             case .backgroundColors: return "Background Colors GDSScreen"
             case .qrScanner: return "QR Scanner"
             }
@@ -56,7 +58,7 @@ class ViewController: UITableViewController {
             switch self {
             case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards, .scaledFont:
                 return "Components"
-            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
+            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backButtonTitle, .backgroundColors:
                 return "Screens & Patterns"
             case .qrScanner:
                 return "Shared Screens"
@@ -158,6 +160,11 @@ class ViewController: UITableViewController {
             pushCollectionViewGDSScreen()
         case .navigationBarButton:
             pushNavigationBarButtonDemo()
+        case .backButtonTitle:
+            navigationController?.pushViewController(
+                BackButtonTitleDemoViewController(style: .insetGrouped),
+                animated: true
+            )
         case .backgroundColors:
             pushBackgroundColorsDemo()
         case .qrScanner:
