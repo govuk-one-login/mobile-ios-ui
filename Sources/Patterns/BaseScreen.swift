@@ -35,6 +35,7 @@ open class BaseScreen: UIViewController {
     public init(viewModel: BaseViewModel?, nibName: String? = nil, bundle: Bundle?) {
         self.viewModel = viewModel
         super.init(nibName: nibName, bundle: bundle)
+        applyBackButtonDisplayMode()
     }
     
     @available(*, unavailable, renamed: "init(viewModel:)")
@@ -56,12 +57,17 @@ open class BaseScreen: UIViewController {
             isHidden: viewModel?.backButtonIsHidden ?? false
         )
         
+        // From iOS 26 the back button should be icon-only, so stop UIKit showing
+        // the title set above on the back button of screens pushed on top of this one.
+        applyBackButtonDisplayMode()
+        
         configureLeftBarButtons()
         configureRightBarButtons()
     }
     
     open override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
+        applyBackButtonDisplayMode()
         
         guard usesTitledBackButton,
               let navigationController = parent as? UINavigationController else {
@@ -127,6 +133,15 @@ open class BaseScreen: UIViewController {
             previous = stack.last
         }
         previous?.navigationItem.backButtonTitle = title.value
+    }
+    
+    /// From iOS 26 the back button is icon-only, so ask UIKit not to show a title
+    /// on this screen's own back button. Applied early (init / `willMove`) because
+    /// the navigation bar builds the back item when the screen is pushed.
+    private func applyBackButtonDisplayMode() {
+        if !usesTitledBackButton {
+            navigationItem.backButtonDisplayMode = .minimal
+        }
     }
     
     @objc private func dismissScreen() {

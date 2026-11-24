@@ -192,6 +192,42 @@ struct BaseScreenTests {
         #expect(parent.navigationItem.backButtonTitle == nil)
     }
     
+    // MARK: - Back button display mode (iOS 26+ icon-only)
+    
+    @Test
+    func backButtonDisplayModeIsMinimalFromInitWithoutTitledBackButton() {
+        // Checked straight after init, before any push or appearance, because the
+        // navigation bar builds the back item when the screen is pushed.
+        let sut = BackButtonStyleScreen(usesTitledBackButton: false)
+        
+        #expect(sut.navigationItem.backButtonDisplayMode == .minimal)
+    }
+    
+    @Test
+    func backButtonDisplayModeIsDefaultWithTitledBackButton() {
+        let previous = UIViewController()
+        let sut = BackButtonStyleScreen(usesTitledBackButton: true)
+        let navigationController = UINavigationController(rootViewController: previous)
+        
+        navigationController.pushViewController(sut, animated: false)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        #expect(sut.navigationItem.backButtonDisplayMode == .default)
+    }
+    
+    @Test
+    func backButtonTitleIsKeptWhenDisplayModeIsMinimal() {
+        let sut = BackButtonStyleScreen(usesTitledBackButton: false)
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // The title is still set (e.g. for VoiceOver), it just isn't displayed.
+        #expect(sut.navigationItem.backButtonDisplayMode == .minimal)
+        #expect(sut.navigationItem.backButtonTitle == "back button")
+    }
+    
     @Test
     func backButtonContents() throws {
         let viewModel = TestBaseViewModel(
