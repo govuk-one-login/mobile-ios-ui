@@ -4,7 +4,6 @@ import UIKit
 extension ComponentCatalog {
 
     // MARK: - Buttons
-    // swiftlint:disable:next function_body_length
     static func buttons(present: @escaping (UIViewController) -> Void) -> [any ContentViewModel] {
         let controlledButton = button(
             title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
