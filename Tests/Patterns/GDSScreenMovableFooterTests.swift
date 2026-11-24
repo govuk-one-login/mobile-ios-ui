@@ -7,14 +7,11 @@ import UIKit
 @MainActor
 struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
     @Test("""
-    Movable footer returns to the bottom stack after a short -> tall layout change \
-    (regression: portrait -> landscape -> portrait left it stranded in the scroll view)
+    Movable footer returns to the bottom stack after a rotation into the split layout and \
+    back (regression: portrait -> landscape -> portrait left it stranded in the scroll view)
     """)
     func movableFooterReturnsToBottomAfterRotation() throws {
-        // Several footer items so the footer comfortably exceeds 1/3 of a short
-        // (landscape-height) viewport but stays well under 1/3 of a tall
-        // (portrait-height) viewport, making the threshold crossing deterministic
-        // without depending on exact per-button metrics.
+        // Several footer items, so the movable footer is clearly more than one view.
         let viewModel = TestGDSScreenViewModel(
             screenStyle: .top,
             body: [GDSTextViewModel(title: "body")],
@@ -28,9 +25,8 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         let sut = GDSScreen(viewModel: viewModel)
 
         let portrait = CGSize(width: 390, height: 800)
-        // A short viewport, as landscape gives. It is kept taller than it is wide: a wider
-        // window uses the split layout, where the movable footer never moves into the body.
-        let shortViewport = CGSize(width: 390, height: 220)
+        // Wider than tall, so the screen uses the split layout.
+        let landscape = CGSize(width: 800, height: 220)
 
         // Portrait: footer is short relative to the screen, so it stays pinned.
         layout(sut, at: portrait)
@@ -38,25 +34,27 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         #expect(sut.bottomStackView.arrangedSubviews.count == 3)
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
 
-        // Landscape: footer now exceeds 1/3 of the short viewport, so it is moved
-        // into the scroll view to remain reachable.
-        layout(sut, at: shortViewport)
-        #expect(sut.isMovableFooterInScrollView == true)
+        // Landscape: the screen splits. The movable footer sits in the trailing half, in
+        // its own scroll view, and never moves into the body's scroll view.
+        layout(sut, at: landscape)
+        #expect(sut.isInSplitLayout == true)
+        #expect(sut.isMovableFooterInScrollView == false)
         #expect(sut.bottomStackView.arrangedSubviews.isEmpty)
-        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 footer
+        #expect(sut.splitMovableStackView.arrangedSubviews.count == 3)
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
 
         // Back to portrait: the footer must return to the pinned bottom stack.
-        // Before the fix this reverse transition did not run against the settled
-        // portrait geometry, leaving the footer stranded in the scroll view.
         layout(sut, at: portrait)
+        #expect(sut.isInSplitLayout == false)
         #expect(sut.isMovableFooterInScrollView == false)
         #expect(sut.bottomStackView.arrangedSubviews.count == 3)
+        #expect(sut.splitMovableStackView.arrangedSubviews.isEmpty)
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
     }
 
     @Test("""
-    Only the movable footer moves into the scroll view; fixed footer content stays \
-    pinned in the bottom stack, and both return correctly
+    Only the movable footer moves in the split layout (into the trailing half's scroll \
+    view); fixed footer content stays pinned in the bottom stack, and both return correctly
     """)
     func onlyMovableFooterMovesWhenFooterContentPresent() throws {
         let movable = [
@@ -73,9 +71,8 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         let sut = GDSScreen(viewModel: viewModel)
 
         let portrait = CGSize(width: 390, height: 800)
-        // A short viewport, as landscape gives. It is kept taller than it is wide: a wider
-        // window uses the split layout, where the movable footer never moves into the body.
-        let shortViewport = CGSize(width: 390, height: 220)
+        // Wider than tall, so the screen uses the split layout.
+        let landscape = CGSize(width: 800, height: 220)
 
         // Portrait: movable + fixed footer content all pinned in the bottom stack.
         layout(sut, at: portrait)
@@ -83,14 +80,16 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         #expect(sut.bottomStackView.arrangedSubviews.count == 4) // 3 movable + 1 fixed
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
 
-        // Landscape: only the movable footer moves; the fixed footer stays pinned.
-        layout(sut, at: shortViewport)
-        #expect(sut.isMovableFooterInScrollView == true)
+        // Landscape: only the movable footer moves, into the trailing half's scroll view;
+        // the fixed footer stays pinned beneath it.
+        layout(sut, at: landscape)
+        #expect(sut.isInSplitLayout == true)
+        #expect(sut.isMovableFooterInScrollView == false)
         #expect(sut.bottomStackView.arrangedSubviews.count == 1) // fixed footer only
         #expect(sut.bottomStackView.isHidden == false)
-        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 movable
+        #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
         for view in sut.movableFooterViews {
-            #expect(view.superview === sut.scrollViewInnerStackView)
+            #expect(view.superview === sut.splitMovableStackView)
         }
         if let fixed = sut.bottomStackView.arrangedSubviews.first {
             #expect(sut.movableFooterViews.contains { $0 === fixed } == false)
@@ -98,6 +97,7 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
 
         // Back to portrait: movable footer returns above the fixed footer, in order.
         layout(sut, at: portrait)
+        #expect(sut.isInSplitLayout == false)
         #expect(sut.isMovableFooterInScrollView == false)
         #expect(sut.bottomStackView.arrangedSubviews.count == 4)
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1)
