@@ -225,7 +225,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     /// layout, so reading it back under-measured the footer by the inset on the first
     /// pass. The inset applies when the container extends under the bottom safe area
     /// (footer background colour set).
-    private func fixedFooterHeight(forWidth width: CGFloat) -> CGFloat {
+    func fixedFooterHeight(forWidth width: CGFloat) -> CGFloat {
         let fixedViews = bottomStackView.arrangedSubviews.filter { !movableFooterViews.contains($0) }
         guard !fixedViews.isEmpty else { return .zero }
         let contentHeight = fixedViews
