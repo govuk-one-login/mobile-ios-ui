@@ -8,7 +8,7 @@ public struct TitleForState {
     private let selectedHighlighted: String?
     private let focusedHighlighted: String?
     private let disabled: String?
-    public let loading: String?
+    let loading: String?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)
