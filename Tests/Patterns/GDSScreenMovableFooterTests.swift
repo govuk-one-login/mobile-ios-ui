@@ -28,7 +28,9 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         let sut = GDSScreen(viewModel: viewModel)
 
         let portrait = CGSize(width: 390, height: 800)
-        let landscape = CGSize(width: 800, height: 220)
+        // A short viewport, as landscape gives. It is kept taller than it is wide: a wider
+        // window uses the split layout, where the movable footer never moves into the body.
+        let shortViewport = CGSize(width: 390, height: 220)
 
         // Portrait: footer is short relative to the screen, so it stays pinned.
         layout(sut, at: portrait)
@@ -38,7 +40,7 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
 
         // Landscape: footer now exceeds 1/3 of the short viewport, so it is moved
         // into the scroll view to remain reachable.
-        layout(sut, at: landscape)
+        layout(sut, at: shortViewport)
         #expect(sut.isMovableFooterInScrollView == true)
         #expect(sut.bottomStackView.arrangedSubviews.isEmpty)
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 4) // body + 3 footer
@@ -71,7 +73,9 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         let sut = GDSScreen(viewModel: viewModel)
 
         let portrait = CGSize(width: 390, height: 800)
-        let landscape = CGSize(width: 800, height: 220)
+        // A short viewport, as landscape gives. It is kept taller than it is wide: a wider
+        // window uses the split layout, where the movable footer never moves into the body.
+        let shortViewport = CGSize(width: 390, height: 220)
 
         // Portrait: movable + fixed footer content all pinned in the bottom stack.
         layout(sut, at: portrait)
@@ -80,7 +84,7 @@ struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
         #expect(sut.scrollViewInnerStackView.arrangedSubviews.count == 1) // body only
 
         // Landscape: only the movable footer moves; the fixed footer stays pinned.
-        layout(sut, at: landscape)
+        layout(sut, at: shortViewport)
         #expect(sut.isMovableFooterInScrollView == true)
         #expect(sut.bottomStackView.arrangedSubviews.count == 1) // fixed footer only
         #expect(sut.bottomStackView.isHidden == false)

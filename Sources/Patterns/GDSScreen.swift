@@ -129,6 +129,18 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     private(set) var isMovableFooterInScrollView = false
     
+    /// True while the screen is in the landscape split layout. See
+    /// `GDSScreen+SplitLayout.swift`.
+    var isInSplitLayout = false
+    
+    // Storage for the split layout. Stored properties cannot live in an extension.
+    private(set) lazy var splitFooterColumn: UIStackView = makeSplitFooterColumn()
+    private(set) lazy var splitMovableScrollView: UIScrollView = makeSplitMovableScrollView()
+    lazy var splitMovableContentView = UIView()
+    lazy var splitMovableStackView: UIStackView = makeSplitMovableStackView()
+    lazy var splitFooterBackgroundView: UIView = makeSplitFooterBackgroundView()
+    var splitFooterConstraints: [NSLayoutConstraint] = []
+    
     public let viewModel: GDSScreenViewModel
     
     public init(
@@ -148,6 +160,11 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        updateSplitLayoutIfNeeded()
+        if isInSplitLayout {
+            updateSplitFooterLayout()
+            return
+        }
         // Movable footer logic only applies when using a scroll view.
         // When usesScrollView is false, body content manages its own scrolling
         // so there is no need to move footer items into the scroll view.
@@ -188,59 +205,6 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
                 equalTo: scrollView.widthAnchor
             )
         ])
-    }
-    
-    /// The intrinsic height the movable footer will occupy at the given width
-    /// and the current Dynamic Type size.
-    ///
-    /// Measured with `systemLayoutSizeFitting` rather than read from `frame` so the
-    /// value is independent of which container the footer currently lives in. Falls
-    /// back to summed frame heights when `width` is non-positive (pre-layout /
-    /// degenerate state), as a best-effort estimate until the next layout pass.
-    func movableFooterViewsHeight(forWidth width: CGFloat) -> CGFloat {
-        guard width > 0 else {
-            return movableFooterViews
-                .map(\.frame.height)
-                .reduce(.zero, +)
-        }
-        return movableFooterViews
-            .map { view in
-                view.systemLayoutSizeFitting(
-                    CGSize(
-                        width: width,
-                        height: UIView.layoutFittingCompressedSize.height
-                    ),
-                    withHorizontalFittingPriority: .required,
-                    verticalFittingPriority: .fittingSizeLevel
-                ).height
-            }
-            .reduce(.zero, +)
-    }
-    
-    /// Height of the non-movable footer content, plus the stack's bottom margin, at
-    /// the given width.
-    ///
-    /// The bottom margin is computed rather than read from `directionalLayoutMargins`:
-    /// UIKit only folds the bottom safe-area inset into that value after the first
-    /// layout, so reading it back under-measured the footer by the inset on the first
-    /// pass. The inset applies when the container extends under the bottom safe area
-    /// (footer background colour set).
-    func fixedFooterHeight(forWidth width: CGFloat) -> CGFloat {
-        let fixedViews = bottomStackView.arrangedSubviews.filter { !movableFooterViews.contains($0) }
-        guard !fixedViews.isEmpty else { return .zero }
-        let contentHeight = fixedViews
-            .map { view in
-                view.systemLayoutSizeFitting(
-                    CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
-                    withHorizontalFittingPriority: .required,
-                    verticalFittingPriority: .fittingSizeLevel
-                ).height
-            }
-            .reduce(.zero, +)
-        let safeAreaBottom = viewModel.safeAreaEdgesToIgnore.contains(.bottom)
-            ? view.safeAreaInsets.bottom
-            : .zero
-        return contentHeight + DesignSystem.Spacing.default + safeAreaBottom
     }
     
     private func checkBottomStackHeight() {
