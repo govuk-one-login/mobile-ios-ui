@@ -40,13 +40,7 @@ extension ComponentCatalog {
             button(
                 title: TitleForState(normal: "Secondary Button with icon", loading: "Loading"),
                 icon: .arrowUpRight,
-                style: .secondaryLeading.adjusting(
-                    foregroundColor: ColorForState(
-                        normal: DesignSystem.Color.Buttons.secondaryForeground,
-                        focused: nil,
-                        loading: DesignSystem.Color.Text.primary
-                    ),
-                ),
+                style: .secondaryLeading,
                 action: .asyncAction {
                     try? await Task.sleep(seconds: 1)
                 }
