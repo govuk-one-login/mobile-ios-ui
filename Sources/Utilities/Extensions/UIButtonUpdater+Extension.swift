@@ -106,7 +106,7 @@ extension UIButton {
                 button.configuration?.title = viewModel.title.forState(button.state)
                 button.configuration?.showsActivityIndicator = true
                 button.configuration?.imagePlacement = .leading
-                button.configuration?.imagePadding = DesignSystem.Spacing.small
+                button.configuration?.imagePadding = DesignSystem.Spacing.default
                 button.accessibilityLabel = viewModel.title.loading ?? GDSLocalisedString(stringKey: "defaultLoadingText", bundle: .designSystem).value
                 button.accessibilityHint = nil
             } else {
