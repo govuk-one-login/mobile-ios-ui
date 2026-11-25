@@ -8,7 +8,7 @@ public struct ColorForState: Equatable {
     private let disabled: UIColor?
     private let selectedHighlighted: UIColor?
     private let focusedHighlighted: UIColor?
-    public let loading: UIColor?
+    private let loading: UIColor?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)

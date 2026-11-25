@@ -8,7 +8,7 @@ public struct IconForState: Sendable, Equatable {
     private let disabled: IconStyle?
     private let selectedHighlighted: IconStyle?
     private let focusedHighlighted: IconStyle?
-    public let loading: IconStyle?
+    private let loading: IconStyle?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)
