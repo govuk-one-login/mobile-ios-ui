@@ -102,6 +102,15 @@ struct ColorTokenTests {
         #expect(sut.darkColor.cgColor == expectedDarkColor.darkColor.cgColor)
     }
     
+    // MARK: - Border Tokens
+    @Test func test_ColorToken_Border_Card() async throws {
+        let expectedColor = DesignSystem.Color.Base.grey3
+        let sut = DesignSystem.Color.Borders.card
+        
+        #expect(sut.lightColor.cgColor == expectedColor.lightColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedColor.darkColor.cgColor)
+    }
+
     // MARK: - Button Tokens
     
     @Test func test_ColorToken_Buttons_primaryForeground() async throws {
