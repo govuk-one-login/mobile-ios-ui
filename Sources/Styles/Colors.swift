@@ -77,6 +77,10 @@ extension DesignSystem {
                 light: Color.Base.green8,
                 dark: Color.Base.green6
             )
+            public static let secondaryForegroundLoading = UIColor(
+                light: Color.Base.black1,
+                dark: Color.Base.white
+            )
             public static let secondaryBackgroundFocused = Color.Base.yellow1
             public static let secondaryBackgroundFocusedHighlighted = Color.Base.yellow4
 

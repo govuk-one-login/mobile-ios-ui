@@ -5,14 +5,30 @@ public final class GDSButton: UIButton, ContentView {
     
     public private(set) var asyncTask: Task<Void, Never>?
     
-    var isLoading: Bool = false {
-        didSet {
+    /// Backing flag for the custom `.loading` control state. Kept private so the
+    /// loading state can only be driven through `isLoading`.
+    private var isLoadingActive: Bool = false
+    
+    var isLoading: Bool {
+        get { isLoadingActive }
+        set {
+            isLoadingActive = newValue
+            // Suppress interaction while loading so the (still-enabled) button
+            // cannot be tapped again, without entering the `.disabled` state.
             var config = self.configuration
-            config?.showsActivityIndicator = isLoading
-            self.isEnabled = !isLoading
+            config?.showsActivityIndicator = newValue
+            self.isEnabled = !newValue
             self.configuration = config
             self.setNeedsUpdateConfiguration()
         }
+    }
+    
+    /// Overridden so the custom `.loading` state composes with the built-in
+    /// control states. When loading is active the `.loading` bit is OR'd into
+    /// whatever state UIKit reports, allowing the `forState(_:)` resolvers and
+    /// the configuration updater to react to it.
+    public override var state: UIControl.State {
+        isLoadingActive ? super.state.union(.loading) : super.state
     }
     
     var isVoiceOverFocussed: Bool = false

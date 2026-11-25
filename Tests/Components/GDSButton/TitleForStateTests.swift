@@ -16,6 +16,8 @@ struct TitleForStateTests {
         #expect(sut.forState([.selected, .highlighted]) == "test title")
         #expect(sut.forState([.focused, .highlighted]) == "test title")
         #expect(sut.forState(.disabled) == "test title")
+        #expect(sut.forState(.loading) == "")
+        #expect(sut.forState([.loading, .disabled]) == "")
         
         #expect(!sut.isSelectable)
     }
@@ -29,7 +31,8 @@ struct TitleForStateTests {
             focused: "test title4",
             selectedHighlighted: "test title5",
             focusedHighlighted: "test title6",
-            disabled: "test title7"
+            disabled: "test title7",
+            loading: "test title8"
         )
         
         #expect(sut.forState(.normal) == "test title1")
@@ -40,6 +43,8 @@ struct TitleForStateTests {
         #expect(sut.forState([.selected, .highlighted]) == "test title5")
         #expect(sut.forState([.focused, .highlighted]) == "test title6")
         #expect(sut.forState(.disabled) == "test title7")
+        #expect(sut.forState(.loading) == "test title8")
+        #expect(sut.forState([.loading, .disabled]) == "test title8")
         
         #expect(sut.isSelectable)
     }

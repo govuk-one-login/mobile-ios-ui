@@ -8,6 +8,7 @@ public struct ColorForState: Equatable {
     private let disabled: UIColor?
     private let selectedHighlighted: UIColor?
     private let focusedHighlighted: UIColor?
+    private let loading: UIColor?
     
     var isSelectable: Bool {
         (selected != nil) || (selectedHighlighted != nil)
@@ -20,7 +21,8 @@ public struct ColorForState: Equatable {
         focused: UIColor?,
         disabled: UIColor? = nil,
         selectedHighlighted: UIColor? = nil,
-        focusedHighlighted: UIColor? = nil
+        focusedHighlighted: UIColor? = nil,
+        loading: UIColor? = nil
     ) {
         self.normal = normal
         self.highlighted = highlighted
@@ -29,6 +31,7 @@ public struct ColorForState: Equatable {
         self.disabled = disabled
         self.selectedHighlighted = selectedHighlighted
         self.focusedHighlighted = focusedHighlighted
+        self.loading = loading
     }
     
     public func forState(_ state: UIControl.State) -> UIColor {
@@ -47,6 +50,8 @@ public struct ColorForState: Equatable {
             return focused ?? normal
         case .disabled, [.focused, .disabled]:
             return disabled ?? normal
+        case .loading, [.loading, .disabled]:
+            return loading ?? disabled ?? normal
         default:
             return normal
         }

@@ -4,7 +4,6 @@ import UIKit
 extension ComponentCatalog {
 
     // MARK: - Buttons
-
     static func buttons(present: @escaping (UIViewController) -> Void) -> [any ContentViewModel] {
         let controlledButton = button(
             title: TitleForState(normal: "Button enabled", disabled: "Button disabled"),
@@ -23,9 +22,28 @@ extension ComponentCatalog {
                 action: .action({ controlledButton.isEnabledToggle() })
             ),
             controlledButton,
-            button(title: "Primary Button", style: .primary),
-            button(title: "Secondary Button", style: .secondary),
-            button(title: "Secondary Button with icon", icon: .arrowUpRight, style: .secondaryLeading),
+            button(
+                title: "Primary Button",
+                style: .primary,
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
+            button(
+                title: "Secondary Button",
+                style: .secondary,
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
+            button(
+                title: TitleForState(normal: "Secondary Button with icon", loading: "Loading"),
+                icon: .arrowUpRight,
+                style: .secondaryLeading,
+                action: .asyncAction {
+                    try? await Task.sleep(seconds: 1)
+                }
+            ),
             button(
                 title: "Outlined Button",
                 style: .secondaryOutlined

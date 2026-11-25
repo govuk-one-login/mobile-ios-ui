@@ -70,7 +70,9 @@ struct GDSButtonStyleTests {
                 normal: DesignSystem.Color.Buttons.secondaryForeground,
                 highlighted: DesignSystem.Color.Buttons.secondaryForegroundHighlighted,
                 focused: DesignSystem.Color.Buttons.secondaryForegroundFocused,
-                focusedHighlighted: DesignSystem.Color.Buttons.secondaryForegroundFocused
+                focusedHighlighted: DesignSystem.Color.Buttons.secondaryForegroundFocused,
+                loading: DesignSystem.Color.Buttons.secondaryForegroundLoading
+                
             ),
             backgroundColor: ColorForState(
                 normal: .clear,
