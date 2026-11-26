@@ -157,6 +157,19 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         checkBottomStackHeight()
     }
     
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.preferredContentSizeCategory
+                != traitCollection.preferredContentSizeCategory,
+              isViewLoaded else { return }
+        // Dynamic Type re-renders the text in place but leaves each view's cached
+        // intrinsic size untouched, so frames lag behind the text (labels overflow
+        // their frames, spacing stays fixed, and views overlap until something
+        // forces a fresh measurement, e.g. being re-parented). Force re-measurement.
+        containerStackView.invalidateIntrinsicContentSizeRecursively()
+        view.setNeedsLayout()
+    }
+    
     private func setup() {
         view.addSubview(containerStackView)
         containerStackView.bindToSuperviewSafeArea(ignoringEdges: viewModel.safeAreaEdgesToIgnore)
@@ -204,7 +217,36 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
             .reduce(.zero, +)
     }
     
+    /// Height of the non-movable footer content, plus the stack's bottom margin, at
+    /// the given width.
+    ///
+    /// The bottom margin is computed rather than read from `directionalLayoutMargins`:
+    /// UIKit only folds the bottom safe-area inset into that value after the first
+    /// layout, so reading it back under-measured the footer by the inset on the first
+    /// pass. The inset applies when the container extends under the bottom safe area
+    /// (footer background colour set).
+    func fixedFooterHeight(forWidth width: CGFloat) -> CGFloat {
+        let fixedViews = bottomStackView.arrangedSubviews.filter { !movableFooterViews.contains($0) }
+        guard !fixedViews.isEmpty else { return .zero }
+        let contentHeight = fixedViews
+            .map { view in
+                view.systemLayoutSizeFitting(
+                    CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                ).height
+            }
+            .reduce(.zero, +)
+        let safeAreaBottom = viewModel.safeAreaEdgesToIgnore.contains(.bottom)
+            ? view.safeAreaInsets.bottom
+            : .zero
+        return contentHeight + DesignSystem.Spacing.default + safeAreaBottom
+    }
+    
     private func checkBottomStackHeight() {
+        // The threshold applies to the whole footer (fixed + movable content, plus
+        // the stack's bottom margin), since that is what occupies the screen. Only
+        // the movable part is relocated when it is exceeded.
         // Read the container size once and fold the guards together. We still
         // bail when there is no usable height (pre-layout) since the threshold is
         // derived from it. The width is passed through to the measurement helper,
@@ -213,7 +255,10 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         let size = containerStackView.bounds.size
         guard size.height > 0 else { return }
 
-        let threshold = size.height / 3
+        // A third of the full view height, not of the container: the container is
+        // inset by the top safe area (status bar / navigation), which the footer
+        // doesn't compete with for space.
+        let threshold = view.bounds.height / 3
         // Measure the footer the same way in both branches so the move-out and
         // move-back decisions are symmetric. Previously each branch measured a
         // different thing (the bottom stack's frame height on the way out, that
@@ -222,6 +267,7 @@ open class GDSScreen: BaseScreen, VoiceOverFocus {
         // larger Dynamic Type) could not always be reversed when it shrank back,
         // stranding the footer in the scroll view.
         let footerHeight = movableFooterViewsHeight(forWidth: size.width)
+            + fixedFooterHeight(forWidth: size.width)
 
         if !isMovableFooterInScrollView, footerHeight > threshold {
             movableFooterToScrollView()

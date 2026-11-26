@@ -27,6 +27,7 @@ class ViewController: UITableViewController {
         case scaledFont
         // Screen patterns
         case gdsScreen
+        case footerResizing
         case noScrollViewScreen
         case collectionViewScreen
         case navigationBarButton
@@ -44,6 +45,7 @@ class ViewController: UITableViewController {
             case .cards: return "Cards"
             case .scaledFont: return "Scaled Font (SwiftUI)"
             case .gdsScreen: return "GDSScreen"
+            case .footerResizing: return "Footer Resizing GDSScreen"
             case .noScrollViewScreen: return "No Scroll View GDSScreen"
             case .collectionViewScreen: return "Collection View GDSScreen"
             case .navigationBarButton: return "NavigationBarButton Examples"
@@ -56,7 +58,7 @@ class ViewController: UITableViewController {
             switch self {
             case .buttons, .progressIndicator, .text, .errorIcons, .rows, .lists, .cards, .scaledFont:
                 return "Components"
-            case .gdsScreen, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
+            case .gdsScreen, .footerResizing, .noScrollViewScreen, .collectionViewScreen, .navigationBarButton, .backgroundColors:
                 return "Screens & Patterns"
             case .qrScanner:
                 return "Shared Screens"
@@ -152,6 +154,9 @@ class ViewController: UITableViewController {
             navigationController?.pushViewController(ScaledFontDemo.makeScreen(), animated: true)
         case .gdsScreen:
             pushGDSScreen()
+        case .footerResizing:
+            let screen = GDSScreen(viewModel: gdsFooterResizingScreenViewModel)
+            navigationController?.pushViewController(screen, animated: true)
         case .noScrollViewScreen:
             pushNoScrollViewGDSScreen()
         case .collectionViewScreen:
@@ -266,6 +271,88 @@ extension ViewController {
                     buttonAction: .action({ })
                 )
             ]
+        )
+    }
+}
+
+// MARK: - Footer resizing example
+
+extension ViewController {
+    /// Exercises how the footer behaves as Dynamic Type changes. The footer scales
+    /// with the text; once the whole footer would take up more than a third of the
+    /// screen, the movable content moves into the scrolling content, and returns
+    /// when the text size shrinks again.
+    var gdsFooterResizingScreenViewModel: GDSDemoScreenViewModel {
+        GDSDemoScreenViewModel(
+            body: [
+                GDSTextViewModel(
+                    title: "Footer Resizing",
+                    titleFont: DesignSystem.Font.Base.title1Bold,
+                    alignment: .left
+                ),
+                GDSTextViewModel(
+                    title: "Change the text size and watch the footer. It should grow and shrink with the text, without overlapping the content above.", // swiftlint:disable:this line_length
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                ),
+                GDSListViewModel(
+                    title: "Things to check",
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
+                    items: [
+                        "The spacing between footer items scales with the text",
+                        "No footer content is clipped or overlapping",
+                        "At large sizes the movable footer content moves into this scrolling content",
+                        "At smaller sizes it returns to the footer, with the same spacing as before"
+                    ],
+                    style: .numbered
+                ),
+                GDSTextViewModel(
+                    title: "Extra content so there is enough here to scroll.",
+                    titleFont: DesignSystem.Font.Base.body,
+                    alignment: .left
+                ),
+                GDSListViewModel(
+                    title: "More content",
+                    titleConfig: (font: DesignSystem.Font.Base.title3Bold, isHeader: true),
+                    items: (1...8).map { GDSLocalisedString(stringLiteral: "Body item \($0)") },
+                    style: .bulleted
+                )
+            ],
+            movableFooter: [
+                GDSTextViewModel(
+                    title: "Review the following before you continue.",
+                    titleFont: DesignSystem.Font.Base.subheadline,
+                    alignment: .left,
+                    verticalPadding: .bottom(DesignSystem.Spacing.small),
+                    horizontalPadding: .horizontal(DesignSystem.Spacing.default)
+                ),
+                GDSButtonViewModel(
+                    title: "Terms and conditions",
+                    icon: .arrowUpRight,
+                    style: .secondaryLeading,
+                    buttonAction: .action({ }),
+                    verticalPadding: .vertical(.zero),
+                    horizontalPadding: .horizontal(DesignSystem.Spacing.default)
+                ),
+                GDSButtonViewModel(
+                    title: "Privacy notice",
+                    icon: .arrowUpRight,
+                    style: .secondaryLeading,
+                    buttonAction: .action({ }),
+                    verticalPadding: .vertical(.zero),
+                    horizontalPadding: .horizontal(DesignSystem.Spacing.default)
+                )
+            ],
+            footer: [
+                GDSButtonViewModel(
+                    title: "Add to wallet",
+                    style: .primary,
+                    buttonAction: .action({ }),
+                    verticalPadding: .top(DesignSystem.Spacing.small),
+                    horizontalPadding: .horizontal(DesignSystem.Spacing.default)
+                )
+            ],
+            footerBackgroundColor: .secondarySystemBackground
         )
     }
 }

@@ -3,53 +3,9 @@ import Testing
 import UIKit
 
 /// Regression coverage for the movable footer transitioning between the pinned
-/// bottom stack and the scroll view. Kept in its own type so the measurement
-/// helpers live next to the only tests that use them.
+/// bottom stack and the scroll view.
 @MainActor
-struct GDSScreenMovableFooterTests {
-    /// Lays the screen out inside a window at `size`, driving the real
-    /// `viewDidLayoutSubviews` -> `checkBottomStackHeight()` path (rather than
-    /// calling the move functions directly), so the movable-footer placement is
-    /// decided against actual frame heights the way it is on device.
-    private func layout(_ sut: GDSScreen, at size: CGSize) {
-        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
-        window.rootViewController = sut
-        window.makeKeyAndVisible()
-        sut.view.frame = window.bounds
-        sut.view.setNeedsLayout()
-        sut.view.layoutIfNeeded()
-    }
-
-    /// Lays the screen out inside a fixed-size window while forcing a Dynamic Type
-    /// content size category, driving the real `viewDidLayoutSubviews` ->
-    /// `checkBottomStackHeight()` path so the movable-footer placement is decided
-    /// against the actual frame heights produced at that text size.
-    ///
-    /// Uses a parent controller + `setOverrideTraitCollection` rather than
-    /// `traitOverrides` (iOS 17+) so it builds against the package's iOS 15 target.
-    private func layout(
-        _ sut: GDSScreen,
-        at size: CGSize,
-        contentSize: UIContentSizeCategory
-    ) {
-        let parent = UIViewController()
-        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
-        window.rootViewController = parent
-        window.makeKeyAndVisible()
-
-        parent.addChild(sut)
-        sut.view.frame = parent.view.bounds
-        parent.view.addSubview(sut.view)
-        parent.setOverrideTraitCollection(
-            UITraitCollection(preferredContentSizeCategory: contentSize),
-            forChild: sut
-        )
-        sut.didMove(toParent: parent)
-
-        sut.view.setNeedsLayout()
-        sut.view.layoutIfNeeded()
-    }
-
+struct GDSScreenMovableFooterTests: GDSScreenFooterTesting {
     @Test("""
     Movable footer returns to the bottom stack after a short -> tall layout change \
     (regression: portrait -> landscape -> portrait left it stranded in the scroll view)
