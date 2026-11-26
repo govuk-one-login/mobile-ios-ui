@@ -53,4 +53,10 @@ struct CornerRadiusTests {
         #expect(sut == expectedValue)
     }
     
+    @Test func test_CornerRadius_Card() async throws {
+        let expectedValue: CGFloat = 16
+        
+        let sut = DesignSystem.CornerRadius.card
+        #expect(sut == expectedValue)
+    }
 }

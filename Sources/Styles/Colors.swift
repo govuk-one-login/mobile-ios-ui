@@ -26,7 +26,9 @@ extension DesignSystem {
             )
         }
         
-        public enum Borders {}
+        public enum Borders {
+            public static let card: UIColor = DesignSystem.Color.Base.grey3
+        }
         
         public enum Gradients {}
         
