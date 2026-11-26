@@ -365,5 +365,16 @@ struct ColorTokenTests {
         #expect(sut.lightColor.cgColor == expectedColor.cgColor)
         #expect(sut.darkColor.cgColor == expectedColor.cgColor)
     }
+    
+    // MARK: - Border tokens
+    
+    @Test func test_ColorToken_Border_Card() async throws {
+        let expectedColor = DesignSystem.Color.Base.grey3
+        let sut = DesignSystem.Color.Borders.card
+        
+        #expect(sut.lightColor.cgColor == expectedColor.cgColor)
+        #expect(sut.darkColor.cgColor == expectedColor.cgColor)
+    }
+
 }
 // swiftlint:enable type_body_length
