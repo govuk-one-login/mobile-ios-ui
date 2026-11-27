@@ -70,38 +70,72 @@ struct GDSProgressIndicatorTests {
     }
     
     @Test("Test configuration used to change the title after 5 seconds")
-    func titleViewAfterFiveSeconds() async throws {
-        let progressIndicator = GDSProgressIndicator(viewModel: viewModel)
-        let window = UIWindow()
-        window.rootViewController = UIViewController()
-        window.rootViewController?.view.addSubview(progressIndicator)
-        window.makeKeyAndVisible()
-        window.layoutIfNeeded()
+    func titleViewAfterFiveSeconds() {
+        let scheduler = ManualScheduler()
+        let progressIndicator = GDSProgressIndicator(viewModel: viewModel, scheduler: scheduler.schedule)
+        let window = show(progressIndicator)
         
-        try await Task.sleep(seconds: 5)
+        #expect(scheduler.delays == [5, 10])
+        
+        scheduler.run(delay: 5)
         
         let stackView = progressIndicator.subviews.first as? UIStackView
         let titleView = stackView?.arrangedSubviews.last as? GDSTextView
         
         #expect(titleView?.text == "Still loading")
         #expect(stackView?.accessibilityLabel == "Still loading")
+        withExtendedLifetime(window) {}
     }
     
     @Test("Test configuration used to change the title after 10 seconds")
-    func titleViewAfterTenSeconds() async throws {
-        let progressIndicator = GDSProgressIndicator(viewModel: viewModel)
-        let window = UIWindow()
-        window.rootViewController = UIViewController()
-        window.rootViewController?.view.addSubview(progressIndicator)
-        window.makeKeyAndVisible()
-        window.layoutIfNeeded()
+    func titleViewAfterTenSeconds() {
+        let scheduler = ManualScheduler()
+        let progressIndicator = GDSProgressIndicator(viewModel: viewModel, scheduler: scheduler.schedule)
+        let window = show(progressIndicator)
         
-        try await Task.sleep(seconds: 10)
+        scheduler.run(delay: 5)
+        scheduler.run(delay: 10)
         
         let stackView = progressIndicator.subviews.first as? UIStackView
         let titleView = stackView?.arrangedSubviews.last as? GDSTextView
         
         #expect(titleView?.text == "Still loading, keep waiting")
         #expect(stackView?.accessibilityLabel == "Still loading, keep waiting")
+        withExtendedLifetime(window) {}
+    }
+    
+    @Test("Title does not change before the delays have elapsed")
+    func titleUnchangedBeforeDelays() {
+        let scheduler = ManualScheduler()
+        let progressIndicator = GDSProgressIndicator(viewModel: viewModel, scheduler: scheduler.schedule)
+        let window = show(progressIndicator)
+        
+        let titleView = (progressIndicator.subviews.first as? UIStackView)?.arrangedSubviews.last as? GDSTextView
+        #expect(titleView?.text == viewModel.title.title.value)
+        withExtendedLifetime(window) {}
+    }
+    
+    @Test("Pending title changes are cancelled when removed from the window")
+    func titleChangesCancelledWhenRemoved() {
+        let scheduler = ManualScheduler()
+        let progressIndicator = GDSProgressIndicator(viewModel: viewModel, scheduler: scheduler.schedule)
+        let window = show(progressIndicator)
+        
+        progressIndicator.removeFromSuperview()
+        scheduler.run(delay: 5)
+        scheduler.run(delay: 10)
+        
+        let titleView = (progressIndicator.subviews.first as? UIStackView)?.arrangedSubviews.last as? GDSTextView
+        #expect(titleView?.text == viewModel.title.title.value)
+        withExtendedLifetime(window) {}
+    }
+    
+    private func show(_ view: UIView) -> UIWindow {
+        let window = UIWindow()
+        window.rootViewController = UIViewController()
+        window.rootViewController?.view.addSubview(view)
+        window.makeKeyAndVisible()
+        window.layoutIfNeeded()
+        return window
     }
 }

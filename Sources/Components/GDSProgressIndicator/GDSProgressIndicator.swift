@@ -2,6 +2,7 @@ import UIKit
 
 public final class GDSProgressIndicator: UIView, ContentView {
     let viewModel: GDSProgressIndicatorViewModel
+    private let scheduler: DelayedScheduler
     private var workItems: [DispatchWorkItem] = []
     
     public lazy var iconView: UIActivityIndicatorView = {
@@ -39,8 +40,13 @@ public final class GDSProgressIndicator: UIView, ContentView {
         return stack
     }()
     
-    public init(viewModel: GDSProgressIndicatorViewModel) {
+    public convenience init(viewModel: GDSProgressIndicatorViewModel) {
+        self.init(viewModel: viewModel, scheduler: DelayedSchedulers.mainQueue)
+    }
+    
+    init(viewModel: GDSProgressIndicatorViewModel, scheduler: @escaping DelayedScheduler) {
         self.viewModel = viewModel
+        self.scheduler = scheduler
         super.init(frame: .zero)
         
         addSubview(stackView)
@@ -101,9 +107,9 @@ public final class GDSProgressIndicator: UIView, ContentView {
         workItems = [titleAfter5Seconds, titleAfter10Seconds]
         
         // Schedule title change after 5 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: titleAfter5Seconds)
+        scheduler(5, titleAfter5Seconds)
         // Schedule title change after 10 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: titleAfter10Seconds)
+        scheduler(10, titleAfter10Seconds)
     }
     
     private func cancelTitleChanges() {
